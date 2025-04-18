@@ -5,7 +5,7 @@
 #  | . \  | (_) | | | | | | (_| | | (_| | | (_) |     #
 #  |_|\_\  \___/  |_| |_|  \__,_|  \__,_|  \___/      #
 #                                                     #
-#____________________________________________________ #
+#_____________________________________________________#
 #                                                     #
 # Main Programmer: DSOE1024                           #
 # Shaders Programmer: yxj                             #
@@ -96,7 +96,7 @@ var _dialog_data_id: int = 0
 ## 调试
 @export_group("调试")
 ## 调试控制台
-@export var debug_console: DebugConsole
+@onready var debug_console: DebugConsole = $DebugInterface
 
 func _ready() -> void:
 	# 读取玩家的设置
@@ -141,31 +141,12 @@ func _ready() -> void:
 
 ## 初始化对话的方法
 func _init_dialogue(callback: Callable = Callable()) -> void:
-	_dialog_data = DialogueData.new()
-	
-	if _dialog_data_list == null:
-		_dialog_data_list = DialogueDataList.new()
 	if _dialog_data_list.dialog_data_list.size() <= 0:
-		print("对话列表为空")
+		printerr("对话列表为空")
 		return
-	var path = _dialog_data_list.dialog_data_list[_dialog_data_id]._dialog_data_file_path
-	var file = FileAccess.open(path, FileAccess.READ)
-	if not file:
-		print("6666666666")
+		
+	_dialog_data = _dialog_data_list.dialog_data_list[_dialog_data_id]
 	
-	var lines = file.get_as_text().split("\n")
-	file.close()
-
-	# 解析元数据
-	var metadata_result = KS._parse_metadata(lines, path)
-	if not metadata_result:
-		_dialog_data = null
-		printerr("666")
-		return
-	
-	_dialog_data.chapter_id = metadata_result[0]
-	_dialog_data.chapter_name = metadata_result[1]
-	var content_lines = lines.slice(2)
 	# 将角色表传给acting_interface
 	_acting_interface.chara_list = _chara_list
 	justenter = true
@@ -174,6 +155,7 @@ func _init_dialogue(callback: Callable = Callable()) -> void:
 	print_rich("[color=yellow]初始化对话 [/color]" + "justenter: " + str(justenter) +
 	" 对话下标: " + str(curline) + " 当前状态: " + str(dialogueState))
 	print("---------------------------------------------")
+	callback.call()
 
 ## 开始对话的方法
 func _start_dialogue() -> void:
