@@ -1,0 +1,518 @@
+[gd_scene load_steps=32 format=3 uid="uid://bj8ynu8013j4j"]
+
+[ext_resource type="Script" uid="uid://dpo124xwpder5" path="res://addons/konado/scripts/dialogue/dialogue_manager.gd" id="1_buo3n"]
+[ext_resource type="Script" uid="uid://cyoedi0x84dxy" path="res://addons/konado/scripts/act/acting_Interface.gd" id="2_pq6sw"]
+[ext_resource type="Script" uid="uid://c6yujcsrb54l8" path="res://addons/konado/scripts/dialogue/dialogue_data.gd" id="2_qodmk"]
+[ext_resource type="Script" uid="uid://di66ghc1qq8e5" path="res://addons/konado/scripts/background/background.gd" id="2_ub6cx"]
+[ext_resource type="Script" uid="uid://b0kbsxqyedoml" path="res://addons/konado/scripts/dialogue/dialogue_Interface.gd" id="3_gl7il"]
+[ext_resource type="Texture2D" uid="uid://bxaf3fksumhhn" path="res://konado_example/image/backgrounds/bg1.png" id="3_m7kjq"]
+[ext_resource type="Script" uid="uid://d0ddu0r56jltu" path="res://addons/konado/scripts/dialogue/dialogue_data_list.gd" id="3_qodmk"]
+[ext_resource type="Resource" uid="uid://df8shsxf6kown" path="res://source/test/test.ks" id="3_sxvt2"]
+[ext_resource type="Script" uid="uid://cfbojxb1pdbrs" path="res://addons/konado/scripts/audio/audio_interface.gd" id="4_gd2ll"]
+[ext_resource type="Script" uid="uid://5aqgmxi8gxcw" path="res://addons/konado/scripts/background/background_list.gd" id="4_wnbmn"]
+[ext_resource type="Script" uid="uid://ri30mk7ouhfu" path="res://addons/konado/scripts/debug/debug_interface.gd" id="6_41ybh"]
+[ext_resource type="Shader" uid="uid://btv6px1j4hwjt" path="res://addons/konado/shader/Blur.gdshader" id="7_bwdrp"]
+
+[sub_resource type="Resource" id="Resource_eac7y"]
+script = ExtResource("2_ub6cx")
+background_name = "bg1"
+background_image = ExtResource("3_m7kjq")
+metadata/_custom_type_script = "uid://di66ghc1qq8e5"
+
+[sub_resource type="Resource" id="Resource_nhljo"]
+script = ExtResource("4_wnbmn")
+background_list = Array[ExtResource("2_ub6cx")]([SubResource("Resource_eac7y")])
+metadata/_custom_type_script = "uid://5aqgmxi8gxcw"
+
+[sub_resource type="Resource" id="Resource_h6kpk"]
+script = ExtResource("3_qodmk")
+dialog_data_list = Array[ExtResource("2_qodmk")]([ExtResource("3_sxvt2"), ExtResource("3_sxvt2")])
+metadata/_custom_type_script = "uid://d0ddu0r56jltu"
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_e5o0s"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_b1osp"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_h66lv"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_25pr6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_f70o6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_d61i7"]
+
+[sub_resource type="Gradient" id="Gradient_rm7mg"]
+offsets = PackedFloat32Array(0, 0.996764, 1)
+colors = PackedColorArray(0.527091, 0.626497, 0.835147, 0.611765, 0.0801724, 0.0952924, 0.127029, 0.0930516, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_m86f6"]
+gradient = SubResource("Gradient_rm7mg")
+width = 512
+height = 512
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.7, 0.7)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vnydh"]
+texture = SubResource("GradientTexture2D_m86f6")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1xeec"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3sqld"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_x3e46"]
+shader = ExtResource("7_bwdrp")
+shader_parameter/lod = 2.0
+shader_parameter/modulate = Color(0.141176, 0.141176, 0.141176, 0.34902)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ocpkv"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tdxva"]
+bg_color = Color(0.141176, 0.141176, 0.141176, 0.392157)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vf4gk"]
+shader = ExtResource("7_bwdrp")
+shader_parameter/lod = 0.9
+shader_parameter/modulate = Color(0.243137, 0.243137, 0.243137, 0.301961)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5whv1"]
+
+[node name="DialogManager" type="Control" node_paths=PackedStringArray("debug_console")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_buo3n")
+_background_list = SubResource("Resource_nhljo")
+_dialog_data_list = SubResource("Resource_h6kpk")
+debug_console = NodePath("DebugInterface")
+
+[node name="MaskLayer" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="DialogUI" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_e5o0s")
+
+[node name="ActingInterface" type="PanelContainer" parent="DialogUI"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_b1osp")
+script = ExtResource("2_pq6sw")
+
+[node name="BackgroundLayer" type="ColorRect" parent="DialogUI/ActingInterface"]
+material = SubResource("ShaderMaterial_h66lv")
+layout_mode = 2
+color = Color(0, 0, 0, 1)
+
+[node name="CharaControl" type="Control" parent="DialogUI/ActingInterface/BackgroundLayer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="EffectLayer" type="ColorRect" parent="DialogUI/ActingInterface"]
+layout_mode = 2
+color = Color(0, 0, 0, 0)
+
+[node name="DialogueInterface" type="VBoxContainer" parent="DialogUI"]
+layout_mode = 2
+alignment = 2
+script = ExtResource("3_gl7il")
+
+[node name="ChoicesBox" type="Control" parent="DialogUI/DialogueInterface"]
+custom_minimum_size = Vector2(380, 290)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="ChoicesContainer" type="VBoxContainer" parent="DialogUI/DialogueInterface/ChoicesBox"]
+custom_minimum_size = Vector2(400, 300)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="DialogueBox" type="PanelContainer" parent="DialogUI/DialogueInterface"]
+custom_minimum_size = Vector2(0, 230)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_25pr6")
+
+[node name="Background" type="TextureRect" parent="DialogUI/DialogueInterface/DialogueBox"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="DialogUI/DialogueInterface/DialogueBox"]
+layout_mode = 2
+theme_override_constants/margin_left = 130
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 130
+theme_override_constants/margin_bottom = 5
+
+[node name="DialogContent" type="VBoxContainer" parent="DialogUI/DialogueInterface/DialogueBox/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DialogUI/DialogueInterface/DialogueBox/MarginContainer/DialogContent"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 30
+
+[node name="Name" type="RichTextLabel" parent="DialogUI/DialogueInterface/DialogueBox/MarginContainer/DialogContent/VBoxContainer"]
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 25
+bbcode_enabled = true
+fit_content = true
+
+[node name="MarginContainer" type="MarginContainer" parent="DialogUI/DialogueInterface/DialogueBox/MarginContainer/DialogContent/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_right = 200
+
+[node name="ContentLable" type="RichTextLabel" parent="DialogUI/DialogueInterface/DialogueBox/MarginContainer/DialogContent/VBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/normal_font_size = 22
+bbcode_enabled = true
+text = "你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好v你好"
+fit_content = true
+autowrap_mode = 2
+tab_size = 8
+visible_characters = 0
+visible_ratio = 0.0
+
+[node name="ActionsContainer" type="HBoxContainer" parent="DialogUI/DialogueInterface/DialogueBox/MarginContainer/DialogContent"]
+layout_mode = 2
+alignment = 1
+
+[node name="存档" type="Button" parent="DialogUI/DialogueInterface/DialogueBox/MarginContainer/DialogContent/ActionsContainer"]
+custom_minimum_size = Vector2(75, 35)
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_f70o6")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_d61i7")
+theme_override_styles/hover = SubResource("StyleBoxTexture_vnydh")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_1xeec")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_3sqld")
+text = "存档"
+
+[node name="读档" type="Button" parent="DialogUI/DialogueInterface/DialogueBox/MarginContainer/DialogContent/ActionsContainer"]
+custom_minimum_size = Vector2(75, 35)
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_f70o6")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_d61i7")
+theme_override_styles/hover = SubResource("StyleBoxTexture_vnydh")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_1xeec")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_3sqld")
+text = "读档"
+
+[node name="快速保存" type="Button" parent="DialogUI/DialogueInterface/DialogueBox/MarginContainer/DialogContent/ActionsContainer"]
+custom_minimum_size = Vector2(75, 35)
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_f70o6")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_d61i7")
+theme_override_styles/hover = SubResource("StyleBoxTexture_vnydh")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_1xeec")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_3sqld")
+text = "快速保存"
+
+[node name="记录" type="Button" parent="DialogUI/DialogueInterface/DialogueBox/MarginContainer/DialogContent/ActionsContainer"]
+custom_minimum_size = Vector2(75, 35)
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_f70o6")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_d61i7")
+theme_override_styles/hover = SubResource("StyleBoxTexture_vnydh")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_1xeec")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_3sqld")
+text = "记录"
+
+[node name="退出" type="Button" parent="DialogUI/DialogueInterface/DialogueBox/MarginContainer/DialogContent/ActionsContainer"]
+custom_minimum_size = Vector2(75, 35)
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_f70o6")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_d61i7")
+theme_override_styles/hover = SubResource("StyleBoxTexture_vnydh")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_1xeec")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_3sqld")
+text = "退出"
+
+[node name="自动" type="Button" parent="DialogUI/DialogueInterface/DialogueBox/MarginContainer/DialogContent/ActionsContainer"]
+custom_minimum_size = Vector2(75, 35)
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_f70o6")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_d61i7")
+theme_override_styles/hover = SubResource("StyleBoxTexture_vnydh")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_1xeec")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_3sqld")
+toggle_mode = true
+text = "自动播放"
+
+[node name="继续" type="Button" parent="DialogUI/DialogueInterface/DialogueBox/MarginContainer/DialogContent/ActionsContainer"]
+custom_minimum_size = Vector2(75, 35)
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_f70o6")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_d61i7")
+theme_override_styles/hover = SubResource("StyleBoxTexture_vnydh")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_1xeec")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_3sqld")
+text = "继续"
+
+[node name="AudioInterface" type="Node2D" parent="."]
+script = ExtResource("4_gd2ll")
+
+[node name="BGMPlayer" type="AudioStreamPlayer" parent="AudioInterface"]
+
+[node name="VoicePlayer" type="AudioStreamPlayer" parent="AudioInterface"]
+
+[node name="SoundEffectPlayer" type="AudioStreamPlayer" parent="AudioInterface"]
+
+[node name="DebugInterface" type="Control" parent="." node_paths=PackedStringArray("input_box", "history_box", "dialog_manager", "dialog_interface", "audio_interface")]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("6_41ybh")
+input_box = NodePath("MarginContainer/VBoxContainer/LineEdit")
+history_box = NodePath("MarginContainer/VBoxContainer/RichTextLabel")
+dialog_manager = NodePath("..")
+dialog_interface = NodePath("../DialogUI/DialogueInterface")
+audio_interface = NodePath("../AudioInterface")
+
+[node name="MarginContainer" type="MarginContainer" parent="DebugInterface"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 400
+theme_override_constants/margin_bottom = 260
+
+[node name="ColorRect" type="ColorRect" parent="DebugInterface/MarginContainer"]
+material = SubResource("ShaderMaterial_x3e46")
+layout_mode = 2
+color = Color(0.176471, 0.176471, 0.176471, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DebugInterface/MarginContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="DebugInterface/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 420)
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxFlat_ocpkv")
+theme_override_styles/normal = SubResource("StyleBoxFlat_tdxva")
+bbcode_enabled = true
+
+[node name="LineEdit" type="LineEdit" parent="DebugInterface/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="LoadKSFileDialog" type="FileDialog" parent="DebugInterface"]
+title = "Open a File"
+initial_position = 2
+size = Vector2i(610, 400)
+ok_button_text = "Open"
+dialog_hide_on_ok = true
+cancel_button_text = "取消"
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.txt", "*.ks")
+show_hidden_files = true
+
+[node name="HistoryUI" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="HistoryUI"]
+material = SubResource("ShaderMaterial_vf4gk")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="HistoryUI/ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 130
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 130
+theme_override_constants/margin_bottom = 50
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HistoryUI/ColorRect/MarginContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HistoryUI/ColorRect/MarginContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 15
+
+[node name="RichTextLabel" type="RichTextLabel" parent="HistoryUI/ColorRect/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[color=orange]主角： [/color]好好好"
+fit_content = true
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="HistoryUI/ColorRect/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[color=orange]主角： [/color]十一月份就背刺我"
+fit_content = true
+
+[node name="RichTextLabel3" type="RichTextLabel" parent="HistoryUI/ColorRect/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[color=orange]主角： [/color]十二月份也背刺我"
+fit_content = true
+
+[node name="RichTextLabel4" type="RichTextLabel" parent="HistoryUI/ColorRect/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[color=orange]主角： [/color]十三月份他还背刺我"
+fit_content = true
+
+[node name="RichTextLabel5" type="RichTextLabel" parent="HistoryUI/ColorRect/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[color=pink]大鹅： [/color]答应我，一定要买战地2042，好吗？"
+fit_content = true
+
+[node name="RichTextLabel6" type="RichTextLabel" parent="HistoryUI/ColorRect/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[color=pink]大鹅： [/color]染上战地了。。。"
+fit_content = true
+
+[node name="RichTextLabel7" type="RichTextLabel" parent="HistoryUI/ColorRect/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[color=green]角色A： [/color]什么，你染上战地了？"
+fit_content = true
+
+[node name="RichTextLabel8" type="RichTextLabel" parent="HistoryUI/ColorRect/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[color=orange]主角： [/color]好好好"
+fit_content = true
+
+[node name="RichTextLabel9" type="RichTextLabel" parent="HistoryUI/ColorRect/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[color=orange]主角： [/color]十一月份就背刺我"
+fit_content = true
+
+[node name="RichTextLabel10" type="RichTextLabel" parent="HistoryUI/ColorRect/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[color=orange]主角： [/color]十二月份也背刺我"
+fit_content = true
+
+[node name="RichTextLabel11" type="RichTextLabel" parent="HistoryUI/ColorRect/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[color=orange]主角： [/color]十三月份他还背刺我"
+fit_content = true
+
+[node name="RichTextLabel12" type="RichTextLabel" parent="HistoryUI/ColorRect/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[color=pink]大鹅： [/color]答应我，一定要买战地2042，好吗？"
+fit_content = true
+
+[node name="RichTextLabel13" type="RichTextLabel" parent="HistoryUI/ColorRect/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[color=pink]大鹅： [/color]染上战地了。。。"
+fit_content = true
+
+[node name="RichTextLabel14" type="RichTextLabel" parent="HistoryUI/ColorRect/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[color=green]角色A： [/color]什么，你染上战地了？"
+fit_content = true
+
+[node name="RichTextLabel15" type="RichTextLabel" parent="HistoryUI/ColorRect/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[color=orange]主角： [/color]好好好"
+fit_content = true
+
+[node name="RichTextLabel16" type="RichTextLabel" parent="HistoryUI/ColorRect/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[color=orange]主角： [/color]十一月份就背刺我"
+fit_content = true
+
+[node name="RichTextLabel17" type="RichTextLabel" parent="HistoryUI/ColorRect/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[color=orange]主角： [/color]十二月份也背刺我"
+fit_content = true
+
+[node name="RichTextLabel18" type="RichTextLabel" parent="HistoryUI/ColorRect/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[color=orange]主角： [/color]十三月份他还背刺我"
+fit_content = true
+
+[node name="RichTextLabel19" type="RichTextLabel" parent="HistoryUI/ColorRect/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[color=pink]大鹅： [/color]答应我，一定要买战地2042，好吗？"
+fit_content = true
+
+[node name="RichTextLabel20" type="RichTextLabel" parent="HistoryUI/ColorRect/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[color=pink]大鹅： [/color]染上战地了。。。"
+fit_content = true
+
+[node name="RichTextLabel21" type="RichTextLabel" parent="HistoryUI/ColorRect/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[color=green]角色A： [/color]什么，你染上战地了？"
+fit_content = true
+
+[node name="Button" type="Button" parent="HistoryUI/ColorRect"]
+custom_minimum_size = Vector2(60, 30)
+layout_mode = 1
+offset_left = 15.0
+offset_top = 10.0
+offset_right = 75.0
+offset_bottom = 40.0
+theme_override_styles/normal = SubResource("StyleBoxEmpty_5whv1")
+text = "返回"
+
+[connection signal="file_selected" from="DebugInterface/LoadKSFileDialog" to="DebugInterface" method="_on_ks_file_sel"]

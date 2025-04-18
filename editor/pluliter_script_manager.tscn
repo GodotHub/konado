@@ -1,0 +1,61 @@
+[gd_scene load_steps=2 format=3 uid="uid://c5udhsnhravx5"]
+
+[ext_resource type="Script" uid="uid://cuyttkhf12ak4" path="res://addons/konado/editor/pluliter_script_manager.gd" id="1_wxye4"]
+
+[node name="Pluliter" type="Control" node_paths=PackedStringArray("ks_path_edit", "load_path_btn", "load_dialog", "generate_btn", "empty_btn")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_wxye4")
+ks_path_edit = NodePath("TabContainer/Pluliter脚本/LineEdit")
+load_path_btn = NodePath("TabContainer/Pluliter脚本/选择路径")
+load_dialog = NodePath("TabContainer/Pluliter脚本/FileDialog")
+generate_btn = NodePath("TabContainer/Pluliter脚本/生成")
+empty_btn = NodePath("TabContainer/Pluliter脚本/清空")
+
+[node name="TabContainer" type="TabContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+current_tab = 0
+
+[node name="Pluliter脚本" type="VBoxContainer" parent="TabContainer"]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="Label2" type="Label" parent="TabContainer/Pluliter脚本"]
+layout_mode = 2
+text = "脚本预生成列表（路径）"
+
+[node name="LineEdit" type="LineEdit" parent="TabContainer/Pluliter脚本"]
+layout_mode = 2
+
+[node name="选择路径" type="Button" parent="TabContainer/Pluliter脚本"]
+layout_mode = 2
+text = "选择路径"
+
+[node name="Label" type="Label" parent="TabContainer/Pluliter脚本"]
+layout_mode = 2
+text = "剧情脚本"
+
+[node name="生成" type="Button" parent="TabContainer/Pluliter脚本"]
+layout_mode = 2
+text = "全部生成"
+
+[node name="清空" type="Button" parent="TabContainer/Pluliter脚本"]
+layout_mode = 2
+text = "全部清空"
+
+[node name="FileDialog" type="FileDialog" parent="TabContainer/Pluliter脚本"]
+title = "Open a File"
+initial_position = 1
+size = Vector2i(500, 300)
+ok_button_text = "Open"
+cancel_button_text = "取消"
+file_mode = 0

@@ -1,0 +1,200 @@
+# Konado
+
+## 简介
+Pluliter Godot是一个对话创建工具，提供多种对话模板以及对话管理器，可以快速创建对话游戏，也可以嵌入各类游戏的对话场景。
+
+## Konado Scripts 语法规范
+
+## 文件结构
+- 文件扩展名：`.ks`
+- 编码格式：UTF-8
+- 基础结构：
+```text
+chapter_id [章节ID]
+chapter_name [章节名称]
+[内容行...]
+```
+
+## 元数据规范
+### 章节标识
+```text
+chapter_id chapter01
+```
+- 必须为文件首行
+- 使用英文+数字组合
+- 推荐格式：`chapter`+数字编号
+
+### 章节名称
+```text
+chapter_name 序章：命运的相遇
+```
+- 必须为文件第二行
+- 支持任意Unicode字符
+- 显示在游戏章节选择界面
+
+## 内容指令集
+
+### 1. 背景切换
+```text
+background [图片资源名] <效果类型>
+```
+- 参数说明：
+  - 图片资源名：不带扩展名的纹理文件名
+  - 效果类型（可选）：
+	- erase：淡出
+	- blinds：百叶窗
+	- wave：波浪
+	- fade：淡入
+- 示例：
+```text
+background morning_room fade
+background battle_field wave
+```
+
+### 2. 角色控制
+#### 显示角色
+```text
+actor show [角色ID] [状态] at [x] [y] scale [比例]
+```
+- 参数说明：
+  - 角色ID：角色资源标识符
+  - 状态：对应角色不同立绘状态
+  - 坐标：场景坐标系（单位：像素）
+  - 比例：显示缩放（1.0为原始大小）
+- 示例：
+```text
+actor show alice normal at 300 450 scale 0.9
+```
+
+#### 隐藏角色
+```text
+actor exit [角色ID]
+```
+- 示例：
+```text
+actor exit bob
+```
+
+#### 状态变更
+```text
+actor change [角色ID] [新状态]
+```
+- 示例：
+```text
+actor change alice angry
+```
+
+#### 角色移动
+```text
+actor move [角色ID] [目标x] [目标y]
+```
+- 示例：
+```text
+actor move alice 500 320
+```
+
+### 3. 音频控制
+#### 播放BGM
+```text
+play bgm [音乐ID]
+```
+- 示例：
+```text
+play bgm battle_theme
+```
+
+#### 播放音效
+```text
+play se [音效ID]
+```
+- 示例：
+```text
+play se sword_clash
+```
+
+#### 停止BGM
+```text
+stop bgm
+```
+
+### 4. 分支选项
+```text
+choice "选项文本1" [跳转ID1] "选项文本2" [跳转ID2]...
+```
+- 规则说明：
+  - 最多支持4个选项
+  - 文本需用双引号包裹
+  - 跳转ID对应其他章节ID
+- 示例：
+```text
+choice "进入战斗" chapter02 "尝试逃跑" chapter03
+```
+
+### 5. 章节跳转
+```text
+jump [目标章节ID]
+```
+- 示例：
+```text
+jump ending_01
+```
+
+### 6. 对话系统
+```text
+"角色ID" "对话内容" <语音ID>
+```
+- 语法规则：
+  - 必须用双引号包裹字段
+  - 语音ID为可选参数
+  - 支持转义字符：\n 换行、\" 显示引号
+- 示例：
+```text
+"narrator" "暴风雨即将来临..." storm_voice_12
+"alice" "这不是我的错！\n你根本不懂！" alice_angry_03
+```
+
+### 7. 特殊指令
+#### 成就解锁
+```text
+unlock_achievement [成就ID]
+```
+- 示例：
+```text
+unlock_achievement first_blood
+```
+
+#### 游戏结束
+```text
+end
+```
+
+## 注释规范
+- 单行注释以`#`开头
+- 示例：
+```text
+# 这里是注释内容
+background tavern_night  # 夜间酒馆场景
+```
+
+## 语法校验规则
+1. 行首空格自动忽略
+2. 空行自动跳过，但是尽可能避免使用空行
+3. 无效指令将触发警告日志
+4. 参数缺失会触发错误提示
+
+## 使用方法
+
+适用于Godot 4.4版本
+
+
+1. 下载并解压本仓库。
+2. 将解压后的文件夹复制到你的Godot项目的`res`中`addons`。
+3. 在Godot编辑器中，打开你的项目。
+4. 在`Project Settings`中，找到`Plugins`选项卡。
+5. 在`Plugins`选项卡中，找到`Pluliter Godot`插件，启用插件。
+
+## 许可证
+Pluliter Godot 多文使用 MIT 许可证，开源且免费使用。
+
+## 贡献者
+- 感谢[lgyxj](https://gitee.com/lgyxj)为本项目提供shader支持
