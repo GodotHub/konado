@@ -1,7 +1,38 @@
-# Konado
+# Konado 可娜多
+
+
+<p align="center">
+  <img src="./assets/KonadoBanner.png" alt="看板娘多文" width=596px>
+</p>
+
+
+<p align="center">
+<span style="font-size:12px;">看板娘可娜</span>
+<span style="font-size:12px;">画师: Marukles</span>
+</p>
 
 ## 简介
-Pluliter Godot是一个对话创建工具，提供多种对话模板以及对话管理器，可以快速创建对话游戏，也可以嵌入各类游戏的对话场景。
+Konado是一个对话创建工具，提供多种对话模板以及对话管理器，可以快速创建对话游戏，也可以嵌入各类游戏的对话场景。
+
+## 安装
+
+### 依赖环境
+
+- Godot 4.2.3 或更高版本
+- 建议通过Git安装插件
+
+### 安装步骤
+
+1. 安装Git，在使用apt包管理器的Linux发行版可以直接执行`sudo apt install git`
+2. 新建Godot项目
+3. 新建插件文件夹`addons`
+4. 在项目根目录打开终端
+5. 执行`git clone https://gitcode.com/shengjing/Konado.git addons/konado` 下载插件
+6. 在Godot项目设置中启用插件
+
+### 常见问题
+- 插件无法加载：确保插件文件夹路径正确，且Godot版本符合要求
+
 
 ## Konado Scripts 语法规范
 
@@ -195,19 +226,11 @@ background tavern_night  # 夜间酒馆场景
 3. 无效指令将触发警告日志
 4. 参数缺失会触发错误提示
 
-## 使用方法
 
-适用于Godot 4.4版本
-
-
-1. 下载并解压本仓库。
-2. 将解压后的文件夹复制到你的Godot项目的`res`中`addons`。
-3. 在Godot编辑器中，打开你的项目。
-4. 在`Project Settings`中，找到`Plugins`选项卡。
-5. 在`Plugins`选项卡中，找到`Pluliter Godot`插件，启用插件。
-
-## 许可证
-Pluliter Godot 多文使用 MIT 许可证，开源且免费使用。
 
 ## 贡献者
 - 感谢[lgyxj](https://gitee.com/lgyxj)为本项目提供shader支持
+- 感谢 麻卤可乐丝 为本项目提供看板娘
+
+## 许可证
+Konado 使用 MIT 许可证，开源且免费使用，具体内容请查看 [LICENSE](./LICENSE) 文件。
