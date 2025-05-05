@@ -1,3 +1,25 @@
+#_____________________________________________________#
+#   _  __                              _              #
+#  | |/ /   ___    _ __     __ _    __| |   ___       #
+#  | ' /   / _ \  | '_ \   / _` |  / _` |  / _ \      #
+#  | . \  | (_) | | | | | | (_| | | (_| | | (_) |     #
+#  |_|\_\  \___/  |_| |_|  \__,_|  \__,_|  \___/      #
+#                                                     #
+#_____________________________________________________#
+#                                                     #
+# Main Programmer: DSOE1024                           #
+# Shaders Programmer: yxj                             #
+# Version: 1.0.0                                      #
+# Description: Visual Novel Game Engine               #
+#_____________________________________________________#
+#                                                     #
+# License: MIT                                        #
+# ____________________________________________________#
+#                                                     #
+# If you want to enjoy art,                           #
+# then you must be a person with artistic cultivation #
+#_____________________________________________________#
+
 @tool
 extends Resource
 class_name Dialogue
@@ -13,6 +35,8 @@ enum Type{
 	Stop_BGM, ## 停止播放BGM
 	Play_SoundEffect, ## 播放音效
 	Show_Choice, ## 显示选项
+	Tag, ## 标签
+	JUMP_Tag, ## 跳转到行
 	JUMP, ## 跳转
 	UNLOCK_ACHIEVEMENTS, ## 解锁成就
 	THE_END ## 剧终
@@ -21,6 +45,10 @@ enum Type{
 	set(v):
 		dialog_type = v
 		notify_property_list_changed()
+
+# Tag ID，用于标记跳转点		
+var tag_id: String
+
 # 对话人物ID
 var character_id: String
 # 对话内容
@@ -55,6 +83,14 @@ var jump_data_name: String
 var achievement_id: String
 
 # 自定义显示模板
+class Tag_Template:
+	@export var tag_id: String = ""
+	static func get_property_infos():
+		var infos = {}
+		for info in (Tag_Template as Script).get_script_property_list():
+			infos[info.name] = info
+		return infos
+
 class Ordinary_Dialog_Template:
 	@export var character_id: String = ""
 	@export_multiline var dialog_content: String = ""
@@ -130,6 +166,9 @@ class ITEM_OP_Template:
 
 func _get_property_list():
 	var list = []
+	if dialog_type == Type.Tag:
+		var tag_template = Tag_Template.get_property_infos()
+		list.append(tag_template["tag_id"])
 	if dialog_type == Type.Ordinary_Dialog:
 		var oridinary_dialog_template = Ordinary_Dialog_Template.get_property_infos()
 		list.append(oridinary_dialog_template["character_id"])

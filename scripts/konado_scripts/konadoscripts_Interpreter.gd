@@ -49,6 +49,7 @@ func parse_line(line: String, line_number: int, path: String) -> Dialogue:
 	if _parse_background(line, dialog): return dialog
 	if _parse_actor(line, dialog): return dialog
 	if _parse_audio(line, dialog): return dialog
+	if _parse_tag(line, dialog): return dialog
 	if _parse_choice(line, dialog): return dialog
 	if _parse_jump(line, dialog): return dialog
 	if _parse_dialog(line, dialog): return dialog
@@ -58,7 +59,7 @@ func parse_line(line: String, line_number: int, path: String) -> Dialogue:
 	return null
 
 # 解析元数据（前两行）
-func _parse_metadata(lines: PackedStringArray, path: String) -> Array:
+func _parse_metadata(lines: PackedStringArray, path: String) -> PackedStringArray:
 	if lines.size() < 2:
 		_scripts_debug(path, 1, "文件不完整，至少需要两行元数据")
 		return []
@@ -167,6 +168,16 @@ func _parse_choice(line: String, dialog: Dialogue) -> bool:
 			choice.jumpdata_id = choices[i + 1]
 			dialog.choices.append(choice)
 	
+	return true
+
+# 解析标签
+func _parse_tag(line: String, dialog: Dialogue) -> bool:
+	if not line.begins_with("tag"):
+		return false
+	
+	var parts = line.split(" ", false)
+	dialog.dialog_type = Dialogue.Type.Tag
+	dialog.tag_id = parts[1]
 	return true
 
 # 跳转解析
