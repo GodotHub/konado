@@ -1,26 +1,3 @@
-#_____________________________________________________#
-#   _  __                              _              #
-#  | |/ /   ___    _ __     __ _    __| |   ___       #
-#  | ' /   / _ \  | '_ \   / _` |  / _` |  / _ \      #
-#  | . \  | (_) | | | | | | (_| | | (_| | | (_) |     #
-#  |_|\_\  \___/  |_| |_|  \__,_|  \__,_|  \___/      #
-#                                                     #
-#_____________________________________________________#
-#                                                     #
-# Main Programmer: DSOE1024                           #
-# Shaders Programmer: yxj                             #
-# Version: 1.0.0                                      #
-# Description: Visual Novel Game Engine               #
-#_____________________________________________________#
-#                                                     #
-# License: MIT                                        #
-# ____________________________________________________#
-#                                                     #
-# If you want to enjoy art,                           #
-# then you must be a person with artistic cultivation #
-#_____________________________________________________#
-
-
 extends Control
 class_name DialogueManager
 
@@ -60,16 +37,16 @@ var dialogueState: DialogState
 @onready var _saveButton: Button = $"DialogUI/DialogueInterface/DialogueBox/MarginContainer/DialogContent/ActionsContainer/存档"
 ## 读档按钮
 @onready var _loadButton: Button = $"DialogUI/DialogueInterface/DialogueBox/MarginContainer/DialogContent/ActionsContainer/读档"
-## 快速存档按钮
-@onready var _qsButton: Button = $"DialogUI/DialogueInterface/DialogueBox/MarginContainer/DialogContent/ActionsContainer/快速保存"
+
 ## 记录按钮
 @onready var _logButton: Button = $"DialogUI/DialogueInterface/DialogueBox/MarginContainer/DialogContent/ActionsContainer/记录"
 ## 退出按钮
 @onready var _exitButton: Button = $"DialogUI/DialogueInterface/DialogueBox/MarginContainer/DialogContent/ActionsContainer/退出"
 ## 自动按钮
 @onready var _autoPlayButton: Button = $"DialogUI/DialogueInterface/DialogueBox/MarginContainer/DialogContent/ActionsContainer/自动"
-## 对话继续按钮
-@onready var _continueButton: Button = $"DialogUI/DialogueInterface/DialogueBox/MarginContainer/DialogContent/ActionsContainer/继续"
+
+
+	
 ## 对话资源
 var _dialog_data: DialogueData
 
@@ -110,11 +87,11 @@ func _ready() -> void:
 				debug_mode = false
 	# 连接按钮信号
 	# Continue
-	if not _continueButton.button_up.is_connected(_continue):
-		_continueButton.button_up.connect(_continue)
-	# QS
-	if not _qsButton.button_up.is_connected(_on_qsbutton_press):
-		_qsButton.button_up.connect(_on_qsbutton_press)
+	#if not _continueButton.button_up.is_connected(_continue):
+		#_continueButton.button_up.connect(_continue)
+	## QS
+	#if not _qsButton.button_up.is_connected(_on_qsbutton_press):
+		#_qsButton.button_up.connect(_on_qsbutton_press)
 	# Save
 	if not _saveButton.button_up.is_connected(_on_savebutton_press):
 			_saveButton.button_up.connect(_on_savebutton_press)
@@ -130,6 +107,7 @@ func _ready() -> void:
 		#var default_toggle_console_event = InputEventKey.new()
 		#default_toggle_console_event.physical_keycode = KEY_QUOTELEFT
 		#InputMap.action_add_event("toggle_console_action", default_toggle_console_event)
+		
 
 	# 初始化对话
 	_init_dialogue(func():
@@ -138,6 +116,7 @@ func _ready() -> void:
 		)
 	# 开始对话
 	#_start_dialogue()
+
 
 ## 初始化对话的方法
 func _init_dialogue(callback: Callable = Callable()) -> void:
@@ -301,16 +280,37 @@ func _physics_process(delta) -> void:
 					# 停止对话
 					_stop_dialogue()
 					pass
+				# 如果是tag
+				elif dialog_type == Dialogue.Type.Tag:
+					_process_next()
 				justenter = false
 		# 完成下一个状态
 		DialogState.PAUSED:
 			if justenter:
 				print_rich("[color=cyan][b]状态：[/b][/color][color=orange]播放完成状态[/color]")
 				justenter = false
-		
-		
+
+## 检查是否没有点击到按钮
+func is_click_valid(event):
+	var excluded_buttons: Array[Button] = [
+		_saveButton,
+		_loadButton,
+		_autoPlayButton,
+		_logButton,
+		_exitButton
+	]
+	var mouse_pos = event.global_position
+	for btn in excluded_buttons:
+		if btn.visible && btn.get_global_rect().has_point(mouse_pos):
+			return false
+	return true
+
 ## 处理输入
 func _input(event):
+	if event is InputEventMouseButton:
+		# 全屏点击下一句
+		if event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+			_process_next()
 	if event is InputEventKey:
 		## 控制台~
 		if event.pressed and event.keycode == KEY_QUOTELEFT:
@@ -422,7 +422,6 @@ func start_autoplay(value: bool):
 		_autoPlayButton.set_text("停止播放")
 	else:
 		_autoPlayButton.set_text("自动播放")
-	_continueButton.set_disabled(value)
 	_continue()
 	pass
 	
@@ -540,16 +539,24 @@ func _play_soundeffect(se_name: String) -> void:
 	pass
 ## 显示对话选项的方法
 func _display_options(choices: Array[DialogueChoice]) -> void:
-	# _dialog_interface.display_options(choices, null, null)
+	_dialog_interface.display_options(choices, null, 22)
 	pass
 
 ## 选项触发方法
 func _on_option_triggered(choice: DialogueChoice) -> void:
-	var data_id = choice.jumpdata_id
-	# 切换剧情
-	_jump_dialog_data(data_id)
+	var tag = choice.jump_tag
+	_jump_tag(tag)
 	print_rich("玩家选择按钮： " + str(choice.choice_text))
 	
+## 跳转到对话标签的方法
+## TODO：应该需要性能优化
+func _jump_tag(tag: String) -> void:
+	for i in range(_dialog_data.dialogs.size()):
+		var d = _dialog_data.dialogs[i]
+		if d.dialog_type == Dialogue.Type.Tag && d.tag_id == tag:
+			_jump_curline(i)
+			break
+
 ## 跳转剧情的方法
 func _jump_dialog_data(data_id: String) -> bool:
 	var jumpdata: DialogueData
@@ -588,10 +595,6 @@ func _process_achievement(id: String):
 	# 这里可以添加成就解锁的接口
 	_process_next()
 	
-## 按下快速存档按钮
-func _on_qsbutton_press():
-	pass
-	
 ## 按下存档按钮
 func _on_savebutton_press():
 	# 停止语音
@@ -609,7 +612,7 @@ func jump_data_and_curline(data_id: String, _curline: int, bgm_id: String, actor
 	print("对话ID" + data_id + "   对话线" + str(_curline) + "   角色表：" + str(actor_dict))
 	if debug_jump_data(data_id):
 		_play_bgm(bgm_id)
-		debug_jump_curline(_curline)
+		_jump_curline(_curline)
 	# 如果角色列表不为空
 	if not actor_dict.is_empty():
 		print("存档角色表不为空")
@@ -630,8 +633,8 @@ func get_game_progress() -> Dictionary:
 	dic["curline"] = curline
 	return dic
 
-## 调试模式跳转到对话
-func debug_jump_curline(value: int) -> bool:
+## 跳转到对话
+func _jump_curline(value: int) -> bool:
 	if value >= 0:
 		if not value >= _dialog_data.dialogs.size():
 			_dialogue_goto_state(DialogState.OFF)
@@ -664,6 +667,7 @@ func debug_load_dialog_data(data) -> bool:
 	var error = await _switch_data(data)
 	return error
 
+## 退出节点
 func _exit_tree():
 	_stop_dialogue()
 	pass

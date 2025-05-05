@@ -165,7 +165,7 @@ func _parse_choice(line: String, dialog: Dialogue) -> bool:
 		if i % 2 == 1 and i + 1 < choices.size():
 			var choice = DialogueChoice.new()
 			choice.choice_text = choices[i].trim_prefix("\"").trim_suffix("\"")
-			choice.jumpdata_id = choices[i + 1]
+			choice.jump_tag = choices[i + 1]
 			dialog.choices.append(choice)
 	
 	return true

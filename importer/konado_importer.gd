@@ -1,4 +1,3 @@
-# konado_importer.gd
 @tool
 extends EditorImportPlugin
 

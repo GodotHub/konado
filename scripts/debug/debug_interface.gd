@@ -85,7 +85,7 @@ func _execute_start_command():
 
 func _execute_jump_cur_command(id):
 	# 执行jump_cur指令
-	var error = dialog_manager.debug_jump_curline(id)
+	var error = dialog_manager._jump_curline(id)
 	if error:
 		_update_output("[color=SNOW]跳转到第" + str(id) + "句对话")
 	else:

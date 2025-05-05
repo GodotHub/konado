@@ -1,25 +1,3 @@
-#_____________________________________________________#
-#   _  __                              _              #
-#  | |/ /   ___    _ __     __ _    __| |   ___       #
-#  | ' /   / _ \  | '_ \   / _` |  / _` |  / _ \      #
-#  | . \  | (_) | | | | | | (_| | | (_| | | (_) |     #
-#  |_|\_\  \___/  |_| |_|  \__,_|  \__,_|  \___/      #
-#                                                     #
-#_____________________________________________________#
-#                                                     #
-# Main Programmer: DSOE1024                           #
-# Shaders Programmer: yxj                             #
-# Version: 1.0.0                                      #
-# Description: Visual Novel Game Engine               #
-#_____________________________________________________#
-#                                                     #
-# License: MIT                                        #
-# ____________________________________________________#
-#                                                     #
-# If you want to enjoy art,                           #
-# then you must be a person with artistic cultivation #
-#_____________________________________________________#
-
 @tool
 extends Resource
 class_name Dialogue
@@ -78,7 +56,7 @@ var background_image_name: String
 # 背景切换特效
 var background_toggle_effects: ActingInterface.EffectsType
 # 跳转的剧情名称
-var jump_data_name: String
+var jump_tag: String
 # 成就ID
 var achievement_id: String
 
@@ -205,7 +183,7 @@ func _get_property_list():
 		list.append(choice_template["choices"])
 	if dialog_type == Type.JUMP:
 		var jump_template = Jump_Template.get_property_infos()
-		list.append(jump_template["jump_data_name"])
+		list.append(jump_template["jump_tag"])
 	if dialog_type == Type.UNLOCK_ACHIEVEMENTS:
 		var unlock_achievements_template = Unlock_Achievements_Template.get_property_infos()
 		list.append(unlock_achievements_template["achievement_id"])

@@ -199,16 +199,6 @@ theme_override_styles/pressed = SubResource("StyleBoxEmpty_1xeec")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_3sqld")
 text = "读档"
 
-[node name="快速保存" type="Button" parent="DialogUI/DialogueInterface/DialogueBox/MarginContainer/DialogContent/ActionsContainer"]
-custom_minimum_size = Vector2(75, 35)
-layout_mode = 2
-theme_override_styles/focus = SubResource("StyleBoxEmpty_f70o6")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_d61i7")
-theme_override_styles/hover = SubResource("StyleBoxTexture_vnydh")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_1xeec")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_3sqld")
-text = "快速保存"
-
 [node name="记录" type="Button" parent="DialogUI/DialogueInterface/DialogueBox/MarginContainer/DialogContent/ActionsContainer"]
 custom_minimum_size = Vector2(75, 35)
 layout_mode = 2
@@ -239,16 +229,6 @@ theme_override_styles/pressed = SubResource("StyleBoxEmpty_1xeec")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_3sqld")
 toggle_mode = true
 text = "自动播放"
-
-[node name="继续" type="Button" parent="DialogUI/DialogueInterface/DialogueBox/MarginContainer/DialogContent/ActionsContainer"]
-custom_minimum_size = Vector2(75, 35)
-layout_mode = 2
-theme_override_styles/focus = SubResource("StyleBoxEmpty_f70o6")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_d61i7")
-theme_override_styles/hover = SubResource("StyleBoxTexture_vnydh")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_1xeec")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_3sqld")
-text = "继续"
 
 [node name="AudioInterface" type="Node2D" parent="."]
 script = ExtResource("4_gd2ll")
