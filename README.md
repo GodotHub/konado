@@ -1,6 +1,6 @@
 # Konado 可娜多
 
-![star](https://gitcode.com/shengjing/Pluliter/star/badge.svg)
+![star](https://gitcode.com/shengjing/Konado/star/badge.svg)
 ![License](https://img.shields.io/badge/License-MIT-yellow.svg)
 ![Status](https://img.shields.io/badge/Status-Active-brightgreen.svg)
 
@@ -224,9 +224,10 @@ background tavern_night  # 夜间酒馆场景
 
 
 ## 项目贡献者
-- 感谢[lgyxj](https://gitee.com/lgyxj)为本项目提供shader支持
-- 感谢 麻卤可乐丝 为本项目提供看板娘
+
+- [Kamiki_](https://gitcode.com/Kamiki_) - 项目贡献者
+- [lgyxj](https://gitee.com/lgyxj) - 为本项目提供shader支持
+- 麻卤可乐丝 - 为本项目提供看板娘
 
 ## 开源许可证
 Konado 使用 MIT 许可证，开源且免费使用，具体内容请查看 [LICENSE](./LICENSE) 文件。
-
