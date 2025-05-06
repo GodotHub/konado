@@ -7,7 +7,6 @@ const IMPORTER_SCRIPT := preload("res://addons/konado/importer/konado_importer.g
 const INTERPRETER_PATH := "res://addons/konado/scripts/konado_scripts/konadoscripts_Interpreter.gd"
 
 ### 插件成员 ###
-var _panel := Panel.new()  # 使用基础Panel作为占位符
 var import_plugin: EditorImportPlugin
 
 func _enter_tree() -> void:
