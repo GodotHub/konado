@@ -33,6 +33,18 @@ Konado是一个对话创建工具，提供多种对话模板以及对话管理�
 5. 执行`git clone https://gitcode.com/shengjing/Konado.git addons/konado` 下载插件
 6. 在Godot项目设置中启用插件
 
+#### 作为子模块安装
+
+进入项目根目录后执行以下命令
+```bash
+git submodule add https://gitcode.com/shengjing/Konado.git addons/konado
+```
+
+递归更新子模块
+```bash
+git submodule update
+```
+
 ### 常见问题
 - 插件无法加载：确保插件文件夹路径正确，且Godot版本符合要求
 
