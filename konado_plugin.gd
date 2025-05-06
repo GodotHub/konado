@@ -34,15 +34,14 @@ var _panel := Panel.new()  # 使用基础Panel作为占位符
 var import_plugin: EditorImportPlugin
 
 func _enter_tree() -> void:
+	# 添加自动加载单例
+	add_autoload_singleton("KS", INTERPRETER_PATH)
 	# 注册自定义资源类型
 	add_custom_type("DialogueData", "Resource", DIALOGUE_DATA_SCRIPT, null)
 	
 	# 初始化导入插件
 	import_plugin = IMPORTER_SCRIPT.new()
 	add_import_plugin(import_plugin)
-	
-	# 添加自动加载单例
-	add_autoload_singleton("KS", INTERPRETER_PATH)
 	
 	# 添加UI面板到编辑器
 	_panel.name = "KonadoPanel"
