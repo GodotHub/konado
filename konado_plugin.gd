@@ -1,26 +1,3 @@
-#_____________________________________________________#
-#   _  __                              _              #
-#  | |/ /   ___    _ __     __ _    __| |   ___       #
-#  | ' /   / _ \  | '_ \   / _` |  / _` |  / _ \      #
-#  | . \  | (_) | | | | | | (_| | | (_| | | (_) |     #
-#  |_|\_\  \___/  |_| |_|  \__,_|  \__,_|  \___/      #
-#                                                     #
-#_____________________________________________________#
-#                                                     #
-# Main Programmer: DSOE1024                           #
-# Shaders Programmer: yxj                             #
-# Version: 1.0.0                                      #
-# Description: Visual Novel Game Engine               #
-#_____________________________________________________#
-#                                                     #
-# License: MIT                                        #
-# ____________________________________________________#
-#                                                     #
-# If you want to enjoy art,                           #
-# then you must be a person with artistic cultivation #
-#_____________________________________________________#
-
-
 @tool
 extends EditorPlugin
 
@@ -46,17 +23,23 @@ func _enter_tree() -> void:
 	# 添加UI面板到编辑器
 	_panel.name = "KonadoPanel"
 	add_control_to_dock(DOCK_SLOT_RIGHT_UL, _panel)
-	
-	print_rich("""
-	---------------------------------------------------------------------------------
-	-------------- [b][i][color=ALICE_BLUE]Konado V1.0.0[/color][/i][/b] --------------
-	:: Loaded modules:
-	   • Dialogue System
-	   • Script Interpreter
-	   • Resource Loader
-	---------------------------------------------------------------------------------
-	""")
 
+	# 从version.txt读取字符串并打印
+	print_rich(load_string("res://addons/konado/version.txt"))
+	
+	# print_rich("""
+	# ---------------------------------------------------------------------------------
+	# -------------- [b][i][color=ALICE_BLUE]Konado V1.0.0[/color][/i][/b] --------------
+	# :: Loaded modules:
+	#    • Dialogue System
+	#    • Script Interpreter
+	#    • Resource Loader
+	# ---------------------------------------------------------------------------------
+	# """)
+
+func load_string(path: String) -> String:
+	return FileAccess.open(path, FileAccess.READ).get_as_text()
+	
 func _exit_tree() -> void:
 	# 清理顺序很重要，先移除依赖项
 	remove_control_from_docks(_panel)
