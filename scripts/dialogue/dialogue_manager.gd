@@ -309,7 +309,7 @@ func is_click_valid(event):
 func _input(event):
 	if event is InputEventMouseButton:
 		# 全屏点击下一句
-		if event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		if is_click_valid(event):
 			_process_next()
 	if event is InputEventKey:
 		## 控制台~
