@@ -19,10 +19,6 @@ func _enter_tree() -> void:
 	# 初始化导入插件
 	import_plugin = IMPORTER_SCRIPT.new()
 	add_import_plugin(import_plugin)
-	
-	# 添加UI面板到编辑器
-	_panel.name = "KonadoPanel"
-	add_control_to_dock(DOCK_SLOT_RIGHT_UL, _panel)
 
 	# 从version.txt读取字符串并打印
 	print_rich(load_string("res://addons/konado/version.txt"))
@@ -40,11 +36,7 @@ func _enter_tree() -> void:
 func load_string(path: String) -> String:
 	return FileAccess.open(path, FileAccess.READ).get_as_text()
 	
-func _exit_tree() -> void:
-	# 清理顺序很重要，先移除依赖项
-	remove_control_from_docks(_panel)
-	_panel.queue_free()
-	
+func _exit_tree() -> void:	
 	# 移除导入插件
 	if import_plugin:
 		remove_import_plugin(import_plugin)
