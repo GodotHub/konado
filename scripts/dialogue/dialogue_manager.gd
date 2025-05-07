@@ -48,7 +48,7 @@ var dialogueState: DialogState
 
 	
 ## 对话资源
-var _dialog_data: DialogueData
+var dialog_data: DialogueData
 
 ## 对话
 var _dialog: Dialogue
@@ -59,17 +59,17 @@ var _dialog_data_id: int = 0
 ## 资源列表
 @export_group("资源列表")
 ## 角色列表
-@export var _chara_list: CharacterList
+@export var chara_list: CharacterList
 ## 背景列表
-@export var _background_list: BackgroundList
+@export var background_list: BackgroundList
 ## 对话列表
-@export var _dialog_data_list: DialogueDataList
+@export var dialog_data_list: DialogueDataList
 ## BGM列表
-@export var _bgm_list: DialogBGMList
+@export var bgm_list: DialogBGMList
 ## 配音资源列表
-@export var _voice_list: DialogVoiceList
+@export var voice_list: DialogVoiceList
 ## 音效列表
-@export var _soundeffect_list: DialogSoundEffectList
+@export var soundeffect_list: DialogSoundEffectList
 ## 调试
 @export_group("调试")
 ## 调试控制台
@@ -120,14 +120,14 @@ func _ready() -> void:
 
 ## 初始化对话的方法
 func _init_dialogue(callback: Callable = Callable()) -> void:
-	if _dialog_data_list.dialog_data_list.size() <= 0:
+	if dialog_data_list.dialog_data_list.size() <= 0:
 		printerr("对话列表为空")
 		return
 		
-	_dialog_data = _dialog_data_list.dialog_data_list[_dialog_data_id]
+	dialog_data = dialog_data_list.dialog_data_list[_dialog_data_id]
 	
 	# 将角色表传给acting_interface
-	_acting_interface.chara_list = _chara_list
+	_acting_interface.chara_list = chara_list
 	justenter = true
 	dialogueState == DialogState.OFF
 	curline = 0
@@ -159,18 +159,18 @@ func _physics_process(delta) -> void:
 		DialogState.PLAYING:
 			if justenter:
 				print_rich("[color=cyan][b]当前状态：[/b][/color][color=orange]播放状态[/color]")
-				if _dialog_data == null:
+				if dialog_data == null:
 					print_rich("[color=red]对话为空[/color]")
 					return
-				if _dialog_data.dialogs.size() <= 0:
+				if dialog_data.dialogs.size() <= 0:
 					print_rich("[color=red]对话为空[/color]")
 					_dialogue_goto_state(DialogState.OFF)
 					return
-				_dialog = _dialog_data.dialogs[curline]
+				_dialog = dialog_data.dialogs[curline]
 				# 对话类型
-				var dialog_type = _dialog_data.dialogs[curline].dialog_type
+				var dialog_type = dialog_data.dialogs[curline].dialog_type
 				# 对话当前句
-				var dialog = _dialog_data.dialogs[curline]
+				var dialog = dialog_data.dialogs[curline]
 				# 隐藏选项
 				_dialog_interface._choice_container.hide()
 				# 判断对话类型
@@ -360,7 +360,7 @@ func _process_next(s: Signal = Signal()) -> void:
 		DialogState.PAUSED:
 			print("对话播放完成，开始播放下一个")
 			# 如果列表中所有对话播放完成了
-			if curline + 1 >= _dialog_data.dialogs.size():
+			if curline + 1 >= dialog_data.dialogs.size():
 				# 切换到对话关闭状态
 				_dialogue_goto_state(DialogState.OFF)
 			# 如果列表中还有对话没有播放
@@ -406,7 +406,7 @@ func _continue() -> void:
 			_audio_interface.stop_voice()
 			print("对话播放完成，开始播放下一个")
 			# 如果列表中所有对话播放完成了
-			if curline + 1 >= _dialog_data.dialogs.size():
+			if curline + 1 >= dialog_data.dialogs.size():
 				# 切换到对话关闭状态
 				_dialogue_goto_state(DialogState.OFF)
 			# 如果列表中还有对话没有播放
@@ -430,7 +430,7 @@ func start_autoplay(value: bool):
 func _display_dialogue(chara_id: String, content: String, speed: float) -> void:
 	var chara_name: String = "旁白"
 	#if chara_id:
-		#for chara in _chara_list.characters:
+		#for chara in chara_list.characters:
 			#if chara.chara_id == chara_id:
 				#chara_name = str(chara.chara_name)
 	if chara_id.length() > 0:
@@ -444,7 +444,7 @@ func _display_dialogue(chara_id: String, content: String, speed: float) -> void:
 func _display_background(bg_name: String, effect: ActingInterface.EffectsType) -> void:
 	if bg_name == null:
 		return
-	var bg_list = _background_list.background_list
+	var bg_list = background_list.background_list
 	var bg_tex: Texture
 	for bg in bg_list:
 		if bg.background_name == bg_name:
@@ -457,7 +457,7 @@ func _display_background(bg_name: String, effect: ActingInterface.EffectsType) -
 func _actor_change_state(chara_id: String, state_id: String):
 	var target_chara: Character
 	var state_tex: Texture
-	for chara in _chara_list.characters:
+	for chara in chara_list.characters:
 		if chara.chara_id == chara_id:
 			target_chara = chara
 			for state in chara.chara_status:
@@ -471,7 +471,7 @@ func _display_character(actor: DialogueActor) -> void:
 		return
 	var target_chara: Character
 	var target_chara_name = actor.character_name
-	for chara in _chara_list.characters:
+	for chara in chara_list.characters:
 		if chara.chara_id == target_chara_name:
 			target_chara = chara
 			break
@@ -504,7 +504,7 @@ func _play_bgm(bgm_name: String) -> void:
 	if bgm_name == null:
 		return
 	var target_bgm: AudioStream
-	for bgm in _bgm_list.bgms:
+	for bgm in bgm_list.bgms:
 		if bgm.bgm_name == bgm_name:
 			target_bgm = bgm.bgm
 			break
@@ -519,7 +519,7 @@ func _play_voice(voice_name: String) -> void:
 	if voice_name == null:
 		return
 	var target_voice: AudioStream
-	for voice in _voice_list.voices:
+	for voice in voice_list.voices:
 		if voice.voice_name == voice_name:
 			target_voice = voice.voice
 			break
@@ -531,7 +531,7 @@ func _play_soundeffect(se_name: String) -> void:
 	if se_name == null:
 		return
 	var target_soundeffect: AudioStream
-	for soundeffect in _soundeffect_list.soundeffects:
+	for soundeffect in soundeffect_list.soundeffects:
 		if soundeffect.se_name == se_name:
 			target_soundeffect = soundeffect.se
 			break
@@ -552,8 +552,8 @@ func _on_option_triggered(choice: DialogueChoice) -> void:
 ## 跳转到对话标签的方法
 ## TODO：应该需要性能优化
 func _jump_tag(tag: String) -> void:
-	for i in range(_dialog_data.dialogs.size()):
-		var d = _dialog_data.dialogs[i]
+	for i in range(dialog_data.dialogs.size()):
+		var d = dialog_data.dialogs[i]
 		if d.dialog_type == Dialogue.Type.Tag && d.tag_id == tag:
 			_jump_curline(i)
 			break
@@ -574,7 +574,7 @@ func _jump_dialog_data(data_id: String) -> bool:
 func _get_dialog_data(data_id: String) -> DialogueData:
 	print(data_id)
 	var target_data: DialogueData
-	for data in _dialog_data_list.dialog_data_list:
+	for data in dialog_data_list.dialog_data_list:
 		if data._dialog_data.chapter_id == data_id:
 			target_data = data._dialog_data
 	return target_data
@@ -585,7 +585,7 @@ func _switch_data(data: DialogueData) -> bool:
 		return false
 	_stop_dialogue()
 	print("切换到 " + data.chapter_name + " 剧情文件")
-	_dialog_data = data
+	dialog_data = data
 	_init_dialogue()
 	await get_tree().create_timer(0.01).timeout
 	_start_dialogue()
@@ -600,6 +600,16 @@ func _process_achievement(id: String):
 func _on_savebutton_press():
 	# 停止语音
 	_audio_interface.stop_voice()
+	
+	Save.chara = chara_list
+	Save.background = background_list
+	Save.dialog_data_id = _dialog_data_id
+	Save.bgm = bgm_list
+	Save.voice = voice_list
+	Save.sound_effect = soundeffect_list
+	Save.curline = curline
+	
+	Save._save_game(1)
 	pass
 	
 ## 按下读档按钮
@@ -629,15 +639,15 @@ func jump_data_and_curline(data_id: String, _curline: int, bgm_id: String, actor
 # 获取游戏进度，返回一个字典，包括章节名称，章节ID和对话下标
 func get_game_progress() -> Dictionary:
 	var dic = {}
-	dic["chapter_name"] = _dialog_data.chapter_name
-	dic["chapter_id"] = _dialog_data.chapter_id
+	dic["chapter_name"] = dialog_data.chapter_name
+	dic["chapter_id"] = dialog_data.chapter_id
 	dic["curline"] = curline
 	return dic
 
 ## 跳转到对话
 func _jump_curline(value: int) -> bool:
 	if value >= 0:
-		if not value >= _dialog_data.dialogs.size():
+		if not value >= dialog_data.dialogs.size():
 			_dialogue_goto_state(DialogState.OFF)
 			curline = value
 			_dialogue_goto_state(DialogState.PLAYING)
@@ -650,8 +660,8 @@ func debug_jump_data(value: String) -> bool:
 	
 ## 调试模式获取信息
 func debug_get_info() -> String:
-	var info = "章节ID：" + str(_dialog_data.chapter_id) \
-	+"  章节：" + str(_dialog_data.chapter_name) \
+	var info = "章节ID：" + str(dialog_data.chapter_id) \
+	+"  章节：" + str(dialog_data.chapter_name) \
 	+"  对话行：" + str(curline) \
 	+"  状态：" + str(dialogueState)
 	return info
@@ -659,7 +669,7 @@ func debug_get_info() -> String:
 ## 调试获取章节列表
 func debug_get_dialog_data_list() -> Array[String]:
 	var data_array: Array[String]
-	for data in _dialog_data_list.dialog_data_list:
+	for data in dialog_data_list.dialog_data_list:
 		data_array.append(data._dialog_data.chapter_id)
 	return data_array
 
