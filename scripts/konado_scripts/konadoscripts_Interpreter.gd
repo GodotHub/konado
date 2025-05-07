@@ -129,6 +129,7 @@ func _parse_actor(line: String, dialog: Dialogue) -> bool:
 	
 	return true
 
+# 创建角色
 func _create_actor(parts: PackedStringArray) -> DialogueActor:
 	if parts.size() < 8:
 		return null
@@ -137,7 +138,7 @@ func _create_actor(parts: PackedStringArray) -> DialogueActor:
 	actor.character_name = parts[2]
 	actor.character_state = parts[3]
 	actor.actor_position = Vector2(parts[5].to_float(), parts[6].to_float())
-	actor.actor_scale = parts[7].to_float()
+	actor.actor_scale = parts[8].to_float()
 	return actor
 
 # 音频解析
