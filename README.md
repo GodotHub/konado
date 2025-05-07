@@ -42,7 +42,7 @@ git submodule add https://gitcode.com/shengjing/Konado.git addons/konado
 
 递归更新子模块
 ```bash
-git submodule update
+git submodule update --remote
 ```
 
 ### 常见问题
