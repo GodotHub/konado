@@ -308,9 +308,10 @@ func is_click_valid(event):
 ## 处理输入
 func _input(event):
 	if event is InputEventMouseButton:
-		# 全屏点击下一句
-		if is_click_valid(event):
-			_process_next()
+		if event.button_index == MOUSE_BUTTON_LEFT:
+			# 全屏点击下一句
+			if is_click_valid(event):
+				_continue()
 	if event is InputEventKey:
 		## 控制台~
 		if event.pressed and event.keycode == KEY_QUOTELEFT:
