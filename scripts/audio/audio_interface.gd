@@ -24,6 +24,7 @@ signal voice_finish_playing
 ## 音效播放器
 @onready var sound_effect_player: AudioStreamPlayer = $SoundEffectPlayer
 
+
 ## 播放BGM的方法（循环播放）
 func play_bgm(audio: AudioStream, audio_id: String) -> void:
 	if bgm_player.is_playing():
@@ -41,6 +42,7 @@ func stop_bgm() -> void:
 	if bgm_player.is_playing():
 		bgm_player.stop()
 
+
 ## 播放语音的方法
 func play_voice(audio: AudioStream) -> void:
 	if voice_player.is_playing():
@@ -54,12 +56,14 @@ func play_voice(audio: AudioStream) -> void:
 ## 停止播放语音的方法
 func stop_voice() -> void:
 	voice_player.stop()
-	
+
 ## 播放音效的方法
 func play_sound_effect(audio: AudioStream) -> void:
 	sound_effect_player.stop()
 	sound_effect_player.stream=audio
 	sound_effect_player.play()
 	finish_playsoundeffect.emit()
-	
-	
+
+#获取音乐播放进度
+func get_bgm_progress() -> float :
+	return bgm_player.get_playback_position()
