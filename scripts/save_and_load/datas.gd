@@ -1,20 +1,21 @@
 extends Node
 
 var save_data : Dictionary = {
-	"metadata": {  # 元数据
-		"timestamp": "2025-05-07 12:30:00",#时间戳
+	"metadata" : {
+		"SaL_system_version" : "1.0",#开发用水印
+		"timestamp" : "0"#时间戳
 	},
-	"game_data": {  # 核心游戏数据
-		"chara" : "0",#角色列表数据
-		"background" : "0",#背景列表数据
-		"dialog_data": {#对话数据
-			"chap_id" : "0",#章节ID
-			"chap_name" : "0",#章节名称
-			"dialogs" : "0"#对话列表
-		},
-		"bgm" : "0",#bgm列表
-		"voice" : "0",#配音列表
-		"sound_effect" : "0",#音效列表
-		"curline" : "0"
+	"game_data" : {
+		"chara_disc" : "chara_disc",#角色用字典
+		"background_id" : "background_id",#背景列表数据
+		#"chapter_id" : "chapter_id.replace("\r","")",#章节id，注释掉防止报错
+		"bgm_id" : "bgm_id",#bgm id
+		"bgm_progress" : "bgm_progress",#bgm进度
+		"voice_id" : "voice_id",#配音列表
+		"sound_effect_id" : "sound_effect_id",#音效列表
+		"curline" : "curline"#当前对话
 	},
-}
+	"Writer" : {
+		"This_is" : "KamikiMayumi"#水印，别管
+	}
+	}

@@ -46,6 +46,8 @@ signal character_moved
 @export var RIGHT_POS: Vector2 = Vector2(1105, 113)
 # Tween效果动画节点
 var effect_tween: Tween
+#存档用背景id
+var background_id : String
 
 func _ready():
 	for child in _chara_controler.get_children():
@@ -66,6 +68,7 @@ func get_chara_node(actor_id: String) -> Node:
 # 显示背景图片的方法，有切换特效
 func change_background_image(tex: Texture, name: String, effects_type: EffectsType = EffectsType.None) -> void:
 	if tex:
+		background_id = name
 		print_rich("[color=cyan]切换背景为: [/color]"+str(name))
 		# 无效果
 		if effects_type == EffectsType.None:
