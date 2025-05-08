@@ -56,6 +56,10 @@ var _dialog: Dialogue
 ## 对话资源ID
 var _dialog_data_id: int = 0
 
+#存档用变量
+var se_id : String
+
+
 ## 资源列表
 @export_group("资源列表")
 ## 角色列表
@@ -70,6 +74,8 @@ var _dialog_data_id: int = 0
 @export var voice_list: DialogVoiceList
 ## 音效列表
 @export var soundeffect_list: DialogSoundEffectList
+
+
 ## 调试
 @export_group("调试")
 ## 调试控制台
@@ -449,9 +455,10 @@ func _display_background(bg_name: String, effect: ActingInterface.EffectsType) -
 	for bg in bg_list:
 		if bg.background_name == bg_name:
 			bg_tex = bg.background_image
+			_acting_interface.change_background_image(bg_tex, bg_name, effect)
 		else:
 			print("背景图片没有找到")
-		_acting_interface.change_background_image(bg_tex, bg_name, effect)
+		
 
 ## 演员状态切换的方法
 func _actor_change_state(chara_id: String, state_id: String):
@@ -535,8 +542,9 @@ func _play_soundeffect(se_name: String) -> void:
 		if soundeffect.se_name == se_name:
 			target_soundeffect = soundeffect.se
 			break
-		_audio_interface.play_sound_effect(target_soundeffect)
-		pass
+	_audio_interface.play_sound_effect(target_soundeffect)
+	#同步存档用变量
+	se_id = se_name
 	pass
 ## 显示对话选项的方法
 func _display_options(choices: Array[DialogueChoice]) -> void:
@@ -598,17 +606,23 @@ func _process_achievement(id: String):
 	
 ## 按下存档按钮
 func _on_savebutton_press():
+	#用于获取变量
+	var dialog = dialog_data.dialogs[curline]
 	# 停止语音
 	_audio_interface.stop_voice()
 	
-	Save.chara = chara_list
-	Save.background = background_list
-	Save.dialog_data_id = _dialog_data_id
-	Save.bgm = bgm_list
-	Save.voice = voice_list
-	Save.sound_effect = soundeffect_list
+	#更新变量
+	Save.chara_disc = _acting_interface.actor_dict
+	Save.background_id = _acting_interface.background_id
+	Save.chapter_id = dialog_data.chapter_id
+	Save.bgm_id = _audio_interface.bgm_name
+	Save.bgm_progress = str("%.2f" %_audio_interface.get_bgm_progress())
+	Save.voice_id = dialog.voice_id
+	Save.sound_effect_id = se_id
+
 	Save.curline = curline
 	
+	#触发函数
 	Save._save_game(1)
 	pass
 	
