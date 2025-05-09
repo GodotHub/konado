@@ -203,6 +203,10 @@ func _physics_process(delta) -> void:
 						_dialog_interface.finish_typing.connect(isfinishtyping.bind(playvoice))
 					# 显示UI
 					_dialog_interface.show()
+					# 设置角色高亮
+					if chara_id:
+						_acting_interface.highlight_actor(chara_id)
+						print(chara_id)
 					# 播放对话
 					_display_dialogue(chara_id, content, speed)
 					# 如果有配音播放配音
