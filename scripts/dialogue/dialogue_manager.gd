@@ -140,7 +140,8 @@ func _init_dialogue(callback: Callable = Callable()) -> void:
 	print_rich("[color=yellow]初始化对话 [/color]" + "justenter: " + str(justenter) +
 	" 对话下标: " + str(curline) + " 当前状态: " + str(dialogueState))
 	print("---------------------------------------------")
-	callback.call()
+	if callback:
+		callback.call()
 
 ## 开始对话的方法
 func _start_dialogue() -> void:
@@ -583,8 +584,8 @@ func _get_dialog_data(data_id: String) -> DialogueData:
 	print(data_id)
 	var target_data: DialogueData
 	for data in dialog_data_list.dialog_data_list:
-		if data._dialog_data.chapter_id == data_id:
-			target_data = data._dialog_data
+		if data.chapter_id == data_id:
+			target_data = data
 	return target_data
 	
 ## 切换剧情的方法
@@ -608,28 +609,59 @@ func _process_achievement(id: String):
 func _on_savebutton_press():
 	#用于获取变量
 	var dialog = dialog_data.dialogs[curline]
+	
 	# 停止语音
 	_audio_interface.stop_voice()
 	
 	#更新变量
-	Save.chara_disc = _acting_interface.actor_dict
-	Save.background_id = _acting_interface.background_id
-	Save.chapter_id = dialog_data.chapter_id
-	Save.bgm_id = _audio_interface.bgm_name
-	Save.bgm_progress = str("%.2f" %_audio_interface.get_bgm_progress())
-	Save.voice_id = dialog.voice_id
-	Save.sound_effect_id = se_id
-
-	Save.curline = curline
+	KS_SAVE_AND_LOAD.chara_disc = _acting_interface.actor_dict
+	KS_SAVE_AND_LOAD.background_id = _acting_interface.background_id
+	KS_SAVE_AND_LOAD.chapter_id = dialog_data.chapter_id
+	KS_SAVE_AND_LOAD.bgm_id = _audio_interface.bgm_name
+	KS_SAVE_AND_LOAD.bgm_progress = str("%.2f" %_audio_interface.get_bgm_progress())#保留两位小数
+	KS_SAVE_AND_LOAD.voice_id = dialog.voice_id
+	KS_SAVE_AND_LOAD.sound_effect_id = se_id
+	KS_SAVE_AND_LOAD.curline = curline
 	
 	#触发函数
-	Save._save_game(1)
+	KS_SAVE_AND_LOAD._save_game(1)
 	pass
-	
+
 ## 按下读档按钮
 func _on_loadbutton_press():
-	# 停止语音
-	_audio_interface.stop_voice()
+	#用于获取变量
+	var dialog = dialog_data.dialogs[curline]
+	
+	#触发函数
+	KS_SAVE_AND_LOAD._load_game(1)
+	
+	#若存档正常，则进程继续
+	if KS_SAVE_AND_LOAD._load_game(1) == true :
+		#更新变量
+		_acting_interface.actor_dict = KS_SAVE_AND_LOAD.chara_disc
+		_acting_interface.background_id = KS_SAVE_AND_LOAD.background_id
+		dialog_data.chapter_id = KS_SAVE_AND_LOAD.chapter_id
+		_audio_interface.bgm_name = KS_SAVE_AND_LOAD.bgm_id
+		#音频进度在下列函数中直接调用，不在这里同步
+		dialog.voice_id = KS_SAVE_AND_LOAD.voice_id
+		se_id = KS_SAVE_AND_LOAD.sound_effect_id
+		curline = KS_SAVE_AND_LOAD.curline
+		
+		#跳转剧情，更新背景
+		jump_data_and_curline(dialog_data.chapter_id,curline,_audio_interface.bgm_name,_acting_interface.actor_dict)
+		_display_background(_acting_interface.background_id,ActingInterface.EffectsType.None)
+		
+		#同步音乐播放进度
+		_audio_interface.stop_bgm()
+		_audio_interface.bgm_player.seek(float(KS_SAVE_AND_LOAD.bgm_progress))
+		_audio_interface.bgm_player.play()
+		
+		# 停止并更新语音
+		_audio_interface.stop_voice()
+		_play_voice(dialog.voice_id)
+		
+		#播放音效（停止音效的方法包含在这个方法里了
+		_play_soundeffect(se_id)
 	pass
 
 ## 读取存档用的跳转
