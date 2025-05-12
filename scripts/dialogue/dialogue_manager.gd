@@ -191,7 +191,7 @@ func _physics_process(delta) -> void:
 					var content
 					var voice_id
 					if (dialog.character_id != null):
-							chara_id = dialog.character_id
+						chara_id = dialog.character_id
 					if (dialog.dialog_content != null):
 						content = dialog.dialog_content
 					if dialog.voice_id:
@@ -209,7 +209,6 @@ func _physics_process(delta) -> void:
 					# 设置角色高亮
 					if chara_id:
 						_acting_interface.highlight_actor(chara_id)
-						print(chara_id)
 					# 播放对话
 					_display_dialogue(chara_id, content, speed)
 					# 如果有配音播放配音
