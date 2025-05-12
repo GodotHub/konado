@@ -169,19 +169,32 @@ func change_background_image(tex: Texture, name: String, effects_type: EffectsTy
 		background_change_finished.emit()
 	
 # 新建角色图片的方法
-func create_new_character(chara_id: String, pos: Vector2, state: String, tex: Texture, _scale: float) -> void:
+func create_new_character(chara_id: String, pos: Vector2, state: String, tex: Texture, _scale: float, mirror: bool) -> void:
 	# 检查创建的是否为场景已有角色
 	for chara_dict in actor_dict.values():
 		if chara_dict["id"] == chara_id:
 			print_rich("[color=red]创建新演员：错误，重复的角色[/color]")
 			delete_character(chara_dict["id"])
-	# 当前角色信息字典
-	var chara_dict = {}
-	chara_dict["id"] = chara_id
-	chara_dict["x"] = pos.x
-	chara_dict["y"] = pos.y
-	chara_dict["state"] = state
-	chara_dict["c_scale"] = _scale
+			
+	# 角色信息字典结构说明:
+	# {
+	#     "id": int,        # 角色唯一标识
+	#     "x": float,       # X轴坐标
+	#     "y": float,       # Y轴坐标
+	#     "state": String,   # 当前状态标识
+	#     "c_scale": float, # 缩放系数
+	#     "mirror": bool    # 是否镜像翻转
+	# }
+
+	var chara_dict := {
+		"id": chara_id,
+		"x": pos.x,
+		"y": pos.y,
+		"state": state,
+		"c_scale": _scale,
+		"mirror": mirror
+		}
+		
 	# 添加到角色字典
 	actor_dict[chara_dict.id] = chara_dict
 	var node_name : String = str(chara_dict["id"])
@@ -193,6 +206,8 @@ func create_new_character(chara_id: String, pos: Vector2, state: String, tex: Te
 	chara_tex.name = node_name
 	chara_tex.set_texture(tex)
 	chara_tex.scale = Vector2(_scale, _scale)
+	# 设置演员立绘水平镜像翻转，减少立绘文件资源占用
+	chara_tex.flip_h = mirror
 	temp_node.set_name(node_name)
 	temp_node.add_child(chara_tex)
 	# 添加到角色容器
@@ -209,6 +224,8 @@ func create_character_from_dic(_actor_dic: Dictionary) -> void:
 		var pos = Vector2(chara["x"], chara["y"])
 		var state = chara["state"]
 		var c_scale = chara["c_scale"]
+		var mirror = chara["mirror"]
+		# TODO： 未来应该放到存档系统实现，这里没法获取演员状态表
 	pass
 		
 # 切换演员的状态

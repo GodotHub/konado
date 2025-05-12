@@ -9,3 +9,5 @@ class_name DialogueActor
 @export var actor_position: Vector2
 # 角色图片缩放
 @export var actor_scale: float
+## 演员立绘水平镜像翻转
+@export var actor_mirror: bool
