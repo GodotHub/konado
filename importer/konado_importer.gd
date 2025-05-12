@@ -2,7 +2,7 @@
 extends EditorImportPlugin
 
 func _get_importer_name():
-	return "konado.story"
+	return "konado.scripts"
 	
 func _get_import_order() -> int:
 	return 0
@@ -11,7 +11,7 @@ func _get_priority():
 	return 1.0
 
 func _get_visible_name():
-	return "Konado Story Script"
+	return "Konado Scripts 可娜多脚本"
 
 func _get_recognized_extensions():
 	return ["ks"]
