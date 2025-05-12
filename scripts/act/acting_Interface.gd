@@ -246,15 +246,21 @@ func change_actor_state(actor_id: String, state_id: String, state_tex: Texture) 
 func highlight_actor(actor_id: String) -> void:
 	for actor in actor_dict.keys():
 		var tmp = get_chara_node(actor).find_child(actor, true, false) as CanvasItem
+		if tmp == null :
+			return
 		tmp.set_modulate(Color(0.5, 0.5, 0.5))
 
 	var chara_node: Node = get_chara_node(actor_id)
-	var tex_node = chara_node.find_child(actor_id, true, false)
 	
-	if tex_node:
-		# 修改字典中角色的状态
-		tex_node.set_modulate(Color(1.0, 1.0, 1.0))
-		
+	if chara_node != null:
+		#如果剧情角色名字和演员名字不匹配，就pass，防止崩溃
+		var tex_node = chara_node.find_child(actor_id, true, false)
+		if tex_node:
+			# 修改字典中角色的状态
+			tex_node.set_modulate(Color(1.0, 1.0, 1.0))
+		pass
+	
+
 # 删除指定角色图片的方法
 func delete_character(chara_id: String):
 	# 检查要删除的角色是否在容器和字典中
