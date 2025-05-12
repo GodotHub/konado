@@ -51,6 +51,8 @@ git submodule update --remote
 
 ## Konado Scripts 语法规范
 
+推荐使用VSCode编辑Konado脚本文件，我们提供了语言支持插件：https://gitcode.com/shengjing/konado-scripts-extension
+
 ## 文件结构
 - 文件扩展名：`.ks`
 - 编码格式：UTF-8
