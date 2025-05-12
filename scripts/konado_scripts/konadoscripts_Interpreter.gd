@@ -139,6 +139,9 @@ func _create_actor(parts: PackedStringArray) -> DialogueActor:
 	actor.character_state = parts[3]
 	actor.actor_position = Vector2(parts[5].to_float(), parts[6].to_float())
 	actor.actor_scale = parts[8].to_float()
+	if parts.size() == 10:
+		if parts[9] == "mirror":
+			actor.actor_mirror = true
 	return actor
 
 # 音频解析

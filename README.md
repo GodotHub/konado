@@ -107,9 +107,13 @@ actor show [角色ID] [状态] at [x] [y] scale [比例]
   - 状态：对应角色不同立绘状态
   - 坐标：场景坐标系（单位：像素）
   - 比例：显示缩放（1.0为原始大小）
+  - 镜像（可选）：水平镜像翻转（mirror）
 - 示例：
 ```text
 actor show alice normal at 300 450 scale 0.9
+
+# 镜像如下
+actor show alice normal at 300 450 scale 0.9 mirror
 ```
 
 #### 隐藏角色

@@ -126,8 +126,11 @@ func _ready() -> void:
 
 ## 初始化对话的方法
 func _init_dialogue(callback: Callable = Callable()) -> void:
+	if dialog_data_list == null:
+		printerr("对话列表资源为空")
+		return
 	if dialog_data_list.dialog_data_list.size() <= 0:
-		printerr("对话列表为空")
+		printerr("对话列表没有对话")
 		return
 		
 	dialog_data = dialog_data_list.dialog_data_list[_dialog_data_id]
@@ -504,8 +507,11 @@ func _display_character(actor: DialogueActor) -> void:
 	var pos = actor.actor_position
 	# 角色缩放
 	var a_scale = actor.actor_scale
+	
+	# 角色立绘镜像翻转
+	var mirror = actor.actor_mirror
 	# 创建角色
-	_acting_interface.create_new_character(target_chara_name, pos, target_state_name, target_state_tex, a_scale)
+	_acting_interface.create_new_character(target_chara_name, pos, target_state_name, target_state_tex, a_scale, mirror)
 		
 ## 演员退场
 func _exit_actor(actor_name: String) -> void:
