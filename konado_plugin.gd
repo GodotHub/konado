@@ -5,7 +5,7 @@ extends EditorPlugin
 const DIALOGUE_DATA_SCRIPT := preload("res://addons/konado/scripts/dialogue/dialogue_data.gd")
 const IMPORTER_SCRIPT := preload("res://addons/konado/importer/konado_importer.gd")
 const INTERPRETER_PATH := "res://addons/konado/scripts/konado_scripts/konadoscripts_Interpreter.gd"
-const SAVE_AND_LOAD := "res://addons/konado/scripts/save_and_load/save_and_load.gd"
+const SAVE_AND_LOAD := "res://addons/konado/scripts/save_and_load/SaL.gd"
 
 ### 插件成员 ###
 var import_plugin: EditorImportPlugin
