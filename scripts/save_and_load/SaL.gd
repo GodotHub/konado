@@ -98,5 +98,46 @@ func _load_game(slot_id: int) -> bool:#加载数据，需要传入槽位ID
 	#调试
 	print("Loaded save data from slot ", slot_id)
 	print(loaded_data)
-	#TODO：不知为何以上两行会print两遍，虽然完全不影响读档，但是真的很奇怪
 	return true
+
+func _get_file_inf(slot_id : int) -> Dictionary :
+	var file_path = SAVE_DIR + SLOT_PREFIX + str(slot_id) + ".json"
+	
+	# 检查存档文件是否存在
+	if not FileAccess.file_exists(file_path):
+		push_error("Save file not found: ", file_path)
+		pass
+	
+	# 打开存档文件
+	var file = FileAccess.open(file_path, FileAccess.READ)
+	if not file:
+		push_error("Load failed: ", FileAccess.get_open_error())
+		pass
+	
+	# 读取并解析JSON数据
+	var json = JSON.new()
+	var parse_result = json.parse(file.get_as_text())
+	if parse_result != OK:
+		push_error("JSON parse error: ", json.get_error_message(), " at line ", json.get_error_line())
+		pass
+	
+	var loaded_data = json.get_data()
+	
+	# 验证数据结构基础格式
+	if not (loaded_data.has("metadata") and loaded_data.has("game_data")):
+		push_error("Invalid save file structure")
+		pass
+	
+	var timestamp_check : String
+	var chapter_id_check : String
+	
+	var meta_data = loaded_data["metadata"]
+	var game_data = loaded_data["game_data"]
+	
+	timestamp_check = meta_data.get("timestamp",[])
+	chapter_id_check = game_data.get("chapter_id", "").replace("\r", "")
+	
+	return{
+		"timestamp" : timestamp_check,
+		"chapter_id" : chapter_id_check
+	}
