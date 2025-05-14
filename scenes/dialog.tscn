@@ -268,6 +268,7 @@ toggle_mode = true
 text = "自动播放"
 
 [node name="SaLUI" type="PanelContainer" parent="DialogUI"]
+visible = false
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_qodmk")
 script = ExtResource("4_566op")
