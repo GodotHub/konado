@@ -30,7 +30,8 @@ var dialogueState: DialogState
 @onready var _acting_interface: ActingInterface = $DialogUI/ActingInterface
 ## 音频接口
 @onready var _audio_interface: DialogAudioInterface = $AudioInterface
-
+#存档UI界面接口
+@onready var _SaL_UI : SaL_UI = $DialogUI/SaLUI
 
 ## 对话的交互按钮，比如存档按钮，读档按钮，继续按钮
 ## 存档按钮
@@ -320,6 +321,10 @@ func is_click_valid(event):
 
 ## 处理输入
 func _input(event):
+	if _check_opening() == false:
+		_audio_interface.stop_voice()
+		return
+	
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			# 全屏点击下一句
@@ -616,6 +621,10 @@ func _process_achievement(id: String):
 	
 ## 按下存档按钮
 func _on_savebutton_press():
+	_SaL_UI.check_UI(1)#打开UI，输入存档格式
+	pass
+
+func _get_file_data(slot_id : int):
 	#用于获取变量
 	var dialog = dialog_data.dialogs[curline]
 	
@@ -633,19 +642,18 @@ func _on_savebutton_press():
 	KS_SAVE_AND_LOAD.curline = curline
 	
 	#触发函数
-	KS_SAVE_AND_LOAD._save_game(1)
-	pass
+	KS_SAVE_AND_LOAD._save_game(slot_id)
 
 ## 按下读档按钮
 func _on_loadbutton_press():
+	_SaL_UI.check_UI(2)#打开UI，输入读档格式
+	pass
+
+func _load_file_data(slot_id : int):
 	#用于获取变量
 	var dialog = dialog_data.dialogs[curline]
 	
-	#触发函数
-	KS_SAVE_AND_LOAD._load_game(1)
-	
-	#若存档正常，则进程继续
-	if KS_SAVE_AND_LOAD._load_game(1) == true :
+	if KS_SAVE_AND_LOAD._load_game(slot_id) == true :
 		#更新变量
 		_acting_interface.actor_dict = KS_SAVE_AND_LOAD.chara_disc
 		_acting_interface.background_id = KS_SAVE_AND_LOAD.background_id
@@ -671,7 +679,13 @@ func _on_loadbutton_press():
 		
 		#播放音效（停止音效的方法包含在这个方法里了
 		_play_soundeffect(se_id)
-	pass
+
+#检测是否有任何窗口打开
+func _check_opening() -> bool:
+	if _SaL_UI.All_UI.visible == true:
+		return false
+	else:
+		return true
 
 ## 读取存档用的跳转
 func jump_data_and_curline(data_id: String, _curline: int, bgm_id: String, actor_dict: Dictionary = {}):

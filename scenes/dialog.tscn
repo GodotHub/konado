@@ -1,8 +1,9 @@
-[gd_scene load_steps=36 format=3 uid="uid://bj8ynu8013j4j"]
+[gd_scene load_steps=40 format=3 uid="uid://bj8ynu8013j4j"]
 
 [ext_resource type="Script" uid="uid://dpo124xwpder5" path="res://addons/konado/scripts/dialogue/dialogue_manager.gd" id="1_buo3n"]
 [ext_resource type="Script" uid="uid://cyoedi0x84dxy" path="res://addons/konado/scripts/act/acting_Interface.gd" id="2_pq6sw"]
 [ext_resource type="Script" uid="uid://b0kbsxqyedoml" path="res://addons/konado/scripts/dialogue/dialogue_Interface.gd" id="3_gl7il"]
+[ext_resource type="Script" uid="uid://5d4l66ex5dy" path="res://addons/konado/scripts/save_and_load/SaL_UI.gd" id="4_566op"]
 [ext_resource type="Script" uid="uid://cfbojxb1pdbrs" path="res://addons/konado/scripts/audio/audio_interface.gd" id="4_gd2ll"]
 [ext_resource type="Script" uid="uid://ri30mk7ouhfu" path="res://addons/konado/scripts/debug/debug_interface.gd" id="6_41ybh"]
 [ext_resource type="Shader" uid="uid://btv6px1j4hwjt" path="res://addons/konado/shader/Blur.gdshader" id="7_bwdrp"]
@@ -38,7 +39,8 @@ texture = SubResource("GradientTexture2D_m86f6")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3sqld"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4a45d"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qodmk"]
+bg_color = Color(0.6, 0.6, 0.6, 0.309804)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_566op"]
 bg_color = Color(1, 1, 1, 1)
@@ -49,13 +51,14 @@ bg_color = Color(1, 1, 1, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sxvt2"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h6kpk"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_566op"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ub6cx"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_m7kjq"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wnbmn"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_utfb4"]
+bg_color = Color(0.937255, 0.14902, 0, 0.376471)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_eac7y"]
 
@@ -64,6 +67,13 @@ bg_color = Color(1, 1, 1, 1)
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_une6u"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jsjy8"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h6kpk"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wnbmn"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sxvt2"]
+bg_color = Color(1, 0.268112, 0.605305, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_x3e46"]
 shader = ExtResource("7_bwdrp")
@@ -260,7 +270,556 @@ text = "自动播放"
 [node name="SaLUI" type="PanelContainer" parent="DialogUI"]
 visible = false
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxEmpty_4a45d")
+theme_override_styles/panel = SubResource("StyleBoxFlat_qodmk")
+script = ExtResource("4_566op")
+
+[node name="FilesContainer" type="MarginContainer" parent="DialogUI/SaLUI"]
+layout_mode = 2
+theme_override_constants/margin_left = 240
+theme_override_constants/margin_top = 80
+
+[node name="FilesHContainer" type="HBoxContainer" parent="DialogUI/SaLUI/FilesContainer"]
+layout_mode = 2
+
+[node name="FilesVContainer" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="FileContainer1" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="FilePanel1" type="Panel" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer1"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_566op")
+
+[node name="FileMargin1" type="MarginContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer1/FilePanel1"]
+layout_mode = 2
+offset_left = -2.0
+offset_top = 4.0
+offset_right = 298.0
+offset_bottom = 63.0
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 20
+
+[node name="FileMarginV1" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer1/FilePanel1/FileMargin1"]
+layout_mode = 2
+
+[node name="SlotAndDate1" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer1/FilePanel1/FileMargin1/FileMarginV1"]
+custom_minimum_size = Vector2(100, 25)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "槽位1 YYYY-MM-DD"
+
+[node name="Chapter1" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer1/FilePanel1/FileMargin1/FileMarginV1"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "章节1 章节名称"
+
+[node name="TriggerButton1" type="Button" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer1/FilePanel1"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+offset_right = 300.0
+offset_bottom = 100.0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_utfb4")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_qodmk")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_sxvt2")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_566op")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ub6cx")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_m7kjq")
+theme_override_styles/hover = SubResource("StyleBoxFlat_utfb4")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eac7y")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_jsjy8")
+
+[node name="FileContainer2" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="FilePanel2" type="Panel" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer2"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_566op")
+
+[node name="FileMargin2" type="MarginContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer2/FilePanel2"]
+layout_mode = 2
+offset_left = -2.0
+offset_top = 4.0
+offset_right = 298.0
+offset_bottom = 63.0
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 20
+
+[node name="FileMarginV2" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer2/FilePanel2/FileMargin2"]
+layout_mode = 2
+
+[node name="SlotAndDate2" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer2/FilePanel2/FileMargin2/FileMarginV2"]
+custom_minimum_size = Vector2(100, 25)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "槽位2 YYYY-MM-DD"
+
+[node name="Chapter2" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer2/FilePanel2/FileMargin2/FileMarginV2"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "章节2 章节名称"
+
+[node name="TriggerButton2" type="Button" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer2/FilePanel2"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+offset_right = 300.0
+offset_bottom = 100.0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_utfb4")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_qodmk")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_sxvt2")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_h6kpk")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ub6cx")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_m7kjq")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_wnbmn")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eac7y")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_jsjy8")
+
+[node name="FileContainer3" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="FilePanel3" type="Panel" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer3"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_566op")
+
+[node name="FileMargin3" type="MarginContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer3/FilePanel3"]
+layout_mode = 2
+offset_left = -2.0
+offset_top = 4.0
+offset_right = 298.0
+offset_bottom = 63.0
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 20
+
+[node name="FileMarginV3" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer3/FilePanel3/FileMargin3"]
+layout_mode = 2
+
+[node name="SlotAndDate3" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer3/FilePanel3/FileMargin3/FileMarginV3"]
+custom_minimum_size = Vector2(100, 25)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "槽位3 YYYY-MM-DD"
+
+[node name="Chapter3" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer3/FilePanel3/FileMargin3/FileMarginV3"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "章节3 章节名称"
+
+[node name="TriggerButton3" type="Button" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer3/FilePanel3"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+offset_right = 300.0
+offset_bottom = 100.0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_utfb4")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_qodmk")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_sxvt2")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_h6kpk")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ub6cx")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_m7kjq")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_wnbmn")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eac7y")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_jsjy8")
+
+[node name="FileContainer4" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="FilePanel4" type="Panel" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer4"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_566op")
+
+[node name="FileMargin4" type="MarginContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer4/FilePanel4"]
+layout_mode = 2
+offset_left = -2.0
+offset_top = 4.0
+offset_right = 298.0
+offset_bottom = 63.0
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 20
+
+[node name="FileMarginV4" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer4/FilePanel4/FileMargin4"]
+layout_mode = 2
+
+[node name="SlotAndDate4" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer4/FilePanel4/FileMargin4/FileMarginV4"]
+custom_minimum_size = Vector2(100, 25)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "槽位4 YYYY-MM-DD"
+
+[node name="Chapter4" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer4/FilePanel4/FileMargin4/FileMarginV4"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "章节4 章节名称"
+
+[node name="TriggerButton4" type="Button" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer4/FilePanel4"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+offset_right = 300.0
+offset_bottom = 100.0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_utfb4")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_qodmk")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_sxvt2")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_h6kpk")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ub6cx")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_m7kjq")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_wnbmn")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eac7y")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_jsjy8")
+
+[node name="FileContainer5" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="FilePanel5" type="Panel" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer5"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_566op")
+
+[node name="FileMargin5" type="MarginContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer5/FilePanel5"]
+layout_mode = 2
+offset_left = -2.0
+offset_top = 4.0
+offset_right = 298.0
+offset_bottom = 63.0
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 20
+
+[node name="FileMarginV5" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer5/FilePanel5/FileMargin5"]
+layout_mode = 2
+
+[node name="SlotAndDate5" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer5/FilePanel5/FileMargin5/FileMarginV5"]
+custom_minimum_size = Vector2(100, 25)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "槽位5 YYYY-MM-DD"
+
+[node name="Chapter5" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer5/FilePanel5/FileMargin5/FileMarginV5"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "章节5 章节名称"
+
+[node name="TriggerButton5" type="Button" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer5/FilePanel5"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+offset_right = 300.0
+offset_bottom = 100.0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_utfb4")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_qodmk")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_sxvt2")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_h6kpk")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ub6cx")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_m7kjq")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_wnbmn")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eac7y")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_jsjy8")
+
+[node name="FilesVContainer2" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="FileContainer6" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="FilePanel6" type="Panel" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer6"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_566op")
+
+[node name="FileMargin6" type="MarginContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer6/FilePanel6"]
+layout_mode = 2
+offset_left = -2.0
+offset_top = 4.0
+offset_right = 298.0
+offset_bottom = 63.0
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 20
+
+[node name="FileMarginV6" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer6/FilePanel6/FileMargin6"]
+layout_mode = 2
+
+[node name="SlotAndDate6" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer6/FilePanel6/FileMargin6/FileMarginV6"]
+custom_minimum_size = Vector2(100, 25)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "槽位6 YYYY-MM-DD"
+
+[node name="Chapter6" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer6/FilePanel6/FileMargin6/FileMarginV6"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "章节8 章节名称"
+
+[node name="TriggerButton6" type="Button" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer6/FilePanel6"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+offset_right = 300.0
+offset_bottom = 100.0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_utfb4")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_qodmk")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_sxvt2")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_h6kpk")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ub6cx")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_m7kjq")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_wnbmn")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eac7y")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_jsjy8")
+
+[node name="FileContainer7" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="FilePanel7" type="Panel" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer7"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_566op")
+
+[node name="FileMargin7" type="MarginContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer7/FilePanel7"]
+layout_mode = 2
+offset_left = -2.0
+offset_top = 4.0
+offset_right = 298.0
+offset_bottom = 63.0
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 20
+
+[node name="FileMarginV7" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer7/FilePanel7/FileMargin7"]
+layout_mode = 2
+
+[node name="SlotAndDate7" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer7/FilePanel7/FileMargin7/FileMarginV7"]
+custom_minimum_size = Vector2(100, 25)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "槽位7 YYYY-MM-DD"
+
+[node name="Chapter7" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer7/FilePanel7/FileMargin7/FileMarginV7"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "章节7 章节名称"
+
+[node name="TriggerButton7" type="Button" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer7/FilePanel7"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+offset_right = 300.0
+offset_bottom = 100.0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_utfb4")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_qodmk")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_sxvt2")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_h6kpk")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ub6cx")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_m7kjq")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_wnbmn")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eac7y")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_jsjy8")
+
+[node name="FileContainer8" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="FilePanel8" type="Panel" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer8"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_566op")
+
+[node name="FileMargin8" type="MarginContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer8/FilePanel8"]
+layout_mode = 2
+offset_left = -2.0
+offset_top = 4.0
+offset_right = 298.0
+offset_bottom = 63.0
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 20
+
+[node name="FileMarginV8" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer8/FilePanel8/FileMargin8"]
+layout_mode = 2
+
+[node name="SlotAndDate8" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer8/FilePanel8/FileMargin8/FileMarginV8"]
+custom_minimum_size = Vector2(100, 25)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "槽位8 YYYY-MM-DD"
+
+[node name="Chapter8" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer8/FilePanel8/FileMargin8/FileMarginV8"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "章节8 章节名称"
+
+[node name="TriggerButton8" type="Button" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer8/FilePanel8"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+offset_right = 300.0
+offset_bottom = 100.0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_utfb4")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_qodmk")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_sxvt2")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_h6kpk")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ub6cx")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_m7kjq")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_wnbmn")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eac7y")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_jsjy8")
+
+[node name="FileContainer9" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="FilePanel9" type="Panel" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer9"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_566op")
+
+[node name="FileMargin9" type="MarginContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer9/FilePanel9"]
+layout_mode = 2
+offset_left = -2.0
+offset_top = 4.0
+offset_right = 298.0
+offset_bottom = 63.0
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 20
+
+[node name="FileMarginV9" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer9/FilePanel9/FileMargin9"]
+layout_mode = 2
+
+[node name="SlotAndDate9" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer9/FilePanel9/FileMargin9/FileMarginV9"]
+custom_minimum_size = Vector2(100, 25)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "槽位9 YYYY-MM-DD"
+
+[node name="Chapter9" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer9/FilePanel9/FileMargin9/FileMarginV9"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "章节9 章节名称"
+
+[node name="TriggerButton9" type="Button" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer9/FilePanel9"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+offset_right = 300.0
+offset_bottom = 100.0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_utfb4")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_qodmk")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_sxvt2")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_h6kpk")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ub6cx")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_m7kjq")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_wnbmn")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eac7y")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_jsjy8")
+
+[node name="FileContainer10" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="FilePanel10" type="Panel" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer10"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_566op")
+
+[node name="FileMargin10" type="MarginContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer10/FilePanel10"]
+layout_mode = 2
+offset_left = -2.0
+offset_top = 4.0
+offset_right = 298.0
+offset_bottom = 63.0
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 20
+
+[node name="FileMarginV10" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer10/FilePanel10/FileMargin10"]
+layout_mode = 2
+
+[node name="SlotAndDate10" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer10/FilePanel10/FileMargin10/FileMarginV10"]
+custom_minimum_size = Vector2(100, 25)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "槽位10 YYYY-MM-DD"
+
+[node name="Chapter10" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer10/FilePanel10/FileMargin10/FileMarginV10"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "章节10 章节名称"
+
+[node name="TriggerButton10" type="Button" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer10/FilePanel10"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+offset_right = 300.0
+offset_bottom = 100.0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_utfb4")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_qodmk")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_sxvt2")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_h6kpk")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ub6cx")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_m7kjq")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_wnbmn")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eac7y")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_jsjy8")
 
 [node name="Title" type="Label" parent="DialogUI/SaLUI"]
 custom_minimum_size = Vector2(200, 100)
@@ -270,553 +829,14 @@ size_flags_vertical = 0
 theme_override_font_sizes/font_size = 60
 text = "读取"
 
-[node name="FilesContainer" type="MarginContainer" parent="DialogUI/SaLUI"]
-layout_mode = 2
-theme_override_constants/margin_left = 240
-theme_override_constants/margin_top = 80
-
-[node name="HBoxContainer" type="HBoxContainer" parent="DialogUI/SaLUI/FilesContainer"]
-layout_mode = 2
-
-[node name="FilesVContainer" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer"]
-custom_minimum_size = Vector2(300, 0)
-layout_mode = 2
-size_flags_horizontal = 0
-
-[node name="FileContainer1" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer"]
-custom_minimum_size = Vector2(300, 100)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-
-[node name="FilePanel1" type="Panel" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer/FileContainer1"]
-custom_minimum_size = Vector2(300, 100)
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_566op")
-
-[node name="FileMargin1" type="MarginContainer" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer/FileContainer1/FilePanel1"]
-layout_mode = 2
-offset_left = -2.0
-offset_top = 4.0
-offset_right = 298.0
-offset_bottom = 63.0
-theme_override_constants/margin_left = 70
-theme_override_constants/margin_top = 20
-
-[node name="FileMarginV1" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer/FileContainer1/FilePanel1/FileMargin1"]
-layout_mode = 2
-
-[node name="SlotAndDate1" type="Label" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer/FileContainer1/FilePanel1/FileMargin1/FileMarginV1"]
-custom_minimum_size = Vector2(100, 25)
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "槽位1 YYYY-MM-DD"
-
-[node name="Chapter1" type="Label" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer/FileContainer1/FilePanel1/FileMargin1/FileMarginV1"]
-custom_minimum_size = Vector2(100, 30)
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "章节1 章节名称"
-
-[node name="TriggerButton1" type="Button" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer/FileContainer1/FilePanel1"]
-custom_minimum_size = Vector2(300, 100)
-layout_mode = 2
-offset_right = 300.0
-offset_bottom = 100.0
-theme_override_styles/focus = SubResource("StyleBoxEmpty_utfb4")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_qodmk")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_sxvt2")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_h6kpk")
-theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ub6cx")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_m7kjq")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_wnbmn")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eac7y")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_jsjy8")
-
-[node name="FileContainer2" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer"]
-custom_minimum_size = Vector2(300, 100)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-
-[node name="FilePanel2" type="Panel" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer/FileContainer2"]
-custom_minimum_size = Vector2(300, 100)
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_566op")
-
-[node name="FileMargin2" type="MarginContainer" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer/FileContainer2/FilePanel2"]
-layout_mode = 2
-offset_left = -2.0
-offset_top = 4.0
-offset_right = 298.0
-offset_bottom = 63.0
-theme_override_constants/margin_left = 70
-theme_override_constants/margin_top = 20
-
-[node name="FileMarginV2" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer/FileContainer2/FilePanel2/FileMargin2"]
-layout_mode = 2
-
-[node name="SlotAndDate2" type="Label" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer/FileContainer2/FilePanel2/FileMargin2/FileMarginV2"]
-custom_minimum_size = Vector2(100, 25)
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "槽位2 YYYY-MM-DD"
-
-[node name="Chapter2" type="Label" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer/FileContainer2/FilePanel2/FileMargin2/FileMarginV2"]
-custom_minimum_size = Vector2(100, 30)
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "章节2 章节名称"
-
-[node name="TriggerButton2" type="Button" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer/FileContainer2/FilePanel2"]
-custom_minimum_size = Vector2(300, 100)
-layout_mode = 2
-offset_right = 300.0
-offset_bottom = 100.0
-theme_override_styles/focus = SubResource("StyleBoxEmpty_utfb4")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_qodmk")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_sxvt2")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_h6kpk")
-theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ub6cx")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_m7kjq")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_wnbmn")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eac7y")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_jsjy8")
-
-[node name="FileContainer3" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer"]
-custom_minimum_size = Vector2(300, 100)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-
-[node name="FilePanel3" type="Panel" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer/FileContainer3"]
-custom_minimum_size = Vector2(300, 100)
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_566op")
-
-[node name="FileMargin3" type="MarginContainer" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer/FileContainer3/FilePanel3"]
-layout_mode = 2
-offset_left = -2.0
-offset_top = 4.0
-offset_right = 298.0
-offset_bottom = 63.0
-theme_override_constants/margin_left = 70
-theme_override_constants/margin_top = 20
-
-[node name="FileMarginV3" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer/FileContainer3/FilePanel3/FileMargin3"]
-layout_mode = 2
-
-[node name="SlotAndDate3" type="Label" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer/FileContainer3/FilePanel3/FileMargin3/FileMarginV3"]
-custom_minimum_size = Vector2(100, 25)
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "槽位3 YYYY-MM-DD"
-
-[node name="Chapter3" type="Label" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer/FileContainer3/FilePanel3/FileMargin3/FileMarginV3"]
-custom_minimum_size = Vector2(100, 30)
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "章节3 章节名称"
-
-[node name="TriggerButton3" type="Button" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer/FileContainer3/FilePanel3"]
-custom_minimum_size = Vector2(300, 100)
-layout_mode = 2
-offset_right = 300.0
-offset_bottom = 100.0
-theme_override_styles/focus = SubResource("StyleBoxEmpty_utfb4")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_qodmk")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_sxvt2")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_h6kpk")
-theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ub6cx")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_m7kjq")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_wnbmn")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eac7y")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_jsjy8")
-
-[node name="FileContainer4" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer"]
-custom_minimum_size = Vector2(300, 100)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-
-[node name="FilePanel4" type="Panel" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer/FileContainer4"]
-custom_minimum_size = Vector2(300, 100)
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_566op")
-
-[node name="FileMargin4" type="MarginContainer" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer/FileContainer4/FilePanel4"]
-layout_mode = 2
-offset_left = -2.0
-offset_top = 4.0
-offset_right = 298.0
-offset_bottom = 63.0
-theme_override_constants/margin_left = 70
-theme_override_constants/margin_top = 20
-
-[node name="FileMarginV4" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer/FileContainer4/FilePanel4/FileMargin4"]
-layout_mode = 2
-
-[node name="SlotAndDate4" type="Label" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer/FileContainer4/FilePanel4/FileMargin4/FileMarginV4"]
-custom_minimum_size = Vector2(100, 25)
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "槽位4 YYYY-MM-DD"
-
-[node name="Chapter4" type="Label" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer/FileContainer4/FilePanel4/FileMargin4/FileMarginV4"]
-custom_minimum_size = Vector2(100, 30)
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "章节4 章节名称"
-
-[node name="TriggerButton4" type="Button" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer/FileContainer4/FilePanel4"]
-custom_minimum_size = Vector2(300, 100)
-layout_mode = 2
-offset_right = 300.0
-offset_bottom = 100.0
-theme_override_styles/focus = SubResource("StyleBoxEmpty_utfb4")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_qodmk")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_sxvt2")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_h6kpk")
-theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ub6cx")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_m7kjq")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_wnbmn")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eac7y")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_jsjy8")
-
-[node name="FileContainer5" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer"]
-custom_minimum_size = Vector2(300, 100)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-
-[node name="FilePanel5" type="Panel" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer/FileContainer5"]
-custom_minimum_size = Vector2(300, 100)
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_566op")
-
-[node name="FileMargin5" type="MarginContainer" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer/FileContainer5/FilePanel5"]
-layout_mode = 2
-offset_left = -2.0
-offset_top = 4.0
-offset_right = 298.0
-offset_bottom = 63.0
-theme_override_constants/margin_left = 70
-theme_override_constants/margin_top = 20
-
-[node name="FileMarginV5" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer/FileContainer5/FilePanel5/FileMargin5"]
-layout_mode = 2
-
-[node name="SlotAndDate5" type="Label" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer/FileContainer5/FilePanel5/FileMargin5/FileMarginV5"]
-custom_minimum_size = Vector2(100, 25)
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "槽位5 YYYY-MM-DD"
-
-[node name="Chapter5" type="Label" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer/FileContainer5/FilePanel5/FileMargin5/FileMarginV5"]
-custom_minimum_size = Vector2(100, 30)
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "章节5 章节名称"
-
-[node name="TriggerButton5" type="Button" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer/FileContainer5/FilePanel5"]
-custom_minimum_size = Vector2(300, 100)
-layout_mode = 2
-offset_right = 300.0
-offset_bottom = 100.0
-theme_override_styles/focus = SubResource("StyleBoxEmpty_utfb4")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_qodmk")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_sxvt2")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_h6kpk")
-theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ub6cx")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_m7kjq")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_wnbmn")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eac7y")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_jsjy8")
-
-[node name="FilesVContainer2" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer"]
-custom_minimum_size = Vector2(300, 0)
-layout_mode = 2
-size_flags_horizontal = 0
-
-[node name="FileContainer6" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer2"]
-custom_minimum_size = Vector2(300, 100)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-
-[node name="FilePanel6" type="Panel" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer2/FileContainer6"]
-custom_minimum_size = Vector2(300, 100)
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_566op")
-
-[node name="FileMargin6" type="MarginContainer" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer2/FileContainer6/FilePanel6"]
-layout_mode = 2
-offset_left = -2.0
-offset_top = 4.0
-offset_right = 298.0
-offset_bottom = 63.0
-theme_override_constants/margin_left = 70
-theme_override_constants/margin_top = 20
-
-[node name="FileMarginV6" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer2/FileContainer6/FilePanel6/FileMargin6"]
-layout_mode = 2
-
-[node name="SlotAndDate6" type="Label" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer2/FileContainer6/FilePanel6/FileMargin6/FileMarginV6"]
-custom_minimum_size = Vector2(100, 25)
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "槽位6 YYYY-MM-DD"
-
-[node name="Chapter6" type="Label" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer2/FileContainer6/FilePanel6/FileMargin6/FileMarginV6"]
-custom_minimum_size = Vector2(100, 30)
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "章节8 章节名称"
-
-[node name="TriggerButton6" type="Button" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer2/FileContainer6/FilePanel6"]
-custom_minimum_size = Vector2(300, 100)
-layout_mode = 2
-offset_right = 300.0
-offset_bottom = 100.0
-theme_override_styles/focus = SubResource("StyleBoxEmpty_utfb4")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_qodmk")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_sxvt2")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_h6kpk")
-theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ub6cx")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_m7kjq")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_wnbmn")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eac7y")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_jsjy8")
-
-[node name="FileContainer7" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer2"]
-custom_minimum_size = Vector2(300, 100)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-
-[node name="FilePanel7" type="Panel" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer2/FileContainer7"]
-custom_minimum_size = Vector2(300, 100)
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_566op")
-
-[node name="FileMargin7" type="MarginContainer" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer2/FileContainer7/FilePanel7"]
-layout_mode = 2
-offset_left = -2.0
-offset_top = 4.0
-offset_right = 298.0
-offset_bottom = 63.0
-theme_override_constants/margin_left = 70
-theme_override_constants/margin_top = 20
-
-[node name="FileMarginV7" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer2/FileContainer7/FilePanel7/FileMargin7"]
-layout_mode = 2
-
-[node name="SlotAndDate7" type="Label" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer2/FileContainer7/FilePanel7/FileMargin7/FileMarginV7"]
-custom_minimum_size = Vector2(100, 25)
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "槽位7 YYYY-MM-DD"
-
-[node name="Chapter7" type="Label" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer2/FileContainer7/FilePanel7/FileMargin7/FileMarginV7"]
-custom_minimum_size = Vector2(100, 30)
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "章节7 章节名称"
-
-[node name="TriggerButton7" type="Button" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer2/FileContainer7/FilePanel7"]
-custom_minimum_size = Vector2(300, 100)
-layout_mode = 2
-offset_right = 300.0
-offset_bottom = 100.0
-theme_override_styles/focus = SubResource("StyleBoxEmpty_utfb4")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_qodmk")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_sxvt2")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_h6kpk")
-theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ub6cx")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_m7kjq")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_wnbmn")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eac7y")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_jsjy8")
-
-[node name="FileContainer8" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer2"]
-custom_minimum_size = Vector2(300, 100)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-
-[node name="FilePanel8" type="Panel" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer2/FileContainer8"]
-custom_minimum_size = Vector2(300, 100)
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_566op")
-
-[node name="FileMargin8" type="MarginContainer" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer2/FileContainer8/FilePanel8"]
-layout_mode = 2
-offset_left = -2.0
-offset_top = 4.0
-offset_right = 298.0
-offset_bottom = 63.0
-theme_override_constants/margin_left = 70
-theme_override_constants/margin_top = 20
-
-[node name="FileMarginV8" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer2/FileContainer8/FilePanel8/FileMargin8"]
-layout_mode = 2
-
-[node name="SlotAndDate8" type="Label" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer2/FileContainer8/FilePanel8/FileMargin8/FileMarginV8"]
-custom_minimum_size = Vector2(100, 25)
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "槽位8 YYYY-MM-DD"
-
-[node name="Chapter8" type="Label" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer2/FileContainer8/FilePanel8/FileMargin8/FileMarginV8"]
-custom_minimum_size = Vector2(100, 30)
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "章节8 章节名称"
-
-[node name="TriggerButton8" type="Button" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer2/FileContainer8/FilePanel8"]
-custom_minimum_size = Vector2(300, 100)
-layout_mode = 2
-offset_right = 300.0
-offset_bottom = 100.0
-theme_override_styles/focus = SubResource("StyleBoxEmpty_utfb4")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_qodmk")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_sxvt2")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_h6kpk")
-theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ub6cx")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_m7kjq")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_wnbmn")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eac7y")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_jsjy8")
-
-[node name="FileContainer9" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer2"]
-custom_minimum_size = Vector2(300, 100)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-
-[node name="FilePanel9" type="Panel" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer2/FileContainer9"]
-custom_minimum_size = Vector2(300, 100)
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_566op")
-
-[node name="FileMargin9" type="MarginContainer" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer2/FileContainer9/FilePanel9"]
-layout_mode = 2
-offset_left = -2.0
-offset_top = 4.0
-offset_right = 298.0
-offset_bottom = 63.0
-theme_override_constants/margin_left = 70
-theme_override_constants/margin_top = 20
-
-[node name="FileMarginV9" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer2/FileContainer9/FilePanel9/FileMargin9"]
-layout_mode = 2
-
-[node name="SlotAndDate9" type="Label" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer2/FileContainer9/FilePanel9/FileMargin9/FileMarginV9"]
-custom_minimum_size = Vector2(100, 25)
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "槽位9 YYYY-MM-DD"
-
-[node name="Chapter9" type="Label" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer2/FileContainer9/FilePanel9/FileMargin9/FileMarginV9"]
-custom_minimum_size = Vector2(100, 30)
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "章节9 章节名称"
-
-[node name="TriggerButton9" type="Button" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer2/FileContainer9/FilePanel9"]
-custom_minimum_size = Vector2(300, 100)
-layout_mode = 2
-offset_right = 300.0
-offset_bottom = 100.0
-theme_override_styles/focus = SubResource("StyleBoxEmpty_utfb4")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_qodmk")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_sxvt2")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_h6kpk")
-theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ub6cx")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_m7kjq")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_wnbmn")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eac7y")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_jsjy8")
-
-[node name="FileContainer10" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer2"]
-custom_minimum_size = Vector2(300, 100)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-
-[node name="FilePanel10" type="Panel" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer2/FileContainer10"]
-custom_minimum_size = Vector2(300, 100)
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_566op")
-
-[node name="FileMargin10" type="MarginContainer" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer2/FileContainer10/FilePanel10"]
-layout_mode = 2
-offset_left = -2.0
-offset_top = 4.0
-offset_right = 298.0
-offset_bottom = 63.0
-theme_override_constants/margin_left = 70
-theme_override_constants/margin_top = 20
-
-[node name="FileMarginV10" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer2/FileContainer10/FilePanel10/FileMargin10"]
-layout_mode = 2
-
-[node name="SlotAndDate10" type="Label" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer2/FileContainer10/FilePanel10/FileMargin10/FileMarginV10"]
-custom_minimum_size = Vector2(100, 25)
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "槽位10 YYYY-MM-DD"
-
-[node name="Chapter10" type="Label" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer2/FileContainer10/FilePanel10/FileMargin10/FileMarginV10"]
-custom_minimum_size = Vector2(100, 30)
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "章节10 章节名称"
-
-[node name="TriggerButton10" type="Button" parent="DialogUI/SaLUI/FilesContainer/HBoxContainer/FilesVContainer2/FileContainer10/FilePanel10"]
-custom_minimum_size = Vector2(300, 100)
-layout_mode = 2
-offset_right = 300.0
-offset_bottom = 100.0
-theme_override_styles/focus = SubResource("StyleBoxEmpty_utfb4")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_qodmk")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_sxvt2")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_h6kpk")
-theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ub6cx")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_m7kjq")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_wnbmn")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eac7y")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_jsjy8")
+[node name="CloseButton" type="Button" parent="DialogUI/SaLUI/Title"]
+layout_mode = 2
+offset_left = 372.0
+offset_top = 21.0
+offset_right = 466.0
+offset_bottom = 97.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_sxvt2")
+text = "关闭"
 
 [node name="AudioInterface" type="Node2D" parent="."]
 script = ExtResource("4_gd2ll")
