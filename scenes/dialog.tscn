@@ -275,11 +275,13 @@ script = ExtResource("4_566op")
 
 [node name="FilesContainer" type="MarginContainer" parent="DialogUI/SaLUI"]
 layout_mode = 2
-theme_override_constants/margin_left = 240
 theme_override_constants/margin_top = 80
 
 [node name="FilesHContainer" type="HBoxContainer" parent="DialogUI/SaLUI/FilesContainer"]
+custom_minimum_size = Vector2(500, 569)
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
 [node name="FilesVContainer" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer"]
 custom_minimum_size = Vector2(300, 0)
@@ -828,6 +830,8 @@ size_flags_horizontal = 4
 size_flags_vertical = 0
 theme_override_font_sizes/font_size = 60
 text = "读取"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="CloseButton" type="Button" parent="DialogUI/SaLUI/Title"]
 layout_mode = 2
