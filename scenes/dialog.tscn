@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://bj8ynu8013j4j"]
+[gd_scene load_steps=48 format=3 uid="uid://bj8ynu8013j4j"]
 
 [ext_resource type="Script" uid="uid://dpo124xwpder5" path="res://addons/konado/scripts/dialogue/dialogue_manager.gd" id="1_buo3n"]
 [ext_resource type="Script" uid="uid://cyoedi0x84dxy" path="res://addons/konado/scripts/act/acting_Interface.gd" id="2_pq6sw"]
@@ -70,7 +70,32 @@ bg_color = Color(0.937255, 0.14902, 0, 0.376471)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h6kpk"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wnbmn"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h6kpk"]
+bg_color = Color(1, 0.321569, 0.427451, 0.482353)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ub6cx"]
+bg_color = Color(1, 0.133333, 0.623529, 0.541176)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m7kjq"]
+bg_color = Color(0.141176, 0, 0.917647, 0.576471)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wnbmn"]
+bg_color = Color(0.945098, 0.423529, 0, 0.670588)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eac7y"]
+bg_color = Color(0, 0.690196, 0.67451, 0.67451)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nhljo"]
+bg_color = Color(0.709804, 0.443137, 1, 0.662745)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_une6u"]
+bg_color = Color(0.6, 0, 0.6, 0.607843)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jsjy8"]
+bg_color = Color(0.909804, 0.196078, 1, 0.513726)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hqqx5"]
+bg_color = Color(1, 0.6, 1, 0.698039)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sxvt2"]
 bg_color = Color(1, 0.268112, 0.605305, 1)
@@ -316,13 +341,13 @@ layout_mode = 2
 custom_minimum_size = Vector2(100, 25)
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "槽位1 YYYY-MM-DD"
+text = "槽位1 当前无存档"
 
 [node name="Chapter1" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer1/FilePanel1/FileMargin1/FileMarginV1"]
 custom_minimum_size = Vector2(100, 30)
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "章节1 章节名称"
+text = "——————————"
 
 [node name="TriggerButton1" type="Button" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer1/FilePanel1"]
 custom_minimum_size = Vector2(300, 100)
@@ -369,13 +394,13 @@ layout_mode = 2
 custom_minimum_size = Vector2(100, 25)
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "槽位2 YYYY-MM-DD"
+text = "槽位2 当前无存档"
 
 [node name="Chapter2" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer2/FilePanel2/FileMargin2/FileMarginV2"]
 custom_minimum_size = Vector2(100, 30)
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "章节2 章节名称"
+text = "——————————"
 
 [node name="TriggerButton2" type="Button" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer2/FilePanel2"]
 custom_minimum_size = Vector2(300, 100)
@@ -388,7 +413,7 @@ theme_override_styles/disabled = SubResource("StyleBoxEmpty_sxvt2")
 theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_h6kpk")
 theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ub6cx")
 theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_m7kjq")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_wnbmn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_h6kpk")
 theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eac7y")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
@@ -422,13 +447,13 @@ layout_mode = 2
 custom_minimum_size = Vector2(100, 25)
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "槽位3 YYYY-MM-DD"
+text = "槽位3 当前无存档"
 
 [node name="Chapter3" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer3/FilePanel3/FileMargin3/FileMarginV3"]
 custom_minimum_size = Vector2(100, 30)
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "章节3 章节名称"
+text = "——————————"
 
 [node name="TriggerButton3" type="Button" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer3/FilePanel3"]
 custom_minimum_size = Vector2(300, 100)
@@ -441,7 +466,7 @@ theme_override_styles/disabled = SubResource("StyleBoxEmpty_sxvt2")
 theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_h6kpk")
 theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ub6cx")
 theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_m7kjq")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_wnbmn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ub6cx")
 theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eac7y")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
@@ -475,13 +500,13 @@ layout_mode = 2
 custom_minimum_size = Vector2(100, 25)
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "槽位4 YYYY-MM-DD"
+text = "槽位4 当前无存档"
 
 [node name="Chapter4" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer4/FilePanel4/FileMargin4/FileMarginV4"]
 custom_minimum_size = Vector2(100, 30)
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "章节4 章节名称"
+text = "——————————"
 
 [node name="TriggerButton4" type="Button" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer4/FilePanel4"]
 custom_minimum_size = Vector2(300, 100)
@@ -494,7 +519,7 @@ theme_override_styles/disabled = SubResource("StyleBoxEmpty_sxvt2")
 theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_h6kpk")
 theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ub6cx")
 theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_m7kjq")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_wnbmn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_m7kjq")
 theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eac7y")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
@@ -528,13 +553,13 @@ layout_mode = 2
 custom_minimum_size = Vector2(100, 25)
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "槽位5 YYYY-MM-DD"
+text = "槽位5 当前无存档"
 
 [node name="Chapter5" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer5/FilePanel5/FileMargin5/FileMarginV5"]
 custom_minimum_size = Vector2(100, 30)
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "章节5 章节名称"
+text = "——————————"
 
 [node name="TriggerButton5" type="Button" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer5/FilePanel5"]
 custom_minimum_size = Vector2(300, 100)
@@ -547,7 +572,7 @@ theme_override_styles/disabled = SubResource("StyleBoxEmpty_sxvt2")
 theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_h6kpk")
 theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ub6cx")
 theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_m7kjq")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_wnbmn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_wnbmn")
 theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eac7y")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
@@ -586,13 +611,13 @@ layout_mode = 2
 custom_minimum_size = Vector2(100, 25)
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "槽位6 YYYY-MM-DD"
+text = "槽位6 当前无存档"
 
 [node name="Chapter6" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer6/FilePanel6/FileMargin6/FileMarginV6"]
 custom_minimum_size = Vector2(100, 30)
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "章节8 章节名称"
+text = "——————————"
 
 [node name="TriggerButton6" type="Button" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer6/FilePanel6"]
 custom_minimum_size = Vector2(300, 100)
@@ -605,7 +630,7 @@ theme_override_styles/disabled = SubResource("StyleBoxEmpty_sxvt2")
 theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_h6kpk")
 theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ub6cx")
 theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_m7kjq")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_wnbmn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_eac7y")
 theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eac7y")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
@@ -639,13 +664,13 @@ layout_mode = 2
 custom_minimum_size = Vector2(100, 25)
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "槽位7 YYYY-MM-DD"
+text = "槽位7 当前无存档"
 
 [node name="Chapter7" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer7/FilePanel7/FileMargin7/FileMarginV7"]
 custom_minimum_size = Vector2(100, 30)
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "章节7 章节名称"
+text = "——————————"
 
 [node name="TriggerButton7" type="Button" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer7/FilePanel7"]
 custom_minimum_size = Vector2(300, 100)
@@ -658,7 +683,7 @@ theme_override_styles/disabled = SubResource("StyleBoxEmpty_sxvt2")
 theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_h6kpk")
 theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ub6cx")
 theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_m7kjq")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_wnbmn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_nhljo")
 theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eac7y")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
@@ -692,13 +717,13 @@ layout_mode = 2
 custom_minimum_size = Vector2(100, 25)
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "槽位8 YYYY-MM-DD"
+text = "槽位8 当前无存档"
 
 [node name="Chapter8" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer8/FilePanel8/FileMargin8/FileMarginV8"]
 custom_minimum_size = Vector2(100, 30)
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "章节8 章节名称"
+text = "——————————"
 
 [node name="TriggerButton8" type="Button" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer8/FilePanel8"]
 custom_minimum_size = Vector2(300, 100)
@@ -711,7 +736,7 @@ theme_override_styles/disabled = SubResource("StyleBoxEmpty_sxvt2")
 theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_h6kpk")
 theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ub6cx")
 theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_m7kjq")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_wnbmn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_une6u")
 theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eac7y")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
@@ -745,13 +770,13 @@ layout_mode = 2
 custom_minimum_size = Vector2(100, 25)
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "槽位9 YYYY-MM-DD"
+text = "槽位9 当前无存档"
 
 [node name="Chapter9" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer9/FilePanel9/FileMargin9/FileMarginV9"]
 custom_minimum_size = Vector2(100, 30)
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "章节9 章节名称"
+text = "——————————"
 
 [node name="TriggerButton9" type="Button" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer9/FilePanel9"]
 custom_minimum_size = Vector2(300, 100)
@@ -764,7 +789,7 @@ theme_override_styles/disabled = SubResource("StyleBoxEmpty_sxvt2")
 theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_h6kpk")
 theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ub6cx")
 theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_m7kjq")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_wnbmn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_jsjy8")
 theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eac7y")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
@@ -798,13 +823,13 @@ layout_mode = 2
 custom_minimum_size = Vector2(100, 25)
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "槽位10 YYYY-MM-DD"
+text = "槽位10 当前无存档"
 
 [node name="Chapter10" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer10/FilePanel10/FileMargin10/FileMarginV10"]
 custom_minimum_size = Vector2(100, 30)
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "章节10 章节名称"
+text = "——————————"
 
 [node name="TriggerButton10" type="Button" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer10/FilePanel10"]
 custom_minimum_size = Vector2(300, 100)
@@ -817,7 +842,7 @@ theme_override_styles/disabled = SubResource("StyleBoxEmpty_sxvt2")
 theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_h6kpk")
 theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ub6cx")
 theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_m7kjq")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_wnbmn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_hqqx5")
 theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eac7y")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
