@@ -26,11 +26,11 @@ func _save_game(slot_id: int) -> void:#保存数据，需要传入槽位ID
 	var file = FileAccess.open(file_path, FileAccess.WRITE)
 	if file:
 		file.store_line(JSON.stringify(data_to_save, "\t"))
-		print(data_to_save)  # 带缩进的 JSON，写入
+		print_rich("槽位" + str(slot_id) + "[color=gold][b] 已存入[/b][/color]")  # 带缩进的 JSON，写入
 	else:
 		push_error("Save failed: ", FileAccess.get_open_error())#打开失败则报错
 
-func _collect_game_data() -> Dictionary:
+func _collect_game_data() -> Dictionary:#收集游戏数据
 	return{
 		"metadata" : {
 			"SaL_system_version" : "0.0.1",#开发用水印
@@ -53,7 +53,7 @@ func _load_game(slot_id: int) -> bool:#加载数据，需要传入槽位ID
 	
 	# 检查存档文件是否存在
 	if not FileAccess.file_exists(file_path):
-		push_error("Save file not found: ", file_path)
+		print_rich("[color=green][b]Save file not found: [/b][/color]", file_path)
 		return false
 	
 	# 打开存档文件
@@ -96,8 +96,8 @@ func _load_game(slot_id: int) -> bool:#加载数据，需要传入槽位ID
 	curline = game_data.get("curline", 0)
 	
 	#调试
-	print("Loaded save data from slot ", slot_id)
-	print(loaded_data)
+	print_rich("[color=yellow][b]Loaded data from slot [/b][/color]", slot_id)
+	#print(loaded_data)
 	return true
 
 func _get_file_inf(slot_id : int) -> Dictionary :
@@ -105,7 +105,7 @@ func _get_file_inf(slot_id : int) -> Dictionary :
 	
 	# 检查存档文件是否存在
 	if not FileAccess.file_exists(file_path):
-		push_error("Save file not found: ", file_path)
+		print_rich("[color=green][b]Save file not found: [/b][/color]", file_path)
 		pass
 	
 	# 打开存档文件

@@ -245,9 +245,11 @@ func change_actor_state(actor_id: String, state_id: String, state_tex: Texture) 
 # 高亮角色
 func highlight_actor(actor_id: String) -> void:
 	for actor in actor_dict.keys():
+		if actor_dict.keys() == null:
+			return#防止报错的判空
 		var tmp = get_chara_node(actor).find_child(actor, true, false) as CanvasItem
 		if tmp == null :
-			return
+			return#同上
 		tmp.set_modulate(Color(0.5, 0.5, 0.5))
 
 	var chara_node: Node = get_chara_node(actor_id)

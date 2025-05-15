@@ -653,7 +653,7 @@ func _load_file_data(slot_id : int):
 	#用于获取变量
 	var dialog = dialog_data.dialogs[curline]
 	
-	if KS_SAVE_AND_LOAD._load_game(slot_id) == true :
+	if KS_SAVE_AND_LOAD._load_game(slot_id) == true :#确认文件存在
 		#更新变量
 		_acting_interface.actor_dict = KS_SAVE_AND_LOAD.chara_disc
 		_acting_interface.background_id = KS_SAVE_AND_LOAD.background_id
@@ -679,6 +679,9 @@ func _load_file_data(slot_id : int):
 		
 		#播放音效（停止音效的方法包含在这个方法里了
 		_play_soundeffect(se_id)
+	else:
+		pass
+		print("文件不存在")
 
 #检测是否有任何窗口打开
 func _check_opening() -> bool:
