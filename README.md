@@ -1,11 +1,11 @@
-# Konado 可娜多
+# Konado 可娜多：视觉小说框架
 
 ![star](https://gitcode.com/shengjing/Konado/star/badge.svg)
 ![License](https://img.shields.io/badge/License-MIT-yellow.svg)
 ![Status](https://img.shields.io/badge/Status-Active-brightgreen.svg)
 
 <p align="center">
-  <img src="./assets/KonadoBanner.png" alt="看板娘多文" width=596px>
+  <img src="assets/KonadoBanner.png" alt="看板娘可娜" width=596px>
 </p>
 
 
@@ -15,6 +15,7 @@
 </p>
 
 ## 简介
+
 Konado是一个对话创建工具，提供多种对话模板以及对话管理器，可以快速创建对话游戏，也可以嵌入各类游戏的对话场景。
 
 ## 安装
