@@ -526,6 +526,8 @@ func _play_bgm(bgm_name: String) -> void:
 	if bgm_name == null:
 		return
 	var target_bgm: AudioStream
+	if bgm_list == null or bgm_list.bgms == null :
+		return#判空
 	for bgm in bgm_list.bgms:
 		if bgm.bgm_name == bgm_name:
 			target_bgm = bgm.bgm
@@ -536,11 +538,14 @@ func _play_bgm(bgm_name: String) -> void:
 func _stop_bgm() -> void:
 	_audio_interface.stop_bgm()
 	pass
+
 ## 播放配音
 func _play_voice(voice_name: String) -> void:
 	if voice_name == null:
 		return
 	var target_voice: AudioStream
+	if voice_list == null or voice_list.voices == null:
+		return#判空
 	for voice in voice_list.voices:
 		if voice.voice_name == voice_name:
 			target_voice = voice.voice
