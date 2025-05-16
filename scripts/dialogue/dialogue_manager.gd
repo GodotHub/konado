@@ -558,6 +558,8 @@ func _play_soundeffect(se_name: String) -> void:
 	if se_name == null:
 		return
 	var target_soundeffect: AudioStream
+	if soundeffect_list == null or soundeffect_list.soundeffects == null:
+		return#判空
 	for soundeffect in soundeffect_list.soundeffects:
 		if soundeffect.se_name == se_name:
 			target_soundeffect = soundeffect.se
