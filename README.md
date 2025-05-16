@@ -1,11 +1,11 @@
-# Konado 可娜多
+# Konado 可娜多：视觉小说框架
 
 ![star](https://gitcode.com/shengjing/Konado/star/badge.svg)
 ![License](https://img.shields.io/badge/License-MIT-yellow.svg)
 ![Status](https://img.shields.io/badge/Status-Active-brightgreen.svg)
 
 <p align="center">
-  <img src="./assets/KonadoBanner.png" alt="看板娘多文" width=596px>
+  <img src="assets/KonadoBanner.png" alt="看板娘可娜" width=596px>
 </p>
 
 
@@ -15,6 +15,7 @@
 </p>
 
 ## 简介
+
 Konado是一个对话创建工具，提供多种对话模板以及对话管理器，可以快速创建对话游戏，也可以嵌入各类游戏的对话场景。
 
 ## 安装
@@ -243,9 +244,12 @@ background tavern_night  # 夜间酒馆场景
 
 ## 项目贡献者
 
-- [Kamiki_](https://gitcode.com/Kamiki_) - 项目贡献者
+- [Kamiki_](https://gitcode.com/Kamiki_) - 项目维护者
+- [gezigezi123](https://gitcode.com/gezigezi123) - 发现并修复了数个功能缺陷
 - [lgyxj](https://gitee.com/lgyxj) - 为本项目提供shader支持
-- 麻卤可乐丝 - 为本项目提供看板娘
+- [麻卤可乐丝](https://gitcode.com/marukles) - 为本项目提供看板娘立绘和海报
+- [moluopro](https://gitcode.com/moluopro) - 初代看板娘设计者
+
 
 ## 开源许可证
 Konado 使用 MIT 许可证，开源且免费使用，具体内容请查看 [LICENSE](./LICENSE) 文件。
