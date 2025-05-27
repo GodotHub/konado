@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=3 uid="uid://bj8ynu8013j4j"]
+[gd_scene load_steps=57 format=3 uid="uid://bj8ynu8013j4j"]
 
 [ext_resource type="Script" uid="uid://dpo124xwpder5" path="res://addons/konado/scripts/dialogue/dialogue_manager.gd" id="1_buo3n"]
 [ext_resource type="Script" uid="uid://cyoedi0x84dxy" path="res://addons/konado/scripts/act/acting_Interface.gd" id="2_pq6sw"]
@@ -39,8 +39,7 @@ texture = SubResource("GradientTexture2D_m86f6")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3sqld"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_566op"]
-bg_color = Color(1, 1, 1, 1)
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hqqx5"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_utfb4"]
 
@@ -52,23 +51,33 @@ bg_color = Color(1, 1, 1, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ub6cx"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_m7kjq"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bycqy"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_utfb4"]
-bg_color = Color(0.937255, 0.14902, 0, 0.376471)
+bg_color = Color(0.792157, 0.792157, 0.792157, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_eac7y"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nhljo"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ya35c"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_une6u"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jsjy8"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xjghb"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_566op"]
+bg_color = Color(1, 1, 1, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h6kpk"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_m7kjq"]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h6kpk"]
 bg_color = Color(1, 0.321569, 0.427451, 0.482353)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nhljo"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jsjy8"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ub6cx"]
 bg_color = Color(1, 0.133333, 0.623529, 0.541176)
@@ -307,6 +316,7 @@ toggle_mode = true
 text = "自动播放"
 
 [node name="SaLUI" type="PanelContainer" parent="DialogUI"]
+visible = false
 custom_minimum_size = Vector2(750, 650)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -338,7 +348,7 @@ size_flags_vertical = 0
 custom_minimum_size = Vector2(300, 100)
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_566op")
+theme_override_styles/panel = SubResource("StyleBoxEmpty_hqqx5")
 
 [node name="TriggerButton1" type="Button" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer1/FilePanel1"]
 custom_minimum_size = Vector2(300, 100)
@@ -350,12 +360,12 @@ theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_qodmk")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_sxvt2")
 theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_566op")
 theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ub6cx")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_m7kjq")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_bycqy")
 theme_override_styles/hover = SubResource("StyleBoxFlat_utfb4")
 theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eac7y")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_ya35c")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_jsjy8")
+theme_override_styles/normal = SubResource("StyleBoxFlat_xjghb")
 
 [node name="FileMargin1" type="MarginContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer1/FilePanel1"]
 layout_mode = 2
