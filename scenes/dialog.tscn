@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3 uid="uid://bj8ynu8013j4j"]
+[gd_scene load_steps=53 format=3 uid="uid://bj8ynu8013j4j"]
 
 [ext_resource type="Script" uid="uid://dpo124xwpder5" path="res://addons/konado/scripts/dialogue/dialogue_manager.gd" id="1_buo3n"]
 [ext_resource type="Script" uid="uid://cyoedi0x84dxy" path="res://addons/konado/scripts/act/acting_Interface.gd" id="2_pq6sw"]
@@ -38,9 +38,6 @@ texture = SubResource("GradientTexture2D_m86f6")
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1xeec"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3sqld"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qodmk"]
-bg_color = Color(0.6, 0.6, 0.6, 0.309804)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_566op"]
 bg_color = Color(1, 1, 1, 1)
@@ -88,14 +85,31 @@ bg_color = Color(0, 0.690196, 0.67451, 0.67451)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nhljo"]
 bg_color = Color(0.709804, 0.443137, 1, 0.662745)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_une6u"]
-bg_color = Color(0.6, 0, 0.6, 0.607843)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bycqy"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ya35c"]
+bg_color = Color(0.792157, 0.792157, 0.792157, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e1ahj"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_utfb4"]
+color = Color(1, 1, 1, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jsjy8"]
-bg_color = Color(0.909804, 0.196078, 1, 0.513726)
+bg_color = Color(0.792157, 0.792157, 0.792157, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hqqx5"]
-bg_color = Color(1, 0.6, 1, 0.698039)
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wnbmn"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qodmk"]
+bg_color = Color(0.792157, 0.792157, 0.792157, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_une6u"]
+bg_color = Color(1, 1, 1, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sxvt2"]
 bg_color = Color(1, 0.268112, 0.605305, 1)
@@ -297,7 +311,6 @@ custom_minimum_size = Vector2(750, 650)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme_override_styles/panel = SubResource("StyleBoxFlat_qodmk")
 script = ExtResource("4_566op")
 
 [node name="FilesContainer" type="MarginContainer" parent="DialogUI/SaLUI"]
@@ -327,30 +340,6 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_566op")
 
-[node name="FileMargin1" type="MarginContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer1/FilePanel1"]
-layout_mode = 2
-offset_left = -2.0
-offset_top = 4.0
-offset_right = 298.0
-offset_bottom = 63.0
-theme_override_constants/margin_left = 30
-theme_override_constants/margin_top = 20
-
-[node name="FileMarginV1" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer1/FilePanel1/FileMargin1"]
-layout_mode = 2
-
-[node name="SlotAndDate1" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer1/FilePanel1/FileMargin1/FileMarginV1"]
-custom_minimum_size = Vector2(100, 25)
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "槽位1 当前无存档"
-
-[node name="Chapter1" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer1/FilePanel1/FileMargin1/FileMarginV1"]
-custom_minimum_size = Vector2(100, 30)
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "——————————"
-
 [node name="TriggerButton1" type="Button" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer1/FilePanel1"]
 custom_minimum_size = Vector2(300, 100)
 layout_mode = 2
@@ -368,6 +357,34 @@ theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_jsjy8")
 
+[node name="FileMargin1" type="MarginContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer1/FilePanel1"]
+layout_mode = 2
+offset_left = -2.0
+offset_top = 4.0
+offset_right = 298.0
+offset_bottom = 63.0
+mouse_filter = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 20
+
+[node name="FileMarginV1" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer1/FilePanel1/FileMargin1"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="SlotAndDate1" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer1/FilePanel1/FileMargin1/FileMarginV1"]
+custom_minimum_size = Vector2(100, 25)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 15
+text = "槽位1 当前无存档"
+
+[node name="Chapter1" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer1/FilePanel1/FileMargin1/FileMarginV1"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 15
+text = "——————————"
+
 [node name="FileContainer2" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer"]
 custom_minimum_size = Vector2(300, 100)
 layout_mode = 2
@@ -379,30 +396,6 @@ custom_minimum_size = Vector2(300, 100)
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_566op")
-
-[node name="FileMargin2" type="MarginContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer2/FilePanel2"]
-layout_mode = 2
-offset_left = -2.0
-offset_top = 4.0
-offset_right = 298.0
-offset_bottom = 63.0
-theme_override_constants/margin_left = 30
-theme_override_constants/margin_top = 20
-
-[node name="FileMarginV2" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer2/FilePanel2/FileMargin2"]
-layout_mode = 2
-
-[node name="SlotAndDate2" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer2/FilePanel2/FileMargin2/FileMarginV2"]
-custom_minimum_size = Vector2(100, 25)
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "槽位2 当前无存档"
-
-[node name="Chapter2" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer2/FilePanel2/FileMargin2/FileMarginV2"]
-custom_minimum_size = Vector2(100, 30)
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "——————————"
 
 [node name="TriggerButton2" type="Button" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer2/FilePanel2"]
 custom_minimum_size = Vector2(300, 100)
@@ -421,6 +414,32 @@ theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_jsjy8")
 
+[node name="FileMargin2" type="MarginContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer2/FilePanel2"]
+layout_mode = 2
+offset_left = -2.0
+offset_top = 4.0
+offset_right = 298.0
+offset_bottom = 63.0
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 20
+
+[node name="FileMarginV2" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer2/FilePanel2/FileMargin2"]
+layout_mode = 2
+
+[node name="SlotAndDate2" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer2/FilePanel2/FileMargin2/FileMarginV2"]
+custom_minimum_size = Vector2(100, 25)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 15
+text = "槽位2 当前无存档"
+
+[node name="Chapter2" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer2/FilePanel2/FileMargin2/FileMarginV2"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 15
+text = "——————————"
+
 [node name="FileContainer3" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer"]
 custom_minimum_size = Vector2(300, 100)
 layout_mode = 2
@@ -432,30 +451,6 @@ custom_minimum_size = Vector2(300, 100)
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_566op")
-
-[node name="FileMargin3" type="MarginContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer3/FilePanel3"]
-layout_mode = 2
-offset_left = -2.0
-offset_top = 4.0
-offset_right = 298.0
-offset_bottom = 63.0
-theme_override_constants/margin_left = 30
-theme_override_constants/margin_top = 20
-
-[node name="FileMarginV3" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer3/FilePanel3/FileMargin3"]
-layout_mode = 2
-
-[node name="SlotAndDate3" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer3/FilePanel3/FileMargin3/FileMarginV3"]
-custom_minimum_size = Vector2(100, 25)
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "槽位3 当前无存档"
-
-[node name="Chapter3" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer3/FilePanel3/FileMargin3/FileMarginV3"]
-custom_minimum_size = Vector2(100, 30)
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "——————————"
 
 [node name="TriggerButton3" type="Button" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer3/FilePanel3"]
 custom_minimum_size = Vector2(300, 100)
@@ -474,6 +469,34 @@ theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_jsjy8")
 
+[node name="FileMargin3" type="MarginContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer3/FilePanel3"]
+layout_mode = 2
+offset_left = -2.0
+offset_top = 4.0
+offset_right = 298.0
+offset_bottom = 63.0
+mouse_filter = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 20
+
+[node name="FileMarginV3" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer3/FilePanel3/FileMargin3"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="SlotAndDate3" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer3/FilePanel3/FileMargin3/FileMarginV3"]
+custom_minimum_size = Vector2(100, 25)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 15
+text = "槽位3 当前无存档"
+
+[node name="Chapter3" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer3/FilePanel3/FileMargin3/FileMarginV3"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 15
+text = "——————————"
+
 [node name="FileContainer4" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer"]
 custom_minimum_size = Vector2(300, 100)
 layout_mode = 2
@@ -485,30 +508,6 @@ custom_minimum_size = Vector2(300, 100)
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_566op")
-
-[node name="FileMargin4" type="MarginContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer4/FilePanel4"]
-layout_mode = 2
-offset_left = -2.0
-offset_top = 4.0
-offset_right = 298.0
-offset_bottom = 63.0
-theme_override_constants/margin_left = 30
-theme_override_constants/margin_top = 20
-
-[node name="FileMarginV4" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer4/FilePanel4/FileMargin4"]
-layout_mode = 2
-
-[node name="SlotAndDate4" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer4/FilePanel4/FileMargin4/FileMarginV4"]
-custom_minimum_size = Vector2(100, 25)
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "槽位4 当前无存档"
-
-[node name="Chapter4" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer4/FilePanel4/FileMargin4/FileMarginV4"]
-custom_minimum_size = Vector2(100, 30)
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "——————————"
 
 [node name="TriggerButton4" type="Button" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer4/FilePanel4"]
 custom_minimum_size = Vector2(300, 100)
@@ -527,6 +526,34 @@ theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_jsjy8")
 
+[node name="FileMargin4" type="MarginContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer4/FilePanel4"]
+layout_mode = 2
+offset_left = -2.0
+offset_top = 4.0
+offset_right = 298.0
+offset_bottom = 63.0
+mouse_filter = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 20
+
+[node name="FileMarginV4" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer4/FilePanel4/FileMargin4"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="SlotAndDate4" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer4/FilePanel4/FileMargin4/FileMarginV4"]
+custom_minimum_size = Vector2(100, 25)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 15
+text = "槽位4 当前无存档"
+
+[node name="Chapter4" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer4/FilePanel4/FileMargin4/FileMarginV4"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 15
+text = "——————————"
+
 [node name="FileContainer5" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer"]
 custom_minimum_size = Vector2(300, 100)
 layout_mode = 2
@@ -538,30 +565,6 @@ custom_minimum_size = Vector2(300, 100)
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_566op")
-
-[node name="FileMargin5" type="MarginContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer5/FilePanel5"]
-layout_mode = 2
-offset_left = -2.0
-offset_top = 4.0
-offset_right = 298.0
-offset_bottom = 63.0
-theme_override_constants/margin_left = 30
-theme_override_constants/margin_top = 20
-
-[node name="FileMarginV5" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer5/FilePanel5/FileMargin5"]
-layout_mode = 2
-
-[node name="SlotAndDate5" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer5/FilePanel5/FileMargin5/FileMarginV5"]
-custom_minimum_size = Vector2(100, 25)
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "槽位5 当前无存档"
-
-[node name="Chapter5" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer5/FilePanel5/FileMargin5/FileMarginV5"]
-custom_minimum_size = Vector2(100, 30)
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "——————————"
 
 [node name="TriggerButton5" type="Button" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer5/FilePanel5"]
 custom_minimum_size = Vector2(300, 100)
@@ -580,6 +583,34 @@ theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_jsjy8")
 
+[node name="FileMargin5" type="MarginContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer5/FilePanel5"]
+layout_mode = 2
+offset_left = -2.0
+offset_top = 4.0
+offset_right = 298.0
+offset_bottom = 63.0
+mouse_filter = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 20
+
+[node name="FileMarginV5" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer5/FilePanel5/FileMargin5"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="SlotAndDate5" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer5/FilePanel5/FileMargin5/FileMarginV5"]
+custom_minimum_size = Vector2(100, 25)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 15
+text = "槽位5 当前无存档"
+
+[node name="Chapter5" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer5/FilePanel5/FileMargin5/FileMarginV5"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 15
+text = "——————————"
+
 [node name="FilesVContainer2" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer"]
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
@@ -596,30 +627,6 @@ custom_minimum_size = Vector2(300, 100)
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_566op")
-
-[node name="FileMargin6" type="MarginContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer6/FilePanel6"]
-layout_mode = 2
-offset_left = -2.0
-offset_top = 4.0
-offset_right = 298.0
-offset_bottom = 63.0
-theme_override_constants/margin_left = 30
-theme_override_constants/margin_top = 20
-
-[node name="FileMarginV6" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer6/FilePanel6/FileMargin6"]
-layout_mode = 2
-
-[node name="SlotAndDate6" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer6/FilePanel6/FileMargin6/FileMarginV6"]
-custom_minimum_size = Vector2(100, 25)
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "槽位6 当前无存档"
-
-[node name="Chapter6" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer6/FilePanel6/FileMargin6/FileMarginV6"]
-custom_minimum_size = Vector2(100, 30)
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "——————————"
 
 [node name="TriggerButton6" type="Button" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer6/FilePanel6"]
 custom_minimum_size = Vector2(300, 100)
@@ -638,6 +645,34 @@ theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_jsjy8")
 
+[node name="FileMargin6" type="MarginContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer6/FilePanel6"]
+layout_mode = 2
+offset_left = -2.0
+offset_top = 4.0
+offset_right = 298.0
+offset_bottom = 63.0
+mouse_filter = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 20
+
+[node name="FileMarginV6" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer6/FilePanel6/FileMargin6"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="SlotAndDate6" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer6/FilePanel6/FileMargin6/FileMarginV6"]
+custom_minimum_size = Vector2(100, 25)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 15
+text = "槽位6 当前无存档"
+
+[node name="Chapter6" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer6/FilePanel6/FileMargin6/FileMarginV6"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 15
+text = "——————————"
+
 [node name="FileContainer7" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2"]
 custom_minimum_size = Vector2(300, 100)
 layout_mode = 2
@@ -649,30 +684,6 @@ custom_minimum_size = Vector2(300, 100)
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_566op")
-
-[node name="FileMargin7" type="MarginContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer7/FilePanel7"]
-layout_mode = 2
-offset_left = -2.0
-offset_top = 4.0
-offset_right = 298.0
-offset_bottom = 63.0
-theme_override_constants/margin_left = 30
-theme_override_constants/margin_top = 20
-
-[node name="FileMarginV7" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer7/FilePanel7/FileMargin7"]
-layout_mode = 2
-
-[node name="SlotAndDate7" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer7/FilePanel7/FileMargin7/FileMarginV7"]
-custom_minimum_size = Vector2(100, 25)
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "槽位7 当前无存档"
-
-[node name="Chapter7" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer7/FilePanel7/FileMargin7/FileMarginV7"]
-custom_minimum_size = Vector2(100, 30)
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "——————————"
 
 [node name="TriggerButton7" type="Button" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer7/FilePanel7"]
 custom_minimum_size = Vector2(300, 100)
@@ -691,6 +702,34 @@ theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_jsjy8")
 
+[node name="FileMargin7" type="MarginContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer7/FilePanel7"]
+layout_mode = 2
+offset_left = -2.0
+offset_top = 4.0
+offset_right = 298.0
+offset_bottom = 63.0
+mouse_filter = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 20
+
+[node name="FileMarginV7" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer7/FilePanel7/FileMargin7"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="SlotAndDate7" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer7/FilePanel7/FileMargin7/FileMarginV7"]
+custom_minimum_size = Vector2(100, 25)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 15
+text = "槽位7 当前无存档"
+
+[node name="Chapter7" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer7/FilePanel7/FileMargin7/FileMarginV7"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 15
+text = "——————————"
+
 [node name="FileContainer8" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2"]
 custom_minimum_size = Vector2(300, 100)
 layout_mode = 2
@@ -701,31 +740,7 @@ size_flags_vertical = 0
 custom_minimum_size = Vector2(300, 100)
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_566op")
-
-[node name="FileMargin8" type="MarginContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer8/FilePanel8"]
-layout_mode = 2
-offset_left = -2.0
-offset_top = 4.0
-offset_right = 298.0
-offset_bottom = 63.0
-theme_override_constants/margin_left = 30
-theme_override_constants/margin_top = 20
-
-[node name="FileMarginV8" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer8/FilePanel8/FileMargin8"]
-layout_mode = 2
-
-[node name="SlotAndDate8" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer8/FilePanel8/FileMargin8/FileMarginV8"]
-custom_minimum_size = Vector2(100, 25)
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "槽位8 当前无存档"
-
-[node name="Chapter8" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer8/FilePanel8/FileMargin8/FileMarginV8"]
-custom_minimum_size = Vector2(100, 30)
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "——————————"
+theme_override_styles/panel = SubResource("StyleBoxFlat_bycqy")
 
 [node name="TriggerButton8" type="Button" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer8/FilePanel8"]
 custom_minimum_size = Vector2(300, 100)
@@ -738,11 +753,39 @@ theme_override_styles/disabled = SubResource("StyleBoxEmpty_sxvt2")
 theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_h6kpk")
 theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ub6cx")
 theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_m7kjq")
-theme_override_styles/hover = SubResource("StyleBoxFlat_une6u")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ya35c")
 theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eac7y")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_jsjy8")
+theme_override_styles/normal = SubResource("StyleBoxFlat_e1ahj")
+
+[node name="FileMargin8" type="MarginContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer8/FilePanel8"]
+layout_mode = 2
+offset_left = -2.0
+offset_top = 4.0
+offset_right = 298.0
+offset_bottom = 63.0
+mouse_filter = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 20
+
+[node name="FileMarginV8" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer8/FilePanel8/FileMargin8"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="SlotAndDate8" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer8/FilePanel8/FileMargin8/FileMarginV8"]
+custom_minimum_size = Vector2(100, 25)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 15
+text = "槽位8 当前无存档"
+
+[node name="Chapter8" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer8/FilePanel8/FileMargin8/FileMarginV8"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 15
+text = "——————————"
 
 [node name="FileContainer9" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2"]
 custom_minimum_size = Vector2(300, 100)
@@ -754,31 +797,7 @@ size_flags_vertical = 0
 custom_minimum_size = Vector2(300, 100)
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_566op")
-
-[node name="FileMargin9" type="MarginContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer9/FilePanel9"]
-layout_mode = 2
-offset_left = -2.0
-offset_top = 4.0
-offset_right = 298.0
-offset_bottom = 63.0
-theme_override_constants/margin_left = 30
-theme_override_constants/margin_top = 20
-
-[node name="FileMarginV9" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer9/FilePanel9/FileMargin9"]
-layout_mode = 2
-
-[node name="SlotAndDate9" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer9/FilePanel9/FileMargin9/FileMarginV9"]
-custom_minimum_size = Vector2(100, 25)
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "槽位9 当前无存档"
-
-[node name="Chapter9" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer9/FilePanel9/FileMargin9/FileMarginV9"]
-custom_minimum_size = Vector2(100, 30)
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "——————————"
+theme_override_styles/panel = SubResource("StyleBoxLine_utfb4")
 
 [node name="TriggerButton9" type="Button" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer9/FilePanel9"]
 custom_minimum_size = Vector2(300, 100)
@@ -795,7 +814,35 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_jsjy8")
 theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eac7y")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_jsjy8")
+theme_override_styles/normal = SubResource("StyleBoxFlat_hqqx5")
+
+[node name="FileMargin9" type="MarginContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer9/FilePanel9"]
+layout_mode = 2
+offset_left = -2.0
+offset_top = 4.0
+offset_right = 298.0
+offset_bottom = 63.0
+mouse_filter = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 20
+
+[node name="FileMarginV9" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer9/FilePanel9/FileMargin9"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="SlotAndDate9" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer9/FilePanel9/FileMargin9/FileMarginV9"]
+custom_minimum_size = Vector2(100, 25)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 15
+text = "槽位9 当前无存档"
+
+[node name="Chapter9" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer9/FilePanel9/FileMargin9/FileMarginV9"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 15
+text = "——————————"
 
 [node name="FileContainer10" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2"]
 custom_minimum_size = Vector2(300, 100)
@@ -807,31 +854,7 @@ size_flags_vertical = 0
 custom_minimum_size = Vector2(300, 100)
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_566op")
-
-[node name="FileMargin10" type="MarginContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer10/FilePanel10"]
-layout_mode = 2
-offset_left = -2.0
-offset_top = 4.0
-offset_right = 298.0
-offset_bottom = 63.0
-theme_override_constants/margin_left = 30
-theme_override_constants/margin_top = 20
-
-[node name="FileMarginV10" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer10/FilePanel10/FileMargin10"]
-layout_mode = 2
-
-[node name="SlotAndDate10" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer10/FilePanel10/FileMargin10/FileMarginV10"]
-custom_minimum_size = Vector2(100, 25)
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "槽位10 当前无存档"
-
-[node name="Chapter10" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer10/FilePanel10/FileMargin10/FileMarginV10"]
-custom_minimum_size = Vector2(100, 30)
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "——————————"
+theme_override_styles/panel = SubResource("StyleBoxEmpty_wnbmn")
 
 [node name="TriggerButton10" type="Button" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer10/FilePanel10"]
 custom_minimum_size = Vector2(300, 100)
@@ -844,11 +867,39 @@ theme_override_styles/disabled = SubResource("StyleBoxEmpty_sxvt2")
 theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_h6kpk")
 theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ub6cx")
 theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_m7kjq")
-theme_override_styles/hover = SubResource("StyleBoxFlat_hqqx5")
+theme_override_styles/hover = SubResource("StyleBoxFlat_qodmk")
 theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eac7y")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_jsjy8")
+theme_override_styles/normal = SubResource("StyleBoxFlat_une6u")
+
+[node name="FileMargin10" type="MarginContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer10/FilePanel10"]
+layout_mode = 2
+offset_left = -2.0
+offset_top = 4.0
+offset_right = 298.0
+offset_bottom = 83.0
+mouse_filter = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 20
+
+[node name="FileMarginV10" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer10/FilePanel10/FileMargin10"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="SlotAndDate10" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer10/FilePanel10/FileMargin10/FileMarginV10"]
+custom_minimum_size = Vector2(100, 25)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 15
+text = "槽位10 当前无存档"
+
+[node name="Chapter10" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer10/FilePanel10/FileMargin10/FileMarginV10"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 15
+text = "——————————"
 
 [node name="Title" type="Label" parent="DialogUI/SaLUI"]
 custom_minimum_size = Vector2(200, 100)
