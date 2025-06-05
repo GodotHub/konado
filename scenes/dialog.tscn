@@ -1,10 +1,11 @@
-[gd_scene load_steps=57 format=3 uid="uid://bj8ynu8013j4j"]
+[gd_scene load_steps=60 format=3 uid="uid://bj8ynu8013j4j"]
 
 [ext_resource type="Script" uid="uid://dpo124xwpder5" path="res://addons/konado/scripts/dialogue/dialogue_manager.gd" id="1_buo3n"]
 [ext_resource type="Script" uid="uid://cyoedi0x84dxy" path="res://addons/konado/scripts/act/acting_Interface.gd" id="2_pq6sw"]
 [ext_resource type="Script" uid="uid://b0kbsxqyedoml" path="res://addons/konado/scripts/dialogue/dialogue_Interface.gd" id="3_gl7il"]
 [ext_resource type="Script" uid="uid://5d4l66ex5dy" path="res://addons/konado/scripts/save_and_load/SaL_UI.gd" id="4_566op"]
 [ext_resource type="Script" uid="uid://cfbojxb1pdbrs" path="res://addons/konado/scripts/audio/audio_interface.gd" id="4_gd2ll"]
+[ext_resource type="Script" uid="uid://cbf7mvlofpiix" path="res://addons/konado/scripts/items/item_interface.gd" id="4_utfb4"]
 [ext_resource type="Script" uid="uid://ri30mk7ouhfu" path="res://addons/konado/scripts/debug/debug_interface.gd" id="6_41ybh"]
 [ext_resource type="Shader" uid="uid://btv6px1j4hwjt" path="res://addons/konado/shader/Blur.gdshader" id="7_bwdrp"]
 
@@ -39,6 +40,8 @@ texture = SubResource("GradientTexture2D_m86f6")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3sqld"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_e1ahj"]
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hqqx5"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_utfb4"]
@@ -65,8 +68,7 @@ bg_color = Color(0.792157, 0.792157, 0.792157, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xjghb"]
 bg_color = Color(1, 1, 1, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_566op"]
-bg_color = Color(1, 1, 1, 1)
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_utfb4"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h6kpk"]
 
@@ -78,6 +80,9 @@ bg_color = Color(1, 0.321569, 0.427451, 0.482353)
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nhljo"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jsjy8"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_566op"]
+bg_color = Color(1, 1, 1, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ub6cx"]
 bg_color = Color(1, 0.133333, 0.623529, 0.541176)
@@ -315,6 +320,14 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_3sqld")
 toggle_mode = true
 text = "自动播放"
 
+[node name="ItemInterface" type="PanelContainer" parent="DialogUI"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_e1ahj")
+script = ExtResource("4_utfb4")
+
+[node name="ItemControl" type="Control" parent="DialogUI/ItemInterface"]
+layout_mode = 2
+
 [node name="SaLUI" type="PanelContainer" parent="DialogUI"]
 visible = false
 custom_minimum_size = Vector2(750, 650)
@@ -405,7 +418,7 @@ size_flags_vertical = 0
 custom_minimum_size = Vector2(300, 100)
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_566op")
+theme_override_styles/panel = SubResource("StyleBoxTexture_utfb4")
 
 [node name="TriggerButton2" type="Button" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer2/FilePanel2"]
 custom_minimum_size = Vector2(300, 100)
