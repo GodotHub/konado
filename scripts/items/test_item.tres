@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="ItemDatas" load_steps=3 format=3 uid="uid://cfp8u5b6xve16"]
+
+[ext_resource type="Texture2D" uid="uid://bk5ej13sbvbkr" path="res://icon.svg" id="1_rspsh"]
+[ext_resource type="Script" uid="uid://cfujf1g6n1p6k" path="res://addons/konado/scripts/items/items_datas.gd" id="2_hseo4"]
+
+[resource]
+script = ExtResource("2_hseo4")
+item_id = "TestData1"
+item_texture = ExtResource("1_rspsh")
+item_origin_position = Vector2(-280, 200)
+item_stay_position = Vector2(500, 200)
+item_target_position = Vector2(1200, 200)
+item_origin_transparency = 0.4
+item_stay_transpasrency = 1.0
+item_target_transparency = 0.0
+item_anime_time_in = 1.0
+item_anime_time_out = 1.0
+item_zoom = Vector2(1, 1)
