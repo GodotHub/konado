@@ -1,6 +1,6 @@
 # Konado 可娜多：视觉小说框架
 
-![star](https://gitcode.com/shengjing/Konado/star/badge.svg)
+![star](https://gitcode.com/godothub/konado/star/badge.svg)
 ![License](https://img.shields.io/badge/License-MIT-yellow.svg)
 ![Status](https://img.shields.io/badge/Status-Active-brightgreen.svg)
 
@@ -31,14 +31,14 @@ Konado是一个对话创建工具，提供多种对话模板以及对话管理�
 2. 新建Godot项目
 3. 新建插件文件夹`addons`
 4. 在项目根目录打开终端
-5. 执行`git clone https://gitcode.com/shengjing/Konado.git addons/konado` 下载插件
+5. 执行`git clone https://gitcode.com/godothub/konado addons/konado` 下载插件
 6. 在Godot项目设置中启用插件
 
 #### 作为子模块安装
 
 进入项目根目录后执行以下命令
 ```bash
-git submodule add https://gitcode.com/shengjing/Konado.git addons/konado
+git submodule add https://gitcode.com/godothub/konado addons/konado
 ```
 
 递归更新子模块
@@ -52,7 +52,7 @@ git submodule update --remote
 
 ## Konado Scripts 语法规范
 
-推荐使用VSCode编辑Konado脚本文件，我们提供了语言支持插件：https://gitcode.com/shengjing/konado-scripts-extension
+推荐使用VSCode编辑Konado脚本文件，我们提供了语言支持插件：https://gitcode.com/godothub/konado-scripts-extension
 
 ## 文件结构
 - 文件扩展名：`.ks`
