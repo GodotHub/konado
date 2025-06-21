@@ -242,6 +242,10 @@ background tavern_night  # 夜间酒馆场景
 4. 参数缺失会触发错误提示
 
 
+## 参与开发
+
+详细贡献指南请参考 [CONTRIBUTING.md](./CONTRIBUTING.md)
+
 ## 项目贡献者
 
 - [Kamiki_](https://gitcode.com/Kamiki_) - 项目维护者
