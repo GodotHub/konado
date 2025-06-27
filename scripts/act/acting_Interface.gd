@@ -290,8 +290,9 @@ func delete_all_character() -> void:
 	print("删除所有演员")
 	pass
 
-## 移动角色的方法
-func move_chara(chara_id: String, target_pos: Vector2):
+## 移动演员的方法
+func move_actor(chara_id: String, target_pos: Vector2):
+	print("移动演员")
 	var chara_node = get_chara_node(chara_id)
 	var move_tween = chara_node.create_tween()
 	move_tween.tween_property(chara_node, "position", Vector2(target_pos), 0.7)
