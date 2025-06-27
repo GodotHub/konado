@@ -1,6 +1,8 @@
 extends Control
 class_name DebugConsole
 
+## TODO: 计划重写，目前弃用该功能！！！
+
 var command_history = []
 
 @export var input_box: LineEdit
@@ -13,6 +15,7 @@ var command_history = []
 @export var audio_interface: DialogAudioInterface
 # 文件加载器
 @onready var ks_file_loader: FileDialog = $LoadKSFileDialog
+
 func _ready():
 	input_box.text_submitted.connect(_on_input_text_entered)
 	_update_output("[color=CYAN]控制台输入：help 查看命令列表[/color]")

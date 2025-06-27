@@ -67,7 +67,7 @@ func display_options(choices: Array[DialogueChoice], choices_tex: Texture = null
 		choiceButton.add_theme_font_size_override("font_size", int(choices_font_size))
 		choiceButton.add_theme_stylebox_override("normal", StyleBoxEmpty.new())
 		# 选项触发
-		choiceButton.button_up.connect(_dialog_manager._on_option_triggered.bind(choice))
+		choiceButton.button_up.connect(_dialog_manager.on_option_triggered.bind(choice))
 		# 添加到选项容器
 		_choice_container.add_child(choiceButton)
 		print_rich("[color=cyan]生成选项按钮: [/color]"+str(choiceButton))

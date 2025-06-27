@@ -1,4 +1,4 @@
-[gd_scene load_steps=60 format=3 uid="uid://bj8ynu8013j4j"]
+[gd_scene load_steps=62 format=3 uid="uid://bj8ynu8013j4j"]
 
 [ext_resource type="Script" uid="uid://dpo124xwpder5" path="res://addons/konado/scripts/dialogue/dialogue_manager.gd" id="1_buo3n"]
 [ext_resource type="Script" uid="uid://cyoedi0x84dxy" path="res://addons/konado/scripts/act/acting_Interface.gd" id="2_pq6sw"]
@@ -16,6 +16,13 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_h66lv"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_25pr6"]
+
+[sub_resource type="Gradient" id="Gradient_utfb4"]
+colors = PackedColorArray(0, 0, 0, 0.870588, 0.141176, 0.141176, 0.141176, 0.74902)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_qodmk"]
+gradient = SubResource("Gradient_utfb4")
+fill_to = Vector2(1, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_f70o6"]
 
@@ -225,6 +232,7 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_25pr6")
 
 [node name="Background" type="TextureRect" parent="DialogUI/DialogueInterface/DialogueBox"]
 layout_mode = 2
+texture = SubResource("GradientTexture2D_qodmk")
 
 [node name="MarginContainer" type="MarginContainer" parent="DialogUI/DialogueInterface/DialogueBox"]
 layout_mode = 2
