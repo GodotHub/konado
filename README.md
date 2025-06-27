@@ -242,14 +242,23 @@ background tavern_night  # 夜间酒馆场景
 4. 参数缺失会触发错误提示
 
 
+## 参与开发
+
+详细贡献指南请参考 [CONTRIBUTING.md](./CONTRIBUTING.md)
+
+## 行为准则
+
+本项目遵循 [Code of Conduct](./CODE_OF_CONDUCT.md) 行为准则。
+
 ## 项目贡献者
 
 - [Kamiki_](https://gitcode.com/Kamiki_) - 项目维护者
 - [gezigezi123](https://gitcode.com/gezigezi123) - 发现并修复了数个功能缺陷
 - [lgyxj](https://gitee.com/lgyxj) - 为本项目提供shader支持
-- [麻卤可乐丝](https://gitcode.com/marukles) - 为本项目提供看板娘立绘和海报
+- [麻卤可乐丝](https://gitcode.com/marukles) - 为本项目提供看板娘立绘、示例人物美术资源和海报
 - [moluopro](https://gitcode.com/moluopro) - 初代看板娘设计者
 
 
 ## 开源许可证
+
 Konado 使用 MIT 许可证，开源且免费使用，具体内容请查看 [LICENSE](./LICENSE) 文件。

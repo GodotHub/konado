@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="BackgroundList" load_steps=4 format=3 uid="uid://dlk03c6v0ju4r"]
+
+[ext_resource type="Script" uid="uid://di66ghc1qq8e5" path="res://addons/konado/scripts/background/background.gd" id="1_g8kxy"]
+[ext_resource type="Script" uid="uid://5aqgmxi8gxcw" path="res://addons/konado/scripts/background/background_list.gd" id="2_0rr68"]
+[ext_resource type="Resource" uid="uid://dnukkmbjbsx0p" path="res://addons/konado/sample/sample_lists/backgrounds/咖啡厅背景.tres" id="2_r5256"]
+
+[resource]
+script = ExtResource("2_0rr68")
+background_list = Array[ExtResource("1_g8kxy")]([ExtResource("2_r5256")])
+metadata/_custom_type_script = "uid://5aqgmxi8gxcw"

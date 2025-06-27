@@ -23,16 +23,6 @@ func _enter_tree() -> void:
 
 	# 从version.txt读取字符串并打印
 	print_rich(load_string("res://addons/konado/version.txt"))
-	
-	# print_rich("""
-	# ---------------------------------------------------------------------------------
-	# -------------- [b][i][color=ALICE_BLUE]Konado V1.0.0[/color][/i][/b] --------------
-	# :: Loaded modules:
-	#    • Dialogue System
-	#    • Script Interpreter
-	#    • Resource Loader
-	# ---------------------------------------------------------------------------------
-	# """)
 
 func load_string(path: String) -> String:
 	return FileAccess.open(path, FileAccess.READ).get_as_text()

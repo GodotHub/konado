@@ -1,3 +1,13 @@
+################################################################################
+# Project: Konado
+# File: dialogue_manager.gd
+# Author: DSOE1024
+# Created: 2025-06-27
+# Last Modified: 2025-06-27
+# Description:
+#   对话管理器
+################################################################################
+
 extends Control
 class_name DialogueManager
 
@@ -10,7 +20,7 @@ var justenter: bool
 @export_group("播放设置")
 @export var autoplay: bool
 ## 对话播放速度
-@export var dialogspeed: float = 0.06
+@export var dialogspeed: float = 0.03
 ## 自动播放速度
 @export var autoplayspeed: float = 2
 ## 正在调试（关闭控制）
@@ -45,7 +55,8 @@ var dialogueState: DialogState
 @onready var _exitButton: Button = $"DialogUI/DialogueInterface/DialogueBox/MarginContainer/DialogContent/ActionsContainer/退出"
 ## 自动按钮
 @onready var _autoPlayButton: Button = $"DialogUI/DialogueInterface/DialogueBox/MarginContainer/DialogContent/ActionsContainer/自动"
-
+## 选项容器（用于实现点击事件屏蔽）
+@onready var _choicesContainer: VBoxContainer = $DialogUI/DialogueInterface/ChoicesBox/ChoicesContainer
 
 	
 ## 对话资源
@@ -243,6 +254,15 @@ func _physics_process(delta) -> void:
 					s.connect(_process_next.bind(s))
 					_actor_change_state(actor, target_state)
 					pass
+				# 如果是移动演员
+				elif dialog_type == Dialogue.Type.Move_Actor:
+					var actor = dialog.target_move_chara
+					var pos = dialog.target_move_pos
+					var s = _acting_interface.character_moved
+					s.connect(_process_next.bind(s))
+					_acting_interface.move_actor(actor, pos)
+					
+					pass
 				# 如果是删除演员
 				elif dialog_type == Dialogue.Type.Exit_Actor:
 					# 删除演员
@@ -250,7 +270,7 @@ func _physics_process(delta) -> void:
 					var s = _acting_interface.character_deleted
 					s.connect(_process_next.bind(s))
 					_exit_actor(actor)
-					_acting_interface.show()
+					
 					pass
 				# 如果是选项
 				elif dialog_type == Dialogue.Type.Show_Choice:
@@ -289,14 +309,15 @@ func _physics_process(delta) -> void:
 				elif dialog_type == Dialogue.Type.UNLOCK_ACHIEVEMENTS:
 					var achievement_id = dialog.achievement_id
 					_process_achievement(achievement_id)
+				# 如果是tag
+				elif dialog_type == Dialogue.Type.Tag:
+					_process_next()
 				# 如果剧终
 				elif dialog_type == Dialogue.Type.THE_END:
 					# 停止对话
 					_stop_dialogue()
 					pass
-				# 如果是tag
-				elif dialog_type == Dialogue.Type.Tag:
-					_process_next()
+					
 				justenter = false
 		# 完成下一个状态
 		DialogState.PAUSED:
@@ -313,9 +334,17 @@ func is_click_valid(event):
 		_logButton,
 		_exitButton
 	]
+	# 对话选项
+	for cbtn in _choicesContainer.get_children():
+		var tcbtn = cbtn as Button
+		if tcbtn:
+			excluded_buttons.append(tcbtn)
 	var mouse_pos = event.global_position
 	for btn in excluded_buttons:
-		if btn.visible && btn.get_global_rect().has_point(mouse_pos):
+		var rect = btn.get_global_rect()
+		if btn.visible && rect.has_point(mouse_pos):
+			# 向下传递
+			btn.emit_signal("button_up")
 			return false
 	return true
 
@@ -330,6 +359,7 @@ func _input(event):
 			# 全屏点击下一句
 			if is_click_valid(event):
 				_continue()
+				get_tree().root.set_input_as_handled()
 	if event is InputEventKey:
 		## 控制台~
 		if event.pressed and event.keycode == KEY_QUOTELEFT:
@@ -342,6 +372,7 @@ func _input(event):
 		if event.pressed and event.keycode == KEY_ENTER:
 			if not debug_console.is_visible():
 				_continue()
+				get_tree().root.set_input_as_handled()
 		
 ## 打字完成
 func isfinishtyping(wait_voice: bool) -> void:
@@ -574,7 +605,7 @@ func _display_options(choices: Array[DialogueChoice]) -> void:
 	pass
 
 ## 选项触发方法
-func _on_option_triggered(choice: DialogueChoice) -> void:
+func on_option_triggered(choice: DialogueChoice) -> void:
 	var tag = choice.jump_tag
 	_jump_tag(tag)
 	print_rich("玩家选择按钮： " + str(choice.choice_text))
