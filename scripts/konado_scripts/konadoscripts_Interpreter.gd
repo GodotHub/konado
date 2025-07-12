@@ -1,13 +1,30 @@
+################################################################################
+# Project: Konado
+# File: konadoscripts_Interpreter.gd
+# Author: DSOE1024
+# Created: 2025-07-12
+# Last Modified: 2025-07-12
+# Description:
+#    Konado脚本解释器，请添加到全局加载
+################################################################################
+
 @tool
 extends Node
 
 # Konado脚本解释器
 
+var tmp_path = ""
+var tmp_original_line_number = 0
+var tmp_line_number = 0
+var tmp_content_lines = []
+
 # 全文解析模式
 func process_scripts_to_data(path: String) -> DialogueData:
+	tmp_path = path
 	var diadata = DialogueData.new()
 	var file = FileAccess.open(path, FileAccess.READ)
 	if not file:
+		_scripts_debug(path, 0, "无法打开脚本文件")
 		return diadata
 	
 	var lines = file.get_as_text().split("\n")
@@ -16,22 +33,38 @@ func process_scripts_to_data(path: String) -> DialogueData:
 	# 解析元数据
 	var metadata_result = _parse_metadata(lines, path)
 	if not metadata_result:
+		_scripts_debug(path, 0, "元数据解析失败")
 		return diadata
 	
 	diadata.chapter_id = metadata_result[0]
 	diadata.chapter_name = metadata_result[1]
+
+	_scripts_info(path, 1, "章节ID：%s" % [diadata.chapter_id])
+	_scripts_info(path, 1, "章节名称：%s" % [diadata.chapter_name])
+
+
 	var content_lines = lines.slice(2)
 
+	tmp_content_lines = content_lines
+
+	_scripts_info(path, 0, "开始解析脚本文件")
 	# 解析内容行
 	for i in content_lines.size():
-		var line = content_lines[i].strip_edges()
+		tmp_line_number = i
+		var line = content_lines[i]
 		var original_line_number = 3 + i
+		tmp_original_line_number = original_line_number
 		var dialog = parse_line(line, original_line_number, path)
 		if dialog:
 			diadata.dialogs.append(dialog)
 
-	print_rich("[color=cyan]文件：[/color]%s [color=cyan]剧情预生成完毕 (｀・ω・´)[/color] 章节名称：%s 章节ID：%s 对话数量：%d" % 
+	# print_rich("[color=cyan]文件：[/color]%s [color=cyan]剧情生成完毕[/color] 章节名称：%s 章节ID：%s 对话数量：%d" % 
+	# 	[path, diadata.chapter_name, diadata.chapter_id, diadata.dialogs.size()])
+
+	_scripts_info(path, 0, "文件：%s 剧情生成完毕 章节名称：%s 章节ID：%s 对话数量：%d" % 
 		[path, diadata.chapter_name, diadata.chapter_id, diadata.dialogs.size()])
+
+	tmp_path = ""
 	return diadata
 
 # 单行解析模式（line_number从3开始对应原始文件第三行）
@@ -40,12 +73,17 @@ func parse_single_line(line: String, line_number: int, path: String) -> Dialogue
 
 # 内部解析实现
 func parse_line(line: String, line_number: int, path: String) -> Dialogue:
+	# 不处理缩进的行
+	if line.begins_with("    ") or line.begins_with("\t"):
+		return null
+
+	line = line.strip_edges()
+	# 空行或注释行，必须提前处理strip_edges
 	if line.is_empty() or line.begins_with("#"):
 		return null
 
 	var dialog := Dialogue.new()
 	
-	# 使用快速返回模式提升性能
 	if _parse_background(line, dialog): return dialog
 	if _parse_actor(line, dialog): return dialog
 	if _parse_audio(line, dialog): return dialog
@@ -53,7 +91,7 @@ func parse_line(line: String, line_number: int, path: String) -> Dialogue:
 	if _parse_choice(line, dialog): return dialog
 	if _parse_jump(line, dialog): return dialog
 	if _parse_dialog(line, dialog): return dialog
-	if _parse_special(line, dialog): return dialog
+	if _parse_end(line, dialog): return dialog
 
 	_scripts_tip(path, line_number, "无法识别的语法: %s" % line)
 	return null
@@ -180,8 +218,32 @@ func _parse_tag(line: String, dialog: Dialogue) -> bool:
 		return false
 	
 	var parts = line.split(" ", false)
+	if parts.size() < 2:
+		_scripts_debug(tmp_path, tmp_original_line_number, "tag标签格式错误")
+		return false
 	dialog.dialog_type = Dialogue.Type.Tag
 	dialog.tag_id = parts[1]
+
+	var tag_inner_line_number = tmp_line_number + 1
+
+	# 遍历标签内的行(缩进)
+	while tag_inner_line_number < tmp_content_lines.size():
+		var inner_line = tmp_content_lines[tag_inner_line_number].strip_edges()
+
+		# 检查缩进
+		if tmp_content_lines[tag_inner_line_number].begins_with("    ") or tmp_content_lines[tag_inner_line_number].begins_with("\t"):
+			tag_inner_line_number += 1
+			if not (inner_line.is_empty() or inner_line.begins_with("#")):
+				if (inner_line.begins_with("tag")):
+					_scripts_debug(tmp_path, tag_inner_line_number, "tag标签内不能嵌套标签")
+					return false
+				var inner_dialog = parse_line(inner_line, tag_inner_line_number, tmp_path)
+				dialog.tag_dialogue.append(inner_dialog)
+				pass
+		else:
+			break
+	_scripts_info(tmp_path, tag_inner_line_number, "标签" + dialog.tag_id + "解析完成" + " " + "标签内有" +str(dialog.tag_dialogue.size()) + "行对话")
+
 	return true
 
 # 跳转解析
@@ -213,21 +275,22 @@ func _parse_dialog(line: String, dialog: Dialogue) -> bool:
 	
 	return true
 
-# 特殊指令解析
-func _parse_special(line: String, dialog: Dialogue) -> bool:
-	if line.begins_with("unlock_achievement"):
-		dialog.dialog_type = Dialogue.Type.UNLOCK_ACHIEVEMENTS
-		dialog.achievement_id = line.split(" ", false)[1]
-		return true
+func _parse_end(line: String, dialog: Dialogue) -> bool:
 	if line.begins_with("end"):
 		dialog.dialog_type = Dialogue.Type.THE_END
 		return true
 	return false
 
+
 # 错误报告
 func _scripts_debug(path: String, line: int, error_info: String):
-	print_rich("[color=red]错误：[/color]%s [行：%d] %s" % [path, line, error_info])
+	print_rich("[color=red]错误：%s [行：%d] %s [/color]" % [path, line, error_info])
+
 
 # 警告提示
 func _scripts_tip(path: String, line: int, warning_info: String):
-	print_rich("[color=yellow]警告：[/color]%s [行：%d] %s" % [path, line, warning_info])
+	print_rich("[color=yellow]警告：%s [行：%d] %s [/color]" % [path, line, warning_info])
+
+# 信息提示
+func _scripts_info(path: String, line: int, info_info: String):
+	print_rich("[color=green]信息：%s [行：%d] %s [/color]" % [path, line, info_info])

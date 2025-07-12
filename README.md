@@ -176,12 +176,25 @@ stop bgm
 #### 标签
 ```text
 tag [标签ID]
+    对话内容
 ```
 - 示例：
 ```text
-tag 这是一个标签
+tag coffee_choice
+    actor change kona 高兴
+    "可娜" "马上就好！店长特制的咖啡豆..."
+    "黛西" "哇，这个香气！"
 ```
 
+禁止嵌套标签，比如如下代码是错误的：
+```text
+tag coffee_choice
+    actor change kona 高兴
+    "可娜" "马上就好！店长特制的咖啡豆..."
+    "黛西" "哇，这个香气！"
+    tag coffee_choice2
+        "可娜" "喝完咖啡，心情就好了！"
+```
 
 #### 标签跳转
 ```text
@@ -212,15 +225,6 @@ choice "进入战斗" tag1 "尝试逃跑" tag2
 "alice" "这不是我的错！\n你根本不懂！" alice_angry_03
 ```
 
-### 7. 特殊指令
-#### 成就解锁
-```text
-unlock_achievement [成就ID]
-```
-- 示例：
-```text
-unlock_achievement first_blood
-```
 
 #### 游戏结束
 ```text
