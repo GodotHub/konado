@@ -16,7 +16,6 @@ enum Type{
 	Tag, ## 标签
 	JUMP_Tag, ## 跳转到行
 	JUMP, ## 跳转
-	UNLOCK_ACHIEVEMENTS, ## 解锁成就
 	THE_END ## 剧终
 }
 @export var dialog_type: Type:
@@ -26,6 +25,9 @@ enum Type{
 
 # Tag ID，用于标记跳转点		
 var tag_id: String
+
+# Tag对话内容
+var tag_dialogue: Array[Dialogue] = []
 
 # 对话人物ID
 var character_id: String
@@ -66,6 +68,14 @@ class Tag_Template:
 	static func get_property_infos():
 		var infos = {}
 		for info in (Tag_Template as Script).get_script_property_list():
+			infos[info.name] = info
+		return infos
+
+class TagDialogue_Template:
+	@export var tag_dialogue: Array[Dialogue] = []
+	static func get_property_infos():
+		var infos = {}
+		for info in (TagDialogue_Template as Script).get_script_property_list():
 			infos[info.name] = info
 		return infos
 
@@ -146,7 +156,9 @@ func _get_property_list():
 	var list = []
 	if dialog_type == Type.Tag:
 		var tag_template = Tag_Template.get_property_infos()
+		var tag_dialogue_template = TagDialogue_Template.get_property_infos()
 		list.append(tag_template["tag_id"])
+		list.append(tag_dialogue_template["tag_dialogue"])
 	if dialog_type == Type.Ordinary_Dialog:
 		var oridinary_dialog_template = Ordinary_Dialog_Template.get_property_infos()
 		list.append(oridinary_dialog_template["character_id"])
@@ -184,9 +196,6 @@ func _get_property_list():
 	if dialog_type == Type.JUMP:
 		var jump_template = Jump_Template.get_property_infos()
 		list.append(jump_template["jump_tag"])
-	if dialog_type == Type.UNLOCK_ACHIEVEMENTS:
-		var unlock_achievements_template = Unlock_Achievements_Template.get_property_infos()
-		list.append(unlock_achievements_template["achievement_id"])
 	if dialog_type == Type.THE_END:
 		pass
 	return list

@@ -305,10 +305,6 @@ func _physics_process(delta) -> void:
 					var data_name = dialog.jump_data_name
 					_jump_dialog_data(data_name)
 					pass
-				# 如果是解锁成就
-				elif dialog_type == Dialogue.Type.UNLOCK_ACHIEVEMENTS:
-					var achievement_id = dialog.achievement_id
-					_process_achievement(achievement_id)
 				# 如果是tag
 				elif dialog_type == Dialogue.Type.Tag:
 					_process_next()
@@ -651,11 +647,6 @@ func _switch_data(data: DialogueData) -> bool:
 	await get_tree().create_timer(0.01).timeout
 	_start_dialogue()
 	return true
-
-## 解锁成就
-func _process_achievement(id: String):
-	# 这里可以添加成就解锁的接口
-	_process_next()
 	
 ## 按下存档按钮
 func _on_savebutton_press():
