@@ -81,6 +81,20 @@ chapter_name 序章：命运的相遇
 - 支持任意Unicode字符
 - 显示在游戏章节选择界面
 
+### 语言、作者、描述
+
+完整元数据示例：
+```
+chapter_id chapter01
+chapter_name 咖啡馆的早晨
+chapter_lang zh-CN
+chapter_author Kona
+chapter_desc 示例剧本，用于展示Konado剧本编辑器的功能
+```
+
+请注意，元数据行必须按照顺序排列，且每行以换行符结尾，值不能为空。
+
+
 ## 内容指令集
 
 ### 1. 背景切换

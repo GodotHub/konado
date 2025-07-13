@@ -1,12 +1,16 @@
 chapter_id chapter01
 chapter_name 咖啡馆的早晨
+chapter_lang zh-CN
+chapter_author Kona
+chapter_desc 示例剧本，用于展示Konado剧本编辑器的功能
+
 # 场景设置
 background 咖啡厅背景 fade
 # play bgm cafe_jazz
 # 角色入场
-actor show kona 正常1 at 0 30 scale 0.6
+actor show kona 正常1 at 0 30 scale 0.6 mirror
 
-actor show daisy 正常 at 460 11 scale 0.6
+actor show daisy 正常 at 460 11 scale 0.6 mirror
 
 # 对话开始
 "可娜" "早安，Daisy！今天天气真好呢~"
