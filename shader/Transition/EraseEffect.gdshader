@@ -12,7 +12,7 @@ uniform sampler2D current_texture : hint_default_black;
 //高斯模糊使用的Weight数组是正态分布函数，sigma值越低越模糊，但是我觉得效果不好
 vec4 IwannaGotGoldMedal(vec2 uv, sampler2D tex, int len) {
     //不加权平均值
-    vec4 res = vec4(0.0); 
+    vec4 res = vec4(0.0);
     for (int i = -len; i <= len; ++ i) {
         for (int j = -len; j <= len; ++ j) {
             vec2 w = uv + vec2(float(i), float(j));

@@ -18,6 +18,7 @@ var tmp_original_line_number = 0
 var tmp_line_number = 0
 var tmp_content_lines = []
 
+
 # 全文解析模式
 func process_scripts_to_data(path: String) -> DialogueData:
 	tmp_path = path
@@ -54,9 +55,13 @@ func process_scripts_to_data(path: String) -> DialogueData:
 		var line = content_lines[i]
 		var original_line_number = 3 + i
 		tmp_original_line_number = original_line_number
-		var dialog = parse_line(line, original_line_number, path)
+		var dialog: Dialogue = parse_line(line, original_line_number, path)
 		if dialog:
-			diadata.dialogs.append(dialog)
+			# 如果是标签对话，则添加到标签对话字典中
+			if dialog.dialog_type == Dialogue.Type.Tag:
+				diadata.tag_dialogues.set(dialog.tag_id, dialog)
+			else:
+				diadata.dialogs.append(dialog)
 
 	# print_rich("[color=cyan]文件：[/color]%s [color=cyan]剧情生成完毕[/color] 章节名称：%s 章节ID：%s 对话数量：%d" % 
 	# 	[path, diadata.chapter_name, diadata.chapter_id, diadata.dialogs.size()])
@@ -87,11 +92,13 @@ func parse_line(line: String, line_number: int, path: String) -> Dialogue:
 	if _parse_background(line, dialog): return dialog
 	if _parse_actor(line, dialog): return dialog
 	if _parse_audio(line, dialog): return dialog
-	if _parse_tag(line, dialog): return dialog
 	if _parse_choice(line, dialog): return dialog
 	if _parse_jump(line, dialog): return dialog
 	if _parse_dialog(line, dialog): return dialog
 	if _parse_end(line, dialog): return dialog
+
+	if _parse_tag(line, dialog):
+		return dialog
 
 	_scripts_tip(path, line_number, "无法识别的语法: %s" % line)
 	return null
