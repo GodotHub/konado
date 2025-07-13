@@ -29,6 +29,9 @@ var tag_id: String
 # Tag对话内容
 var tag_dialogue: Array[Dialogue] = []
 
+# 是否加载完成
+var is_tag_loaded: bool = false
+
 # 对话人物ID
 var character_id: String
 # 对话内容

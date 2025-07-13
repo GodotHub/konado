@@ -8,3 +8,5 @@ class_name DialogueData
 @export var chapter_name: String
 # 对话列表
 @export var dialogs: Array[Dialogue] = []
+# tag字典
+@export var tag_dialogues: Dictionary = {}

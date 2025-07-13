@@ -3,7 +3,7 @@
 # File: dialogue_manager.gd
 # Author: DSOE1024
 # Created: 2025-06-27
-# Last Modified: 2025-06-27
+# Last Modified: 2025-07-13
 # Description:
 #   对话管理器
 ################################################################################
@@ -41,7 +41,7 @@ var dialogueState: DialogState
 ## 音频接口
 @onready var _audio_interface: DialogAudioInterface = $AudioInterface
 #存档UI界面接口
-@onready var _SaL_UI : SaL_UI = $DialogUI/SaLUI
+@onready var _SaL_UI: SaL_UI = $DialogUI/SaLUI
 
 ## 对话的交互按钮，比如存档按钮，读档按钮，继续按钮
 ## 存档按钮
@@ -63,13 +63,15 @@ var dialogueState: DialogState
 var dialog_data: DialogueData
 
 ## 对话
-var _dialog: Dialogue
+#var _dialog: Dialogue
 
 ## 对话资源ID
 var _dialog_data_id: int = 0
 
 #存档用变量
-var se_id : String
+var se_id: String
+
+var option_triggered: bool = false
 
 
 ## 资源列表
@@ -88,10 +90,10 @@ var se_id : String
 @export var soundeffect_list: DialogSoundEffectList
 
 
-## 调试
-@export_group("调试")
-## 调试控制台
-@onready var debug_console: DebugConsole = $DebugInterface
+# ## 调试
+# @export_group("调试")
+# ## 调试控制台
+# @onready var debug_console: DebugConsole = $DebugInterface
 
 func _ready() -> void:
 	# 读取玩家的设置
@@ -180,6 +182,7 @@ func _physics_process(delta) -> void:
 		# 播放状态
 		DialogState.PLAYING:
 			if justenter:
+				justenter = false
 				print_rich("[color=cyan][b]当前状态：[/b][/color][color=orange]播放状态[/color]")
 				if dialog_data == null:
 					print_rich("[color=red]对话为空[/color]")
@@ -188,13 +191,14 @@ func _physics_process(delta) -> void:
 					print_rich("[color=red]对话为空[/color]")
 					_dialogue_goto_state(DialogState.OFF)
 					return
-				_dialog = dialog_data.dialogs[curline]
+
 				# 对话类型
 				var dialog_type = dialog_data.dialogs[curline].dialog_type
 				# 对话当前句
 				var dialog = dialog_data.dialogs[curline]
 				# 隐藏选项
 				_dialog_interface._choice_container.hide()
+
 				# 判断对话类型
 				# 如果是普通对话
 				if dialog_type == Dialogue.Type.Ordinary_Dialog:
@@ -305,21 +309,36 @@ func _physics_process(delta) -> void:
 					var data_name = dialog.jump_data_name
 					_jump_dialog_data(data_name)
 					pass
-				# 如果是tag
+				# 如果是标签对话
 				elif dialog_type == Dialogue.Type.Tag:
+					print_rich("[color=orange]标签对话[/color]")
+					var tag_dialogues: Array[Dialogue] = dialog.tag_dialogue
+					var insert_position = curline + 1
+					for i in range(tag_dialogues.size()):
+						# 检查是否已经存在
+						if tag_dialogues[i].dialog_type == Dialogue.Type.Tag:
+							print_rich("[color=red]标签对话中不能包含标签对话[/color]")
+							continue
+						dialog_data.dialogs.insert(insert_position + i, tag_dialogues[i])
+					await get_tree().create_timer(0.001).timeout
+					
+					print("添加了 %d 个标签对话" % tag_dialogues.size())
+					print("当前对话总数: " + str(dialog_data.dialogs.size()))
+
+					await get_tree().create_timer(0.01).timeout
 					_process_next()
+					pass
 				# 如果剧终
 				elif dialog_type == Dialogue.Type.THE_END:
 					# 停止对话
 					_stop_dialogue()
 					pass
 					
-				justenter = false
 		# 完成下一个状态
 		DialogState.PAUSED:
 			if justenter:
-				print_rich("[color=cyan][b]状态：[/b][/color][color=orange]播放完成状态[/color]")
 				justenter = false
+				print_rich("[color=cyan][b]状态：[/b][/color][color=orange]播放完成状态[/color]")
 
 ## 检查是否没有点击到按钮
 func is_click_valid(event):
@@ -355,20 +374,20 @@ func _input(event):
 			# 全屏点击下一句
 			if is_click_valid(event):
 				_continue()
-				get_tree().root.set_input_as_handled()
+				#get_tree().root.set_input_as_handled()
 	if event is InputEventKey:
-		## 控制台~
-		if event.pressed and event.keycode == KEY_QUOTELEFT:
-			if debug_mode:
-				if not debug_console.is_visible():
-					debug_console.show()
-				else:
-					debug_console.hide()
+		# ## 控制台~
+		# if event.pressed and event.keycode == KEY_QUOTELEFT:
+		# 	if debug_mode:
+		# 		if not debug_console.is_visible():
+		# 			debug_console.show()
+		# 		else:
+		# 			debug_console.hide()
 		## 对话继续
 		if event.pressed and event.keycode == KEY_ENTER:
-			if not debug_console.is_visible():
-				_continue()
-				get_tree().root.set_input_as_handled()
+			# if not debug_console.is_visible():
+			_continue()
+				#get_tree().root.set_input_as_handled()
 		
 ## 打字完成
 func isfinishtyping(wait_voice: bool) -> void:
@@ -390,7 +409,7 @@ func isfinishtyping(wait_voice: bool) -> void:
 func _process_next(s: Signal = Signal()) -> void:
 	if not s.is_null():
 		s.disconnect(_process_next)
-	print("触发自动下一个信号")
+		print("触发自动下一个信号")
 	_dialogue_goto_state(DialogState.PAUSED)
 	# 暂时先用等待的方法，没找到更好的解决方法
 	await get_tree().create_timer(0.001).timeout
@@ -435,6 +454,8 @@ func _dialogue_goto_state(dialogstate: DialogState) -> void:
 func _nextline() -> void:
 	curline += 1
 	print_rich("---------------------------------------------")
+	# 打印时间 日期+时间
+	print("当前时间：" + str(Time.get_date_string_from_system()) + " " + str(Time.get_time_string_from_system()))
 	print("对话下标：" + str(curline))
 
 ## 继续，下一句按钮
@@ -553,8 +574,8 @@ func _play_bgm(bgm_name: String) -> void:
 	if bgm_name == null:
 		return
 	var target_bgm: AudioStream
-	if bgm_list == null or bgm_list.bgms == null :
-		return#判空
+	if bgm_list == null or bgm_list.bgms == null:
+		return # 判空
 	for bgm in bgm_list.bgms:
 		if bgm.bgm_name == bgm_name:
 			target_bgm = bgm.bgm
@@ -572,7 +593,7 @@ func _play_voice(voice_name: String) -> void:
 		return
 	var target_voice: AudioStream
 	if voice_list == null or voice_list.voices == null:
-		return#判空
+		return # 判空
 	for voice in voice_list.voices:
 		if voice.voice_name == voice_name:
 			target_voice = voice.voice
@@ -586,7 +607,7 @@ func _play_soundeffect(se_name: String) -> void:
 		return
 	var target_soundeffect: AudioStream
 	if soundeffect_list == null or soundeffect_list.soundeffects == null:
-		return#判空
+		return # 判空
 	for soundeffect in soundeffect_list.soundeffects:
 		if soundeffect.se_name == se_name:
 			target_soundeffect = soundeffect.se
@@ -602,18 +623,36 @@ func _display_options(choices: Array[DialogueChoice]) -> void:
 
 ## 选项触发方法
 func on_option_triggered(choice: DialogueChoice) -> void:
-	var tag = choice.jump_tag
-	_jump_tag(tag)
-	print_rich("玩家选择按钮： " + str(choice.choice_text))
+	_dialogue_goto_state(DialogState.PAUSED)
+	_dialog_interface._choice_container.hide()
+
+	print("玩家选择按钮： " + str(choice.choice_text))
+	_jump_tag(choice.jump_tag)
 	
 ## 跳转到对话标签的方法
 ## TODO：应该需要性能优化
 func _jump_tag(tag: String) -> void:
-	for i in range(dialog_data.dialogs.size()):
-		var d = dialog_data.dialogs[i]
-		if d.dialog_type == Dialogue.Type.Tag && d.tag_id == tag:
-			_jump_curline(i)
-			break
+	print_rich("跳转到标签： " + str(tag))
+	var target_dialogue: Dialogue = dialog_data.tag_dialogues[tag]
+	if target_dialogue == null:
+		print("无法完成跳转，没有这个标签")
+		return
+
+
+	"""
+	PS：为啥这么写？因为全屏输入传递会导致选项按钮的信号被连续触发两次导致重复添加对话和跳转
+		目前只能用这种很逆天的两次判断的方法来防止重复添加对话，希望以后能找到更好的方法
+		如果你想尝试解决这个问题请查看该脚本的_input()函数和is_click_valid()函数，但我不确定问题在哪
+	"""
+	if not target_dialogue.is_tag_loaded:
+		# _jump_cur_dialogue(target_dialogue)
+		dialog_data.dialogs.insert(curline + 1, target_dialogue)
+		print("插入标签，对话长度" + str(dialog_data.dialogs.size()))
+		target_dialogue.is_tag_loaded = true
+		_jump_curline(curline + 1)
+	# else:
+	# 	print("标签已加载和跳转")
+		
 
 ## 跳转剧情的方法
 func _jump_dialog_data(data_id: String) -> bool:
@@ -650,10 +689,10 @@ func _switch_data(data: DialogueData) -> bool:
 	
 ## 按下存档按钮
 func _on_savebutton_press():
-	_SaL_UI.check_UI(1)#打开UI，输入存档格式
+	_SaL_UI.check_UI(1) # 打开UI，输入存档格式
 	pass
 
-func _get_file_data(slot_id : int):
+func _get_file_data(slot_id: int):
 	#用于获取变量
 	var dialog = dialog_data.dialogs[curline]
 	
@@ -665,7 +704,7 @@ func _get_file_data(slot_id : int):
 	KS_SAVE_AND_LOAD.background_id = _acting_interface.background_id
 	KS_SAVE_AND_LOAD.chapter_id = dialog_data.chapter_id
 	KS_SAVE_AND_LOAD.bgm_id = _audio_interface.bgm_name
-	KS_SAVE_AND_LOAD.bgm_progress = str("%.2f" %_audio_interface.get_bgm_progress())#保留两位小数
+	KS_SAVE_AND_LOAD.bgm_progress = str("%.2f"%_audio_interface.get_bgm_progress()) # 保留两位小数
 	KS_SAVE_AND_LOAD.voice_id = dialog.voice_id
 	KS_SAVE_AND_LOAD.sound_effect_id = se_id
 	KS_SAVE_AND_LOAD.curline = curline
@@ -675,14 +714,14 @@ func _get_file_data(slot_id : int):
 
 ## 按下读档按钮
 func _on_loadbutton_press():
-	_SaL_UI.check_UI(2)#打开UI，输入读档格式
+	_SaL_UI.check_UI(2) # 打开UI，输入读档格式
 	pass
 
-func _load_file_data(slot_id : int):
+func _load_file_data(slot_id: int):
 	#用于获取变量
 	var dialog = dialog_data.dialogs[curline]
 	
-	if KS_SAVE_AND_LOAD._load_game(slot_id) == true :#确认文件存在
+	if KS_SAVE_AND_LOAD._load_game(slot_id) == true: # 确认文件存在
 		#更新变量
 		_acting_interface.actor_dict = KS_SAVE_AND_LOAD.chara_disc
 		_acting_interface.background_id = KS_SAVE_AND_LOAD.background_id
@@ -694,8 +733,8 @@ func _load_file_data(slot_id : int):
 		curline = KS_SAVE_AND_LOAD.curline
 		
 		#跳转剧情，更新背景
-		jump_data_and_curline(dialog_data.chapter_id,curline,_audio_interface.bgm_name,_acting_interface.actor_dict)
-		_display_background(_acting_interface.background_id,ActingInterface.EffectsType.None)
+		jump_data_and_curline(dialog_data.chapter_id, curline, _audio_interface.bgm_name, _acting_interface.actor_dict)
+		_display_background(_acting_interface.background_id, ActingInterface.EffectsType.None)
 		
 		#同步音乐播放进度
 		_audio_interface.stop_bgm()
@@ -751,9 +790,20 @@ func _jump_curline(value: int) -> bool:
 		if not value >= dialog_data.dialogs.size():
 			_dialogue_goto_state(DialogState.OFF)
 			curline = value
+			print_rich("跳转到：" + str(curline))
 			_dialogue_goto_state(DialogState.PLAYING)
 			return true
 	return false
+
+## 跳转到对话
+func _jump_cur_dialogue(dialog: Dialogue) -> bool:
+	if dialog != null:
+		_dialogue_goto_state(DialogState.OFF)
+		# 还没有实现
+		_dialogue_goto_state(DialogState.PLAYING)
+		return true
+	return false
+
 ## 调试模式跳转到章节
 func debug_jump_data(value: String) -> bool:
 	var error = _jump_dialog_data(value)
