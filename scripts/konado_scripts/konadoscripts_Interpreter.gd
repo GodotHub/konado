@@ -3,13 +3,14 @@
 # File: konadoscripts_Interpreter.gd
 # Author: DSOE1024
 # Created: 2025-07-12
-# Last Modified: 2025-07-12
+# Last Modified: 2025-07-14
 # Description:
 #    Konado脚本解释器，请添加到全局加载
 ################################################################################
 
 @tool
 extends Node
+class_name KonadoScriptsInterpreter
 
 # Konado脚本解释器
 
@@ -18,9 +19,20 @@ var tmp_original_line_number = 0
 var tmp_line_number = 0
 var tmp_content_lines = []
 
+## 对话内容正则表达式
+var dialogue_content_regex: RegEx
+## 元数据正则表达式
+var dialogue_metadata_regex: RegEx
 
 # 全文解析模式
 func process_scripts_to_data(path: String) -> DialogueData:
+	# 提前初始化正则表达式，避免重复编译
+	dialogue_content_regex = RegEx.new()
+	dialogue_content_regex.compile("^\"(.*?)\"\\s+\"(.*?)\"(?:\\s+(\\S+))?$")
+
+	dialogue_metadata_regex = RegEx.new()
+	dialogue_metadata_regex.compile("^(chapter_id|chapter_name|chapter_lang|chapter_author|chapter_desc)\\s+(\\S+)")
+
 	tmp_path = path
 	var diadata = DialogueData.new()
 	var file = FileAccess.open(path, FileAccess.READ)
@@ -33,18 +45,26 @@ func process_scripts_to_data(path: String) -> DialogueData:
 
 	# 解析元数据
 	var metadata_result = _parse_metadata(lines, path)
+	dialogue_metadata_regex = null
 	if not metadata_result:
 		_scripts_debug(path, 0, "元数据解析失败")
 		return diadata
 	
 	diadata.chapter_id = metadata_result[0]
 	diadata.chapter_name = metadata_result[1]
+	diadata.chapter_lang = metadata_result[2]
+	diadata.chapter_author = metadata_result[3]
+	diadata.chapter_desc = metadata_result[4]
+
 
 	_scripts_info(path, 1, "章节ID：%s" % [diadata.chapter_id])
-	_scripts_info(path, 1, "章节名称：%s" % [diadata.chapter_name])
+	_scripts_info(path, 2, "章节名称：%s" % [diadata.chapter_name])
+	_scripts_info(path, 3, "章节语言：%s" % [diadata.chapter_lang])
+	_scripts_info(path, 4, "章节作者：%s" % [diadata.chapter_author])
+	_scripts_info(path, 5, "章节描述：%s" % [diadata.chapter_desc])
 
-
-	var content_lines = lines.slice(2)
+	# 只保留内容行
+	var content_lines = lines.slice(5)
 
 	tmp_content_lines = content_lines
 
@@ -71,6 +91,8 @@ func process_scripts_to_data(path: String) -> DialogueData:
 
 	tmp_path = ""
 	return diadata
+
+
 
 # 单行解析模式（line_number从3开始对应原始文件第三行）
 func parse_single_line(line: String, line_number: int, path: String) -> Dialogue:
@@ -106,22 +128,32 @@ func parse_line(line: String, line_number: int, path: String) -> Dialogue:
 # 解析元数据（前两行）
 func _parse_metadata(lines: PackedStringArray, path: String) -> PackedStringArray:
 	if lines.size() < 2:
-		_scripts_debug(path, 1, "文件不完整，至少需要两行元数据")
+		_scripts_debug(path, 1, "文件不完整，至少需要5行元数据")
 		return []
 
-	# 解析章节ID
-	if not lines[0].begins_with("chapter_id"):
-		_scripts_debug(path, 1, "缺失章节ID")
-		return []
-	var chapter_id = lines[0].split(" ", false)[1]
+	var metadata: PackedStringArray = []
 
-	# 解析章节名称
-	if not lines[1].begins_with("chapter_name"):
-		_scripts_debug(path, 2, "缺失章节名称")
-		return []
-	var chapter_name = lines[1].split(" ", false)[1]
-
-	return [chapter_id, chapter_name]
+	for i in 5:
+		var result = dialogue_metadata_regex.search(lines[i])
+		if not result:
+			_scripts_debug(path, i + 1, "无效的元数据格式: %s" % lines[i])
+			return []
+		
+		var key = result.get_string(1)
+		var value = result.get_string(2)
+		
+		match key:
+			"chapter_id":
+				metadata.append(value)
+			"chapter_name":
+				metadata.append(value)
+			"chapter_lang":
+				metadata.append(value)
+			"chapter_author":
+				metadata.append(value)
+			"chapter_desc":
+				metadata.append(value)
+	return metadata
 
 # 背景切换解析
 func _parse_background(line: String, dialog: Dialogue) -> bool:
@@ -197,7 +229,7 @@ func _parse_audio(line: String, dialog: Dialogue) -> bool:
 	var parts = line.split(" ", false)
 	if parts[0] == "play":
 		dialog.dialog_type = Dialogue.Type.Play_BGM if parts[1] == "bgm" else Dialogue.Type.Play_SoundEffect
-		dialog[ "bgm_name" if parts[1] == "bgm" else "soundeffect_name"] = parts[2]
+		dialog["bgm_name" if parts[1] == "bgm" else "soundeffect_name"] = parts[2]
 	else:
 		dialog.dialog_type = Dialogue.Type.Stop_BGM
 	
@@ -249,7 +281,7 @@ func _parse_tag(line: String, dialog: Dialogue) -> bool:
 				pass
 		else:
 			break
-	_scripts_info(tmp_path, tag_inner_line_number, "标签" + dialog.tag_id + "解析完成" + " " + "标签内有" +str(dialog.tag_dialogue.size()) + "行对话")
+	_scripts_info(tmp_path, tag_inner_line_number, "标签" + dialog.tag_id + "解析完成" + " " + "标签内有" + str(dialog.tag_dialogue.size()) + "行对话")
 
 	return true
 
@@ -268,9 +300,7 @@ func _parse_dialog(line: String, dialog: Dialogue) -> bool:
 	if not line.begins_with("\""):
 		return false
 	
-	var regex = RegEx.new()
-	regex.compile("^\"(.*?)\"\\s+\"(.*?)\"(?:\\s+(\\S+))?$")
-	var result = regex.search(line)
+	var result = dialogue_content_regex.search(line)
 	if not result:
 		return false
 	
@@ -296,8 +326,8 @@ func _scripts_debug(path: String, line: int, error_info: String):
 
 # 警告提示
 func _scripts_tip(path: String, line: int, warning_info: String):
-	print_rich("[color=yellow]警告：%s [行：%d] %s [/color]" % [path, line, warning_info])
+	print_rich("[color=orange]警告：%s [行：%d] %s [/color]" % [path, line, warning_info])
 
 # 信息提示
 func _scripts_info(path: String, line: int, info_info: String):
-	print_rich("[color=green]信息：%s [行：%d] %s [/color]" % [path, line, info_info])
+	print_rich("[color=grey]信息：%s [行：%d] %s [/color]" % [path, line, info_info])
