@@ -241,13 +241,32 @@ func _parse_choice(line: String, dialog: Dialogue) -> bool:
 		return false
 	
 	dialog.dialog_type = Dialogue.Type.Show_Choice
-	var choices = line.split(" ", false)
-	for i in range(1, choices.size()):
-		if i % 2 == 1 and i + 1 < choices.size():
-			var choice = DialogueChoice.new()
-			choice.choice_text = choices[i].trim_prefix("\"").trim_suffix("\"")
-			choice.jump_tag = choices[i + 1]
-			dialog.choices.append(choice)
+	# var choices = line.split(" ", false)
+	# for i in range(1, choices.size()):
+	# 	if i % 2 == 1 and i + 1 < choices.size():
+	# 		var choice = DialogueChoice.new()
+	# 		choice.choice_text = choices[i].trim_prefix("\"").trim_suffix("\"")
+	# 		choice.jump_tag = choices[i + 1]
+	# 		dialog.choices.append(choice)
+
+	var choice_inner_line_number = tmp_line_number + 1
+
+	while choice_inner_line_number < tmp_content_lines.size():
+		var inner_line = tmp_content_lines[choice_inner_line_number].strip_edges()
+
+		# 检查缩进
+		if tmp_content_lines[choice_inner_line_number].begins_with("    ") or tmp_content_lines[choice_inner_line_number].begins_with("\t"):
+			choice_inner_line_number += 1
+			if not (inner_line.is_empty() or inner_line.begins_with("#")):
+				var choice = DialogueChoice.new()
+				choice.choice_text = inner_line.split(" ", false)[0].trim_prefix("\"").trim_suffix("\"")
+				choice.jump_tag = inner_line.split(" ", false)[1].trim_prefix("\"").trim_suffix("\"")
+
+				dialog.choices.append(choice)
+				pass
+		else:
+			break
+	_scripts_info(tmp_path, choice_inner_line_number, "选项解析完成" + " " + "选项有" + str(dialog.choices.size()) + "个")
 	
 	return true
 
