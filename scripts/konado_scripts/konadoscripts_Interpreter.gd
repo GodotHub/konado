@@ -85,7 +85,6 @@ func process_scripts_to_data(path: String) -> DialogueData:
 
 	tmp_content_lines = content_lines
 
-	_scripts_info(path, 0, "开始解析脚本文件")
 	# 解析内容行
 	for i in content_lines.size():
 		tmp_line_number = i
