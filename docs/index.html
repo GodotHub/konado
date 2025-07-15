@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Konado Docs</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="Description">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
+  <link rel="stylesheet" href="//unpkg.com/mermaid/dist/mermaid.min.css" />
+</head>
+
+<body>
+  <div id="app">加载中，首次加载可能需要一段时间</div>
+  <script>
+    window.$docsify = {
+      name: 'Konado Docs',
+      repo: '',
+      loadSidebar: true,
+      loadNavbar: true,
+      plugins: [
+        function (hook, vm) {
+          hook.ready(function () {
+            mermaid.initialize({ startOnLoad: false });
+          });
+          hook.doneEach(function () {
+            mermaid.init(undefined, '.mermaid');
+          });
+        }
+      ],
+      markdown: {
+        renderer: {
+          code: function (code, lang) {
+            var html = '';
+            if (code.match(/^sequenceDiagram/) || code.match(/^graph/) || code.match(/^gantt/)) {
+              html = '<div class="mermaid">' + code + '</div>';
+            }
+            // 如果不是图表，显示默认代码块
+            else {
+              html = '<pre v-pre data-lang="' + lang + '"><code class="lang-' + lang + '">' + Prism.highlight(code, Prism.languages[lang] || Prism.languages.markup) + '</code></pre>';
+            }
+            var hl = Prism.highlight(code, Prism.languages[lang] || Prism.languages.markup);
+            //return html + '<pre v-pre data-lang="' + lang + '"><code class="lang-' + lang + '">' + hl + '</code></pre>';
+            return html
+          }
+        }
+      }
+    }
+  </script>
+  <!-- Docsify v4 -->
+  <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/emoji.min.js"></script>
+  <script type="text/javascript" src="//unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</body>
+
+</html>

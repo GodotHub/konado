@@ -35,7 +35,8 @@ func _get_option_visibility(path, option_name, options):
 	return true
 
 func _import(source_file, save_path, options, platform_variants, gen_files):
-	var diadata = KS.process_scripts_to_data(source_file)
+	var interpreter = KonadoScriptsInterpreter.new()
+	var diadata = interpreter.process_scripts_to_data(source_file)
 	if diadata == null:
 		return FAILED
 	var output_path = "%s.%s" % [save_path, _get_save_extension()]
