@@ -5,6 +5,7 @@ import DefaultTheme from 'vitepress/theme'
 import './style.css'
 
 import '@theojs/lumen/style'
+import { googleAnalytics } from '@theojs/lumen'
 
 export default {
   extends: DefaultTheme,
@@ -14,6 +15,6 @@ export default {
     })
   },
   enhanceApp({ app, router, siteData }) {
-    // ...
+    googleAnalytics({ id: 'G-DVCMR9LD73' }) 
   }
 } satisfies Theme
