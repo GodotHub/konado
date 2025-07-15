@@ -9,7 +9,7 @@
 #                                                     #
 # Main Programmer: DSOE1024, Kamiki_                  #
 # Shaders Programmer: yxj                             #
-# Version: 1.1.0                                      #
+# Version: 1.1.1                                      #
 # Description: Visual Novel Game Engine Framework     #
 #_____________________________________________________#
 #                                                     #
