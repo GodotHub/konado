@@ -7,13 +7,13 @@
 #                                                     #
 #_____________________________________________________#
 #                                                     #
-# Main Programmer: DSOE1024, Kamiki_                  #
-# Shaders Programmer: yxj                             #
 # Version: 1.1.1                                      #
 # Description: Visual Novel Game Engine Framework     #
 #_____________________________________________________#
 #                                                     #
 # License: MIT                                        #
+# Copyright © 2025 DSOE1024, Kamiki_                  #
+# Copyright © 2025 Starry Team                        #
 # ____________________________________________________#
 #                                                     #
 # If you want to enjoy art,                           #
