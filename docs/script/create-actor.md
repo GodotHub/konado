@@ -20,7 +20,7 @@ actor show [角色ID] [状态] at [x] [y] scale [比例] <mirror>
 | 比例 | 是 | `0.85` | 缩放比例 |
 | mirror | 否 | - | 水平镜像翻转 |
 
-关于坐标和缩放，请参考[演员坐标和缩放](/zh-cn/配置/演员坐标和缩放)
+关于坐标和缩放，请参考[演员坐标和缩放](/tutorial/actor-coordinate-and-scaling)
 
 
 ## 示例
