@@ -275,7 +275,7 @@ background tavern_night  # 夜间酒馆场景
 - [gezigezi123](https://gitcode.com/gezigezi123) - 项目维护者
 - [lgyxj](https://gitee.com/lgyxj) - 为本项目提供shader支持
 - [麻卤可乐丝](https://gitcode.com/marukles) - 为本项目提供看板娘立绘、示例人物美术资源和海报
-- [moluopro](https://gitcode.com/moluopro) - 初代看板娘设计者
+- [moluopro](https://gitcode.com/moluopro) - 文档和官网维护者，初代看板娘设计者
 
 
 ## 开源许可证
