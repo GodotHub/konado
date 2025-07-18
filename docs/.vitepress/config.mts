@@ -39,7 +39,7 @@ export default defineConfig({
         }, link: 'https://gitcode.com/godothub/konado'
       },
       {
-        icon: 'github', link: 'https://gitcode.com/godothub/konado'
+        icon: 'github', link: 'https://github.com/godothub/konado'
       },
       {
         icon:

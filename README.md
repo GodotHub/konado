@@ -8,7 +8,6 @@
   <img src="assets/KonadoBanner.png" alt="看板娘可娜" width=596px>
 </p>
 
-
 <p align="center">
 <span style="font-size:12px;">看板娘可娜</span>
 <span style="font-size:12px;">画师: Marukles</span>
@@ -18,22 +17,26 @@
 
 Konado是一个对话创建工具，提供多种对话模板以及对话管理器，可以快速创建对话游戏，也可以嵌入各类游戏的对话场景。
 
+
 ## 快速开始
 
-请参考 [快速开始](https://godothub.com/konado/quickstart/) 文档，了解如何快速开始使用Konado。
+请参考 [快速开始](https://godothub.com/konado/quickstart) 文档，了解如何快速开始使用Konado。
+
 
 ## 文档
 
-欢迎访问我们的项目网站：https://godothub.com/konado/ 获取更多详细文档和教程。
+欢迎访问我们的项目网站：https://godothub.com/konado 获取更多详细文档和教程。
 
 
 ## 参与开发
 
 详细贡献指南请参考 [CONTRIBUTING.md](./CONTRIBUTING.md)
 
+
 ## 行为准则
 
 本项目遵循 [Code of Conduct](./CODE_OF_CONDUCT.md) 行为准则。
+
 
 ## 项目贡献者
 
