@@ -8,6 +8,7 @@
 #_____________________________________________________#
 #                                                     #
 # Version: 1.1.1                                      #
+# Codename: Hash Brown                                #
 # Description: Visual Novel Game Engine Framework     #
 #_____________________________________________________#
 #                                                     #
