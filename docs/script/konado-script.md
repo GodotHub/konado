@@ -1,6 +1,6 @@
-## 什么是 Konado Scripts？
+## Konado Script
 
-Konado Scripts 是一种专为视觉小说游戏设计的 **领域特定语言(Domain Specific Language)** ，文件扩展名为`.ks`。它采用纯文本格式（UTF-8编码），允许开发者通过简洁的指令集描述视觉小说的所有元素，包括剧情流程、角色表现、场景转换、分支选择等。
+Konado Script 是一种专为视觉小说游戏设计的 **领域特定语言(Domain Specific Language)** ，文件扩展名为`.ks`。它采用纯文本格式（UTF-8编码），允许开发者通过简洁的指令集描述视觉小说的所有元素，包括剧情流程、角色表现、场景转换、分支选择等。
 
 ## 设计理念
 
