@@ -7,8 +7,8 @@
 #                                                     #
 #_____________________________________________________#
 #                                                     #
-# Version: 1.1.1                                      #
-# Codename: Hash Brown                                #
+# Version: 1.2.0                                      #
+# Codename: Chicken Rack                              #
 # Description: Visual Novel Game Engine Framework     #
 #_____________________________________________________#
 #                                                     #
