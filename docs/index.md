@@ -10,7 +10,7 @@ hero:
   actions:
     - theme: brand
       text: 快速开始
-      link: /quickstart
+      link: /tutorial/install
     - theme: alt
       text: 赞助我们❤
       link: "https://afdian.tv/item/52230b2860a011f083ef52540025c377"

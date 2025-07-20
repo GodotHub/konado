@@ -1,4 +1,5 @@
 import { defineConfig } from 'vitepress'
+import { execSync } from 'child_process'
 import { MermaidMarkdown, MermaidPlugin } from 'vitepress-plugin-mermaid';
 
 export default defineConfig({
@@ -73,6 +74,10 @@ export default defineConfig({
       lang: 'zh-CN',
       description: 'Konado: 视觉小说框架',
       themeConfig: {
+        editLink: {
+          pattern: 'https://gitcode.com/godothub/konado/edit/master/docs/:path',
+          text: '在 GitCode 上编辑此页'
+        },
         outlineTitle: '本页目录',
         returnToTopLabel: '返回顶部',
         darkModeSwitchLabel: '深色模式',
@@ -100,10 +105,13 @@ export default defineConfig({
         },
         nav: [
           {
-            text: '查看文档', link: '/quickstart'
+            text: '查看文档', link: '/tutorial/install'
           },
           {
             text: '更新日志', link: '/update'
+          },
+          {
+            text: '加入群聊', link: 'https://pd.qq.com/g/GodotHub999/text/707799746'
           },
           {
             text: '赞助我们', link: 'https://afdian.tv/item/52230b2860a011f083ef52540025c377'
@@ -111,18 +119,13 @@ export default defineConfig({
         ],
         sidebar: [
           {
-            text: '快速开始',
-            link: '/quickstart'
-          },
-          {
             text: '基础教程',
             items: [
+              { text: '安装Konado', link: '/tutorial/install' },
               { text: '对话配置文件', link: '/tutorial/profiles' },
               { text: '演员坐标与缩放', link: '/tutorial/actor-coordinate-and-scaling' },
-              { text: '自定义对话框', link: '/tutorial/customize-the-dialogbox' },
-              { text: '版本、开发代号以及状态', link: '/tutorial/codename-and-version-and-status' }
-            ],
-            link: '/tutorial'
+              { text: '自定义对话框', link: '/tutorial/customize-the-dialogbox' }
+            ]
           },
           {
             text: 'Konado Script',
@@ -171,28 +174,26 @@ export default defineConfig({
                 ]
               }
             ]
-            , link: 'script'
           },
           {
             text: '开发',
             collapsed: true,
             items: [
-              { text: '贡献代码', link: '/develop/' },
-              { text: '贡献文档', link: '/develop/' },
-              { text: '问题反馈', link: '/develop/' }
-            ],
-            link: '/develop'
+              { text: '路线图', link: '/develop/roadmap' },
+              { text: '贡献代码', link: '/develop/code-contribute' },
+              { text: '贡献文档', link: '/develop/doc-contribute' },
+              { text: '问题反馈', link: '/develop/feedback' }
+            ]
           },
           {
             text: '关于',
             collapsed: true,
             items: [
-              { text: '关于Konado', link: '/about/' },
-              { text: '看板娘Kona', link: '/about/' },
-              { text: '许可证', link: '/about/' },
-              { text: '鸣谢', link: '/about/' }
-            ],
-            link: '/about'
+              { text: '关于Konado', link: '/about/konado' },
+              { text: '看板娘Kona', link: '/about/kona' },
+              { text: '许可证', link: '/about/license' },
+              { text: '鸣谢', link: '/about/thanks' }
+            ]
           }
         ]
       }

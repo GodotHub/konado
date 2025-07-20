@@ -1,8 +1,6 @@
-## 鸣谢
-
 ## 许可证
 
-Konado 使用 MIT 许可证，以下是许可证全文：
+Konado 使用 `MIT` 许可证，以下是许可证全文：
 
 ```
 The MIT License (MIT)
@@ -16,7 +14,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-如果您在项目中使用了 Konado，请遵守MIT许可协议，并在您的项目中声明 Konado 的相关信息。
+如果您在项目中使用了 `Konado` ，请遵守 `MIT` 许可协议，并在您的项目中声明 `Konado` 的相关信息。
 
 - 英文版本：
 ```text
@@ -32,4 +30,4 @@ Copyright © 2025 DSOE1024, Kamiki_
 Copyright © 2025 Starry Team
 ```
 
-如果您对许可证有任何疑问，欢迎到仓库提交 issue。
+如果您对许可证有任何疑问，欢迎到仓库提交[issue](https://gitcode.com/godothub/konado/issues)。
