@@ -132,7 +132,13 @@ func _ready() -> void:
 	# 初始化对话
 	_init_dialogue(func():
 		await get_tree().create_timer(0.1).timeout
-		_start_dialogue()
+		if dialog_data.dialogs[0].dialog_type == Dialogue.Type.START:
+			_start_dialogue()
+		else: 
+			print("第一句应该是START，请在脚本中修改")
+			# 暂停引擎
+			get_tree().paused = true
+			# _start_dialogue()
 		)
 	# 开始对话
 	#_start_dialogue()
@@ -326,6 +332,12 @@ func _physics_process(delta) -> void:
 					print("当前对话总数: " + str(dialog_data.dialogs.size()))
 
 					await get_tree().create_timer(0.01).timeout
+					_process_next()
+					pass
+				# 如果开始对话
+				elif dialog_type == Dialogue.Type.START:
+					if dialogueState != DialogState.PLAYING:
+						_start_dialogue()
 					_process_next()
 					pass
 				# 如果剧终
