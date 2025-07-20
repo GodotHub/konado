@@ -4,6 +4,8 @@ chapter_lang zh-CN
 chapter_author Kona
 chapter_desc 示例剧本，用于展示Konado剧本编辑器的功能
 
+start
+
 # 场景设置
 background 咖啡厅背景 blinds
 # play bgm cafe_jazz

@@ -149,6 +149,9 @@ func parse_line(line: String, line_number: int, path: String) -> Dialogue:
 	if _parse_end(line, dialog): 
 		print("解析成功：结束相关\n")
 		return dialog
+	if _parse_start(line, dialog):
+		print("解析成功：开始相关\n")
+		return dialog
 	if _parse_tag(line, dialog):
 		print("解析成功：标签相关\n")
 		return dialog
@@ -267,33 +270,7 @@ func _parse_audio(line: String, dialog: Dialogue) -> bool:
 	
 	return true
 
-# 选项解析
-#func _parse_choice(line: String, dialog: Dialogue) -> bool:
-	#if not line.begins_with("choice"):
-		#return false
-	#
-	#dialog.dialog_type = Dialogue.Type.Show_Choice
-	#var choice_inner_line_number = tmp_line_number + 1
-#
-	#while choice_inner_line_number < tmp_content_lines.size():
-		#var inner_line = tmp_content_lines[choice_inner_line_number].strip_edges()
-#
-		## 检查缩进
-		#if tmp_content_lines[choice_inner_line_number].begins_with("    ") or tmp_content_lines[choice_inner_line_number].begins_with("\t"):
-			#choice_inner_line_number += 1
-			#if not (inner_line.is_empty() or inner_line.begins_with("#")):
-				#var choice = DialogueChoice.new()
-				#choice.choice_text = inner_line.split(" ", false)[0].trim_prefix("\"").trim_suffix("\"")
-				#choice.jump_tag = inner_line.split(" ", false)[1].trim_prefix("\"").trim_suffix("\"")
-				#dialog.choices.append(choice)
-				#pass
-		#else:
-			#break
-	#var choices_strs = ""
-	#for choice in dialog.choices:
-		#choices_strs += choice.choice_text + " "
-	#_scripts_info(tmp_path, choice_inner_line_number, "选项解析完成" + " " + "选项数量" + str(dialog.choices.size()) +  "  选项： " + choices_strs)
-	#
+# 解析选项
 func _parse_choice(line: String, dialog: Dialogue) -> bool:
 	if not line.begins_with("choice"):
 		return false
@@ -376,6 +353,14 @@ func _parse_dialog(line: String, dialog: Dialogue) -> bool:
 	
 	return true
 
+# 解析开始
+func _parse_start(line: String, dialog: Dialogue) -> bool:
+	if line.begins_with("start"):
+		dialog.dialog_type = Dialogue.Type.START
+		return true
+	return false
+	
+# 解析结束
 func _parse_end(line: String, dialog: Dialogue) -> bool:
 	if line.begins_with("end"):
 		dialog.dialog_type = Dialogue.Type.THE_END
