@@ -3,6 +3,7 @@ extends Resource
 class_name Dialogue
 ## 对话类型
 enum Type{
+	START, ## 开始
 	Ordinary_Dialog, ## 普通对话
 	Display_Actor, ## 显示演员
 	Actor_Change_State, ## 演员切换状态
