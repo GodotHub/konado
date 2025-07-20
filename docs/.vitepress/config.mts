@@ -119,7 +119,8 @@ export default defineConfig({
             items: [
               { text: '对话配置文件', link: '/tutorial/profiles' },
               { text: '演员坐标与缩放', link: '/tutorial/actor-coordinate-and-scaling' },
-              { text: '自定义对话框', link: '/tutorial/customize-the-dialogbox' }
+              { text: '自定义对话框', link: '/tutorial/customize-the-dialogbox' },
+              { text: '版本、开发代号以及状态', link: '/tutorial/codename-and-version-and-status' }
             ],
             link: '/tutorial'
           },

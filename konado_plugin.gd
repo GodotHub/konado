@@ -20,7 +20,8 @@ func _enter_tree() -> void:
 	add_import_plugin(import_plugin)
 
 	# 从version.txt读取字符串并打印
-	print_rich(load_string("res://addons/konado/version.txt"))
+	print(load_string("res://addons/konado/version.txt"))
+	print("Konado loaded")
 
 func load_string(path: String) -> String:
 	return FileAccess.open(path, FileAccess.READ).get_as_text()
@@ -34,3 +35,4 @@ func _exit_tree() -> void:
 	# 清理自动加载和自定义类型
 	remove_autoload_singleton("KS_SAVE_AND_LOAD")
 	remove_custom_type("DialogueData")
+	print("Konado unloaded")
