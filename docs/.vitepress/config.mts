@@ -177,7 +177,6 @@ export default defineConfig({
           },
           {
             text: '开发',
-            collapsed: true,
             items: [
               { text: '路线图', link: '/develop/roadmap' },
               { text: '贡献代码', link: '/develop/code-contribute' },
