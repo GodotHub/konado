@@ -1,6 +1,10 @@
 @tool
 extends Resource
 class_name Dialogue
+
+## 源对话文件行号
+var source_file_line: int = -1
+
 ## 对话类型
 enum Type{
 	START, ## 开始

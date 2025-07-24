@@ -24,6 +24,13 @@ var dialogue_content_regex: RegEx
 ## 元数据正则表达式
 var dialogue_metadata_regex: RegEx
 
+## 演员验证表
+var cur_tmp_actors = []
+
+## 选项行记录表 key: 行号 value: 行内容
+var cur_tmp_option_lines = {}
+var tmp_tags = []
+
 # 全文解析模式
 func process_scripts_to_data(path: String) -> DialogueData:
 	if not path:
@@ -80,6 +87,9 @@ func process_scripts_to_data(path: String) -> DialogueData:
 	_scripts_info(path, 4, "章节作者：%s" % [diadata.chapter_author])
 	_scripts_info(path, 5, "章节描述：%s" % [diadata.chapter_desc])
 
+	# 清空演员验证表
+	cur_tmp_actors = []
+
 	# 只保留内容行
 	var content_lines = lines.slice(5)
 
@@ -105,11 +115,16 @@ func process_scripts_to_data(path: String) -> DialogueData:
 		[path, diadata.chapter_name, diadata.chapter_id, diadata.dialogs.size()])
 
 	tmp_path = ""
+
+	if not _check_tag_and_choice():
+		_scripts_debug(path, 0, "标签和选项解析失败")
+
+
 	return diadata
 
 
 
-# 单行解析模式（line_number从3开始对应原始文件第三行）
+# 单行解析模式
 func parse_single_line(line: String, line_number: int, path: String) -> Dialogue:
 	return parse_line(line.strip_edges(), line_number, path)
 
@@ -127,6 +142,7 @@ func parse_line(line: String, line_number: int, path: String) -> Dialogue:
 		return null
 
 	var dialog := Dialogue.new()
+	dialog.source_file_line = line_number
 	
 	if _parse_background(line, dialog):
 		print("解析成功：背景切换\n")
@@ -156,6 +172,7 @@ func parse_line(line: String, line_number: int, path: String) -> Dialogue:
 		print("解析成功：标签相关\n")
 		return dialog
 
+	dialog = null
 	_scripts_tip(path, line_number, "解析失败：无法识别的语法，请检查语法是否正确或删除该行: %s" % line)
 	print("\n")
 	return null
@@ -226,17 +243,38 @@ func _parse_actor(line: String, dialog: Dialogue) -> bool:
 		"show":
 			dialog.dialog_type = Dialogue.Type.Display_Actor
 			var actor = _create_actor(parts)
-			if actor: dialog.show_actor = actor
+			if actor: 
+				dialog.show_actor = actor
+				# 添加检查功能
+				if not cur_tmp_actors.has(actor.character_name):
+					cur_tmp_actors.append(actor.character_name)
+				else:
+					_scripts_debug(tmp_path, tmp_original_line_number, "角色已存在，请检查角色名称是否重复创建")
 		"exit":
 			dialog.dialog_type = Dialogue.Type.Exit_Actor
 			dialog.exit_actor = parts[2]
+			# 添加检查功能
+			if cur_tmp_actors.has(parts[2]):
+				cur_tmp_actors.erase(parts[2])
+			else:
+				_scripts_debug(tmp_path, tmp_original_line_number, "无法移除不存在的角色，请检查角色名称是否正确")
 		"change":
 			dialog.dialog_type = Dialogue.Type.Actor_Change_State
 			dialog.change_state_actor = parts[2]
+
+			# 添加检查功能
+			if not cur_tmp_actors.has(parts[2]):
+				_scripts_debug(tmp_path, tmp_original_line_number, "无法改变不存在的角色的状态，请检查角色名称是否正确")
+				
 			dialog.change_state = parts[3]
 		"move":
 			dialog.dialog_type = Dialogue.Type.Move_Actor
 			dialog.target_move_chara = parts[2]
+
+			# 添加检查功能
+			if not cur_tmp_actors.has(parts[2]):
+				_scripts_debug(tmp_path, tmp_original_line_number, "无法移动不存在的角色的位置，请检查角色名称是否正确")
+
 			dialog.target_move_pos = Vector2(parts[3].to_float(), parts[4].to_float())
 	
 	return true
@@ -286,6 +324,9 @@ func _parse_choice(line: String, dialog: Dialogue) -> bool:
 	var choices_strs = ""
 	for choice in dialog.choices:
 		choices_strs += choice.choice_text + " "
+	# 添加检查功能
+	cur_tmp_option_lines[tmp_original_line_number] = line
+
 	_scripts_info(tmp_path, tmp_line_number + 1, "选项解析完成" + " " + "选项数量" + str(dialog.choices.size()) +  "  选项： " + choices_strs)
 	return true
 
@@ -304,8 +345,6 @@ func _parse_tag(line: String, dialog: Dialogue) -> bool:
 	var tag_inner_line_number = tmp_line_number + 1
 
 	# 遍历标签内的行(缩进)
-
-
 	while tag_inner_line_number < tmp_content_lines.size():
 		var inner_line = tmp_content_lines[tag_inner_line_number].strip_edges()
 
@@ -321,6 +360,8 @@ func _parse_tag(line: String, dialog: Dialogue) -> bool:
 				pass
 		else:
 			break
+
+	tmp_tags.append(dialog.tag_id)
 
 	_scripts_info(tmp_path, tmp_original_line_number, "标签" + dialog.tag_id + "解析完成" + " " + "标签内有" + str(dialog.tag_dialogue.size()) + "行对话")
 
@@ -353,6 +394,23 @@ func _parse_dialog(line: String, dialog: Dialogue) -> bool:
 	
 	return true
 
+# 检查tag和choice
+func _check_tag_and_choice() -> bool:
+	var target_jump_tag = []
+
+	for line in cur_tmp_option_lines:
+		var choices = cur_tmp_option_lines[line].split(" ", false)
+		for i in range(1, choices.size()):
+			if i % 2 == 1 and i + 1 < choices.size():
+				target_jump_tag.append(choices[i + 1])
+		for tar in target_jump_tag:
+			if not tmp_tags.has(tar):
+				_scripts_debug(tmp_path, line, "跳转标签" + tar + "不存在")
+				return false
+		target_jump_tag = []
+	return true
+
+
 # 解析开始
 func _parse_start(line: String, dialog: Dialogue) -> bool:
 	if line.begins_with("start"):
@@ -370,13 +428,13 @@ func _parse_end(line: String, dialog: Dialogue) -> bool:
 
 # 错误报告
 func _scripts_debug(path: String, line: int, error_info: String):
-	print_rich("[color=red]错误：%s [行：%d] %s [/color]" % [path, line, error_info])
+	push_error("错误：%s [行：%d] %s " % [path, line, error_info])
 
 
 # 警告提示
 func _scripts_tip(path: String, line: int, warning_info: String):
-	print_rich("[color=orange]警告：%s [行：%d] %s [/color]" % [path, line, warning_info])
+	push_warning("警告：%s [行：%d] %s " % [path, line, warning_info])
 
 # 信息提示
 func _scripts_info(path: String, line: int, info_info: String):
-	print_rich("[color=grey]信息：%s [行：%d] %s [/color]" % [path, line, info_info])
+	print("信息：%s [行：%d] %s " % [path, line, info_info])
