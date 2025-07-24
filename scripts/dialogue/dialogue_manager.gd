@@ -74,6 +74,9 @@ var se_id: String
 var option_triggered: bool = false
 
 
+@export var konado_resource: KonadoResource
+
+
 ## 资源列表
 @export_group("资源列表")
 ## 角色列表
@@ -90,12 +93,12 @@ var option_triggered: bool = false
 @export var soundeffect_list: DialogSoundEffectList
 
 
-# ## 调试
-# @export_group("调试")
-# ## 调试控制台
-# @onready var debug_console: DebugConsole = $DebugInterface
-
 func _ready() -> void:
+
+	# 写入项目根目录临时文件
+	# var file = FileAccess.open("res://temp.json", FileAccess.WRITE)
+	# file.store_string(konado_resource.get_json_data())
+	# return
 	# 读取玩家的设置
 	var config = ConfigFile.new()
 	var error = config.load("user://settings.cfg")
@@ -106,12 +109,6 @@ func _ready() -> void:
 			else:
 				debug_mode = false
 	# 连接按钮信号
-	# Continue
-	#if not _continueButton.button_up.is_connected(_continue):
-		#_continueButton.button_up.connect(_continue)
-	## QS
-	#if not _qsButton.button_up.is_connected(_on_qsbutton_press):
-		#_qsButton.button_up.connect(_on_qsbutton_press)
 	# Save
 	if not _saveButton.button_up.is_connected(_on_savebutton_press):
 			_saveButton.button_up.connect(_on_savebutton_press)
@@ -121,13 +118,6 @@ func _ready() -> void:
 	# Auto
 	if not _autoPlayButton.toggled.is_connected(start_autoplay):
 		_autoPlayButton.toggled.connect(start_autoplay)
-	## 添加~控制台按键映射（如果不使用_input方法或者手动添加按键映射）
-		#if not InputMap.has_action("toggle_console_action"):
-		#InputMap.add_action("toggle_console_action")
-		#var default_toggle_console_event = InputEventKey.new()
-		#default_toggle_console_event.physical_keycode = KEY_QUOTELEFT
-		#InputMap.action_add_event("toggle_console_action", default_toggle_console_event)
-		
 
 	# 初始化对话
 	_init_dialogue(func():
@@ -142,6 +132,11 @@ func _ready() -> void:
 		)
 	# 开始对话
 	#_start_dialogue()
+
+## 这是一个测试方法，用于测试对话管理器
+func print_hello() -> bool:
+	_display_dialogue("Kona", "Hello, World!", 0.01)
+	return true
 
 
 ## 初始化对话的方法
@@ -386,20 +381,10 @@ func _input(event):
 			# 全屏点击下一句
 			if is_click_valid(event):
 				_continue()
-				#get_tree().root.set_input_as_handled()
 	if event is InputEventKey:
-		# ## 控制台~
-		# if event.pressed and event.keycode == KEY_QUOTELEFT:
-		# 	if debug_mode:
-		# 		if not debug_console.is_visible():
-		# 			debug_console.show()
-		# 		else:
-		# 			debug_console.hide()
 		## 对话继续
 		if event.pressed and event.keycode == KEY_ENTER:
-			# if not debug_console.is_visible():
 			_continue()
-				#get_tree().root.set_input_as_handled()
 		
 ## 打字完成
 func isfinishtyping(wait_voice: bool) -> void:

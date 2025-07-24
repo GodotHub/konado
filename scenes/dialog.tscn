@@ -1,6 +1,7 @@
-[gd_scene load_steps=55 format=3 uid="uid://bj8ynu8013j4j"]
+[gd_scene load_steps=56 format=3 uid="uid://bj8ynu8013j4j"]
 
 [ext_resource type="Script" uid="uid://dpo124xwpder5" path="res://addons/konado/scripts/dialogue/dialogue_manager.gd" id="1_buo3n"]
+[ext_resource type="Resource" uid="uid://bl1ygyclnh38r" path="res://addons/konado/sample/sample_lists/new_resource.tres" id="2_566op"]
 [ext_resource type="Script" uid="uid://cyoedi0x84dxy" path="res://addons/konado/scripts/act/acting_Interface.gd" id="2_pq6sw"]
 [ext_resource type="Script" uid="uid://b0kbsxqyedoml" path="res://addons/konado/scripts/dialogue/dialogue_Interface.gd" id="3_gl7il"]
 [ext_resource type="Script" uid="uid://5d4l66ex5dy" path="res://addons/konado/scripts/save_and_load/SaL_UI.gd" id="4_566op"]
@@ -141,6 +142,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_buo3n")
+konado_resource = ExtResource("2_566op")
 
 [node name="MaskLayer" type="ColorRect" parent="."]
 layout_mode = 1
