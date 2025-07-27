@@ -24,6 +24,20 @@ var tag_color: Color
 var chara_status: Array[CharacterStatus]
 
 
+func get_json_data():
+	# 角色状态图集转字典
+	var status_dict = {}
+	for status in chara_status:
+		status_dict[status.status_name] = status.get_json_data()
+	
+	return {
+		"角色ID": chara_id,
+		"角色姓名": chara_name,
+		"角色标记颜色": tag_color,
+		"角色状态": status_dict
+	}
+
+
 func _get_property_list():
 	var properties = []
 	

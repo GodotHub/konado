@@ -1,7 +1,6 @@
-[gd_scene load_steps=56 format=3 uid="uid://bj8ynu8013j4j"]
+[gd_scene load_steps=59 format=3 uid="uid://bj8ynu8013j4j"]
 
 [ext_resource type="Script" uid="uid://dpo124xwpder5" path="res://addons/konado/scripts/dialogue/dialogue_manager.gd" id="1_buo3n"]
-[ext_resource type="Resource" uid="uid://bl1ygyclnh38r" path="res://addons/konado/sample/sample_lists/new_resource.tres" id="2_566op"]
 [ext_resource type="Script" uid="uid://cyoedi0x84dxy" path="res://addons/konado/scripts/act/acting_Interface.gd" id="2_pq6sw"]
 [ext_resource type="Script" uid="uid://b0kbsxqyedoml" path="res://addons/konado/scripts/dialogue/dialogue_Interface.gd" id="3_gl7il"]
 [ext_resource type="Script" uid="uid://5d4l66ex5dy" path="res://addons/konado/scripts/save_and_load/SaL_UI.gd" id="4_566op"]
@@ -22,6 +21,14 @@ colors = PackedColorArray(0, 0, 0, 0.870588, 0.141176, 0.141176, 0.141176, 0.749
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_qodmk"]
 gradient = SubResource("Gradient_utfb4")
 fill_to = Vector2(1, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xjghb"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_uf3p3"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h5wn0"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bfne7"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_f70o6"]
 
@@ -142,7 +149,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_buo3n")
-konado_resource = ExtResource("2_566op")
 
 [node name="MaskLayer" type="ColorRect" parent="."]
 layout_mode = 1
@@ -237,6 +243,8 @@ theme_override_constants/separation = 30
 custom_minimum_size = Vector2(0, 35)
 layout_mode = 2
 theme_override_font_sizes/normal_font_size = 25
+theme_override_styles/background = SubResource("StyleBoxEmpty_xjghb")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_uf3p3")
 bbcode_enabled = true
 fit_content = true
 
@@ -248,6 +256,8 @@ theme_override_constants/margin_right = 200
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_font_sizes/normal_font_size = 22
+theme_override_styles/background = SubResource("StyleBoxEmpty_h5wn0")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_bfne7")
 bbcode_enabled = true
 text = "你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好v你好"
 fit_content = true
