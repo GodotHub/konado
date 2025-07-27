@@ -1,3 +1,4 @@
+@tool
 extends Node
 class_name DialogueInterface
 # 对话UI控制脚本
@@ -15,6 +16,15 @@ var writertween: Tween
 signal finish_typing
 ## 完成创建选项的信号
 signal finish_display_options
+
+func _ready() -> void:
+	# 如果在编辑器模式下
+	
+	_name_lable.add_theme_stylebox_override("normal", StyleBoxEmpty.new())
+	_name_lable.add_theme_stylebox_override("background", StyleBoxEmpty.new())
+	_content_lable.add_theme_stylebox_override("normal", StyleBoxEmpty.new())
+	_content_lable.add_theme_stylebox_override("background", StyleBoxEmpty.new())
+		
 
 ## 修改对话框背景的方法
 func change_dialog_box(tex: Texture):

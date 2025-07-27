@@ -8,8 +8,23 @@
 #   对话管理器
 ################################################################################
 
+@tool
+
 extends Control
 class_name DialogueManager
+
+## 对话配置
+
+@export_group("对话配置")
+
+## 是否在游戏开始时自动初始化对话，如果为true，则在游戏开始时自动初始化对话，否则需要手动初始化对话
+## 手动初始化对话的方法为：在游戏开始时，调用`init_dialogue`方法
+@export var init_onstart: bool = true
+
+## 是否自动开始对话，如果为true，则在游戏开始时自动开始对话，否则需要手动开始对话
+## 手动开始对话的方法为：在游戏开始时，调用`start_dialogue`方法
+@export var autostart: bool = true
+
 
 ## 对话当前行，同时也是用于读取对话列表的下标，在游戏中的初始值应该为0或者任何大于0的整数
 var curline: int
@@ -23,8 +38,7 @@ var justenter: bool
 @export var dialogspeed: float = 0.03
 ## 自动播放速度
 @export var autoplayspeed: float = 2
-## 正在调试（关闭控制）
-@export var debug_mode: bool
+
 ## 对话状态（0:关闭，1:播放，2:播放完成下一个）
 enum DialogState {OFF, PLAYING, PAUSED}
 ## 对话的状态
@@ -62,8 +76,6 @@ var dialogueState: DialogState
 ## 对话资源
 var dialog_data: DialogueData
 
-## 对话
-#var _dialog: Dialogue
 
 ## 对话资源ID
 var _dialog_data_id: int = 0
@@ -92,22 +104,11 @@ var option_triggered: bool = false
 ## 音效列表
 @export var soundeffect_list: DialogSoundEffectList
 
+## 调试模式
+@export var debug_mode = false
+
 
 func _ready() -> void:
-
-	# 写入项目根目录临时文件
-	# var file = FileAccess.open("res://temp.json", FileAccess.WRITE)
-	# file.store_string(konado_resource.get_json_data())
-	# return
-	# 读取玩家的设置
-	var config = ConfigFile.new()
-	var error = config.load("user://settings.cfg")
-	if error == OK:
-		if not debug_mode:
-			if config.get_value("advanced_settings", "console") == 0:
-				debug_mode = true
-			else:
-				debug_mode = false
 	# 连接按钮信号
 	# Save
 	if not _saveButton.button_up.is_connected(_on_savebutton_press):
@@ -119,19 +120,45 @@ func _ready() -> void:
 	if not _autoPlayButton.toggled.is_connected(start_autoplay):
 		_autoPlayButton.toggled.connect(start_autoplay)
 
-	# 初始化对话
-	_init_dialogue(func():
-		await get_tree().create_timer(0.1).timeout
-		if dialog_data.dialogs[0].dialog_type == Dialogue.Type.START:
-			_start_dialogue()
-		else: 
-			print("第一句应该是START，请在脚本中修改")
-			# 暂停引擎
-			get_tree().paused = true
-			# _start_dialogue()
-		)
-	# 开始对话
-	#_start_dialogue()
+	# 为了适应Snowflake编辑器，在编辑器中不自动初始化对话，防止直接在编辑器场景自动播放
+	# 这个tool特性设计真的非常难蚌...
+	if is_in_editor_and_idle():
+		return
+
+	if not debug_mode:
+		# 自动初始化和开始对话
+		if init_onstart:
+			print("自动初始化对话")
+			# 初始化对话
+			if not autostart:
+				_init_dialogue(func():
+					print("请手动开始对话")
+					)
+			else:
+				_init_dialogue(func():
+					print("自动开始对话")
+					await get_tree().create_timer(0.1).timeout
+					if dialog_data.dialogs[0].dialog_type == Dialogue.Type.START:
+						_start_dialogue()
+					else: 
+						print("第一句应该是START，请在脚本中修改")
+						# 暂停引擎
+						get_tree().paused = true
+						# _start_dialogue()
+					)
+		else:
+			print("请手动初始化对话")
+
+
+## 检查是否在编辑器中并且处于空闲状态
+## 编辑器中“未播放”状态的本质是场景树未激活，如果场景树未激活，则认为处于空闲状态
+func is_in_editor_and_idle() -> bool:
+	# 没招，Godot根本没设计运行时和编辑器的区分，只能用这种很傻的方式~
+	# 目前想不到什么优化的方法...
+	if not Engine.is_editor_hint():
+		return false
+	var root = get_tree().get_root()
+	return root != null and !root.is_processing_internal()
 
 ## 这是一个测试方法，用于测试对话管理器
 func print_hello() -> bool:
@@ -141,17 +168,19 @@ func print_hello() -> bool:
 
 ## 初始化对话的方法
 func _init_dialogue(callback: Callable = Callable()) -> void:
-	if dialog_data_list == null:
-		printerr("对话列表资源为空")
-		return
-	if dialog_data_list.dialog_data_list.size() <= 0:
-		printerr("对话列表没有对话")
-		return
-		
-	dialog_data = dialog_data_list.dialog_data_list[_dialog_data_id]
+	if not debug_mode:
+		if dialog_data_list == null:
+			printerr("对话列表资源为空")
+			return
+		if dialog_data_list.dialog_data_list.size() <= 0:
+			printerr("对话列表没有对话")
+			return
+
+		dialog_data = dialog_data_list.dialog_data_list[_dialog_data_id]
 	
-	# 将角色表传给acting_interface
-	_acting_interface.chara_list = chara_list
+		# 将角色表传给acting_interface
+		_acting_interface.chara_list = chara_list
+
 	justenter = true
 	dialogueState == DialogState.OFF
 	curline = 0
@@ -160,6 +189,14 @@ func _init_dialogue(callback: Callable = Callable()) -> void:
 	print("---------------------------------------------")
 	if callback:
 		callback.call()
+
+## 设置对话数据的方法
+func set_dialogue_data(dialogue_data: DialogueData) -> void:
+	self.dialog_data = dialogue_data
+
+## 设置角色表的方法
+func set_chara_list(chara_list: CharacterList) -> void:
+	self.chara_list = chara_list
 
 ## 开始对话的方法
 func _start_dialogue() -> void:
@@ -375,16 +412,16 @@ func _input(event):
 	if _check_opening() == false:
 		_audio_interface.stop_voice()
 		return
-	
-	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_LEFT:
-			# 全屏点击下一句
-			if is_click_valid(event):
+	if not debug_mode:
+		if event is InputEventMouseButton:
+			if event.button_index == MOUSE_BUTTON_LEFT:
+				# 全屏点击下一句
+				if is_click_valid(event):
+					_continue()
+		if event is InputEventKey:
+			## 对话继续
+			if event.pressed and event.keycode == KEY_ENTER:
 				_continue()
-	if event is InputEventKey:
-		## 对话继续
-		if event.pressed and event.keycode == KEY_ENTER:
-			_continue()
 		
 ## 打字完成
 func isfinishtyping(wait_voice: bool) -> void:
@@ -783,6 +820,21 @@ func get_game_progress() -> Dictionary:
 
 ## 跳转到对话
 func _jump_curline(value: int) -> bool:
+	# 遍历演员操作相关的对话到当前行
+	# 临时先这么写吧，以后再优化，目前不崩就行~
+	for i in value:
+		var dialog = dialog_data.dialogs[i]
+		if dialog.dialog_type == Dialogue.Type.Display_Actor:
+			_display_character(dialog.actor)
+		if dialog.dialog_type == Dialogue.Type.Move_Actor:
+			_acting_interface.move_actor(dialog.actor_name, dialog.actor_position)
+		if dialog.dialog_type == Dialogue.Type.Exit_Actor:
+			_acting_interface.exit_actor(dialog.exit_actor)
+		if dialog.dialog_type == Dialogue.Type.Actor_Change_State:
+			_acting_interface.change_character_state(dialog.change_state_actor, dialog.change_state)
+	
+
+
 	if value >= 0:
 		if not value >= dialog_data.dialogs.size():
 			_dialogue_goto_state(DialogState.OFF)
@@ -813,6 +865,19 @@ func debug_get_info() -> String:
 	+"  对话行：" + str(curline) \
 	+"  状态：" + str(dialogueState)
 	return info
+
+
+## 获取当前对话帧信息
+func debug_get_dialogue_frame_info() -> String:
+	var chapter_id = dialog_data.chapter_id
+	var dialogue_id = curline
+	var dialogue_type = dialog_data.dialogs[curline].dialog_type
+	
+	var info = "当前对话帧" + str(dialogue_id) \
+	+"  对话类型：" + str(dialogue_type) \
+	+"  章节ID：" + str(chapter_id)
+	return info
+	
 	
 ## 调试获取章节列表
 func debug_get_dialog_data_list() -> Array[String]:

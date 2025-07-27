@@ -1,3 +1,4 @@
+@tool
 extends Control
 class_name ActingInterface
 ## 表演管理器

@@ -15,7 +15,20 @@ class_name CharacterStatus
 # 状态名称
 var status_name: String
 # 状态角色图片
-var status_texture: Texture 
+var status_texture: Texture
+
+
+func get_json_data() -> Dictionary:
+	# 图片转Base64
+
+	## 获取图片的PackedByteArray
+	var packed_bytes = status_texture.get_image().get_data()
+	var base_str = Marshalls.raw_to_base64(packed_bytes)
+
+	return {
+		"status_name": status_name,
+		"status_texture": base_str
+	}
 
 func _get_property_list() -> Array:
 	var properties = []

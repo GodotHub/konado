@@ -1,3 +1,5 @@
+@tool
+
 extends Node
 class_name SaL_UI
 
