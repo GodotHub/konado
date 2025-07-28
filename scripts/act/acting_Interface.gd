@@ -232,6 +232,9 @@ func create_character_from_dic(_actor_dic: Dictionary) -> void:
 # 切换演员的状态
 func change_actor_state(actor_id: String, state_id: String, state_tex: Texture) -> void:
 	var chara_node: Node = get_chara_node(actor_id)
+	if chara_node == null:
+		print("切换角色状态失败"+actor_id+"到"+str(state_tex))
+		return
 	var tex_node = chara_node.find_child(actor_id, true, false)
 	if tex_node:
 		# 修改字典中角色的状态
