@@ -192,18 +192,31 @@ func _init_dialogue(callback: Callable = Callable()) -> void:
 
 ## 设置对话数据的方法
 func set_dialogue_data(dialogue_data: DialogueData) -> void:
+	if dialogue_data == null:
+		printerr("对话数据为空")
+		return
+	print(dialogue_data.to_string())
 	self.dialog_data = dialogue_data
 
 ## 设置角色表的方法
 func set_chara_list(chara_list: CharacterList) -> void:
+	if chara_list == null:
+		printerr("角色列表为空")
+		return
 	print(chara_list.to_string())
 	self.chara_list = chara_list
 
 func set_background_list(background_list: BackgroundList) -> void:
+	if background_list == null:
+		printerr("背景列表为空")
+		return
 	print(background_list.to_string())
 	self.background_list = background_list
 
 func set_bgm_list(bgm_list: DialogBGMList) -> void:
+	if bgm_list == null:
+		printerr("BGM列表为空")
+		return
 	print(bgm_list.to_string())
 	self.bgm_list = bgm_list
 
@@ -829,24 +842,57 @@ func get_game_progress() -> Dictionary:
 
 ## 跳转到对话
 func _jump_curline(value: int) -> bool:
-
-	_acting_interface.delete_all_character()
-	# 遍历演员操作相关的对话到当前行
-	# 临时先这么写吧，以后再优化，目前不崩就行~
-	for i in value:
-		var dialog = dialog_data.dialogs[i]
-		if dialog.dialog_type == Dialogue.Type.Display_Actor:
-			_display_character(dialog.show_actor)
-		if dialog.dialog_type == Dialogue.Type.Move_Actor:
-			_acting_interface.move_actor(dialog.target_move_chara, dialog.target_move_pos)
-		if dialog.dialog_type == Dialogue.Type.Exit_Actor:
-			_exit_actor(dialog.exit_actor)
-		if dialog.dialog_type == Dialogue.Type.Actor_Change_State:
-			_actor_change_state(dialog.change_state_actor, dialog.change_state)
-
-
 	if value >= 0:
 		if not value >= dialog_data.dialogs.size():
+
+			_acting_interface.delete_all_character()
+			# 遍历演员操作相关的对话到当前行
+			# 临时先这么写吧，以后再优化，目前不崩就行~
+			for i in value:
+				var dialog = dialog_data.dialogs[i]
+				var dialog_type = dialog.dialog_type
+				# if dialog.dialog_type == Dialogue.Type.Display_Actor:
+				# 	_display_character(dialog.show_actor)
+				# if dialog.dialog_type == Dialogue.Type.Move_Actor:
+				# 	_acting_interface.move_actor(dialog.target_move_chara, dialog.target_move_pos)
+				# if dialog.dialog_type == Dialogue.Type.Exit_Actor:
+				# 	_exit_actor(dialog.exit_actor)
+				# if dialog.dialog_type == Dialogue.Type.Actor_Change_State:
+				# 	_actor_change_state(dialog.change_state_actor, dialog.change_state)
+				
+				# 如果是显示演员
+				if dialog_type == Dialogue.Type.Display_Actor:
+					# 显示演员
+					var actor = dialog.show_actor
+					#var s = _acting_interface.character_created
+					#s.connect(_process_next.bind(s))
+					#_acting_interface.show()
+					_display_character(actor)
+					pass
+				# 如果修改演员状态
+				if dialog_type == Dialogue.Type.Actor_Change_State:
+					var actor = dialog.change_state_actor
+					var target_state = dialog.change_state
+					#var s = _acting_interface.character_state_changed
+					#s.connect(_process_next.bind(s))
+					_actor_change_state(actor, target_state)
+					pass
+				# 如果是移动演员
+				if dialog_type == Dialogue.Type.Move_Actor:
+					var actor = dialog.target_move_chara
+					var pos = dialog.target_move_pos
+					#var s = _acting_interface.character_moved
+					#s.connect(_process_next.bind(s))
+					_acting_interface.move_actor(actor, pos)
+					pass
+				# 如果是删除演员
+				if dialog_type == Dialogue.Type.Exit_Actor:
+					# 删除演员
+					var actor = dialog.exit_actor
+					#var s = _acting_interface.character_deleted
+					#s.connect(_process_next.bind(s))
+					_exit_actor(actor)
+					pass
 			_dialogue_goto_state(DialogState.OFF)
 			curline = value
 			print_rich("跳转到：" + str(curline))
