@@ -37,6 +37,14 @@ var tmp_ks_file_path: String = ""
 
 
 func _ready() -> void:
+	# 获取项目设置分辨率，因为Godot竟然没做编辑器和运行时分辨率分离！！！
+	# 不是哥们，这编辑器扩展太混乱了
+	var initial_width = ProjectSettings.get_setting("display/window/size/viewport_width")
+	var initial_height = ProjectSettings.get_setting("display/window/size/viewport_height")
+	var initial_resolution = Vector2i(initial_width, initial_height)
+	dialogue_manager.set_size(initial_resolution)
+	dialogue_manager.set_scale(Vector2(0.65, 0.65))
+	
 	# 订阅大小变化事件
 	self.resized.connect(func(): 
 		# print("SnowflakeEditor resized" + str(self.get_size()))

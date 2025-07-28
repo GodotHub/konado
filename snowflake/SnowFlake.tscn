@@ -30,7 +30,6 @@ position = Vector2i(335, 180)
 ok_button_text = "Open"
 file_mode = 0
 access = 2
-root_subfolder = "res://addons/konado/sample/"
 use_native_dialog = true
 
 [node name="Editor" type="Control" parent="."]
