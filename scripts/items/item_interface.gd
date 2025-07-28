@@ -6,7 +6,7 @@ class_name ItemInterface
 
 #TODO：测试用路径，应该改成从接口那边获取文件信息。
 ##并且，改完后要删掉文件夹里的测试文件！
-var item_datas : ItemDatas = load("res://addons/konado/scripts/items/test_item.tres")
+var item_datas : ItemDatas = load("")
 
 #管理用节点
 @onready var item_controller := $ItemControl

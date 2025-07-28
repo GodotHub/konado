@@ -15,7 +15,9 @@ class_name KonadoScriptsInterpreter
 # Konado脚本解释器
 
 var tmp_path = ""
+# 源脚本行，显示在VSCode中
 var tmp_original_line_number = 0
+# 当前脚本行，经过处理后的行
 var tmp_line_number = 0
 var tmp_content_lines = []
 
@@ -353,9 +355,9 @@ func _parse_tag(line: String, dialog: Dialogue) -> bool:
 			tag_inner_line_number += 1
 			if not (inner_line.is_empty() or inner_line.begins_with("#")):
 				if (inner_line.begins_with("tag")):
-					_scripts_debug(tmp_path, tag_inner_line_number, "tag标签内不能嵌套标签")
+					_scripts_debug(tmp_path, tag_inner_line_number + 5, "tag标签内不能嵌套标签")
 					return false
-				var inner_dialog = parse_line(inner_line, tag_inner_line_number, tmp_path)
+				var inner_dialog = parse_line(inner_line, tag_inner_line_number + 5, tmp_path)
 				dialog.tag_dialogue.append(inner_dialog)
 				pass
 		else:

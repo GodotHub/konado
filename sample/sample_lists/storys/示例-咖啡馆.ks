@@ -6,6 +6,10 @@ chapter_desc 示例剧本，用于展示Konado剧本编辑器的功能
 
 start
 
+tag test
+    "可娜" "你好，我是可娜！"
+    "黛西" "你好，我是黛西！"
+
 # 场景设置
 background 咖啡厅背景 blinds
 # play bgm cafe_jazz

@@ -1,19 +1,23 @@
-[gd_scene load_steps=2 format=3 uid="uid://mp1rt4ufop48"]
+[gd_scene load_steps=3 format=3 uid="uid://mp1rt4ufop48"]
 
 [ext_resource type="Script" uid="uid://dwi4naafqu3mh" path="res://addons/konado/snowflake/scripts/dialogue_debugbox.gd" id="1_12d2t"]
 
-[node name="DialogueDebugBox" type="Panel" node_paths=PackedStringArray("des_label", "source_label", "edit_button", "play_button")]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_12d2t"]
+
+[node name="DialogueDebugBox" type="Panel" node_paths=PackedStringArray("des_label", "source_label", "edit_button", "play_button", "margin")]
 custom_minimum_size = Vector2(300, 60)
 offset_right = 300.0
 offset_bottom = 60.0
 size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_12d2t")
 script = ExtResource("1_12d2t")
-des_label = NodePath("VBoxContainer/MarginContainer/HBoxContainer/DesLabel")
-source_label = NodePath("VBoxContainer/MarginContainer2/SourceLabel")
-edit_button = NodePath("VBoxContainer/MarginContainer/HBoxContainer/Edit")
-play_button = NodePath("VBoxContainer/MarginContainer/HBoxContainer/Play")
+des_label = NodePath("MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/DesLabel")
+source_label = NodePath("MarginContainer/VBoxContainer/MarginContainer2/SourceLabel")
+edit_button = NodePath("MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/Edit")
+play_button = NodePath("MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/Play")
+margin = NodePath("MarginContainer")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -21,32 +25,39 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+[node name="ColorRect" type="ColorRect" parent="MarginContainer"]
+layout_mode = 2
+color = Color(0.147672, 0.147672, 0.147672, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="DesLabel" type="Label" parent="VBoxContainer/MarginContainer/HBoxContainer"]
+[node name="DesLabel" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "无法解析的对话"
 
-[node name="Edit" type="Button" parent="VBoxContainer/MarginContainer/HBoxContainer"]
+[node name="Edit" type="Button" parent="MarginContainer/VBoxContainer/MarginContainer/HBoxContainer"]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 text = "Edit"
 
-[node name="Play" type="Button" parent="VBoxContainer/MarginContainer/HBoxContainer"]
+[node name="Play" type="Button" parent="MarginContainer/VBoxContainer/MarginContainer/HBoxContainer"]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 text = "Play"
 
-[node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer"]
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="SourceLabel" type="Label" parent="VBoxContainer/MarginContainer2"]
+[node name="SourceLabel" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer2"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.593134, 0.593134, 0.593134, 1)
