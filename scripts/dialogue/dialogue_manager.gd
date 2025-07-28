@@ -196,7 +196,16 @@ func set_dialogue_data(dialogue_data: DialogueData) -> void:
 
 ## 设置角色表的方法
 func set_chara_list(chara_list: CharacterList) -> void:
+	print(chara_list.to_string())
 	self.chara_list = chara_list
+
+func set_background_list(background_list: BackgroundList) -> void:
+	print(background_list.to_string())
+	self.background_list = background_list
+
+func set_bgm_list(bgm_list: DialogBGMList) -> void:
+	print(bgm_list.to_string())
+	self.bgm_list = bgm_list
 
 ## 开始对话的方法
 func _start_dialogue() -> void:
@@ -820,19 +829,20 @@ func get_game_progress() -> Dictionary:
 
 ## 跳转到对话
 func _jump_curline(value: int) -> bool:
+
+	_acting_interface.delete_all_character()
 	# 遍历演员操作相关的对话到当前行
 	# 临时先这么写吧，以后再优化，目前不崩就行~
 	for i in value:
 		var dialog = dialog_data.dialogs[i]
 		if dialog.dialog_type == Dialogue.Type.Display_Actor:
-			_display_character(dialog.actor)
+			_display_character(dialog.show_actor)
 		if dialog.dialog_type == Dialogue.Type.Move_Actor:
-			_acting_interface.move_actor(dialog.actor_name, dialog.actor_position)
+			_acting_interface.move_actor(dialog.target_move_chara, dialog.target_move_pos)
 		if dialog.dialog_type == Dialogue.Type.Exit_Actor:
-			_acting_interface.exit_actor(dialog.exit_actor)
+			_exit_actor(dialog.exit_actor)
 		if dialog.dialog_type == Dialogue.Type.Actor_Change_State:
-			_acting_interface.change_character_state(dialog.change_state_actor, dialog.change_state)
-	
+			_actor_change_state(dialog.change_state_actor, dialog.change_state)
 
 
 	if value >= 0:
@@ -893,5 +903,6 @@ func debug_load_dialog_data(data) -> bool:
 
 ## 退出节点
 func _exit_tree():
-	_stop_dialogue()
+	if not is_in_editor_and_idle():
+		_stop_dialogue()
 	pass

@@ -27,6 +27,10 @@ var line: int
 
 @export var play_button: Button
 
+@export var is_sub_box: bool = false
+
+@export var margin: MarginContainer
+
 func _ready() -> void:
     edit_button.pressed.connect(func():
         on_edit_btn_pressed.emit(line)
@@ -41,6 +45,9 @@ func init_box(index: int, line: int, des: String, source: String) -> void:
     self.line = line
     self.des_label.text = des
     self.source_label.text = source
+
+func set_sub_box() -> void:
+    margin.add_theme_constant_override("margin_left", 20)
 
 
 

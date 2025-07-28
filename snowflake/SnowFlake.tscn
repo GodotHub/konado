@@ -13,130 +13,16 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_rk04y")
-dialogue_ks_load_btn = NodePath("VBoxContainer/Control/MarginContainer/HBoxContainer/选择剧本")
-character_table_btn = NodePath("VBoxContainer/Control/MarginContainer/HBoxContainer/加载角色表")
-background_table_btn = NodePath("VBoxContainer/Control/MarginContainer/HBoxContainer/加载背景表")
-bgm_table_btn = NodePath("VBoxContainer/Control/MarginContainer/HBoxContainer/加载BGM表")
-dialogue_manager = NodePath("VBoxContainer/Editor/DialogManager")
+dialogue_ks_load_btn = NodePath("Editor/Control3/MarginContainer/HBoxContainer/选择剧本")
+character_table_btn = NodePath("Editor/Control3/MarginContainer/HBoxContainer/加载角色表")
+background_table_btn = NodePath("Editor/Control3/MarginContainer/HBoxContainer/加载背景表")
+bgm_table_btn = NodePath("Editor/Control3/MarginContainer/HBoxContainer/加载BGM表")
+dialogue_manager = NodePath("Editor/Control2/DialogManager")
 file_dialogue = NodePath("FileDialog")
-playnext = NodePath("VBoxContainer/Control/MarginContainer/HBoxContainer/继续")
-autoplay_btn = NodePath("VBoxContainer/Control/MarginContainer/HBoxContainer/自动播放")
-dialogue_debug_box_container = NodePath("VBoxContainer/Editor/Control/Panel/ScrollContainer/对话调试容器")
+playnext = NodePath("Editor/Control3/MarginContainer/HBoxContainer/继续")
+autoplay_btn = NodePath("Editor/Control3/MarginContainer/HBoxContainer/自动播放")
+dialogue_debug_box_container = NodePath("Editor/Control/Panel/ScrollContainer/对话调试容器")
 dialogue_box_scene = ExtResource("2_04reh")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/separation = 10
-
-[node name="Control" type="Control" parent="VBoxContainer"]
-custom_minimum_size = Vector2(0, 35)
-layout_mode = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/Control"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 2
-theme_override_constants/margin_top = 2
-theme_override_constants/margin_right = 2
-theme_override_constants/margin_bottom = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Control/MarginContainer"]
-layout_mode = 2
-theme_override_constants/separation = 10
-
-[node name="Button" type="Button" parent="VBoxContainer/Control/MarginContainer/HBoxContainer"]
-layout_mode = 2
-text = "播放"
-
-[node name="选择剧本" type="Button" parent="VBoxContainer/Control/MarginContainer/HBoxContainer"]
-layout_mode = 2
-text = "选择剧本"
-
-[node name="加载角色表" type="Button" parent="VBoxContainer/Control/MarginContainer/HBoxContainer"]
-layout_mode = 2
-text = "加载角色表"
-
-[node name="加载背景表" type="Button" parent="VBoxContainer/Control/MarginContainer/HBoxContainer"]
-layout_mode = 2
-text = "加载背景表"
-
-[node name="加载BGM表" type="Button" parent="VBoxContainer/Control/MarginContainer/HBoxContainer"]
-layout_mode = 2
-text = "加载BGM表"
-
-[node name="继续" type="Button" parent="VBoxContainer/Control/MarginContainer/HBoxContainer"]
-layout_mode = 2
-text = "继续"
-
-[node name="自动播放" type="Button" parent="VBoxContainer/Control/MarginContainer/HBoxContainer"]
-layout_mode = 2
-text = "自动播放"
-
-[node name="Editor" type="Control" parent="VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="DialogManager" parent="VBoxContainer/Editor" instance=ExtResource("1_c6wsy")]
-custom_minimum_size = Vector2(1280, 720)
-layout_mode = 0
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 21.0
-offset_top = 99.0
-offset_right = 1301.0
-offset_bottom = 819.0
-grow_horizontal = 1
-grow_vertical = 1
-scale = Vector2(0.65, 0.65)
-
-[node name="Control" type="Control" parent="VBoxContainer/Editor"]
-custom_minimum_size = Vector2(404.455, 680)
-layout_mode = 1
-anchors_preset = 11
-anchor_left = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -404.0
-offset_top = -2.0
-offset_right = 0.454956
-offset_bottom = 3.0
-grow_horizontal = 0
-grow_vertical = 2
-
-[node name="Panel" type="Panel" parent="VBoxContainer/Editor/Control"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/Editor/Control/Panel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="对话调试容器" type="VBoxContainer" parent="VBoxContainer/Editor/Control/Panel/ScrollContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme_override_constants/separation = 5
-
-[node name="DialogueDebugBox" parent="VBoxContainer/Editor/Control/Panel/ScrollContainer/对话调试容器" instance=ExtResource("2_04reh")]
-layout_mode = 2
 
 [node name="FileDialog" type="FileDialog" parent="."]
 title = "Open a File"
@@ -144,4 +30,125 @@ position = Vector2i(335, 180)
 ok_button_text = "Open"
 file_mode = 0
 access = 2
+root_subfolder = "res://addons/konado/sample/"
 use_native_dialog = true
+
+[node name="Editor" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+
+[node name="Control2" type="Control" parent="Editor"]
+custom_minimum_size = Vector2(870, 0)
+layout_mode = 2
+anchors_preset = 0
+offset_right = 870.0
+offset_bottom = 639.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+
+[node name="DialogManager" parent="Editor/Control2" instance=ExtResource("1_c6wsy")]
+custom_minimum_size = Vector2(1280, 720)
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 12.0
+offset_top = 94.0
+offset_right = 1292.0
+offset_bottom = 814.0
+grow_horizontal = 1
+grow_vertical = 1
+scale = Vector2(0.65, 0.65)
+debug_mode = true
+
+[node name="Control" type="Control" parent="Editor"]
+custom_minimum_size = Vector2(404.455, 680)
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -418.0
+grow_horizontal = 0
+grow_vertical = 2
+size_flags_horizontal = 3
+
+[node name="Panel" type="Panel" parent="Editor/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Editor/Control/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="对话调试容器" type="VBoxContainer" parent="Editor/Control/Panel/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 5
+
+[node name="DialogueDebugBox" parent="Editor/Control/Panel/ScrollContainer/对话调试容器" instance=ExtResource("2_04reh")]
+layout_mode = 2
+
+[node name="Control3" type="Control" parent="Editor"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -67.0
+offset_right = 869.0
+grow_vertical = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="Editor/Control3"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Editor/Control3/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="播放" type="Button" parent="Editor/Control3/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "播放"
+
+[node name="选择剧本" type="Button" parent="Editor/Control3/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "选择剧本"
+
+[node name="加载角色表" type="Button" parent="Editor/Control3/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "加载角色表"
+
+[node name="加载背景表" type="Button" parent="Editor/Control3/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "加载背景表"
+
+[node name="加载BGM表" type="Button" parent="Editor/Control3/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "加载BGM表"
+
+[node name="继续" type="Button" parent="Editor/Control3/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "继续"
+
+[node name="自动播放" type="Button" parent="Editor/Control3/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "自动播放"

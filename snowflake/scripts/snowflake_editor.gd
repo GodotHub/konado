@@ -39,7 +39,21 @@ var tmp_ks_file_path: String = ""
 func _ready() -> void:
 	# 订阅大小变化事件
 	self.resized.connect(func(): 
-		print("SnowflakeEditor resized" + str(self.get_size()))
+		# print("SnowflakeEditor resized" + str(self.get_size()))
+		# 根据窗口大小调整DialogueManager的大小（Control）
+		# 计算当前窗口的宽高比
+		var aspect_ratio = self.get_size().x / self.get_size().y
+		# 保持DialogueManager的宽高比，计算可调整的宽高
+		var x_adjust = self.get_size().x / 1280
+		var y_adjust = self.get_size().y / 720
+		
+		var target_adjust = max(x_adjust, y_adjust)
+
+		# 根据调整后的宽高比，计算目标宽高
+		var target_scale = target_adjust * 0.65
+
+		dialogue_manager.set_scale(Vector2(target_scale, target_scale))
+
 	)
 	init_editor()
 	pass
@@ -55,13 +69,19 @@ func init_editor() -> void:
 	background_table_btn.pressed.connect(on_background_table_btn_pressed)
 	bgm_table_btn.pressed.connect(on_bgm_table_btn_pressed)
 	playnext.pressed.connect(dialogue_manager._continue)
-	autoplay_btn.pressed.connect(dialogue_manager._toggle_auto_play)
+	autoplay_btn.pressed.connect(func(): 
+		if autoplay_btn.text == "自动播放":
+			autoplay_btn.text = "停止播放"
+			dialogue_manager.start_autoplay(true)
+		else:
+			autoplay_btn.text = "自动播放"
+			dialogue_manager.start_autoplay(false)
+		)
 	pass
 
 
-	
-
 func on_dialogue_ks_load_btn_pressed() -> void:
+	file_dialogue.title = "选择对话脚本"
 	file_dialogue.file_selected.connect(load_ks_file)
 	file_dialogue.filters = ["*.ks"]
 	file_dialogue.popup()
@@ -75,10 +95,23 @@ func load_ks_file(path: String) -> void:
 	var diadata: DialogueData = interpreter.process_scripts_to_data(path)
 
 	_clean_dialogue_box_container()
+
+	var main_label = Label.new()
+	main_label.text = "主对话"
+	dialogue_debug_box_container.add_child(main_label)
 	var index = 0
 	for dia in diadata.dialogs:
 		_gen_dialogue_box(index, dia)
 		index += 1
+
+	for tagdia in diadata.tag_dialogues:
+		var tag_label = Label.new()
+		tag_label.text = "标签对话：" + tagdia
+		dialogue_debug_box_container.add_child(tag_label)
+		var tag_dialogue: Dialogue = diadata.tag_dialogues[tagdia]
+		for dia in tag_dialogue.tag_dialogue:
+			_gen_dialogue_box(0, dia, true)
+	
 	#dialogue_manager.set_chara_list()
 	dialogue_manager.set_dialogue_data(diadata)
 	dialogue_manager._init_dialogue()
@@ -92,7 +125,7 @@ func _clean_dialogue_box_container() -> void:
 
 
 ## 生成对话盒
-func _gen_dialogue_box(index: int, dialogue: Dialogue) -> void:
+func _gen_dialogue_box(index: int, dialogue: Dialogue, subdia: bool = false) -> void:
 	var debug_box = dialogue_box_scene.instantiate() as DialogueDebugBox
 	var line_des = "在对话第：" + str(index) +  "句" + " - " + "在源文件第" + str(dialogue.source_file_line) + "行"
 	debug_box.init_box(index, dialogue.source_file_line, "描述", line_des)
@@ -104,23 +137,49 @@ func _gen_dialogue_box(index: int, dialogue: Dialogue) -> void:
 		)
 	# 添加到场景
 	dialogue_debug_box_container.add_child(debug_box)
-
-	
+	if subdia == true:
+		debug_box.set_sub_box()
 	pass
 	
 
 func on_character_table_btn_pressed() -> void:
+	file_dialogue.title = "选择角色表"
+	file_dialogue.file_selected.connect(load_character_table)
+	file_dialogue.filters = ["*.res", "*.tres"]
 	file_dialogue.popup()
+	pass
+
+func load_character_table(path: String) -> void:
+	file_dialogue.file_selected.disconnect(load_character_table)
+	var chara_table = ResourceLoader.load(path) as CharacterList
+	dialogue_manager.set_chara_list(chara_table)
 	pass
 
 func on_background_table_btn_pressed() -> void:
+	file_dialogue.title = "选择背景表"
+	file_dialogue.file_selected.connect(load_background_table)
+	file_dialogue.filters = ["*.res", "*.tres"]
 	file_dialogue.popup()
 	pass
+
+func load_background_table(path: String) -> void:
+	file_dialogue.file_selected.disconnect(load_background_table)
+	var bg_table = ResourceLoader.load(path) as BackgroundList
+	dialogue_manager.set_background_list(bg_table)
+	pass 
 
 func on_bgm_table_btn_pressed() -> void:
+	file_dialogue.title = "选择BGM表"
+	file_dialogue.file_selected.connect(load_bgm_table)
+	file_dialogue.filters = ["*.res", "*.tres"]
 	file_dialogue.popup()
 	pass
 
+func load_bgm_table(path: String) -> void:
+	file_dialogue.file_selected.disconnect(load_bgm_table)
+	var bgm_table = ResourceLoader.load(path) as DialogBGMList
+	dialogue_manager.set_bgm_list(bgm_table)
+	pass
 
 
 func edit_with_vscode(path: String, line: int, col: int) -> void:

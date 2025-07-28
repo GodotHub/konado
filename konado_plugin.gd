@@ -11,25 +11,8 @@
 @tool
 extends EditorPlugin
 
-# const konado_editor = preload("res://addons/konado/snowflake/SnowFlake.tscn")
 
 var konado_editor_instance: KonadoEditorWindow = null
-
-# class KonadoEditorWindow extends Window:
-# 	func _init() -> void:
-# 		# 禁用默认主题
-# 		theme = null
-# 		title = "Snowflake Editor"
-# 		size = Vector2(1280, 720)
-# 		initial_position = Window.WINDOW_INITIAL_POSITION_CENTER_MAIN_WINDOW_SCREEN
-
-# 		close_requested.connect(func(): self.hide())
-
-# 		min_size = size
-# 		var editor = konado_editor.instantiate() as SnowflakeEditor
-# 		editor.init_editor()
-# 		add_child(editor)
-# 	pass
 
 ## 配置常量
 const DIALOGUE_DATA_SCRIPT := preload("res://addons/konado/scripts/dialogue/dialogue_data.gd")
@@ -104,7 +87,7 @@ func _create_toolbar_btn() -> Button:
 
 func _create_editor_toolbar_btn() -> Button:
 	var btn = Button.new()
-	btn.text = "Konado编辑器"
+	btn.text = "Snowflake编辑器"
 	btn.pressed.connect(func():
 		open_snowflake_editor()
 	)
