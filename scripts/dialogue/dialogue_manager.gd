@@ -868,21 +868,21 @@ func _jump_curline(value: int) -> bool:
 					_display_character(actor)
 					# 创建定时器，不加这个给我来千手观音是吧
 					# Godot没有同步真的很难蚌
-					await get_tree().create_timer(0.01)
+					await get_tree().create_timer(0.01).timeout
 					pass
 				# 如果修改演员状态
 				if dialog_type == Dialogue.Type.Actor_Change_State:
 					var actor = dialog.change_state_actor
 					var target_state = dialog.change_state
 					_actor_change_state(actor, target_state)
-					await get_tree().create_timer(0.01)
+					await get_tree().create_timer(0.01).timeout
 					pass
 				# 如果是移动演员
 				if dialog_type == Dialogue.Type.Move_Actor:
 					var actor = dialog.target_move_chara
 					var pos = dialog.target_move_pos
 					_acting_interface.move_actor(actor, pos)
-					await get_tree().create_timer(0.01)
+					await get_tree().create_timer(0.01).timeout
 					pass
 				# 如果是删除演员
 				if dialog_type == Dialogue.Type.Exit_Actor:
@@ -890,7 +890,7 @@ func _jump_curline(value: int) -> bool:
 					var actor = dialog.exit_actor
 					_exit_actor(actor)
 
-					await get_tree().create_timer(0.01)
+					await get_tree().create_timer(0.01).timeout
 					pass
 			_dialogue_goto_state(DialogState.OFF)
 			curline = value
