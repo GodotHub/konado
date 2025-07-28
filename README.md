@@ -50,4 +50,25 @@ Konado是一个对话创建工具，提供多种对话模板以及对话管理�
 
 ## 开源许可证
 
+项目看板娘 Kona 以及 sample 下的示例素材立绘使用 CC-NC-SA 4.0 许可证，由StarryTeam的[麻卤可乐丝](https://gitcode.com/marukles)设计和绘画。
+
 Konado 使用 MIT 许可证，具体内容请查看 [LICENSE](./LICENSE) 文件。
+
+如果您使用了 Konado，请保留以下版权声明和许可证信息。
+
+```
+Copyright © 2025 Starry Team, DSOE1024, Kamiki_. All Rights Reserved.
+
+Konado software is licensed under the MIT License (see LICENSE for full terms).  
+Banner and sample assets are licensed under CC-NC-SA 4.0.
+
+The MIT License (MIT)
+Copyright © 2025 Starry Team, DSOE1024, Kamiki_
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+```
+
