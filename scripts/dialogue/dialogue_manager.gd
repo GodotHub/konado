@@ -849,10 +849,6 @@ func _jump_curline(value: int) -> bool:
 			# 遍历演员操作相关的对话到当前行
 			# 临时先这么写吧，以后再优化，目前不崩就行~
 
-			# 创建定时器，不加这个给我来千手观音是吧
-			# Godot没有同步真的很难蚌
-			var timer = get_tree().create_timer(0.01)
-
 			for i in value:
 				var dialog = dialog_data.dialogs[i]
 				var dialog_type = dialog.dialog_type
@@ -870,32 +866,31 @@ func _jump_curline(value: int) -> bool:
 					# 显示演员
 					var actor = dialog.show_actor
 					_display_character(actor)
-					timer.start()
-					await timer.timeout
+					# 创建定时器，不加这个给我来千手观音是吧
+					# Godot没有同步真的很难蚌
+					await get_tree().create_timer(0.01)
 					pass
 				# 如果修改演员状态
 				if dialog_type == Dialogue.Type.Actor_Change_State:
 					var actor = dialog.change_state_actor
 					var target_state = dialog.change_state
 					_actor_change_state(actor, target_state)
-					timer.start()
-					await timer.timeout
+					await get_tree().create_timer(0.01)
 					pass
 				# 如果是移动演员
 				if dialog_type == Dialogue.Type.Move_Actor:
 					var actor = dialog.target_move_chara
 					var pos = dialog.target_move_pos
 					_acting_interface.move_actor(actor, pos)
-					timer.start()
-					await timer.timeout
+					await get_tree().create_timer(0.01)
 					pass
 				# 如果是删除演员
 				if dialog_type == Dialogue.Type.Exit_Actor:
 					# 删除演员
 					var actor = dialog.exit_actor
 					_exit_actor(actor)
-					timer.start()
-					await timer.timeout
+
+					await get_tree().create_timer(0.01)
 					pass
 			_dialogue_goto_state(DialogState.OFF)
 			curline = value
