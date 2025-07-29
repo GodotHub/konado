@@ -16,13 +16,12 @@ hero:
       link: "https://afdian.tv/item/52230b2860a011f083ef52540025c377"
 
 features:
-  - title: 开源项目
+  - title: 自由分发
     details: 采用了以宽松著称的MIT协议
-  - title: Godot引擎
+  - title: 强大平台
     details: 为世界上最流行的开源引擎打造
-  - title: 内建脚本
-    details: 创作游戏就像写文案一样简单
   - title: 值得信赖
-    details: 经过长期维护而变得愈发可靠
+    details: 由Starry Team长期开发和维护
+  - title: 易如反掌
+    details: 创作游戏就像写文案一样简单
 ---
-
