@@ -29,10 +29,10 @@ enum Type{
 		notify_property_list_changed()
 
 # Tag ID，用于标记跳转点		
-var tag_id: String
+var branch_id: String
 
 # Tag对话内容
-var tag_dialogue: Array[Dialogue] = []
+var branch_dialogue: Array[Dialogue] = []
 
 # 是否加载完成
 var is_tag_loaded: bool = false
@@ -72,7 +72,7 @@ var achievement_id: String
 
 # 自定义显示模板
 class Tag_Template:
-	@export var tag_id: String = ""
+	@export var branch_id: String = ""
 	static func get_property_infos():
 		var infos = {}
 		for info in (Tag_Template as Script).get_script_property_list():
@@ -80,7 +80,7 @@ class Tag_Template:
 		return infos
 
 class TagDialogue_Template:
-	@export var tag_dialogue: Array[Dialogue] = []
+	@export var branch_dialogue: Array[Dialogue] = []
 	static func get_property_infos():
 		var infos = {}
 		for info in (TagDialogue_Template as Script).get_script_property_list():
@@ -165,8 +165,8 @@ func _get_property_list():
 	if dialog_type == Type.Tag:
 		var tag_template = Tag_Template.get_property_infos()
 		var tag_dialogue_template = TagDialogue_Template.get_property_infos()
-		list.append(tag_template["tag_id"])
-		list.append(tag_dialogue_template["tag_dialogue"])
+		list.append(tag_template["branch_id"])
+		list.append(tag_dialogue_template["branch_dialogue"])
 	if dialog_type == Type.Ordinary_Dialog:
 		var oridinary_dialog_template = Ordinary_Dialog_Template.get_property_infos()
 		list.append(oridinary_dialog_template["character_id"])

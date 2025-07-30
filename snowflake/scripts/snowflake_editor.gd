@@ -100,7 +100,7 @@ func load_ks_file(path: String) -> void:
 	file_dialogue.file_selected.disconnect(load_ks_file)
 	file_dialogue.filters = []
 	var interpreter = KonadoScriptsInterpreter.new()
-	var diadata: DialogueData = interpreter.process_scripts_to_data(path)
+	var diadata: DialogueShot = interpreter.process_scripts_to_data(path)
 
 	_clean_dialogue_box_container()
 

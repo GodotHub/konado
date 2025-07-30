@@ -25,6 +25,9 @@ class_name DialogueManager
 ## 手动开始对话的方法为：在游戏开始时，调用`start_dialogue`方法
 @export var autostart: bool = true
 
+## 是否开启演员自动高亮，如果为true，则根据对话中的角色姓名自动高亮对应的演员，否则不自动高亮
+@export var actor_auto_highlight: bool = true
+
 
 ## 对话当前行，同时也是用于读取对话列表的下标，在游戏中的初始值应该为0或者任何大于0的整数
 var curline: int
@@ -74,7 +77,7 @@ var dialogueState: DialogState
 
 	
 ## 对话资源
-var dialog_data: DialogueData
+var dialog_data: DialogueShot = null
 
 
 ## 对话资源ID
@@ -86,7 +89,7 @@ var se_id: String
 var option_triggered: bool = false
 
 
-@export var konado_resource: KonadoResource
+
 
 
 ## 资源列表
@@ -96,7 +99,7 @@ var option_triggered: bool = false
 ## 背景列表
 @export var background_list: BackgroundList
 ## 对话列表
-@export var dialog_data_list: DialogueDataList
+@export var dialogue_chapter: DialogueChapter
 ## BGM列表
 @export var bgm_list: DialogBGMList
 ## 配音资源列表
@@ -169,14 +172,14 @@ func print_hello() -> bool:
 ## 初始化对话的方法
 func _init_dialogue(callback: Callable = Callable()) -> void:
 	if not debug_mode:
-		if dialog_data_list == null:
+		if dialogue_chapter == null:
 			printerr("对话列表资源为空")
 			return
-		if dialog_data_list.dialog_data_list.size() <= 0:
+		if dialogue_chapter.dialogue_shots.size() <= 0:
 			printerr("对话列表没有对话")
 			return
 
-		dialog_data = dialog_data_list.dialog_data_list[_dialog_data_id]
+		dialog_data = dialogue_chapter.dialogue_shots[_dialog_data_id]
 	
 		# 将角色表传给acting_interface
 		_acting_interface.chara_list = chara_list
@@ -191,7 +194,7 @@ func _init_dialogue(callback: Callable = Callable()) -> void:
 		callback.call()
 
 ## 设置对话数据的方法
-func set_dialogue_data(dialogue_data: DialogueData) -> void:
+func set_dialogue_data(dialogue_data: DialogueShot) -> void:
 	if dialogue_data == null:
 		printerr("对话数据为空")
 		return
@@ -283,8 +286,9 @@ func _physics_process(delta) -> void:
 					# 显示UI
 					_dialog_interface.show()
 					# 设置角色高亮
-					if chara_id:
-						_acting_interface.highlight_actor(chara_id)
+					if actor_auto_highlight:
+						if chara_id:
+							_acting_interface.highlight_actor(chara_id)
 					# 播放对话
 					_display_dialogue(chara_id, content, speed)
 					# 如果有配音播放配音
@@ -369,10 +373,10 @@ func _physics_process(delta) -> void:
 					var data_name = dialog.jump_data_name
 					_jump_dialog_data(data_name)
 					pass
-				# 如果是标签对话
+				# 如果是分支对话
 				elif dialog_type == Dialogue.Type.Tag:
-					print_rich("[color=orange]标签对话[/color]")
-					var tag_dialogues: Array[Dialogue] = dialog.tag_dialogue
+					print_rich("[color=orange]分支对话[/color]")
+					var tag_dialogues: Array[Dialogue] = dialog.branch_dialogue
 					var insert_position = curline + 1
 					for i in range(tag_dialogues.size()):
 						# 检查是否已经存在
@@ -581,12 +585,12 @@ func _actor_change_state(chara_id: String, state_id: String):
 	var target_chara: Character
 	var state_tex: Texture
 	for chara in chara_list.characters:
-		if chara.chara_id == chara_id:
+		if chara.chara_name == chara_id:
 			target_chara = chara
 			for state in chara.chara_status:
 				if state.status_name == state_id:
 					state_tex = state.status_texture
-	_acting_interface.change_actor_state(target_chara.chara_id, state_id, state_tex)
+	_acting_interface.change_actor_state(target_chara.chara_name, state_id, state_tex)
 
 ## 从角色列表创建并显示角色
 func _display_character(actor: DialogueActor) -> void:
@@ -595,7 +599,7 @@ func _display_character(actor: DialogueActor) -> void:
 	var target_chara: Character
 	var target_chara_name = actor.character_name
 	for chara in chara_list.characters:
-		if chara.chara_id == target_chara_name:
+		if chara.chara_name == target_chara_name:
 			target_chara = chara
 			break
 	
@@ -689,11 +693,10 @@ func on_option_triggered(choice: DialogueChoice) -> void:
 ## TODO：应该需要性能优化
 func _jump_tag(tag: String) -> void:
 	print_rich("跳转到标签： " + str(tag))
-	var target_dialogue: Dialogue = dialog_data.tag_dialogues[tag]
+	var target_dialogue: Dialogue = dialog_data.branchs[tag]
 	if target_dialogue == null:
 		print("无法完成跳转，没有这个标签")
 		return
-
 
 	"""
 	PS：为啥这么写？因为全屏输入传递会导致选项按钮的信号被连续触发两次导致重复添加对话和跳转
@@ -712,7 +715,7 @@ func _jump_tag(tag: String) -> void:
 
 ## 跳转剧情的方法
 func _jump_dialog_data(data_id: String) -> bool:
-	var jumpdata: DialogueData
+	var jumpdata: DialogueShot
 	jumpdata = _get_dialog_data(data_id)
 	if jumpdata == null:
 		print("无法完成跳转，没有这个剧情")
@@ -723,16 +726,16 @@ func _jump_dialog_data(data_id: String) -> bool:
 	return true
 
 ## 寻找指定剧情
-func _get_dialog_data(data_id: String) -> DialogueData:
+func _get_dialog_data(data_id: String) -> DialogueShot:
 	print(data_id)
-	var target_data: DialogueData
-	for data in dialog_data_list.dialog_data_list:
+	var target_data: DialogueShot
+	for data in dialogue_chapter.dialogue_chapter:
 		if data.chapter_id == data_id:
 			target_data = data
 	return target_data
 	
 ## 切换剧情的方法
-func _switch_data(data: DialogueData) -> bool:
+func _switch_data(data: DialogueShot) -> bool:
 	if not data and data.dialogs.size() > 0:
 		return false
 	_stop_dialogue()
@@ -937,7 +940,7 @@ func debug_get_dialogue_frame_info() -> String:
 ## 调试获取章节列表
 func debug_get_dialog_data_list() -> Array[String]:
 	var data_array: Array[String]
-	for data in dialog_data_list.dialog_data_list:
+	for data in dialogue_chapter.dialogue_chapter:
 		data_array.append(data._dialog_data.chapter_id)
 	return data_array
 
