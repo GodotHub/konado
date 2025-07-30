@@ -64,6 +64,7 @@ offset_bottom = 814.0
 grow_horizontal = 1
 grow_vertical = 1
 scale = Vector2(0.65, 0.65)
+actor_auto_highlight = null
 debug_mode = true
 
 [node name="Control" type="Control" parent="Editor"]

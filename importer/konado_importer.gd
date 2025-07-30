@@ -38,6 +38,7 @@ func _import(source_file, save_path, options, platform_variants, gen_files):
 	var interpreter = KonadoScriptsInterpreter.new()
 	var diadata = interpreter.process_scripts_to_data(source_file)
 	if diadata == null:
+		printerr("Failed to process scripts")
 		return FAILED
 	var output_path = "%s.%s" % [save_path, _get_save_extension()]
 	var error = ResourceSaver.save(diadata, output_path, 

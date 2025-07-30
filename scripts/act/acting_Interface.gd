@@ -250,7 +250,7 @@ func change_actor_state(actor_id: String, state_id: String, state_tex: Texture) 
 func highlight_actor(actor_id: String) -> void:
 	for actor in actor_dict.keys():
 		if actor_dict.keys() == null:
-			return#防止报错的判空
+			return #防止报错的判空
 		var tmp = get_chara_node(actor).find_child(actor, true, false) as CanvasItem
 		if tmp == null :
 			return#同上

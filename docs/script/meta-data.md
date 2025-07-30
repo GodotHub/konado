@@ -9,10 +9,10 @@
 
 ```mermaid
 graph LR
-    file["脚本文件.ks"] --> header[元数据头]
-    file --> content[剧本内容]
-    classDef meta fill:#e6f7ff,stroke:#1890ff
-    class line1,line2 meta
+	file["脚本文件.ks"] --> header[元数据头]
+	file --> content[剧本内容]
+	classDef meta fill:#e6f7ff,stroke:#1890ff
+	class line1,line2 meta
 ```
 
 元数据是剧本的**基础配置信息**，位于脚本文件开头，具有以下核心功能：

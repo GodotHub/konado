@@ -29,12 +29,15 @@ var dialogue_metadata_regex: RegEx
 ## 演员验证表
 var cur_tmp_actors = []
 
+## 角色依赖记录，出现的角色将记录下来
+var dep_characters: Array[String] = []
+
 ## 选项行记录表 key: 行号 value: 行内容
 var cur_tmp_option_lines = {}
 var tmp_tags = []
 
 # 全文解析模式
-func process_scripts_to_data(path: String) -> DialogueData:
+func process_scripts_to_data(path: String) -> DialogueShot:
 	if not path:
 		_scripts_debug(path, 0, "路径为空，无法打开脚本文件")
 		return null
@@ -63,11 +66,11 @@ func process_scripts_to_data(path: String) -> DialogueData:
 	dialogue_content_regex.compile("^\"(.*?)\"\\s+\"(.*?)\"(?:\\s+(\\S+))?$")
 
 	dialogue_metadata_regex = RegEx.new()
-	dialogue_metadata_regex.compile("^(chapter_id|chapter_name|chapter_lang|chapter_author|chapter_desc)\\s+(\\S+)")
+	dialogue_metadata_regex.compile("^(shot_id)\\s+(\\S+)")
 	
 	_scripts_info(path, 0, "开始解析脚本文件")
 
-	var diadata: DialogueData = DialogueData.new()
+	var diadata: DialogueShot = DialogueShot.new()
 
 	# 解析元数据
 	var metadata_result = _parse_metadata(lines, path)
@@ -76,24 +79,23 @@ func process_scripts_to_data(path: String) -> DialogueData:
 		_scripts_debug(path, 0, "元数据解析失败")
 		return diadata
 	
-	diadata.chapter_id = metadata_result[0]
-	diadata.chapter_name = metadata_result[1]
-	diadata.chapter_lang = metadata_result[2]
-	diadata.chapter_author = metadata_result[3]
-	diadata.chapter_desc = metadata_result[4]
+	# diadata.chapter_id = metadata_result[0]
+	# diadata.chapter_name = metadata_result[1]
+	# diadata.chapter_lang = metadata_result[2]
+	# diadata.chapter_author = metadata_result[3]
+	# diadata.chapter_desc = metadata_result[4]
+
+	diadata.shot_id = metadata_result[0]
 
 
-	_scripts_info(path, 1, "章节ID：%s" % [diadata.chapter_id])
-	_scripts_info(path, 2, "章节名称：%s" % [diadata.chapter_name])
-	_scripts_info(path, 3, "章节语言：%s" % [diadata.chapter_lang])
-	_scripts_info(path, 4, "章节作者：%s" % [diadata.chapter_author])
-	_scripts_info(path, 5, "章节描述：%s" % [diadata.chapter_desc])
+	_scripts_info(path, 1, "Shot id：%s" % [diadata.shot_id])
 
 	# 清空演员验证表
 	cur_tmp_actors = []
 
 	# 只保留内容行
-	var content_lines = lines.slice(5)
+	var content_lines = lines.slice(1)
+	# var content_lines = lines
 
 	tmp_content_lines = content_lines
 
@@ -101,7 +103,7 @@ func process_scripts_to_data(path: String) -> DialogueData:
 	for i in content_lines.size():
 		tmp_line_number = i
 		var line = content_lines[i]
-		var original_line_number = 6 + i
+		var original_line_number =  i + 1
 		print("解析第%d行" % original_line_number)
 		print("第%d行内容：" % original_line_number, line)
 		tmp_original_line_number = original_line_number
@@ -109,12 +111,14 @@ func process_scripts_to_data(path: String) -> DialogueData:
 		if dialog:
 			# 如果是标签对话，则添加到标签对话字典中
 			if dialog.dialog_type == Dialogue.Type.Tag:
-				diadata.tag_dialogues.set(dialog.tag_id, dialog)
+				diadata.branchs.set(dialog.branch_id, dialog)
 			else:
 				diadata.dialogs.append(dialog)
 
-	_scripts_info(path, 0, "文件：%s 剧情生成完毕 章节名称：%s 章节ID：%s 对话数量：%d" % 
-		[path, diadata.chapter_name, diadata.chapter_id, diadata.dialogs.size()])
+	diadata.dep_characters = dep_characters
+
+	_scripts_info(path, 0, "文件：%s 章节ID：%s 对话数量：%d" % 
+		[path, diadata.shot_id, diadata.dialogs.size()])
 
 	tmp_path = ""
 
@@ -170,7 +174,7 @@ func parse_line(line: String, line_number: int, path: String) -> Dialogue:
 	if _parse_start(line, dialog):
 		print("解析成功：开始相关\n")
 		return dialog
-	if _parse_tag(line, dialog):
+	if _parse_branch(line, dialog):
 		print("解析成功：标签相关\n")
 		return dialog
 
@@ -182,12 +186,12 @@ func parse_line(line: String, line_number: int, path: String) -> Dialogue:
 # 解析元数据（前两行）
 func _parse_metadata(lines: PackedStringArray, path: String) -> PackedStringArray:
 	if lines.size() < 2:
-		_scripts_debug(path, 1, "文件不完整，至少需要5行元数据")
+		_scripts_debug(path, 1, "文件不完整，至少需要shot id")
 		return []
 
 	var metadata: PackedStringArray = []
 
-	for i in 5:
+	for i in 1:
 		var result = dialogue_metadata_regex.search(lines[i])
 		if not result:
 			_scripts_debug(path, i + 1, "无效的元数据格式: %s" % lines[i])
@@ -197,15 +201,7 @@ func _parse_metadata(lines: PackedStringArray, path: String) -> PackedStringArra
 		var value = result.get_string(2)
 		
 		match key:
-			"chapter_id":
-				metadata.append(value)
-			"chapter_name":
-				metadata.append(value)
-			"chapter_lang":
-				metadata.append(value)
-			"chapter_author":
-				metadata.append(value)
-			"chapter_desc":
+			"shot_id":
 				metadata.append(value)
 	return metadata
 
@@ -250,6 +246,8 @@ func _parse_actor(line: String, dialog: Dialogue) -> bool:
 				# 添加检查功能
 				if not cur_tmp_actors.has(actor.character_name):
 					cur_tmp_actors.append(actor.character_name)
+				if not dep_characters.has(actor.character_name):
+					dep_characters.append(actor.character_name)
 				else:
 					_scripts_debug(tmp_path, tmp_original_line_number, "角色已存在，请检查角色名称是否重复创建")
 		"exit":
@@ -332,17 +330,17 @@ func _parse_choice(line: String, dialog: Dialogue) -> bool:
 	_scripts_info(tmp_path, tmp_line_number + 1, "选项解析完成" + " " + "选项数量" + str(dialog.choices.size()) +  "  选项： " + choices_strs)
 	return true
 
-# 解析标签
-func _parse_tag(line: String, dialog: Dialogue) -> bool:
-	if not line.begins_with("tag"):
+# 分支解析
+func _parse_branch(line: String, dialog: Dialogue) -> bool:
+	if not line.begins_with("branch"):
 		return false
 	
 	var parts = line.split(" ", false)
 	if parts.size() < 2:
-		_scripts_debug(tmp_path, tmp_original_line_number, "tag标签格式错误")
+		_scripts_debug(tmp_path, tmp_original_line_number, "branch格式错误")
 		return false
 	dialog.dialog_type = Dialogue.Type.Tag
-	dialog.tag_id = parts[1]
+	dialog.branch_id = parts[1]
 
 	var tag_inner_line_number = tmp_line_number + 1
 
@@ -354,18 +352,18 @@ func _parse_tag(line: String, dialog: Dialogue) -> bool:
 		if tmp_content_lines[tag_inner_line_number].begins_with("    ") or tmp_content_lines[tag_inner_line_number].begins_with("\t"):
 			tag_inner_line_number += 1
 			if not (inner_line.is_empty() or inner_line.begins_with("#")):
-				if (inner_line.begins_with("tag")):
-					_scripts_debug(tmp_path, tag_inner_line_number + 5, "tag标签内不能嵌套标签")
+				if (inner_line.begins_with("branch")):
+					_scripts_debug(tmp_path, tag_inner_line_number + 1, "branch内不能嵌套branch")
 					return false
-				var inner_dialog = parse_line(inner_line, tag_inner_line_number + 5, tmp_path)
-				dialog.tag_dialogue.append(inner_dialog)
+				var inner_dialog = parse_line(inner_line, tag_inner_line_number + 1, tmp_path)
+				dialog.branch_dialogue.append(inner_dialog)
 				pass
 		else:
 			break
 
-	tmp_tags.append(dialog.tag_id)
+	tmp_tags.append(dialog.branch_id)
 
-	_scripts_info(tmp_path, tmp_original_line_number, "标签" + dialog.tag_id + "解析完成" + " " + "标签内有" + str(dialog.tag_dialogue.size()) + "行对话")
+	_scripts_info(tmp_path, tmp_original_line_number, "标签" + dialog.branch_id + "解析完成" + " " + "标签内有" + str(dialog.branch_dialogue.size()) + "行对话")
 
 	return true
 
