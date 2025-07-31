@@ -1,0 +1,80 @@
+[gd_scene format=3 uid="uid://tgcygvvajaui"]
+
+[node name="演员组件" type="Control"]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 3
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="BoxContainer2" type="BoxContainer" parent="Panel/MarginContainer"]
+layout_mode = 2
+vertical = true
+
+[node name="BoxContainer" type="BoxContainer" parent="Panel/MarginContainer/BoxContainer2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/BoxContainer2/BoxContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+text = "演员"
+
+[node name="OptionButton" type="OptionButton" parent="Panel/MarginContainer/BoxContainer2/BoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label2" type="Label" parent="Panel/MarginContainer/BoxContainer2/BoxContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+text = "位置"
+
+[node name="OptionButton2" type="OptionButton" parent="Panel/MarginContainer/BoxContainer2/BoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+selected = 0
+item_count = 3
+popup/item_0/text = "左"
+popup/item_0/id = 0
+popup/item_1/text = "右"
+popup/item_1/id = 1
+popup/item_2/text = "自定义"
+popup/item_2/id = 2
+
+[node name="Label3" type="Label" parent="Panel/MarginContainer/BoxContainer2/BoxContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+text = "立绘"
+
+[node name="OptionButton3" type="OptionButton" parent="Panel/MarginContainer/BoxContainer2/BoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+selected = 0
+item_count = 1
+popup/item_0/text = "立绘1"
+popup/item_0/id = 0
+
+[node name="TextEdit" type="TextEdit" parent="Panel/MarginContainer/BoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+placeholder_text = "台词"

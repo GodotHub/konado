@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://bekbl1hthapcy"]
+
+[node name="Component_label" type="Button"]
+offset_right = 248.0
+offset_bottom = 38.0
+theme_type_variation = &"Component"
+text = "组件标签"
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -34.0
+offset_top = -16.0
+offset_bottom = 16.0
+grow_horizontal = 0
+grow_vertical = 2
+text = "十"
