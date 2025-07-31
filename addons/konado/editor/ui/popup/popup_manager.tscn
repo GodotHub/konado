@@ -5,3 +5,11 @@
 [node name="new_cut_popup" type="Window" parent="."]
 position = Vector2i(0, 36)
 size = Vector2i(1130, 695)
+
+[node name="Panel" type="Panel" parent="new_cut_popup"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"Window_panel"

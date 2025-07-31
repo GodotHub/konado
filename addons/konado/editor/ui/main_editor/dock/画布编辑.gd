@@ -15,6 +15,11 @@ func _ready() -> void:
 	add_child(add_component)
 	add_component.hide()
 
+func _on_componet_label_container_gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
+			_on_add_component_pressed()
+
 func _on_add_component_pressed() -> void:
 	add_component.position = position 
 	add_component.position.y += size.y - add_component.size.y/2 -50
@@ -37,8 +42,6 @@ func _on_add_component_id_pressed(id):
 		else:
 			var node = scene.instantiate()
 			componet_edit.add_child(node)
-			
-
 
 func _on_add_component_close() -> void:
 	add_component.hide()

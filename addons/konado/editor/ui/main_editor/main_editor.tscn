@@ -361,27 +361,37 @@ size_flags_vertical = 3
 layout_mode = 2
 
 [node name="Panel" type="Panel" parent="BoxContainer/SplitContainer3"]
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="BoxContainer" type="BoxContainer" parent="BoxContainer/SplitContainer3/Panel"]
+[node name="Panel" type="Panel" parent="BoxContainer/SplitContainer3/Panel"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+theme_type_variation = &"Background"
+
+[node name="BoxContainer" type="BoxContainer" parent="BoxContainer/SplitContainer3/Panel/Panel"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_bottom = 7.0
 grow_horizontal = 2
 grow_vertical = 2
 vertical = true
 
-[node name="TabBar" type="TabBar" parent="BoxContainer/SplitContainer3/Panel/BoxContainer"]
+[node name="TabBar" type="TabBar" parent="BoxContainer/SplitContainer3/Panel/Panel/BoxContainer"]
 layout_mode = 2
 current_tab = 0
 tab_count = 2
 tab_0/title = "文本模式"
 tab_1/title = "快照模式"
 
-[node name="HSeparator" type="HSeparator" parent="BoxContainer/SplitContainer3/Panel/BoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="BoxContainer/SplitContainer3/Panel/Panel/BoxContainer"]
 layout_mode = 2
 
 [node name="信息栏" type="BoxContainer" parent="BoxContainer"]
