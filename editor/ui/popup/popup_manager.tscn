@@ -1,7 +1,0 @@
-[gd_scene format=3 uid="uid://p2qpghxqhaik"]
-
-[node name="popup_manager" type="Node"]
-
-[node name="new_cut_popup" type="Window" parent="."]
-position = Vector2i(0, 36)
-size = Vector2i(1130, 695)
