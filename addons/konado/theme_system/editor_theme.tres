@@ -3612,12 +3612,12 @@ data = {
 [sub_resource type="ImageTexture" id="ImageTexture_tg8e2"]
 image = SubResource("Image_2gs7l")
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8vi82"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4ud1g"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
 content_margin_bottom = 4.0
-bg_color = Color(0.1, 0.1, 0.1, 0.6)
+bg_color = Color(0.14902, 0.152941, 0.160784, 1)
 corner_radius_top_left = 3
 corner_radius_top_right = 3
 corner_radius_bottom_right = 3
@@ -3629,7 +3629,7 @@ content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
 content_margin_bottom = 4.0
-bg_color = Color(0, 0, 0, 0.6)
+bg_color = Color(0.14902, 0.152941, 0.160784, 1)
 corner_radius_top_left = 3
 corner_radius_top_right = 3
 corner_radius_bottom_right = 3
@@ -3660,23 +3660,23 @@ border_width_right = 1
 border_color = Color(0.175, 0.175, 0.175, 1)
 corner_detail = 1
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_86msb"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_owaiw"]
 content_margin_left = 10.0
 content_margin_top = 4.0
 content_margin_right = 10.0
 content_margin_bottom = 4.0
-bg_color = Color(0.1, 0.1, 0.1, 0.6)
-border_color = Color(1, 1, 1, 0.75)
-corner_detail = 1
+bg_color = Color(0.14902, 0.152941, 0.160784, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_detail = 5
+expand_margin_bottom = 2.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bkiep"]
 content_margin_left = 10.0
 content_margin_top = 4.0
 content_margin_right = 10.0
 content_margin_bottom = 4.0
-bg_color = Color(0, 0, 0, 0.6)
-border_width_left = 1
-border_width_right = 1
+bg_color = Color(0.6, 0.6, 0.6, 0)
 border_color = Color(0.175, 0.175, 0.175, 1)
 corner_detail = 1
 
@@ -4406,12 +4406,12 @@ TabBar/icons/decrement_highlight = SubResource("ImageTexture_l1ccn")
 TabBar/icons/drop_mark = SubResource("ImageTexture_jiing")
 TabBar/icons/increment = SubResource("ImageTexture_mds7a")
 TabBar/icons/increment_highlight = SubResource("ImageTexture_tg8e2")
-TabBar/styles/button_highlight = SubResource("StyleBoxFlat_8vi82")
+TabBar/styles/button_highlight = SubResource("StyleBoxFlat_4ud1g")
 TabBar/styles/button_pressed = SubResource("StyleBoxFlat_ghdo7")
 TabBar/styles/tab_disabled = SubResource("StyleBoxFlat_wyn3k")
 TabBar/styles/tab_focus = SubResource("StyleBoxEmpty_ny44o")
 TabBar/styles/tab_hovered = SubResource("StyleBoxFlat_br312")
-TabBar/styles/tab_selected = SubResource("StyleBoxFlat_86msb")
+TabBar/styles/tab_selected = SubResource("StyleBoxFlat_owaiw")
 TabBar/styles/tab_unselected = SubResource("StyleBoxFlat_bkiep")
 TextEdit/colors/background_color = Color(0, 0, 0, 0)
 TextEdit/colors/caret_background_color = Color(0, 0, 0, 1)

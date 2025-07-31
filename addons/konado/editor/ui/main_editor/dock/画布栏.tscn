@@ -59,6 +59,7 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+mouse_filter = 0
 vertical = true
 
 [node name="BoxContainer" type="BoxContainer" parent="SplitContainer/组件栏/BoxContainer"]
@@ -93,4 +94,5 @@ size_flags_vertical = 3
 size_flags_stretch_ratio = 5.0
 vertical = true
 
+[connection signal="gui_input" from="SplitContainer/组件栏/BoxContainer/ScrollContainer/componet_label_container" to="." method="_on_componet_label_container_gui_input"]
 [connection signal="pressed" from="SplitContainer/组件栏/BoxContainer/BoxContainer/add_component" to="." method="_on_add_component_pressed"]
