@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="CharacterStatus" load_steps=3 format=3 uid="uid://b37nt2e4rbers"]
+
+[ext_resource type="Script" uid="uid://dxbtmvyauvfln" path="res://addons/konado/scripts/character/character_status.gd" id="1_li05w"]
+[ext_resource type="Texture2D" uid="uid://hecjc8cwyd0b" path="res://addons/konado/sample/sample_arts/Konado_Simple.png" id="2_exgqx"]
+
+[resource]
+script = ExtResource("1_li05w")
+"角色状态名称" = "正常1"
+"角色状态图片" = ExtResource("2_exgqx")
+metadata/_custom_type_script = "uid://dxbtmvyauvfln"

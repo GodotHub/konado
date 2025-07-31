@@ -1,0 +1,962 @@
+[gd_scene load_steps=61 format=3 uid="uid://bj8ynu8013j4j"]
+
+[ext_resource type="Script" uid="uid://dpo124xwpder5" path="res://addons/konado/scripts/dialogue/dialogue_manager.gd" id="1_buo3n"]
+[ext_resource type="Script" uid="uid://cyoedi0x84dxy" path="res://addons/konado/scripts/act/acting_Interface.gd" id="2_pq6sw"]
+[ext_resource type="Script" uid="uid://b0kbsxqyedoml" path="res://addons/konado/scripts/dialogue/dialogue_Interface.gd" id="3_gl7il"]
+[ext_resource type="Shader" uid="uid://dxr17ie00ux36" path="res://addons/konado/shader/Transition/BlindsEffect.gdshader" id="3_utfb4"]
+[ext_resource type="Script" uid="uid://5d4l66ex5dy" path="res://addons/konado/scripts/save_and_load/SaL_UI.gd" id="4_566op"]
+[ext_resource type="Script" uid="uid://cfbojxb1pdbrs" path="res://addons/konado/scripts/audio/audio_interface.gd" id="4_gd2ll"]
+[ext_resource type="Texture2D" uid="uid://bb7nhjioefh8a" path="res://addons/konado/sample/sample_arts/示例-咖啡馆-背景.png" id="4_qodmk"]
+[ext_resource type="Script" uid="uid://cbf7mvlofpiix" path="res://addons/konado/scripts/items/item_interface.gd" id="4_utfb4"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_e5o0s"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_b1osp"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_h66lv"]
+shader = ExtResource("3_utfb4")
+shader_parameter/resolution = Vector2(1920, 1080)
+shader_parameter/switch_progress = 1.5
+shader_parameter/target_switch_texture = ExtResource("4_qodmk")
+shader_parameter/current_texture = ExtResource("4_qodmk")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_25pr6"]
+
+[sub_resource type="Gradient" id="Gradient_utfb4"]
+colors = PackedColorArray(0, 0, 0, 0.870588, 0.141176, 0.141176, 0.141176, 0.74902)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_qodmk"]
+gradient = SubResource("Gradient_utfb4")
+fill_to = Vector2(1, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xjghb"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_uf3p3"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h5wn0"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bfne7"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_f70o6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_d61i7"]
+
+[sub_resource type="Gradient" id="Gradient_rm7mg"]
+offsets = PackedFloat32Array(0, 0.996764, 1)
+colors = PackedColorArray(0.527091, 0.626497, 0.835147, 0.611765, 0.0801724, 0.0952924, 0.127029, 0.0930516, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_m86f6"]
+gradient = SubResource("Gradient_rm7mg")
+width = 512
+height = 512
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.7, 0.7)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vnydh"]
+texture = SubResource("GradientTexture2D_m86f6")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1xeec"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3sqld"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_e1ahj"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hqqx5"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_utfb4"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qodmk"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sxvt2"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_566op"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ub6cx"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bycqy"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_utfb4"]
+bg_color = Color(0.792157, 0.792157, 0.792157, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_eac7y"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ya35c"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_une6u"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xjghb"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_utfb4"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h6kpk"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_m7kjq"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h6kpk"]
+bg_color = Color(1, 0.321569, 0.427451, 0.482353)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nhljo"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jsjy8"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_566op"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ub6cx"]
+bg_color = Color(1, 0.133333, 0.623529, 0.541176)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m7kjq"]
+bg_color = Color(0.141176, 0, 0.917647, 0.576471)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wnbmn"]
+bg_color = Color(0.945098, 0.423529, 0, 0.670588)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eac7y"]
+bg_color = Color(0, 0.690196, 0.67451, 0.67451)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nhljo"]
+bg_color = Color(0.709804, 0.443137, 1, 0.662745)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bycqy"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ya35c"]
+bg_color = Color(0.792157, 0.792157, 0.792157, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e1ahj"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_utfb4"]
+color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jsjy8"]
+bg_color = Color(0.792157, 0.792157, 0.792157, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hqqx5"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wnbmn"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qodmk"]
+bg_color = Color(0.792157, 0.792157, 0.792157, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_une6u"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sxvt2"]
+bg_color = Color(1, 0.268112, 0.605305, 1)
+
+[node name="DialogManager" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_buo3n")
+actor_auto_highlight = null
+
+[node name="MaskLayer" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="DialogUI" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_e5o0s")
+
+[node name="ActingInterface" type="PanelContainer" parent="DialogUI"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_b1osp")
+script = ExtResource("2_pq6sw")
+
+[node name="BackgroundLayer" type="ColorRect" parent="DialogUI/ActingInterface"]
+material = SubResource("ShaderMaterial_h66lv")
+layout_mode = 2
+color = Color(0, 0, 0, 1)
+
+[node name="CharaControl" type="Control" parent="DialogUI/ActingInterface/BackgroundLayer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="EffectLayer" type="ColorRect" parent="DialogUI/ActingInterface"]
+layout_mode = 2
+color = Color(0, 0, 0, 0)
+
+[node name="DialogueInterface" type="VBoxContainer" parent="DialogUI"]
+layout_mode = 2
+alignment = 2
+script = ExtResource("3_gl7il")
+
+[node name="ChoicesBox" type="Control" parent="DialogUI/DialogueInterface"]
+custom_minimum_size = Vector2(380, 290)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="ChoicesContainer" type="VBoxContainer" parent="DialogUI/DialogueInterface/ChoicesBox"]
+custom_minimum_size = Vector2(400, 300)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="DialogueBox" type="PanelContainer" parent="DialogUI/DialogueInterface"]
+custom_minimum_size = Vector2(0, 230)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_25pr6")
+
+[node name="Background" type="TextureRect" parent="DialogUI/DialogueInterface/DialogueBox"]
+layout_mode = 2
+texture = SubResource("GradientTexture2D_qodmk")
+
+[node name="MarginContainer" type="MarginContainer" parent="DialogUI/DialogueInterface/DialogueBox"]
+layout_mode = 2
+theme_override_constants/margin_left = 130
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 130
+theme_override_constants/margin_bottom = 5
+
+[node name="DialogContent" type="VBoxContainer" parent="DialogUI/DialogueInterface/DialogueBox/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DialogUI/DialogueInterface/DialogueBox/MarginContainer/DialogContent"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 30
+
+[node name="Name" type="RichTextLabel" parent="DialogUI/DialogueInterface/DialogueBox/MarginContainer/DialogContent/VBoxContainer"]
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 25
+theme_override_styles/background = SubResource("StyleBoxEmpty_xjghb")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_uf3p3")
+bbcode_enabled = true
+fit_content = true
+
+[node name="MarginContainer" type="MarginContainer" parent="DialogUI/DialogueInterface/DialogueBox/MarginContainer/DialogContent/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_right = 200
+
+[node name="ContentLable" type="RichTextLabel" parent="DialogUI/DialogueInterface/DialogueBox/MarginContainer/DialogContent/VBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/normal_font_size = 22
+theme_override_styles/background = SubResource("StyleBoxEmpty_h5wn0")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_bfne7")
+bbcode_enabled = true
+fit_content = true
+autowrap_mode = 2
+tab_size = 8
+visible_characters = 0
+visible_ratio = 0.0
+
+[node name="ActionsContainer" type="HBoxContainer" parent="DialogUI/DialogueInterface/DialogueBox/MarginContainer/DialogContent"]
+layout_mode = 2
+alignment = 1
+
+[node name="存档" type="Button" parent="DialogUI/DialogueInterface/DialogueBox/MarginContainer/DialogContent/ActionsContainer"]
+custom_minimum_size = Vector2(75, 35)
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_f70o6")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_d61i7")
+theme_override_styles/hover = SubResource("StyleBoxTexture_vnydh")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_1xeec")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_3sqld")
+text = "存档"
+
+[node name="读档" type="Button" parent="DialogUI/DialogueInterface/DialogueBox/MarginContainer/DialogContent/ActionsContainer"]
+custom_minimum_size = Vector2(75, 35)
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_f70o6")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_d61i7")
+theme_override_styles/hover = SubResource("StyleBoxTexture_vnydh")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_1xeec")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_3sqld")
+text = "读档"
+
+[node name="记录" type="Button" parent="DialogUI/DialogueInterface/DialogueBox/MarginContainer/DialogContent/ActionsContainer"]
+custom_minimum_size = Vector2(75, 35)
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_f70o6")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_d61i7")
+theme_override_styles/hover = SubResource("StyleBoxTexture_vnydh")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_1xeec")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_3sqld")
+text = "记录"
+
+[node name="退出" type="Button" parent="DialogUI/DialogueInterface/DialogueBox/MarginContainer/DialogContent/ActionsContainer"]
+custom_minimum_size = Vector2(75, 35)
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_f70o6")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_d61i7")
+theme_override_styles/hover = SubResource("StyleBoxTexture_vnydh")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_1xeec")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_3sqld")
+text = "退出"
+
+[node name="自动" type="Button" parent="DialogUI/DialogueInterface/DialogueBox/MarginContainer/DialogContent/ActionsContainer"]
+custom_minimum_size = Vector2(75, 35)
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_f70o6")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_d61i7")
+theme_override_styles/hover = SubResource("StyleBoxTexture_vnydh")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_1xeec")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_3sqld")
+toggle_mode = true
+text = "自动播放"
+
+[node name="ItemInterface" type="PanelContainer" parent="DialogUI"]
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_e1ahj")
+script = ExtResource("4_utfb4")
+
+[node name="ItemControl" type="Control" parent="DialogUI/ItemInterface"]
+layout_mode = 2
+
+[node name="SaLUI" type="PanelContainer" parent="DialogUI"]
+visible = false
+custom_minimum_size = Vector2(750, 650)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("4_566op")
+
+[node name="FilesContainer" type="MarginContainer" parent="DialogUI/SaLUI"]
+layout_mode = 2
+theme_override_constants/margin_top = 80
+
+[node name="FilesHContainer" type="HBoxContainer" parent="DialogUI/SaLUI/FilesContainer"]
+custom_minimum_size = Vector2(500, 569)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="FilesVContainer" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="FileContainer1" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="FilePanel1" type="Panel" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer1"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_hqqx5")
+
+[node name="TriggerButton1" type="Button" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer1/FilePanel1"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+offset_right = 300.0
+offset_bottom = 100.0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_utfb4")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_qodmk")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_sxvt2")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_566op")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ub6cx")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_bycqy")
+theme_override_styles/hover = SubResource("StyleBoxFlat_utfb4")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eac7y")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_ya35c")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
+theme_override_styles/normal = SubResource("StyleBoxFlat_xjghb")
+
+[node name="FileMargin1" type="MarginContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer1/FilePanel1"]
+layout_mode = 2
+offset_left = -2.0
+offset_top = 4.0
+offset_right = 298.0
+offset_bottom = 63.0
+mouse_filter = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 20
+
+[node name="FileMarginV1" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer1/FilePanel1/FileMargin1"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="SlotAndDate1" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer1/FilePanel1/FileMargin1/FileMarginV1"]
+custom_minimum_size = Vector2(100, 25)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 15
+text = "槽位1 当前无存档"
+
+[node name="Chapter1" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer1/FilePanel1/FileMargin1/FileMarginV1"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 15
+text = "——————————"
+
+[node name="FileContainer2" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="FilePanel2" type="Panel" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer2"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxTexture_utfb4")
+
+[node name="TriggerButton2" type="Button" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer2/FilePanel2"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+offset_right = 300.0
+offset_bottom = 100.0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_utfb4")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_qodmk")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_sxvt2")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_h6kpk")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ub6cx")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_m7kjq")
+theme_override_styles/hover = SubResource("StyleBoxFlat_h6kpk")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eac7y")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_jsjy8")
+
+[node name="FileMargin2" type="MarginContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer2/FilePanel2"]
+layout_mode = 2
+offset_left = -2.0
+offset_top = 4.0
+offset_right = 298.0
+offset_bottom = 63.0
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 20
+
+[node name="FileMarginV2" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer2/FilePanel2/FileMargin2"]
+layout_mode = 2
+
+[node name="SlotAndDate2" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer2/FilePanel2/FileMargin2/FileMarginV2"]
+custom_minimum_size = Vector2(100, 25)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 15
+text = "槽位2 当前无存档"
+
+[node name="Chapter2" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer2/FilePanel2/FileMargin2/FileMarginV2"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 15
+text = "——————————"
+
+[node name="FileContainer3" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="FilePanel3" type="Panel" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer3"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_566op")
+
+[node name="TriggerButton3" type="Button" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer3/FilePanel3"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+offset_right = 300.0
+offset_bottom = 100.0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_utfb4")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_qodmk")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_sxvt2")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_h6kpk")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ub6cx")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_m7kjq")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ub6cx")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eac7y")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_jsjy8")
+
+[node name="FileMargin3" type="MarginContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer3/FilePanel3"]
+layout_mode = 2
+offset_left = -2.0
+offset_top = 4.0
+offset_right = 298.0
+offset_bottom = 63.0
+mouse_filter = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 20
+
+[node name="FileMarginV3" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer3/FilePanel3/FileMargin3"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="SlotAndDate3" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer3/FilePanel3/FileMargin3/FileMarginV3"]
+custom_minimum_size = Vector2(100, 25)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 15
+text = "槽位3 当前无存档"
+
+[node name="Chapter3" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer3/FilePanel3/FileMargin3/FileMarginV3"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 15
+text = "——————————"
+
+[node name="FileContainer4" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="FilePanel4" type="Panel" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer4"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_566op")
+
+[node name="TriggerButton4" type="Button" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer4/FilePanel4"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+offset_right = 300.0
+offset_bottom = 100.0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_utfb4")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_qodmk")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_sxvt2")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_h6kpk")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ub6cx")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_m7kjq")
+theme_override_styles/hover = SubResource("StyleBoxFlat_m7kjq")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eac7y")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_jsjy8")
+
+[node name="FileMargin4" type="MarginContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer4/FilePanel4"]
+layout_mode = 2
+offset_left = -2.0
+offset_top = 4.0
+offset_right = 298.0
+offset_bottom = 63.0
+mouse_filter = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 20
+
+[node name="FileMarginV4" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer4/FilePanel4/FileMargin4"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="SlotAndDate4" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer4/FilePanel4/FileMargin4/FileMarginV4"]
+custom_minimum_size = Vector2(100, 25)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 15
+text = "槽位4 当前无存档"
+
+[node name="Chapter4" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer4/FilePanel4/FileMargin4/FileMarginV4"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 15
+text = "——————————"
+
+[node name="FileContainer5" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="FilePanel5" type="Panel" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer5"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_566op")
+
+[node name="TriggerButton5" type="Button" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer5/FilePanel5"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+offset_right = 300.0
+offset_bottom = 100.0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_utfb4")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_qodmk")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_sxvt2")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_h6kpk")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ub6cx")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_m7kjq")
+theme_override_styles/hover = SubResource("StyleBoxFlat_wnbmn")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eac7y")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_jsjy8")
+
+[node name="FileMargin5" type="MarginContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer5/FilePanel5"]
+layout_mode = 2
+offset_left = -2.0
+offset_top = 4.0
+offset_right = 298.0
+offset_bottom = 63.0
+mouse_filter = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 20
+
+[node name="FileMarginV5" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer5/FilePanel5/FileMargin5"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="SlotAndDate5" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer5/FilePanel5/FileMargin5/FileMarginV5"]
+custom_minimum_size = Vector2(100, 25)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 15
+text = "槽位5 当前无存档"
+
+[node name="Chapter5" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer5/FilePanel5/FileMargin5/FileMarginV5"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 15
+text = "——————————"
+
+[node name="FilesVContainer2" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="FileContainer6" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="FilePanel6" type="Panel" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer6"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_566op")
+
+[node name="TriggerButton6" type="Button" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer6/FilePanel6"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+offset_right = 300.0
+offset_bottom = 100.0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_utfb4")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_qodmk")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_sxvt2")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_h6kpk")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ub6cx")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_m7kjq")
+theme_override_styles/hover = SubResource("StyleBoxFlat_eac7y")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eac7y")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_jsjy8")
+
+[node name="FileMargin6" type="MarginContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer6/FilePanel6"]
+layout_mode = 2
+offset_left = -2.0
+offset_top = 4.0
+offset_right = 298.0
+offset_bottom = 63.0
+mouse_filter = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 20
+
+[node name="FileMarginV6" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer6/FilePanel6/FileMargin6"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="SlotAndDate6" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer6/FilePanel6/FileMargin6/FileMarginV6"]
+custom_minimum_size = Vector2(100, 25)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 15
+text = "槽位6 当前无存档"
+
+[node name="Chapter6" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer6/FilePanel6/FileMargin6/FileMarginV6"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 15
+text = "——————————"
+
+[node name="FileContainer7" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="FilePanel7" type="Panel" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer7"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_566op")
+
+[node name="TriggerButton7" type="Button" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer7/FilePanel7"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+offset_right = 300.0
+offset_bottom = 100.0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_utfb4")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_qodmk")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_sxvt2")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_h6kpk")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ub6cx")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_m7kjq")
+theme_override_styles/hover = SubResource("StyleBoxFlat_nhljo")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eac7y")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_jsjy8")
+
+[node name="FileMargin7" type="MarginContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer7/FilePanel7"]
+layout_mode = 2
+offset_left = -2.0
+offset_top = 4.0
+offset_right = 298.0
+offset_bottom = 63.0
+mouse_filter = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 20
+
+[node name="FileMarginV7" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer7/FilePanel7/FileMargin7"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="SlotAndDate7" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer7/FilePanel7/FileMargin7/FileMarginV7"]
+custom_minimum_size = Vector2(100, 25)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 15
+text = "槽位7 当前无存档"
+
+[node name="Chapter7" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer7/FilePanel7/FileMargin7/FileMarginV7"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 15
+text = "——————————"
+
+[node name="FileContainer8" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="FilePanel8" type="Panel" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer8"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_bycqy")
+
+[node name="TriggerButton8" type="Button" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer8/FilePanel8"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+offset_right = 300.0
+offset_bottom = 100.0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_utfb4")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_qodmk")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_sxvt2")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_h6kpk")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ub6cx")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_m7kjq")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ya35c")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eac7y")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
+theme_override_styles/normal = SubResource("StyleBoxFlat_e1ahj")
+
+[node name="FileMargin8" type="MarginContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer8/FilePanel8"]
+layout_mode = 2
+offset_left = -2.0
+offset_top = 4.0
+offset_right = 298.0
+offset_bottom = 63.0
+mouse_filter = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 20
+
+[node name="FileMarginV8" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer8/FilePanel8/FileMargin8"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="SlotAndDate8" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer8/FilePanel8/FileMargin8/FileMarginV8"]
+custom_minimum_size = Vector2(100, 25)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 15
+text = "槽位8 当前无存档"
+
+[node name="Chapter8" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer8/FilePanel8/FileMargin8/FileMarginV8"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 15
+text = "——————————"
+
+[node name="FileContainer9" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="FilePanel9" type="Panel" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer9"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxLine_utfb4")
+
+[node name="TriggerButton9" type="Button" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer9/FilePanel9"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+offset_right = 300.0
+offset_bottom = 100.0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_utfb4")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_qodmk")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_sxvt2")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_h6kpk")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ub6cx")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_m7kjq")
+theme_override_styles/hover = SubResource("StyleBoxFlat_jsjy8")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eac7y")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
+theme_override_styles/normal = SubResource("StyleBoxFlat_hqqx5")
+
+[node name="FileMargin9" type="MarginContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer9/FilePanel9"]
+layout_mode = 2
+offset_left = -2.0
+offset_top = 4.0
+offset_right = 298.0
+offset_bottom = 63.0
+mouse_filter = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 20
+
+[node name="FileMarginV9" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer9/FilePanel9/FileMargin9"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="SlotAndDate9" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer9/FilePanel9/FileMargin9/FileMarginV9"]
+custom_minimum_size = Vector2(100, 25)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 15
+text = "槽位9 当前无存档"
+
+[node name="Chapter9" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer9/FilePanel9/FileMargin9/FileMarginV9"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 15
+text = "——————————"
+
+[node name="FileContainer10" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="FilePanel10" type="Panel" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer10"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_wnbmn")
+
+[node name="TriggerButton10" type="Button" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer10/FilePanel10"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+offset_right = 300.0
+offset_bottom = 100.0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_utfb4")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_qodmk")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_sxvt2")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_h6kpk")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ub6cx")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_m7kjq")
+theme_override_styles/hover = SubResource("StyleBoxFlat_qodmk")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eac7y")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
+theme_override_styles/normal = SubResource("StyleBoxFlat_une6u")
+
+[node name="FileMargin10" type="MarginContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer10/FilePanel10"]
+layout_mode = 2
+offset_left = -2.0
+offset_top = 4.0
+offset_right = 298.0
+offset_bottom = 83.0
+mouse_filter = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 20
+
+[node name="FileMarginV10" type="VBoxContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer10/FilePanel10/FileMargin10"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="SlotAndDate10" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer10/FilePanel10/FileMargin10/FileMarginV10"]
+custom_minimum_size = Vector2(100, 25)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 15
+text = "槽位10 当前无存档"
+
+[node name="Chapter10" type="Label" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer10/FilePanel10/FileMargin10/FileMarginV10"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 15
+text = "——————————"
+
+[node name="Title" type="Label" parent="DialogUI/SaLUI"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 60
+text = "读取"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CloseButton" type="Button" parent="DialogUI/SaLUI/Title"]
+layout_mode = 2
+offset_left = 372.0
+offset_top = 21.0
+offset_right = 466.0
+offset_bottom = 97.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_sxvt2")
+text = "关闭"
+
+[node name="AudioInterface" type="Node2D" parent="."]
+script = ExtResource("4_gd2ll")
+
+[node name="BGMPlayer" type="AudioStreamPlayer" parent="AudioInterface"]
+
+[node name="VoicePlayer" type="AudioStreamPlayer" parent="AudioInterface"]
+
+[node name="SoundEffectPlayer" type="AudioStreamPlayer" parent="AudioInterface"]
