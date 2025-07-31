@@ -1,0 +1,389 @@
+[gd_scene load_steps=6 format=3 uid="uid://bommt7l6wmdsa"]
+
+[ext_resource type="Theme" uid="uid://dwtf3ffxpbiox" path="res://addons/konado/theme_system/editor_theme.tres" id="1_lwc1q"]
+[ext_resource type="PackedScene" uid="uid://bekbl1hthapcy" path="res://addons/konado/theme_system/component_label.tscn" id="2_lxpd5"]
+[ext_resource type="PackedScene" uid="uid://dtm3j0waaivyj" path="res://addons/konado/sample/konado_sample.tscn" id="3_pwu0a"]
+[ext_resource type="PackedScene" uid="uid://ngoysingi1jp" path="res://addons/konado/editor/ui/main_editor/dock/画布栏.tscn" id="4_lxpd5"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_lwc1q"]
+
+[node name="MainEditor" type="Panel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"Background"
+
+[node name="BoxContainer" type="BoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+vertical = true
+
+[node name="菜单栏" type="Panel" parent="BoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme = ExtResource("1_lwc1q")
+theme_type_variation = &"MainMenu"
+
+[node name="BoxContainer2" type="BoxContainer" parent="BoxContainer/菜单栏"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BoxContainer" type="BoxContainer" parent="BoxContainer/菜单栏/BoxContainer2"]
+custom_minimum_size = Vector2(100, 40)
+layout_mode = 2
+
+[node name="Button" type="MenuButton" parent="BoxContainer/菜单栏/BoxContainer2/BoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "文件"
+switch_on_hover = true
+item_count = 4
+popup/item_0/text = "新建项目"
+popup/item_0/id = 0
+popup/item_1/text = "保存项目"
+popup/item_1/id = 1
+popup/item_2/text = "导出项目"
+popup/item_2/id = 2
+popup/item_3/id = 3
+
+[node name="Button2" type="MenuButton" parent="BoxContainer/菜单栏/BoxContainer2/BoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "编辑"
+switch_on_hover = true
+item_count = 2
+popup/item_0/text = "项目设置"
+popup/item_0/id = 0
+popup/item_1/text = "首选项"
+popup/item_1/id = 1
+
+[node name="Button3" type="MenuButton" parent="BoxContainer/菜单栏/BoxContainer2/BoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "窗口"
+switch_on_hover = true
+
+[node name="Button4" type="MenuButton" parent="BoxContainer/菜单栏/BoxContainer2/BoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "帮助"
+switch_on_hover = true
+
+[node name="BoxContainer2" type="BoxContainer" parent="BoxContainer/菜单栏/BoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 10
+metadata/_edit_group_ = true
+
+[node name="Button3" type="Button" parent="BoxContainer/菜单栏/BoxContainer2/BoxContainer2"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+toggle_mode = true
+button_group = SubResource("ButtonGroup_lwc1q")
+text = "数据管理"
+
+[node name="Button" type="Button" parent="BoxContainer/菜单栏/BoxContainer2/BoxContainer2"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+toggle_mode = true
+button_pressed = true
+button_group = SubResource("ButtonGroup_lwc1q")
+text = "编辑模式"
+
+[node name="Button2" type="Button" parent="BoxContainer/菜单栏/BoxContainer2/BoxContainer2"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+toggle_mode = true
+button_group = SubResource("ButtonGroup_lwc1q")
+text = "系统管理"
+
+[node name="BoxContainer3" type="BoxContainer" parent="BoxContainer/菜单栏/BoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 10
+
+[node name="Button" type="Button" parent="BoxContainer/菜单栏/BoxContainer2/BoxContainer3"]
+layout_mode = 2
+text = "从头播放"
+
+[node name="Button2" type="Button" parent="BoxContainer/菜单栏/BoxContainer2/BoxContainer3"]
+layout_mode = 2
+text = "当前cut"
+
+[node name="Button3" type="Button" parent="BoxContainer/菜单栏/BoxContainer2/BoxContainer3"]
+layout_mode = 2
+text = "指定cut"
+
+[node name="占位" type="Control" parent="BoxContainer/菜单栏/BoxContainer2/BoxContainer3"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+
+[node name="SplitContainer3" type="SplitContainer" parent="BoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="SplitContainer2" type="SplitContainer" parent="BoxContainer/SplitContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 4.0
+split_offset = 250
+vertical = true
+drag_area_highlight_in_editor = true
+
+[node name="SplitContainer" type="SplitContainer" parent="BoxContainer/SplitContainer3/SplitContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+drag_area_highlight_in_editor = true
+
+[node name="Control" type="Control" parent="BoxContainer/SplitContainer3/SplitContainer2/SplitContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Panel" type="Panel" parent="BoxContainer/SplitContainer3/SplitContainer2/SplitContainer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+
+[node name="BoxContainer" type="BoxContainer" parent="BoxContainer/SplitContainer3/SplitContainer2/SplitContainer/Control/Panel"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+vertical = true
+
+[node name="Label" type="Label" parent="BoxContainer/SplitContainer3/SplitContainer2/SplitContainer/Control/Panel/BoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+text = "文件管理"
+
+[node name="HSeparator" type="HSeparator" parent="BoxContainer/SplitContainer3/SplitContainer2/SplitContainer/Control/Panel/BoxContainer"]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="BoxContainer/SplitContainer3/SplitContainer2/SplitContainer/Control/Panel/BoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="BoxContainer" type="BoxContainer" parent="BoxContainer/SplitContainer3/SplitContainer2/SplitContainer/Control/Panel/BoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+vertical = true
+
+[node name="组件库" type="Panel" parent="BoxContainer/SplitContainer3/SplitContainer2/SplitContainer/Control"]
+visible = false
+custom_minimum_size = Vector2(300, 300)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+
+[node name="BoxContainer" type="BoxContainer" parent="BoxContainer/SplitContainer3/SplitContainer2/SplitContainer/Control/组件库"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+vertical = true
+
+[node name="Label" type="Label" parent="BoxContainer/SplitContainer3/SplitContainer2/SplitContainer/Control/组件库/BoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+text = "组件库"
+
+[node name="HSeparator" type="HSeparator" parent="BoxContainer/SplitContainer3/SplitContainer2/SplitContainer/Control/组件库/BoxContainer"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="BoxContainer/SplitContainer3/SplitContainer2/SplitContainer/Control/组件库/BoxContainer"]
+layout_mode = 2
+text = "     常用组件"
+
+[node name="SplitContainer" type="SplitContainer" parent="BoxContainer/SplitContainer3/SplitContainer2/SplitContainer/Control/组件库/BoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+split_offset = -80
+vertical = true
+
+[node name="ScrollContainer" type="ScrollContainer" parent="BoxContainer/SplitContainer3/SplitContainer2/SplitContainer/Control/组件库/BoxContainer/SplitContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="BoxContainer" type="BoxContainer" parent="BoxContainer/SplitContainer3/SplitContainer2/SplitContainer/Control/组件库/BoxContainer/SplitContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+vertical = true
+
+[node name="Component2" parent="BoxContainer/SplitContainer3/SplitContainer2/SplitContainer/Control/组件库/BoxContainer/SplitContainer/ScrollContainer/BoxContainer" instance=ExtResource("2_lxpd5")]
+self_modulate = Color(0.72526, 0.293693, 0.293693, 1)
+layout_mode = 2
+text = "场景"
+
+[node name="Component" parent="BoxContainer/SplitContainer3/SplitContainer2/SplitContainer/Control/组件库/BoxContainer/SplitContainer/ScrollContainer/BoxContainer" instance=ExtResource("2_lxpd5")]
+self_modulate = Color(0.430751, 0.800781, 0.388921, 1)
+layout_mode = 2
+text = "演员"
+
+[node name="Component3" parent="BoxContainer/SplitContainer3/SplitContainer2/SplitContainer/Control/组件库/BoxContainer/SplitContainer/ScrollContainer/BoxContainer" instance=ExtResource("2_lxpd5")]
+self_modulate = Color(0.660156, 0.721222, 1, 1)
+layout_mode = 2
+text = "特效"
+
+[node name="Component4" parent="BoxContainer/SplitContainer3/SplitContainer2/SplitContainer/Control/组件库/BoxContainer/SplitContainer/ScrollContainer/BoxContainer" instance=ExtResource("2_lxpd5")]
+modulate = Color(1, 0.935272, 0.605469, 1)
+layout_mode = 2
+text = "对话
+"
+
+[node name="Component5" parent="BoxContainer/SplitContainer3/SplitContainer2/SplitContainer/Control/组件库/BoxContainer/SplitContainer/ScrollContainer/BoxContainer" instance=ExtResource("2_lxpd5")]
+modulate = Color(0, 0.829427, 0.719269, 1)
+layout_mode = 2
+text = "道具
+"
+
+[node name="Component6" parent="BoxContainer/SplitContainer3/SplitContainer2/SplitContainer/Control/组件库/BoxContainer/SplitContainer/ScrollContainer/BoxContainer" instance=ExtResource("2_lxpd5")]
+layout_mode = 2
+text = "按钮
+"
+
+[node name="BoxContainer" type="BoxContainer" parent="BoxContainer/SplitContainer3/SplitContainer2/SplitContainer/Control/组件库/BoxContainer/SplitContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+vertical = true
+
+[node name="Label" type="Label" parent="BoxContainer/SplitContainer3/SplitContainer2/SplitContainer/Control/组件库/BoxContainer/SplitContainer/BoxContainer"]
+layout_mode = 2
+text = "     交互组件"
+
+[node name="ScrollContainer2" type="ScrollContainer" parent="BoxContainer/SplitContainer3/SplitContainer2/SplitContainer/Control/组件库/BoxContainer/SplitContainer/BoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="BoxContainer" type="BoxContainer" parent="BoxContainer/SplitContainer3/SplitContainer2/SplitContainer/Control/组件库/BoxContainer/SplitContainer/BoxContainer/ScrollContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+vertical = true
+
+[node name="Component2" parent="BoxContainer/SplitContainer3/SplitContainer2/SplitContainer/Control/组件库/BoxContainer/SplitContainer/BoxContainer/ScrollContainer2/BoxContainer" instance=ExtResource("2_lxpd5")]
+layout_mode = 2
+text = "场景"
+
+[node name="Component" parent="BoxContainer/SplitContainer3/SplitContainer2/SplitContainer/Control/组件库/BoxContainer/SplitContainer/BoxContainer/ScrollContainer2/BoxContainer" instance=ExtResource("2_lxpd5")]
+layout_mode = 2
+text = "演员"
+
+[node name="Component3" parent="BoxContainer/SplitContainer3/SplitContainer2/SplitContainer/Control/组件库/BoxContainer/SplitContainer/BoxContainer/ScrollContainer2/BoxContainer" instance=ExtResource("2_lxpd5")]
+layout_mode = 2
+text = "特效"
+
+[node name="Component4" parent="BoxContainer/SplitContainer3/SplitContainer2/SplitContainer/Control/组件库/BoxContainer/SplitContainer/BoxContainer/ScrollContainer2/BoxContainer" instance=ExtResource("2_lxpd5")]
+layout_mode = 2
+text = "对话
+"
+
+[node name="Component5" parent="BoxContainer/SplitContainer3/SplitContainer2/SplitContainer/Control/组件库/BoxContainer/SplitContainer/BoxContainer/ScrollContainer2/BoxContainer" instance=ExtResource("2_lxpd5")]
+layout_mode = 2
+text = "道具
+"
+
+[node name="Component6" parent="BoxContainer/SplitContainer3/SplitContainer2/SplitContainer/Control/组件库/BoxContainer/SplitContainer/BoxContainer/ScrollContainer2/BoxContainer" instance=ExtResource("2_lxpd5")]
+layout_mode = 2
+text = "按钮
+"
+
+[node name="画布区" type="Panel" parent="BoxContainer/SplitContainer3/SplitContainer2/SplitContainer"]
+custom_minimum_size = Vector2(800, 500)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 4.0
+
+[node name="BoxContainer2" type="BoxContainer" parent="BoxContainer/SplitContainer3/SplitContainer2/SplitContainer/画布区"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+vertical = true
+
+[node name="BoxContainer" type="BoxContainer" parent="BoxContainer/SplitContainer3/SplitContainer2/SplitContainer/画布区/BoxContainer2"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+vertical = true
+
+[node name="Label" type="Label" parent="BoxContainer/SplitContainer3/SplitContainer2/SplitContainer/画布区/BoxContainer2/BoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+text = "画布"
+
+[node name="HSeparator" type="HSeparator" parent="BoxContainer/SplitContainer3/SplitContainer2/SplitContainer/画布区/BoxContainer2"]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="BoxContainer/SplitContainer3/SplitContainer2/SplitContainer/画布区/BoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="KonadoSample" parent="BoxContainer/SplitContainer3/SplitContainer2/SplitContainer/画布区/BoxContainer2/ScrollContainer" instance=ExtResource("3_pwu0a")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="画布层" parent="BoxContainer/SplitContainer3/SplitContainer2" instance=ExtResource("4_lxpd5")]
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="BoxContainer/SplitContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BoxContainer" type="BoxContainer" parent="BoxContainer/SplitContainer3/Panel"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+vertical = true
+
+[node name="TabBar" type="TabBar" parent="BoxContainer/SplitContainer3/Panel/BoxContainer"]
+layout_mode = 2
+current_tab = 0
+tab_count = 2
+tab_0/title = "文本模式"
+tab_1/title = "快照模式"
+
+[node name="HSeparator" type="HSeparator" parent="BoxContainer/SplitContainer3/Panel/BoxContainer"]
+layout_mode = 2
+
+[node name="信息栏" type="BoxContainer" parent="BoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
