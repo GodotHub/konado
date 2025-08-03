@@ -15,7 +15,7 @@ extends EditorPlugin
 var konado_editor_instance: KonadoEditorWindow = null
 
 ## 配置常量
-const DIALOGUE_DATA_SCRIPT := preload("res://addons/konado/scripts/dialogue/dialogue_data.gd")
+const DIALOGUE_DATA_SCRIPT := preload("res://addons/konado/scripts/dialogue/dialogue_shot.gd")
 const IMPORTER_SCRIPT := preload("res://addons/konado/importer/konado_importer.gd")
 const SAVE_AND_LOAD := "res://addons/konado/scripts/save_and_load/SaL.gd"
 const Component_Factory = "res://addons/konado/editor/ui/ui_components/component_factory.gd"
