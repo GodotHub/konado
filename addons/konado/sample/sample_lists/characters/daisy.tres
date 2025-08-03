@@ -12,8 +12,6 @@ metadata/_custom_type_script = "uid://dxbtmvyauvfln"
 
 [resource]
 script = ExtResource("1_mpe3s")
-"角色ID" = "daisy"
 "角色姓名" = "黛西"
-"角色标记颜色" = Color(0, 0, 0, 1)
 "角色状态" = Array[ExtResource("2_0n4va")]([SubResource("Resource_6uvnk")])
 metadata/_custom_type_script = "uid://5dxx84u6uyy0"
