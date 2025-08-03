@@ -5,7 +5,7 @@
 ![Status](https://img.shields.io/badge/Status-Active-brightgreen.svg)
 
 <p align="center">
-  <img src="assets/KonadoBanner.png" alt="看板娘可娜" width=596px>
+  <img src="addons/konado/assets/KonadoBanner.png" alt="看板娘可娜" width=596px>
 </p>
 
 <p align="center">

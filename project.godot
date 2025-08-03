@@ -10,7 +10,9 @@ config_version=5
 
 [application]
 
-config/name="视觉小说编辑器"
+config/name="Konado Editor"
+config/description="Konado Editor，可娜多编辑器"
+config/version="0.0.1"
 run/main_scene="uid://bommt7l6wmdsa"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
@@ -28,7 +30,7 @@ window/stretch/aspect="expand"
 
 [dotnet]
 
-project/assembly_name="视觉小说编辑器"
+project/assembly_name="KonadoEditor"
 
 [editor_plugins]
 
