@@ -847,54 +847,55 @@ func get_game_progress() -> Dictionary:
 func _jump_curline(value: int) -> bool:
 	if value >= 0:
 		if not value >= dialog_data.dialogs.size():
+			# 只在编辑器模式这样
+			if Engine.is_editor_hint():
+				_acting_interface.delete_all_character()
+				# 遍历演员操作相关的对话到当前行
+				# 临时先这么写吧，以后再优化，目前不崩就行~
 
-			_acting_interface.delete_all_character()
-			# 遍历演员操作相关的对话到当前行
-			# 临时先这么写吧，以后再优化，目前不崩就行~
+				for i in value:
+					var dialog = dialog_data.dialogs[i]
+					var dialog_type = dialog.dialog_type
+					# if dialog.dialog_type == Dialogue.Type.Display_Actor:
+					# 	_display_character(dialog.show_actor)
+					# if dialog.dialog_type == Dialogue.Type.Move_Actor:
+					# 	_acting_interface.move_actor(dialog.target_move_chara, dialog.target_move_pos)
+					# if dialog.dialog_type == Dialogue.Type.Exit_Actor:
+					# 	_exit_actor(dialog.exit_actor)
+					# if dialog.dialog_type == Dialogue.Type.Actor_Change_State:
+					# 	_actor_change_state(dialog.change_state_actor, dialog.change_state)
+					
+					# 如果是显示演员
+					if dialog_type == Dialogue.Type.Display_Actor:
+						# 显示演员
+						var actor = dialog.show_actor
+						_display_character(actor)
+						# 创建定时器，不加这个给我来千手观音是吧
+						# Godot没有同步真的很难蚌
+						await get_tree().create_timer(0.01).timeout
+						pass
+					# 如果修改演员状态
+					if dialog_type == Dialogue.Type.Actor_Change_State:
+						var actor = dialog.change_state_actor
+						var target_state = dialog.change_state
+						_actor_change_state(actor, target_state)
+						await get_tree().create_timer(0.01).timeout
+						pass
+					# 如果是移动演员
+					if dialog_type == Dialogue.Type.Move_Actor:
+						var actor = dialog.target_move_chara
+						var pos = dialog.target_move_pos
+						_acting_interface.move_actor(actor, pos)
+						await get_tree().create_timer(0.01).timeout
+						pass
+					# 如果是删除演员
+					if dialog_type == Dialogue.Type.Exit_Actor:
+						# 删除演员
+						var actor = dialog.exit_actor
+						_exit_actor(actor)
 
-			for i in value:
-				var dialog = dialog_data.dialogs[i]
-				var dialog_type = dialog.dialog_type
-				# if dialog.dialog_type == Dialogue.Type.Display_Actor:
-				# 	_display_character(dialog.show_actor)
-				# if dialog.dialog_type == Dialogue.Type.Move_Actor:
-				# 	_acting_interface.move_actor(dialog.target_move_chara, dialog.target_move_pos)
-				# if dialog.dialog_type == Dialogue.Type.Exit_Actor:
-				# 	_exit_actor(dialog.exit_actor)
-				# if dialog.dialog_type == Dialogue.Type.Actor_Change_State:
-				# 	_actor_change_state(dialog.change_state_actor, dialog.change_state)
-				
-				# 如果是显示演员
-				if dialog_type == Dialogue.Type.Display_Actor:
-					# 显示演员
-					var actor = dialog.show_actor
-					_display_character(actor)
-					# 创建定时器，不加这个给我来千手观音是吧
-					# Godot没有同步真的很难蚌
-					await get_tree().create_timer(0.01).timeout
-					pass
-				# 如果修改演员状态
-				if dialog_type == Dialogue.Type.Actor_Change_State:
-					var actor = dialog.change_state_actor
-					var target_state = dialog.change_state
-					_actor_change_state(actor, target_state)
-					await get_tree().create_timer(0.01).timeout
-					pass
-				# 如果是移动演员
-				if dialog_type == Dialogue.Type.Move_Actor:
-					var actor = dialog.target_move_chara
-					var pos = dialog.target_move_pos
-					_acting_interface.move_actor(actor, pos)
-					await get_tree().create_timer(0.01).timeout
-					pass
-				# 如果是删除演员
-				if dialog_type == Dialogue.Type.Exit_Actor:
-					# 删除演员
-					var actor = dialog.exit_actor
-					_exit_actor(actor)
-
-					await get_tree().create_timer(0.01).timeout
-					pass
+						await get_tree().create_timer(0.01).timeout
+						pass
 			_dialogue_goto_state(DialogState.OFF)
 			curline = value
 			print_rich("跳转到：" + str(curline))

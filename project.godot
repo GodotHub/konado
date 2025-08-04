@@ -10,8 +10,8 @@ config_version=5
 
 [application]
 
-config/name="视觉小说编辑器"
-config/description="d"
+config/name="Konado Editor"
+config/description="Konado Editor，Konado编辑器"
 run/main_scene="uid://bommt7l6wmdsa"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"

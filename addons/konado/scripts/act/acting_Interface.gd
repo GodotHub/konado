@@ -204,6 +204,8 @@ func create_new_character(chara_id: String, pos: Vector2, state: String, tex: Te
 	temp_node.set_position(pos)
 	# 创建角色的TextureRect
 	var chara_tex = TextureRect.new()
+	# 先隐藏
+	chara_tex.modulate = Color(1, 1, 1, 0)
 	chara_tex.name = node_name
 	chara_tex.set_texture(tex)
 	chara_tex.scale = Vector2(_scale, _scale)
@@ -211,9 +213,15 @@ func create_new_character(chara_id: String, pos: Vector2, state: String, tex: Te
 	chara_tex.flip_h = mirror
 	temp_node.set_name(node_name)
 	temp_node.add_child(chara_tex)
+
 	# 添加到角色容器
 	_chara_controler.add_child(temp_node)
 	# _chara_controler.add_child(chara_tex)
+	var ctween = temp_node.create_tween()
+	ctween.tween_property(chara_tex, "modulate", Color(1, 1, 1, 1), 0.618)
+	ctween.play()
+	await ctween.finished
+	ctween.kill()
 	character_created.emit()
 	print("在位置："+str(pos)+" 新建了演员："+str(chara_id)+" 演员状态："+str(state))
 	
@@ -278,6 +286,11 @@ func delete_character(chara_id: String):
 			var chara_controler_node = _chara_controler
 			var chara_node: Node = chara_controler_node.find_child(chara_id, true, false)
 			if chara_node:
+				var ctween = chara_node.create_tween()
+				ctween.tween_property(chara_node.get_child(0), "modulate", Color(1, 1, 1, 0), 0.618)
+				ctween.play()
+				await ctween.finished
+				ctween.kill()
 				chara_node.queue_free()
 				print("演员删除")
 				character_deleted.emit()
