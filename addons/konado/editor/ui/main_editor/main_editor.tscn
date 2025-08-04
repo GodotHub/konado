@@ -317,7 +317,7 @@ text = "按钮
 "
 
 [node name="画布区" type="Panel" parent="BoxContainer/SplitContainer3/SplitContainer2/SplitContainer"]
-custom_minimum_size = Vector2(800, 500)
+custom_minimum_size = Vector2(500, 300)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 4.0
@@ -358,6 +358,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="画布层" parent="BoxContainer/SplitContainer3/SplitContainer2" instance=ExtResource("4_lxpd5")]
+custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 
 [node name="Panel" type="Panel" parent="BoxContainer/SplitContainer3"]
