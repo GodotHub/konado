@@ -156,6 +156,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_buo3n")
+dialogspeed = 0.2
 
 [node name="MaskLayer" type="ColorRect" parent="."]
 layout_mode = 1
@@ -269,8 +270,6 @@ bbcode_enabled = true
 fit_content = true
 autowrap_mode = 2
 tab_size = 8
-visible_characters = 0
-visible_ratio = 0.0
 
 [node name="ActionsContainer" type="HBoxContainer" parent="DialogUI/DialogueInterface/DialogueBox/MarginContainer/DialogContent"]
 layout_mode = 2
