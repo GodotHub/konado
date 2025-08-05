@@ -36,6 +36,7 @@ grow_vertical = 2
 
 [node name="DialogManager" parent="." instance=ExtResource("1_hpqsc")]
 layout_mode = 1
+dialogspeed = 0.15
 chara_list = ExtResource("2_icnme")
 background_list = ExtResource("3_icnme")
 dialogue_chapter = ExtResource("4_nix8x")

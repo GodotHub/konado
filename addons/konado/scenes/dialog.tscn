@@ -156,7 +156,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_buo3n")
-dialogspeed = 0.2
 
 [node name="MaskLayer" type="ColorRect" parent="."]
 layout_mode = 1
