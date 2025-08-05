@@ -37,17 +37,36 @@ func change_dialog_box(tex: Texture):
 
 ## 显示对话的方法，使用Tween实现打字机
 func set_content(content: String, speed: float) -> void:
-	if writertween:
-		writertween.stop()
-		writertween.kill()
-	writertween = get_tree().create_tween()
-	# 打字机tween
-	_content_lable.visible_ratio = 0
-	_content_lable.text = str(content)
-	writertween.tween_property(_content_lable, "visible_ratio", 1, speed * content.length())
-	await writertween.finished
-	finish_typing.emit()
-	
+	_content = content
+	_speed = speed
+	_time = 0
+	_current = 0
+	_content_lable.visible_characters = -1
+
+var _content:String = ""
+var _speed: float = 0.1
+var _time:float = 0
+var _current:int = 0
+
+func _process(_delta: float) -> void:
+	if _current < _content.length():
+		var text:String = _content.substr(0, _current) # 内容截取
+		_time += _delta
+		
+		if _time > _speed:
+			text += _content[_current]
+			_time = 0
+			_current += 1
+		else:
+			# 设置半透明字体
+			var alpha:float = _time / _speed
+			text += "[color=#ffffff%02X]%s[/color]" % [alpha * 255, _content[_current]]
+		# 文本覆盖
+		_content_lable.text = text
+	else:
+		#归为
+		finish_typing.emit()
+		_content = ""
 
 ## 显示角色姓名的方法
 func set_character_name(name: String) -> void:
