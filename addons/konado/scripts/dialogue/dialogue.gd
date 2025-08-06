@@ -21,17 +21,18 @@ enum Type{
 	Tag, ## 标签
 	JUMP_Tag, ## 跳转到行
 	JUMP, ## 跳转
-	THE_END ## 剧终
+	THE_END, ## 剧终
+	LABEL ## 注释标签
 }
 @export var dialog_type: Type:
 	set(v):
 		dialog_type = v
 		notify_property_list_changed()
 
-# Tag ID，用于标记跳转点		
+#  用于标记跳转点		
 var branch_id: String
 
-# Tag对话内容
+# 对话内容
 var branch_dialogue: Array[Dialogue] = []
 
 # 是否加载完成
@@ -67,8 +68,17 @@ var background_image_name: String
 var background_toggle_effects: ActingInterface.EffectsType
 # 跳转的剧情名称
 var jump_tag: String
-# 成就ID
-var achievement_id: String
+
+## 注释
+var label_notes: String
+
+class Label_Template:
+	@export var label_notes: String = ""
+	static func get_property_infos():
+		var infos = {}
+		for info in (Label_Template as Script).get_script_property_list():
+			infos[info.name] = info
+		return infos
 
 # 自定义显示模板
 class Tag_Template:
@@ -204,6 +214,9 @@ func _get_property_list():
 	if dialog_type == Type.JUMP:
 		var jump_template = Jump_Template.get_property_infos()
 		list.append(jump_template["jump_tag"])
+	if dialog_type == Type.LABEL:
+		var label_template = Label_Template.get_property_infos()
+		list.append(label_template["label_notes"])
 	if dialog_type == Type.THE_END:
 		pass
 	return list
