@@ -1,15 +1,18 @@
 [gd_scene load_steps=3 format=3 uid="uid://c5i8tukmns7cm"]
 
-[ext_resource type="Script" uid="uid://ca88dmkffnhmr" path="res://addons/konado/editor/ui/ui_components/快照.gd" id="1_ew7x0"]
-[ext_resource type="Texture2D" uid="uid://bb7nhjioefh8a" path="res://addons/konado/sample/sample_arts/示例-咖啡馆-背景.png" id="1_sfvs0"]
+[ext_resource type="Script" uid="uid://ca88dmkffnhmr" path="res://addons/konado/editor/ui/ui_components/data_ui_component.gd" id="1_6y5jx"]
+[ext_resource type="Texture2D" uid="uid://bb7nhjioefh8a" path="res://addons/konado/sample/sample_arts/示例-咖啡馆-背景.png" id="2_h725x"]
 
-[node name="Control" type="Control"]
+[node name="data_ui_component" type="Control"]
+editor_description = "数据显示组件"
+custom_minimum_size = Vector2(100, 100)
 layout_mode = 3
-anchor_right = 0.132813
-anchor_bottom = 0.184259
+anchor_top = -0.0180556
+anchor_right = 0.189844
+anchor_bottom = 0.251389
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_ew7x0")
+script = ExtResource("1_6y5jx")
 selected = true
 metadata/_edit_use_anchors_ = true
 
@@ -50,14 +53,15 @@ mouse_filter = 2
 vertical = true
 
 [node name="TextureRect" type="TextureRect" parent="Panel/BoxContainer"]
-custom_minimum_size = Vector2(200, 150)
+custom_minimum_size = Vector2(50, 150)
 layout_mode = 2
 mouse_filter = 2
-texture = ExtResource("1_sfvs0")
+texture = ExtResource("2_h725x")
 expand_mode = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="Panel/BoxContainer"]
 layout_mode = 2
+tooltip_text = "sasd"
 text = "cut_name"
 metadata/_edit_use_anchors_ = true

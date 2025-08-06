@@ -1,10 +1,7 @@
+@tool
 extends Control
 @onready var selected_box: Panel = %selected_box
 
-@export var tip :="": ## 备注信息
-	set(value):
-		tip = value 
-		tooltip_text = tip
 @export var selected:=false :
 	set(value):
 		selected = value
@@ -14,6 +11,11 @@ extends Control
 			else:
 				selected_box.hide()
 
+var tip :="": ## 备注信息
+	set(value):
+		tip = value 
+		tooltip_text = tip
+	
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.is_pressed():
 		selected = !selected
