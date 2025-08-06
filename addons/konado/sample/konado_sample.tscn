@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://bj8ynu8013j4j" path="res://addons/konado/scenes/dialog.tscn" id="1_hpqsc"]
 [ext_resource type="Resource" uid="uid://bjtt4547g54v0" path="res://addons/konado/sample/sample_lists/konado_sample_chara_list.tres" id="2_icnme"]
 [ext_resource type="Resource" uid="uid://dlk03c6v0ju4r" path="res://addons/konado/sample/sample_lists/konado_sample_background_list.tres" id="3_icnme"]
-[ext_resource type="Resource" path="res://addons/konado/sample/sample_lists/dialogue_chapter.tres" id="4_nix8x"]
+[ext_resource type="Resource" uid="uid://cj8f3lckkwmj0" path="res://addons/konado/sample/sample_lists/dialogue_chapter.tres" id="4_nix8x"]
 [ext_resource type="Script" uid="uid://bdcmjrcgc4uvn" path="res://addons/konado/scripts/audio/bgm/bgm.gd" id="8_n1o2k"]
 [ext_resource type="Script" uid="uid://cx11453q1ekqa" path="res://addons/konado/scripts/audio/bgm/bgm_list.gd" id="9_n8pl2"]
 [ext_resource type="Script" uid="uid://uur73dv6qen8" path="res://addons/konado/scripts/audio/voice/voice_list.gd" id="10_vinkj"]
@@ -36,6 +36,7 @@ grow_vertical = 2
 
 [node name="DialogManager" parent="." instance=ExtResource("1_hpqsc")]
 layout_mode = 1
+dialogspeed = 0.15
 chara_list = ExtResource("2_icnme")
 background_list = ExtResource("3_icnme")
 dialogue_chapter = ExtResource("4_nix8x")
