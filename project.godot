@@ -18,8 +18,8 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-KS_SAVE_AND_LOAD="*res://addons/konado/scripts/save_and_load/SaL.gd"
 ComponentFactory="*res://addons/konado/editor/ui/ui_components/component_factory.gd"
+KS_SAVE_AND_LOAD="*res://addons/konado/scripts/save_and_load/SaL.gd"
 
 [display]
 

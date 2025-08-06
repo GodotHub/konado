@@ -143,13 +143,16 @@ func parse_line(line: String, line_number: int, path: String) -> Dialogue:
 
 	line = line.strip_edges()
 	# 空行或注释行，必须提前处理strip_edges
-	if line.is_empty() or line.begins_with("#"):
-		print("解析成功：忽略空行或注释行\n")
+	if line.is_empty():
+		print("解析成功：忽略空行\n")
 		return null
 
 	var dialog := Dialogue.new()
 	dialog.source_file_line = line_number
 	
+	if _parse_label(line, dialog):
+		print("解析成功：注释相关\n")
+		return dialog
 	if _parse_background(line, dialog):
 		print("解析成功：背景切换\n")
 		return dialog
@@ -204,6 +207,16 @@ func _parse_metadata(lines: PackedStringArray, path: String) -> PackedStringArra
 			"shot_id":
 				metadata.append(value)
 	return metadata
+
+# 解析注释
+func _parse_label(line: String, dialog: Dialogue) -> bool:
+	if not line.begins_with("#"):
+		return false
+
+	dialog.dialog_type = Dialogue.Type.LABEL
+	dialog.label_notes = line.replace("#", "")
+
+	return true
 
 # 背景切换解析
 func _parse_background(line: String, dialog: Dialogue) -> bool:
@@ -351,7 +364,7 @@ func _parse_branch(line: String, dialog: Dialogue) -> bool:
 		# 检查缩进
 		if tmp_content_lines[tag_inner_line_number].begins_with("    ") or tmp_content_lines[tag_inner_line_number].begins_with("\t"):
 			tag_inner_line_number += 1
-			if not (inner_line.is_empty() or inner_line.begins_with("#")):
+			if not (inner_line.is_empty()):
 				if (inner_line.begins_with("branch")):
 					_scripts_debug(tmp_path, tag_inner_line_number + 1, "branch内不能嵌套branch")
 					return false
