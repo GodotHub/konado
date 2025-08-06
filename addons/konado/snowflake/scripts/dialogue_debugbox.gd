@@ -32,22 +32,19 @@ var line: int
 @export var margin: MarginContainer
 
 func _ready() -> void:
-    edit_button.pressed.connect(func():
-        on_edit_btn_pressed.emit(line)
-        )
-    play_button.pressed.connect(func():
-        on_play_btn_pressed.emit(index)
-        )
-    pass
+	edit_button.pressed.connect(func():
+		on_edit_btn_pressed.emit(line)
+		)
+	play_button.pressed.connect(func():
+		on_play_btn_pressed.emit(index)
+		)
+	pass
 
 func init_box(index: int, line: int, des: String, source: String) -> void:
-    self.index = index
-    self.line = line
-    self.des_label.text = des
-    self.source_label.text = source
+	self.index = index
+	self.line = line
+	self.des_label.text = des
+	self.source_label.text = source
 
 func set_sub_box() -> void:
-    margin.add_theme_constant_override("margin_left", 20)
-
-
-
+	margin.add_theme_constant_override("margin_left", 20)

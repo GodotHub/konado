@@ -1,0 +1,36 @@
+[gd_scene load_steps=2 format=3 uid="uid://tdgiaaxwqgb2"]
+
+[ext_resource type="PackedScene" uid="uid://djq23ftlfwkn1" path="res://addons/konado/editor/ui/main_editor/dock/dock.tscn" id="1_ae77l"]
+
+[node name="文件管理区" type="Panel"]
+anchors_preset = -1
+anchor_right = 0.388281
+anchor_bottom = 1.00139
+offset_bottom = -6.10352e-05
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+metadata/_edit_use_anchors_ = true
+
+[node name="BoxContainer" type="BoxContainer" parent="."]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+vertical = true
+
+[node name="dock" parent="BoxContainer" instance=ExtResource("1_ae77l")]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="BoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Tree" type="Tree" parent="BoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
