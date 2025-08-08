@@ -88,8 +88,8 @@ var se_id: String
 
 var option_triggered: bool = false
 
-
-
+# 添加节流器，防止快速点击
+var can_continue = true
 
 
 ## 资源列表
@@ -145,9 +145,8 @@ func _ready() -> void:
 						_start_dialogue()
 					else: 
 						print("第一句应该是START，请在脚本中修改")
-						# 暂停引擎
-						get_tree().paused = true
-						# _start_dialogue()
+						
+						_start_dialogue()
 					)
 		else:
 			print("请手动初始化对话")
@@ -235,7 +234,7 @@ func _start_dialogue() -> void:
 	print_rich("[color=yellow]开始对话 [/color]")
 
 
-func _physics_process(delta) -> void:
+func _process(delta) -> void:
 	match dialogueState:
 		# 关闭状态
 		DialogState.OFF:
@@ -281,8 +280,9 @@ func _physics_process(delta) -> void:
 						playvoice = true
 					else:
 						playvoice = false
-					if not _dialog_interface.finish_typing.is_connected(isfinishtyping):
-						_dialog_interface.finish_typing.connect(isfinishtyping.bind(playvoice))
+					if _dialog_interface.finish_typing.is_connected(isfinishtyping):
+						_dialog_interface.finish_typing.disconnect(isfinishtyping)
+					_dialog_interface.finish_typing.connect(isfinishtyping.bind(playvoice))
 					# 显示UI
 					_dialog_interface.show()
 					# 设置角色高亮
@@ -441,6 +441,8 @@ func is_click_valid(event):
 
 ## 处理输入
 func _input(event):
+	if not can_continue:
+		return
 	if _check_opening() == false:
 		_audio_interface.stop_voice()
 		return
@@ -454,12 +456,12 @@ func _input(event):
 		# 			_continue()
 
 		# 先用enter和空格键代替鼠标点击，全屏幕点击功能等后续修复
-		if event is InputEventKey:
-			## 对话继续
-			if event.pressed and event.keycode == KEY_ENTER:
+		if event is InputEventKey and event.pressed:
+			if event.keycode in [KEY_ENTER, KEY_SPACE]:
+				can_continue = false
 				_continue()
-			if event.pressed and event.keycode == KEY_SPACE:
-				_continue()
+				await get_tree().create_timer(0.2).timeout  # 200ms冷却
+				can_continue = true
 		
 ## 打字完成
 func isfinishtyping(wait_voice: bool) -> void:
@@ -482,10 +484,11 @@ func isfinishtyping(wait_voice: bool) -> void:
 	
 ## 自动下一个
 func _process_next(s: Signal = Signal()) -> void:
-	if not s.is_null():
+	if not s.is_null() and s.is_connected(_process_next):
 		s.disconnect(_process_next)
 		print("触发自动下一个信号")
 	_dialogue_goto_state(DialogState.PAUSED)
+	
 	# 暂时先用等待的方法，没找到更好的解决方法
 	await get_tree().create_timer(0.001).timeout
 	print_rich("[color=yellow]点击继续按钮，判断状态[/color]")
