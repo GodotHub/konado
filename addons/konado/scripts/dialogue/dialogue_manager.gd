@@ -145,9 +145,8 @@ func _ready() -> void:
 						_start_dialogue()
 					else: 
 						print("第一句应该是START，请在脚本中修改")
-						# 暂停引擎
-						get_tree().paused = true
-						# _start_dialogue()
+						
+						_start_dialogue()
 					)
 		else:
 			print("请手动初始化对话")
