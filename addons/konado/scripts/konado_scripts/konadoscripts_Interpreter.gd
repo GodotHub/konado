@@ -110,7 +110,7 @@ func process_scripts_to_data(path: String) -> DialogueShot:
 		var dialog: Dialogue = parse_line(line, original_line_number, path)
 		if dialog:
 			# 如果是标签对话，则添加到标签对话字典中
-			if dialog.dialog_type == Dialogue.Type.Tag:
+			if dialog.dialog_type == Dialogue.Type.Branch:
 				diadata.branchs.set(dialog.branch_id, dialog)
 			else:
 				diadata.dialogs.append(dialog)
@@ -352,7 +352,7 @@ func _parse_branch(line: String, dialog: Dialogue) -> bool:
 	if parts.size() < 2:
 		_scripts_debug(tmp_path, tmp_original_line_number, "branch格式错误")
 		return false
-	dialog.dialog_type = Dialogue.Type.Tag
+	dialog.dialog_type = Dialogue.Type.Branch
 	dialog.branch_id = parts[1]
 
 	var tag_inner_line_number = tmp_line_number + 1

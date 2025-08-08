@@ -18,7 +18,7 @@ enum Type{
 	Stop_BGM, ## 停止播放BGM
 	Play_SoundEffect, ## 播放音效
 	Show_Choice, ## 显示选项
-	Tag, ## 标签
+	Branch, ## 标签
 	JUMP_Tag, ## 跳转到行
 	JUMP, ## 跳转
 	THE_END, ## 剧终
@@ -172,7 +172,7 @@ class ITEM_OP_Template:
 
 func _get_property_list():
 	var list = []
-	if dialog_type == Type.Tag:
+	if dialog_type == Type.Branch:
 		var tag_template = Tag_Template.get_property_infos()
 		var tag_dialogue_template = TagDialogue_Template.get_property_infos()
 		list.append(tag_template["branch_id"])
