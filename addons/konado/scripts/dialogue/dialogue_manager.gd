@@ -374,13 +374,13 @@ func _physics_process(delta) -> void:
 					_jump_dialog_data(data_name)
 					pass
 				# 如果是分支对话
-				elif dialog_type == Dialogue.Type.Tag:
+				elif dialog_type == Dialogue.Type.Branch:
 					print_rich("[color=orange]分支对话[/color]")
 					var tag_dialogues: Array[Dialogue] = dialog.branch_dialogue
 					var insert_position = curline + 1
 					for i in range(tag_dialogues.size()):
 						# 检查是否已经存在
-						if tag_dialogues[i].dialog_type == Dialogue.Type.Tag:
+						if tag_dialogues[i].dialog_type == Dialogue.Type.Branch:
 							print_rich("[color=red]标签对话中不能包含标签对话[/color]")
 							continue
 						dialog_data.dialogs.insert(insert_position + i, tag_dialogues[i])
@@ -444,21 +444,28 @@ func _input(event):
 	if _check_opening() == false:
 		_audio_interface.stop_voice()
 		return
+
 	if not debug_mode:
-		if event is InputEventMouseButton:
-			if event.button_index == MOUSE_BUTTON_LEFT:
-				# 全屏点击下一句
-				if is_click_valid(event):
-					_continue()
+		# 这么写是导致一切神奇bug的罪魁祸首，别学我。。。
+		# if event is InputEventMouseButton:
+		# 	if event.button_index == MOUSE_BUTTON_LEFT:
+		# 		# 全屏点击下一句
+		# 		if is_click_valid(event):
+		# 			_continue()
+
+		# 先用enter和空格键代替鼠标点击，全屏幕点击功能等后续修复
 		if event is InputEventKey:
 			## 对话继续
 			if event.pressed and event.keycode == KEY_ENTER:
+				_continue()
+			if event.pressed and event.keycode == KEY_SPACE:
 				_continue()
 		
 ## 打字完成
 func isfinishtyping(wait_voice: bool) -> void:
 	_dialog_interface.finish_typing.disconnect(isfinishtyping)
 	_dialogue_goto_state(DialogState.PAUSED)
+
 	print("触发打字完成信号")
 	# 如果自动播放还要检查配音是否播放完毕
 	if autoplay:
@@ -469,6 +476,8 @@ func isfinishtyping(wait_voice: bool) -> void:
 		else:
 			await get_tree().create_timer(autoplayspeed).timeout
 		_continue()
+
+	
 
 	
 ## 自动下一个
