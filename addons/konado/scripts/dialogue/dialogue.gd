@@ -18,12 +18,13 @@ enum Type{
 	Stop_BGM, ## 停止播放BGM
 	Play_SoundEffect, ## 播放音效
 	Show_Choice, ## 显示选项
-	Branch, ## 标签
+	Branch, ## 分支
 	JUMP_Tag, ## 跳转到行
-	JUMP, ## 跳转
+	JUMP_Shot, ## 跳转
 	THE_END, ## 剧终
 	LABEL ## 注释标签
 }
+
 @export var dialog_type: Type:
 	set(v):
 		dialog_type = v
@@ -36,7 +37,7 @@ var branch_id: String
 var branch_dialogue: Array[Dialogue] = []
 
 # 是否加载完成
-var is_tag_loaded: bool = false
+var is_branch_loaded: bool = false
 
 # 对话人物ID
 var character_id: String
@@ -66,8 +67,9 @@ var soundeffect_name: String
 var background_image_name: String
 # 背景切换特效
 var background_toggle_effects: ActingInterface.EffectsType
-# 跳转的剧情名称
-var jump_tag: String
+
+# 目标跳转的镜头
+var jump_shot_id: String
 
 ## 注释
 var label_notes: String
@@ -147,7 +149,7 @@ class Choice_Template:
 		return infos
 	
 class Jump_Template:
-	@export var jump_data_name: String = ""
+	@export var jump_shot_id: String = ""
 	static func get_property_infos():
 		var infos = {}
 		for info in (Jump_Template as Script).get_script_property_list():
@@ -211,9 +213,9 @@ func _get_property_list():
 	if dialog_type == Type.Show_Choice:
 		var choice_template = Choice_Template.get_property_infos()
 		list.append(choice_template["choices"])
-	if dialog_type == Type.JUMP:
+	if dialog_type == Type.JUMP_Shot:
 		var jump_template = Jump_Template.get_property_infos()
-		list.append(jump_template["jump_tag"])
+		list.append(jump_template["jump_shot_id"])
 	if dialog_type == Type.LABEL:
 		var label_template = Label_Template.get_property_infos()
 		list.append(label_template["label_notes"])

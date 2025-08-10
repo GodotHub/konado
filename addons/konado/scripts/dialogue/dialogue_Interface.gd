@@ -24,6 +24,14 @@ func _ready() -> void:
 	_name_lable.add_theme_stylebox_override("background", StyleBoxEmpty.new())
 	_content_lable.add_theme_stylebox_override("normal", StyleBoxEmpty.new())
 	_content_lable.add_theme_stylebox_override("background", StyleBoxEmpty.new())
+
+
+## 初始化对话框
+func init_dialog_box() -> void:
+	_name_lable.text = ""
+	_content_lable.text = ""
+	distroy_options()
+
 		
 
 ## 修改对话框背景的方法
@@ -115,14 +123,24 @@ func set_character_name(name: String) -> void:
 	_name_lable.text = str(name)
 
 
-## 显示对话选项的方法
-func display_options(choices: Array[DialogueChoice], choices_tex: Texture = null, choices_font_size: int = 22) -> void:
+func distroy_options() -> void:
 	# 隐藏选项容器
 	_choice_container.hide()
 	# 删除原有选项
 	if _choice_container.get_child_count() != 0:
 		for child in _choice_container.get_children():
 			child.queue_free()
+
+## 显示对话选项的方法
+func display_options(choices: Array[DialogueChoice], choices_tex: Texture = null, choices_font_size: int = 22) -> void:
+	# # 隐藏选项容器
+	# _choice_container.hide()
+	# # 删除原有选项
+	# if _choice_container.get_child_count() != 0:
+	# 	for child in _choice_container.get_children():
+	# 		child.queue_free()
+
+	distroy_options()
 	# 生成新选项
 	for choice in choices:
 		var choiceButton := Button.new()
