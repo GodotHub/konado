@@ -177,11 +177,17 @@ func _init_dialogue(callback: Callable = Callable()) -> void:
 		if dialogue_chapter.dialogue_shots.size() <= 0:
 			printerr("对话列表没有对话")
 			return
-
-		dialog_data = dialogue_chapter.dialogue_shots[_dialog_data_id]
+		# 如果对话数据为空，则默认为第一个对话数据
+		if dialog_data == null:
+			if not dialogue_chapter.dialogue_shots.size() <= 0:
+				dialog_data = dialogue_chapter.dialogue_shots[0]
 	
 		# 将角色表传给acting_interface
 		_acting_interface.chara_list = chara_list
+
+	# 初始化各管理器
+	_acting_interface.delete_all_character()
+	_dialog_interface.init_dialog_box()
 
 	justenter = true
 	dialogueState == DialogState.OFF
@@ -368,10 +374,10 @@ func _process(delta) -> void:
 					var se_name = dialog.soundeffect_name
 					_play_soundeffect(se_name)
 					pass
-				# 如果是剧情跳转
-				elif dialog_type == Dialogue.Type.JUMP:
-					var data_name = dialog.jump_data_name
-					_jump_dialog_data(data_name)
+				# 如果是镜头跳转
+				elif dialog_type == Dialogue.Type.JUMP_Shot:
+					var data_name = dialog.jump_shot_id
+					_jump_shot(data_name)
 					pass
 				# 如果是分支对话
 				elif dialog_type == Dialogue.Type.Branch:
@@ -721,34 +727,34 @@ func _jump_tag(tag: String) -> void:
 		目前只能用这种很逆天的两次判断的方法来防止重复添加对话，希望以后能找到更好的方法
 		如果你想尝试解决这个问题请查看该脚本的_input()函数和is_click_valid()函数，但我不确定问题在哪
 	"""
-	if not target_dialogue.is_tag_loaded:
+	if not target_dialogue.is_branch_loaded:
 		# _jump_cur_dialogue(target_dialogue)
 		dialog_data.dialogs.insert(curline + 1, target_dialogue)
 		print("插入标签，对话长度" + str(dialog_data.dialogs.size()))
-		target_dialogue.is_tag_loaded = true
+		target_dialogue.is_branch_loaded = true
 		_jump_curline(curline + 1)
 	# else:
 	# 	print("标签已加载和跳转")
 		
 
 ## 跳转剧情的方法
-func _jump_dialog_data(data_id: String) -> bool:
+func _jump_shot(data_id: String) -> bool:
 	var jumpdata: DialogueShot
 	jumpdata = _get_dialog_data(data_id)
 	if jumpdata == null:
-		print("无法完成跳转，没有这个剧情")
+		print("无法完成跳转，没有这个镜头")
 		return false
 	# 切换剧情
 	_switch_data(jumpdata)
-	print_rich("跳转到：" + str(jumpdata.chapter_name))
+	print_rich("跳转到：" + str(jumpdata.shot_id) + " 镜头")
 	return true
 
 ## 寻找指定剧情
-func _get_dialog_data(data_id: String) -> DialogueShot:
-	print(data_id)
+func _get_dialog_data(shot_id: String) -> DialogueShot:
+	print(shot_id)
 	var target_data: DialogueShot
-	for data in dialogue_chapter.dialogue_chapter:
-		if data.chapter_id == data_id:
+	for data in dialogue_chapter.dialogue_shots:
+		if data.shot_id == shot_id:
 			target_data = data
 	return target_data
 	
@@ -757,7 +763,7 @@ func _switch_data(data: DialogueShot) -> bool:
 	if not data and data.dialogs.size() > 0:
 		return false
 	_stop_dialogue()
-	print("切换到 " + data.chapter_name + " 剧情文件")
+	print("切换到 " + data.shot_id + " 剧情文件")
 	dialog_data = data
 	_init_dialogue()
 	await get_tree().create_timer(0.01).timeout
@@ -932,7 +938,7 @@ func _jump_cur_dialogue(dialog: Dialogue) -> bool:
 
 ## 调试模式跳转到章节
 func debug_jump_data(value: String) -> bool:
-	var error = _jump_dialog_data(value)
+	var error = _jump_shot(value)
 	return error
 	
 ## 调试模式获取信息

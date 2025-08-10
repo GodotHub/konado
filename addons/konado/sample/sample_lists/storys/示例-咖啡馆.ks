@@ -7,7 +7,7 @@ background 咖啡厅背景 blinds
 # play bgm cafe_jazz
 # 角色入场
 actor show 可娜 正常1 at 0 30 scale 0.6 mirror
-actor show 黛西 正常 at 460 11 scale 0.6 mirror
+actor show 黛西 正常 at 460 11 scale 0.6
 
 # 对话开始
 "可娜" "早安，Daisy！今天天气真好呢~"
@@ -43,4 +43,6 @@ actor move 可娜 50 30
 "可娜" "时间过得真快，又到午休时间了"
 actor exit 黛西
 "可娜" "明天见啦Daisy！"
+
+jumpshot 6666
 end

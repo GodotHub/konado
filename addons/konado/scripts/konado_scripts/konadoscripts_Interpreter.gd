@@ -165,8 +165,8 @@ func parse_line(line: String, line_number: int, path: String) -> Dialogue:
 	if _parse_choice(line, dialog): 
 		print("解析成功：选择相关\n")
 		return dialog
-	if _parse_jump(line, dialog):
-		print("解析成功：跳转相关\n")
+	if _parse_jumpshot(line, dialog):
+		print("解析成功：跳转镜头相关\n")
 		return dialog
 	if _parse_dialog(line, dialog):
 		print("解析成功：对话相关\n")
@@ -381,13 +381,13 @@ func _parse_branch(line: String, dialog: Dialogue) -> bool:
 	return true
 
 # 跳转解析
-func _parse_jump(line: String, dialog: Dialogue) -> bool:
+func _parse_jumpshot(line: String, dialog: Dialogue) -> bool:
 	if not line.begins_with("jump"):
 		return false
 	
 	var parts = line.split(" ", false)
-	dialog.dialog_type = Dialogue.Type.JUMP
-	dialog.jump_data_name = parts[1]
+	dialog.dialog_type = Dialogue.Type.JUMP_Shot
+	dialog.jump_shot_id = parts[1]
 	return true
 
 # 对话解析（使用正则表达式优化）

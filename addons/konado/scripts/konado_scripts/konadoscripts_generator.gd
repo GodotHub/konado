@@ -97,8 +97,8 @@ func _generate_dialog_line(dialog: Dialogue) -> String:
                 lines.append("    " + _generate_dialog_line(branch_dialog))
             lines.append("")
             return "\n".join(lines)
-        Dialogue.Type.JUMP:
-            return "jump " + dialog.jump_data_name
+        Dialogue.Type.JUMP_Shot:
+            return "jumpshot" + dialog.jump_data_name
         Dialogue.Type.Ordinary_Dialog:
             var line = '"' + dialog.character_id + '" "' + dialog.dialog_content + '"'
             if dialog.voice_id:
