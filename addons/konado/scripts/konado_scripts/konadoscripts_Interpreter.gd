@@ -14,6 +14,9 @@ class_name KonadoScriptsInterpreter
 
 # Konado脚本解释器
 
+## 是否初始化完成
+var is_init: bool = false
+
 var tmp_path = ""
 # 源脚本行，显示在VSCode中
 var tmp_original_line_number = 0
@@ -36,8 +39,37 @@ var dep_characters: Array[String] = []
 var cur_tmp_option_lines = {}
 var tmp_tags = []
 
-# 全文解析模式
+# ====================== 编译选项 ====================== #
+
+## 是否允许自定义后缀脚本，开启后将不强制要求使用ks作为脚本文件后缀
+var allow_custom_suffix: bool = true
+
+## 是否开启演员验证，开启后将针对所有演员语法进行验证，判断是否存在
+var enable_actor_validation: bool = true
+
+# ====================================================== #
+
+## 初始化解释器
+func init_insterpreter(flags: Dictionary[String, Variant]):
+	if flags.has("allow_custom_suffix"):
+		# 验证类型是否正确
+		if flags["allow_custom_suffix"] is not bool:
+			_scripts_warning(tmp_path, tmp_original_line_number, "allow_custom_suffix选项类型错误，应为bool类型")
+			return
+		allow_custom_suffix = flags["allow_custom_suffix"] as bool
+	if flags.has("enable_actor_validation"):
+		if flags["enable_actor_validation"] is not bool:
+			_scripts_warning(tmp_path, tmp_original_line_number, "enable_actor_validation选项类型错误，应为bool类型")
+			return
+		enable_actor_validation = flags["enable_actor_validation"] as bool
+	
+	is_init = true
+
+## 全文解析模式
 func process_scripts_to_data(path: String) -> DialogueShot:
+	if not is_init:
+		_scripts_debug(path, 0, "解释器未初始化，无法解析脚本文件")
+		return
 	if not path:
 		_scripts_debug(path, 0, "路径为空，无法打开脚本文件")
 		return null
@@ -47,8 +79,11 @@ func process_scripts_to_data(path: String) -> DialogueShot:
 		return null
 
 	if not path.ends_with(".ks"):
-		_scripts_debug(path, 0, "文件后缀不正确，无法打开脚本文件")
-		return null
+		if allow_custom_suffix:
+			_scripts_warning(path, 0, "建议使用使用ks作为脚本文件后缀")
+		else:
+			_scripts_debug(path, 0, "编译器要求使用ks作为脚本文件后缀，如果需要使用自定义后缀，请开启allow_custom_suffix选项")
+			return null
 
 	tmp_path = path
 
@@ -78,12 +113,6 @@ func process_scripts_to_data(path: String) -> DialogueShot:
 	if not metadata_result:
 		_scripts_debug(path, 0, "元数据解析失败")
 		return diadata
-	
-	# diadata.chapter_id = metadata_result[0]
-	# diadata.chapter_name = metadata_result[1]
-	# diadata.chapter_lang = metadata_result[2]
-	# diadata.chapter_author = metadata_result[3]
-	# diadata.chapter_desc = metadata_result[4]
 
 	diadata.shot_id = metadata_result[0]
 
@@ -95,7 +124,6 @@ func process_scripts_to_data(path: String) -> DialogueShot:
 
 	# 只保留内容行
 	var content_lines = lines.slice(1)
-	# var content_lines = lines
 
 	tmp_content_lines = content_lines
 
@@ -182,7 +210,7 @@ func parse_line(line: String, line_number: int, path: String) -> Dialogue:
 		return dialog
 
 	dialog = null
-	_scripts_tip(path, line_number, "解析失败：无法识别的语法，请检查语法是否正确或删除该行: %s" % line)
+	_scripts_warning(path, line_number, "解析失败：无法识别的语法，请检查语法是否正确或删除该行: %s" % line)
 	print("\n")
 	return null
 
@@ -256,28 +284,32 @@ func _parse_actor(line: String, dialog: Dialogue) -> bool:
 			var actor = _create_actor(parts)
 			if actor: 
 				dialog.show_actor = actor
-				# 添加检查功能
-				if not cur_tmp_actors.has(actor.character_name):
-					cur_tmp_actors.append(actor.character_name)
 				if not dep_characters.has(actor.character_name):
 					dep_characters.append(actor.character_name)
-				else:
-					_scripts_debug(tmp_path, tmp_original_line_number, "角色已存在，请检查角色名称是否重复创建")
+				# 添加检查功能
+				if enable_actor_validation:
+					if not cur_tmp_actors.has(actor.character_name):
+						cur_tmp_actors.append(actor.character_name)
+					else:
+						_scripts_debug(tmp_path, tmp_original_line_number, "角色已存在，请检查角色名称是否重复创建")
+						return false
 		"exit":
 			dialog.dialog_type = Dialogue.Type.Exit_Actor
 			dialog.exit_actor = parts[2]
 			# 添加检查功能
-			if cur_tmp_actors.has(parts[2]):
-				cur_tmp_actors.erase(parts[2])
-			else:
-				_scripts_debug(tmp_path, tmp_original_line_number, "无法移除不存在的角色，请检查角色名称是否正确")
+			if enable_actor_validation:
+				if cur_tmp_actors.has(parts[2]):
+					cur_tmp_actors.erase(parts[2])
+				else:
+					_scripts_debug(tmp_path, tmp_original_line_number, "无法移除不存在的角色，请检查角色名称是否正确")
 		"change":
 			dialog.dialog_type = Dialogue.Type.Actor_Change_State
 			dialog.change_state_actor = parts[2]
 
 			# 添加检查功能
-			if not cur_tmp_actors.has(parts[2]):
-				_scripts_debug(tmp_path, tmp_original_line_number, "无法改变不存在的角色的状态，请检查角色名称是否正确")
+			if enable_actor_validation:
+				if not cur_tmp_actors.has(parts[2]):
+					_scripts_debug(tmp_path, tmp_original_line_number, "无法改变不存在的角色的状态，请检查角色名称是否正确")
 				
 			dialog.change_state = parts[3]
 		"move":
@@ -285,8 +317,9 @@ func _parse_actor(line: String, dialog: Dialogue) -> bool:
 			dialog.target_move_chara = parts[2]
 
 			# 添加检查功能
-			if not cur_tmp_actors.has(parts[2]):
-				_scripts_debug(tmp_path, tmp_original_line_number, "无法移动不存在的角色的位置，请检查角色名称是否正确")
+			if enable_actor_validation:
+				if not cur_tmp_actors.has(parts[2]):
+					_scripts_debug(tmp_path, tmp_original_line_number, "无法移动不存在的角色的位置，请检查角色名称是否正确")
 
 			dialog.target_move_pos = Vector2(parts[3].to_float(), parts[4].to_float())
 	
@@ -445,7 +478,7 @@ func _scripts_debug(path: String, line: int, error_info: String):
 
 
 # 警告提示
-func _scripts_tip(path: String, line: int, warning_info: String):
+func _scripts_warning(path: String, line: int, warning_info: String):
 	push_warning("警告：%s [行：%d] %s " % [path, line, warning_info])
 
 # 信息提示
