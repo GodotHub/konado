@@ -14,6 +14,9 @@ class_name KonadoScriptsInterpreter
 
 # Konado脚本解释器
 
+## 是否初始化完成
+var is_init: bool = false
+
 var tmp_path = ""
 # 源脚本行，显示在VSCode中
 var tmp_original_line_number = 0
@@ -46,8 +49,27 @@ var enable_actor_validation: bool = true
 
 # ====================================================== #
 
-# 全文解析模式
+## 初始化解释器
+func init_insterpreter(flags: Dictionary[String, Variant]):
+	if flags.has("allow_custom_suffix"):
+		# 验证类型是否正确
+		if flags["allow_custom_suffix"] is not bool:
+			_scripts_warning(tmp_path, tmp_original_line_number, "allow_custom_suffix选项类型错误，应为bool类型")
+			return
+		allow_custom_suffix = flags["allow_custom_suffix"] as bool
+	if flags.has("enable_actor_validation"):
+		if flags["enable_actor_validation"] is not bool:
+			_scripts_warning(tmp_path, tmp_original_line_number, "enable_actor_validation选项类型错误，应为bool类型")
+			return
+		enable_actor_validation = flags["enable_actor_validation"] as bool
+	
+	is_init = true
+
+## 全文解析模式
 func process_scripts_to_data(path: String) -> DialogueShot:
+	if not is_init:
+		_scripts_debug(path, 0, "解释器未初始化，无法解析脚本文件")
+		return
 	if not path:
 		_scripts_debug(path, 0, "路径为空，无法打开脚本文件")
 		return null
