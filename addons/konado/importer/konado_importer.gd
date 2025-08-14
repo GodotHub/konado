@@ -36,6 +36,12 @@ func _get_option_visibility(path, option_name, options):
 
 func _import(source_file, save_path, options, platform_variants, gen_files):
 	var interpreter = KonadoScriptsInterpreter.new()
+
+	interpreter.init_insterpreter({
+		"allow_custom_suffix": true,
+		"enable_actor_validation": true
+	})
+	
 	var diadata = interpreter.process_scripts_to_data(source_file)
 	if diadata == null:
 		printerr("Failed to process scripts")

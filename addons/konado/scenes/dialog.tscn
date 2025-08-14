@@ -6,7 +6,7 @@
 [ext_resource type="Shader" uid="uid://dxr17ie00ux36" path="res://addons/konado/shader/Transition/BlindsEffect.gdshader" id="3_utfb4"]
 [ext_resource type="Script" uid="uid://5d4l66ex5dy" path="res://addons/konado/scripts/save_and_load/SaL_UI.gd" id="4_566op"]
 [ext_resource type="Script" uid="uid://cfbojxb1pdbrs" path="res://addons/konado/scripts/audio/audio_interface.gd" id="4_gd2ll"]
-[ext_resource type="Texture2D" uid="uid://bb7nhjioefh8a" path="res://addons/konado/sample/sample_arts/示例-咖啡馆-背景.png" id="4_qodmk"]
+[ext_resource type="Texture2D" uid="uid://bb7nhjioefh8a" path="res://sample/sample_arts/示例-咖啡馆-背景.png" id="4_qodmk"]
 [ext_resource type="Script" uid="uid://cbf7mvlofpiix" path="res://addons/konado/scripts/items/item_interface.gd" id="4_utfb4"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_e5o0s"]
