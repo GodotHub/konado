@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://0go33s82b24j"
-path="res://.godot/imported/D.png-133e7d88f3c7edd444f5cccfa0d0808a.ctex"
+path="res://.godot/imported/D.png-0abed990a60dc3e9757a12f72e07d237.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/konado/sample/sample_arts/D.png"
-dest_files=["res://.godot/imported/D.png-133e7d88f3c7edd444f5cccfa0d0808a.ctex"]
+source_file="res://sample/sample_arts/D.png"
+dest_files=["res://.godot/imported/D.png-0abed990a60dc3e9757a12f72e07d237.ctex"]
 
 [params]
 
