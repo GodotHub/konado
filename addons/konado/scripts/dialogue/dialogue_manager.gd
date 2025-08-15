@@ -292,7 +292,7 @@ func _process(delta) -> void:
 						}
 						datas["name"] = chara_id
 						datas["content"] = content
-						DialogReview._dialog_set(curline,datas["name"],datas["content"])
+						KS_DIA_REVIEW._dialog_set(curline,datas["name"],datas["content"])
 					
 					var speed = dialogspeed
 					var playvoice
@@ -728,7 +728,7 @@ func on_option_triggered(choice: DialogueChoice) -> void:
 	_jump_tag(choice.jump_tag)
 	
 	#为对话回顾提供的文本
-	DialogReview.find_choosen(str(choice.choice_text))
+	KS_DIA_REVIEW.find_choosen(str(choice.choice_text))
 	
 
 	

@@ -18,6 +18,7 @@ var konado_editor_instance: KonadoEditorWindow = null
 const DIALOGUE_DATA_SCRIPT := preload("res://addons/konado/scripts/dialogue/dialogue_shot.gd")
 const IMPORTER_SCRIPT := preload("res://addons/konado/importer/konado_importer.gd")
 const SAVE_AND_LOAD := "res://addons/konado/scripts/save_and_load/SaL.gd"
+const DialogueReview := "res://addons/konado/scripts/dialogue/dialog_review.gd"
 const Component_Factory = "res://addons/konado/editor/ui/ui_components/component_factory.gd"
 
 ## 插件成员
@@ -33,6 +34,7 @@ func _enter_tree() -> void:
 	# 添加自动加载单例
 	add_autoload_singleton("KS_SAVE_AND_LOAD",SAVE_AND_LOAD)
 	add_autoload_singleton("ComponentFactory",Component_Factory)
+	add_autoload_singleton("KS_DIA_REVIEW",DialogueReview)
 	
 	# 注册自定义资源类型
 	add_custom_type("DialogueData", "Resource", DIALOGUE_DATA_SCRIPT, null)
@@ -106,5 +108,6 @@ func _exit_tree() -> void:
 
 	# 清理自动加载和自定义类型
 	remove_autoload_singleton("KS_SAVE_AND_LOAD")
+	remove_autoload_singleton("KS_DIA_REVIEW")
 	remove_custom_type("DialogueData")
 	print("Konado unloaded")
