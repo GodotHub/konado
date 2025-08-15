@@ -161,9 +161,15 @@ func display_options(choices: Array[DialogueChoice], choices_tex: Texture = null
 				await get_tree().create_timer(0.001).timeout
 				print_rich("[color=green]选项被触发: [/color]"+str(choice))
 				_dialog_manager.on_option_triggered(choice)
-				choiceButton.set_disabled(true))
+				choiceButton.set_disabled(true)
+				)
 		# 添加到选项容器
 		_choice_container.add_child(choiceButton)
 		print_rich("[color=cyan]生成选项按钮: [/color]"+str(choiceButton))
 	# 显示选项容器
 	_choice_container.show()
+	
+	#为对话回顾提供的数据
+	var curline : int = _dialog_manager.curline
+	var options : Array[DialogueChoice] = choices
+	DialogReview._option_set(curline,choices)
