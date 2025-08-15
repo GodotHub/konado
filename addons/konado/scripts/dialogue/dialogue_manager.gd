@@ -59,6 +59,8 @@ var dialogueState: DialogState
 @onready var _audio_interface: DialogAudioInterface = $AudioInterface
 #存档UI界面接口
 @onready var _SaL_UI: SaL_UI = $DialogUI/SaLUI
+#回顾界面UI接口
+@onready var _review_UI := $"DialogUI/DialogReview"
 
 ## 对话的交互按钮，比如存档按钮，读档按钮，继续按钮
 ## 存档按钮
@@ -122,6 +124,7 @@ func _ready() -> void:
 	# Auto
 	if not _autoPlayButton.toggled.is_connected(start_autoplay):
 		_autoPlayButton.toggled.connect(start_autoplay)
+
 
 	# 为了适应Snowflake编辑器，在编辑器中不自动初始化对话，防止直接在编辑器场景自动播放
 	# 这个tool特性设计真的非常难蚌...
@@ -280,6 +283,17 @@ func _process(delta) -> void:
 						content = dialog.dialog_content
 					if dialog.voice_id:
 						voice_id = dialog.voice_id
+					
+					##以下：对话回顾用数据
+					if (dialog.character_id != null) and (dialog.dialog_content != null) :
+						var datas : Dictionary = {
+							"name" : "name",
+							"content" : "content"
+						}
+						datas["name"] = chara_id
+						datas["content"] = content
+						DialogReview._dialog_set(curline,datas["name"],datas["content"])
+					
 					var speed = dialogspeed
 					var playvoice
 					if voice_id:
@@ -709,9 +723,14 @@ func _display_options(choices: Array[DialogueChoice]) -> void:
 func on_option_triggered(choice: DialogueChoice) -> void:
 	_dialogue_goto_state(DialogState.PAUSED)
 	_dialog_interface._choice_container.hide()
-
+	
 	print("玩家选择按钮： " + str(choice.choice_text))
 	_jump_tag(choice.jump_tag)
+	
+	#为对话回顾提供的文本
+	DialogReview.find_choosen(str(choice.choice_text))
+	
+
 	
 ## 跳转到对话标签的方法
 ## TODO：应该需要性能优化
