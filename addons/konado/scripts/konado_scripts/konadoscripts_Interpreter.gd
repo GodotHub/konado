@@ -131,7 +131,7 @@ func process_scripts_to_data(path: String) -> DialogueShot:
 	for i in content_lines.size():
 		tmp_line_number = i
 		var line = content_lines[i]
-		var original_line_number =  i + 1
+		var original_line_number =  i + 2
 		print("解析第%d行" % original_line_number)
 		print("第%d行内容：" % original_line_number, line)
 		tmp_original_line_number = original_line_number
@@ -173,6 +173,9 @@ func parse_line(line: String, line_number: int, path: String) -> Dialogue:
 	# 空行或注释行，必须提前处理strip_edges
 	if line.is_empty():
 		print("解析成功：忽略空行\n")
+		return null
+	if line.begins_with("##"):
+		print("解析成功：忽略特殊注释行\n")
 		return null
 
 	var dialog := Dialogue.new()
