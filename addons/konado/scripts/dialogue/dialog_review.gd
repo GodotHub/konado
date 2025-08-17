@@ -51,7 +51,7 @@ func _vbox_container():
 
 #设置对话组，从DialogueManager获取数据
 func _dialog_set(dialog_id : int , name : String , content : String):
-	if get_node("./IDS") and get_node("./IDS/IDV"):
+	if get_node("./IDS") or get_node("./IDS/IDV"):
 		pass
 	else:
 		_masklayer()
@@ -213,3 +213,7 @@ func _check_visible() -> bool:
 		return true
 	else :
 		return false
+
+func remove_records():
+	for child in get_node("./IDS/IDV").get_children():
+		child.queue_free()
