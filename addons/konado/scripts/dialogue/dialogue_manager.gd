@@ -59,8 +59,8 @@ var dialogueState: DialogState
 @onready var _audio_interface: DialogAudioInterface = $AudioInterface
 #存档UI界面接口
 @onready var _SaL_UI: SaL_UI = $DialogUI/SaLUI
-#回顾界面UI接口
-@onready var _review_UI := $"DialogUI/DialogReview"
+##回顾界面UI接口
+#@onready var _review_UI := $"DialogUI/DialogReview"
 
 ## 对话的交互按钮，比如存档按钮，读档按钮，继续按钮
 ## 存档按钮
@@ -76,6 +76,9 @@ var dialogueState: DialogState
 @onready var _autoPlayButton: Button = $"DialogUI/DialogueInterface/DialogueBox/MarginContainer/DialogContent/ActionsContainer/自动"
 ## 选项容器（用于实现点击事件屏蔽）
 @onready var _choicesContainer: VBoxContainer = $DialogUI/DialogueInterface/ChoicesBox/ChoicesContainer
+## 回顾按钮
+@onready var _reviewButton : Button = $"DialogUI/DialogueInterface/DialogueBox/MarginContainer/DialogContent/ActionsContainer/回顾"
+
 
 	
 ## 对话资源
@@ -124,7 +127,9 @@ func _ready() -> void:
 	# Auto
 	if not _autoPlayButton.toggled.is_connected(start_autoplay):
 		_autoPlayButton.toggled.connect(start_autoplay)
-
+	# Review
+	if not _reviewButton.pressed.is_connected(_on_reviewbutton_press):
+		_reviewButton.pressed.connect(_on_reviewbutton_press)
 
 	# 为了适应Snowflake编辑器，在编辑器中不自动初始化对话，防止直接在编辑器场景自动播放
 	# 这个tool特性设计真的非常难蚌...
@@ -818,6 +823,10 @@ func _get_file_data(slot_id: int):
 func _on_loadbutton_press():
 	_SaL_UI.check_UI(2) # 打开UI，输入读档格式
 	pass
+
+## 按下回顾按钮
+func _on_reviewbutton_press():
+	KS_DIA_REVIEW.change_visible()
 
 func _load_file_data(slot_id: int):
 	#用于获取变量
