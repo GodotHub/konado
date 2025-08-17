@@ -2,6 +2,18 @@ extends Control
 
 var choices_ID : int
 
+func _masklayer():
+	var masklayer : ColorRect = ColorRect.new()
+	
+	masklayer.name = "IDMS"
+	masklayer.size_flags_horizontal = Control.SIZE_EXPAND_FILL#使其填满上级容器
+	masklayer.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	masklayer.custom_minimum_size.x = DisplayServer.window_get_size().x#将大小设置为当前屏幕大小
+	masklayer.custom_minimum_size.y = DisplayServer.window_get_size().y - 60#留出按钮
+	masklayer.color = Color.GRAY
+	
+	get_node(".").add_child(masklayer)
+
 #滚动容器相关
 func _scroll_container():
 	
@@ -19,7 +31,8 @@ func _scroll_container():
 		get_node(".").add_child(scroll_container)
 		print("IDS:ScrollContainer 已创建")#创建节点
 	else:
-			printerr("父节点已丢失，进程已停止")#报错
+		_masklayer()
+		#printerr("父节点已丢失，进程已停止")#报错
 
 #二级vbox相关
 func _vbox_container():
@@ -41,6 +54,7 @@ func _dialog_set(dialog_id : int , name : String , content : String):
 	if get_node("./IDS") and get_node("./IDS/IDV"):
 		pass
 	else:
+		_masklayer()
 		_scroll_container()
 		_vbox_container()#如果上级容器不存在就新建
 	
@@ -182,3 +196,20 @@ func find_choosen(text : String):
 	
 	choosen_node_route.add_theme_color_override("font_color" , Color.BLACK)
 	#调黑
+
+func change_visible():
+	var ui : Node = get_node(".")
+	ui.custom_minimum_size.y = DisplayServer.window_get_size().y - 60
+	if _check_visible() == true :
+		ui.z_index = 100
+		ui.visible = true
+	else :
+		ui.z_index = 0
+		ui.visible = false
+
+func _check_visible() -> bool:
+	var ui : Node = get_node(".")
+	if ui.z_index != 100 :
+		return true
+	else :
+		return false
