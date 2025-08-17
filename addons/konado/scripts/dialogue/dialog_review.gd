@@ -10,7 +10,7 @@ func _masklayer():
 	masklayer.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	masklayer.custom_minimum_size.x = DisplayServer.window_get_size().x#将大小设置为当前屏幕大小
 	masklayer.custom_minimum_size.y = DisplayServer.window_get_size().y - 60#留出按钮
-	masklayer.color = Color.GRAY
+	masklayer.color = Color.BLACK
 	
 	get_node(".").add_child(masklayer)
 
@@ -194,7 +194,7 @@ func find_choosen(text : String):
 	var choosen_node_route : Label = get_node(choosen_routes)
 	#寻找选项
 	
-	choosen_node_route.add_theme_color_override("font_color" , Color.BLACK)
+	choosen_node_route.add_theme_color_override("font_color" , Color.YELLOW)
 	#调黑
 
 func change_visible():
