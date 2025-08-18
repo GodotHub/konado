@@ -13,6 +13,7 @@ func _masklayer():
 	masklayer.color = Color.BLACK
 	
 	get_node(".").add_child(masklayer)
+	print("背景图层已创建")
 
 #滚动容器相关
 func _scroll_container():
@@ -32,7 +33,6 @@ func _scroll_container():
 		print("IDS:ScrollContainer 已创建")#创建节点
 	else:
 		_masklayer()
-		#printerr("父节点已丢失，进程已停止")#报错
 
 #二级vbox相关
 func _vbox_container():
@@ -51,9 +51,9 @@ func _vbox_container():
 
 #设置对话组，从DialogueManager获取数据
 func _dialog_set(dialog_id : int , name : String , content : String):
-	if get_node("./IDS") or get_node("./IDS/IDV"):
+	if get_node(".").get_child_count() > 0 :
 		pass
-	else:
+	else :
 		_masklayer()
 		_scroll_container()
 		_vbox_container()#如果上级容器不存在就新建
@@ -80,15 +80,12 @@ func _dialog_set(dialog_id : int , name : String , content : String):
 	dialog_set_vboxcontainer.name = dialog_set_v1_id
 	dialog_set_vboxcontainer.size_flags_horizontal = Control.SIZE_EXPAND_FILL#命名并更改尺寸
 	
-	## 这部分和之后所有的-1+1，是因为在已有子级节点的情况下，add_child会报错，需要用add_siblings；
-	## 但是curline并不是每一行都是对话，所以时有报错。
-	## TODO：可以优化，但这部分我不是很熟。
-	if get_node("./IDS/IDV/ID" + str(dialog_id - 1) + "_1"):
+	if get_node("./IDS/IDV").get_child_count() > 0:
 		if not get_node("./IDS/IDV"):
 			printerr("父节点IDV丢失，进程已停止")
 			return
 		else:
-			get_node("./IDS/IDV/ID" + str(dialog_id - 1) + "_1").add_sibling(dialog_set_vboxcontainer)
+			get_node("./IDS/IDV").get_child(0).add_sibling(dialog_set_vboxcontainer)
 			if get_node(v1_route):
 				print(dialog_set_v1_id + "：VboxContainer 已创建" )#创建一级vbox
 	else :
@@ -197,7 +194,7 @@ func find_choosen(text : String):
 	choosen_node_route.add_theme_color_override("font_color" , Color.YELLOW)
 	#调黑
 
-func change_visible():
+func change_visible():#修改可见性
 	var ui : Node = get_node(".")
 	ui.custom_minimum_size.y = DisplayServer.window_get_size().y - 60
 	if _check_visible() == true :
@@ -207,13 +204,13 @@ func change_visible():
 		ui.z_index = 0
 		ui.visible = false
 
-func _check_visible() -> bool:
+func _check_visible() -> bool:#检查可见性
 	var ui : Node = get_node(".")
 	if ui.z_index != 100 :
 		return true
 	else :
 		return false
 
-func remove_records():
+func remove_records():#移除所有记录
 	for child in get_node("./IDS/IDV").get_children():
 		child.queue_free()
