@@ -148,7 +148,8 @@ func _ready() -> void:
 			else:
 				_init_dialogue(func():
 					print("自动开始对话")
-					await get_tree().create_timer(0.1).timeout
+					#await get_tree().create_timer(0.1).timeout
+					await get_tree().process_frame
 					if dialog_data.dialogs[0].dialog_type == Dialogue.Type.START:
 						_start_dialogue()
 					else: 
@@ -409,12 +410,13 @@ func _process(delta) -> void:
 							print_rich("[color=red]标签对话中不能包含标签对话[/color]")
 							continue
 						dialog_data.dialogs.insert(insert_position + i, tag_dialogues[i])
-					await get_tree().create_timer(0.001).timeout
+					#await get_tree().create_timer(0.001).timeout
+					await get_tree().process_frame
 					
 					print("添加了 %d 个标签对话" % tag_dialogues.size())
 					print("当前对话总数: " + str(dialog_data.dialogs.size()))
 
-					await get_tree().create_timer(0.01).timeout
+					#await get_tree().create_timer(0.01).timeout
 					_process_next()
 					pass
 				# 跳过注释
@@ -485,7 +487,8 @@ func _input(event):
 			if event.keycode in [KEY_ENTER, KEY_SPACE]:
 				can_continue = false
 				_continue()
-				await get_tree().create_timer(0.2).timeout  # 200ms冷却
+				#await get_tree().create_timer(0.2).timeout  # 200ms冷却
+				await get_tree().process_frame
 				can_continue = true
 		
 ## 打字完成
@@ -515,7 +518,8 @@ func _process_next(s: Signal = Signal()) -> void:
 	_dialogue_goto_state(DialogState.PAUSED)
 	
 	# 暂时先用等待的方法，没找到更好的解决方法
-	await get_tree().create_timer(0.001).timeout
+	#await get_tree().create_timer(0.001).timeout
+	await get_tree().process_frame
 	print_rich("[color=yellow]点击继续按钮，判断状态[/color]")
 	match dialogueState:
 		DialogState.OFF:
@@ -790,7 +794,8 @@ func _switch_data(data: DialogueShot) -> bool:
 	print("切换到 " + data.shot_id + " 剧情文件")
 	dialog_data = data
 	_init_dialogue()
-	await get_tree().create_timer(0.01).timeout
+	#await get_tree().create_timer(0.01).timeout
+	await get_tree().process_frame
 	_start_dialogue()
 	return true
 	
@@ -924,21 +929,25 @@ func _jump_curline(value: int) -> bool:
 						_display_character(actor)
 						# 创建定时器，不加这个给我来千手观音是吧
 						# Godot没有同步真的很难蚌
-						await get_tree().create_timer(0.01).timeout
+						# 抱歉，我找到了（
+						#await get_tree().create_timer(0.01).timeout
+						await get_tree().process_frame
 						pass
 					# 如果修改演员状态
 					if dialog_type == Dialogue.Type.Actor_Change_State:
 						var actor = dialog.change_state_actor
 						var target_state = dialog.change_state
 						_actor_change_state(actor, target_state)
-						await get_tree().create_timer(0.01).timeout
+						#await get_tree().create_timer(0.01).timeout
+						await get_tree().process_frame
 						pass
 					# 如果是移动演员
 					if dialog_type == Dialogue.Type.Move_Actor:
 						var actor = dialog.target_move_chara
 						var pos = dialog.target_move_pos
 						_acting_interface.move_actor(actor, pos)
-						await get_tree().create_timer(0.01).timeout
+						#await get_tree().create_timer(0.01).timeout
+						await get_tree().process_frame
 						pass
 					# 如果是删除演员
 					if dialog_type == Dialogue.Type.Exit_Actor:
@@ -946,7 +955,8 @@ func _jump_curline(value: int) -> bool:
 						var actor = dialog.exit_actor
 						_exit_actor(actor)
 
-						await get_tree().create_timer(0.01).timeout
+						#await get_tree().create_timer(0.01).timeout
+						await get_tree().process_frame
 						pass
 			_dialogue_goto_state(DialogState.OFF)
 			curline = value
