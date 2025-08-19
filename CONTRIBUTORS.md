@@ -14,11 +14,9 @@
 
 ## 贡献者
 
-
 - [麻卤可乐丝](https://gitcode.com/marukles) - 为本项目提供看板娘立绘、示例人物美术资源和海报
 - [moluopro](https://gitcode.com/moluopro) - 文档和官网维护者，初代看板娘设计者
-- [lgyxj](https://gitee.com/lgyxj) - 为本项目提供shader支持
-
+- [lgyxj](https://gitee.com/lgyxj) - 为本项目提供初代背景转场shader支持
 
 ## 翻译
 
