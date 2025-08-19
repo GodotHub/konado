@@ -17,6 +17,8 @@ signal finish_typing
 ## 完成创建选项的信号
 signal finish_display_options
 
+@onready var _review_UI := $"../DialogReview"
+
 func _ready() -> void:
 	# 如果在编辑器模式下
 	
@@ -171,5 +173,5 @@ func display_options(choices: Array[DialogueChoice], choices_tex: Texture = null
 	
 	#为对话回顾提供的数据
 	var curline : int = _dialog_manager.curline
-	var options : Array[DialogueChoice] = choices
-	KS_DIA_REVIEW._option_set(curline,choices)
+	var options:Array=choices
+	_review_UI._option_set(curline,choices)

@@ -26,7 +26,7 @@ func _scroll_container():
 	scroll_container.custom_minimum_size.x = DisplayServer.window_get_size().x#将大小设置为当前屏幕大小
 	scroll_container.custom_minimum_size.y = DisplayServer.window_get_size().y - 60#留出按钮空间
 	scroll_container.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED#调整手柄可见性
-	scroll_container.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_SHOW_ALWAYS
+	scroll_container.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_AUTO
 	
 	if get_node("."):#判定父节点是否存在
 		get_node(".").add_child(scroll_container)
@@ -39,6 +39,7 @@ func _vbox_container():
 	var vbox_container : VBoxContainer = VBoxContainer.new()#新建节点
 	
 	vbox_container.name = "IDV"#命名，滚动容器内的vbox，同样唯一
+	vbox_container.custom_minimum_size.y = 720
 	vbox_container.size_flags_horizontal = Control.SIZE_EXPAND_FILL #使其填满
 	vbox_container.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	if not get_node("./IDS"):#若父节点返空则报错
@@ -85,7 +86,7 @@ func _dialog_set(dialog_id : int , name : String , content : String):
 			printerr("父节点IDV丢失，进程已停止")
 			return
 		else:
-			get_node("./IDS/IDV").get_child(0).add_sibling(dialog_set_vboxcontainer)
+			get_node("./IDS/IDV").get_child(-1).add_sibling(dialog_set_vboxcontainer)
 			if get_node(v1_route):
 				print(dialog_set_v1_id + "：VboxContainer 已创建" )#创建一级vbox
 	else :

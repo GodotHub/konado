@@ -60,7 +60,7 @@ var dialogueState: DialogState
 #存档UI界面接口
 @onready var _SaL_UI: SaL_UI = $DialogUI/SaLUI
 ##回顾界面UI接口
-#@onready var _review_UI := $"DialogUI/DialogReview"
+@onready var _review_UI := $"DialogUI/DialogReview"
 
 ## 对话的交互按钮，比如存档按钮，读档按钮，继续按钮
 ## 存档按钮
@@ -297,7 +297,7 @@ func _process(delta) -> void:
 						}
 						datas["name"] = chara_id
 						datas["content"] = content
-						KS_DIA_REVIEW._dialog_set(curline,datas["name"],datas["content"])
+						_review_UI._dialog_set(curline,datas["name"],datas["content"])
 					
 					var speed = dialogspeed
 					var playvoice
@@ -733,7 +733,7 @@ func on_option_triggered(choice: DialogueChoice) -> void:
 	_jump_tag(choice.jump_tag)
 	
 	#为对话回顾提供的文本
-	KS_DIA_REVIEW.find_choosen(str(choice.choice_text))
+	_review_UI.find_choosen(str(choice.choice_text))
 	
 
 	
@@ -826,7 +826,7 @@ func _on_loadbutton_press():
 
 ## 按下回顾按钮
 func _on_reviewbutton_press():
-	KS_DIA_REVIEW.change_visible()
+	_review_UI.change_visible()
 
 func _load_file_data(slot_id: int):
 	#用于获取变量

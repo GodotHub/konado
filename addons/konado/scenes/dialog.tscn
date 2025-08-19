@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=3 uid="uid://bj8ynu8013j4j"]
+[gd_scene load_steps=62 format=3 uid="uid://bj8ynu8013j4j"]
 
 [ext_resource type="Script" uid="uid://dpo124xwpder5" path="res://addons/konado/scripts/dialogue/dialogue_manager.gd" id="1_buo3n"]
 [ext_resource type="Script" uid="uid://cyoedi0x84dxy" path="res://addons/konado/scripts/act/acting_Interface.gd" id="2_pq6sw"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://cfbojxb1pdbrs" path="res://addons/konado/scripts/audio/audio_interface.gd" id="4_gd2ll"]
 [ext_resource type="Texture2D" uid="uid://bb7nhjioefh8a" path="res://sample/sample_arts/示例-咖啡馆-背景.png" id="4_qodmk"]
 [ext_resource type="Script" uid="uid://cbf7mvlofpiix" path="res://addons/konado/scripts/items/item_interface.gd" id="4_utfb4"]
+[ext_resource type="PackedScene" uid="uid://dahbi42p77rwu" path="res://addons/konado/scenes/dialog_review.tscn" id="8_qodmk"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_e5o0s"]
 
@@ -959,6 +960,10 @@ offset_right = 466.0
 offset_bottom = 97.0
 theme_override_styles/normal = SubResource("StyleBoxFlat_sxvt2")
 text = "关闭"
+
+[node name="DialogReview" parent="DialogUI" instance=ExtResource("8_qodmk")]
+visible = false
+layout_mode = 2
 
 [node name="AudioInterface" type="Node2D" parent="."]
 visible = false
