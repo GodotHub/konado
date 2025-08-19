@@ -42,7 +42,7 @@ var tmp_tags = []
 # ====================== 编译选项 ====================== #
 
 ## 是否允许自定义后缀脚本，开启后将不强制要求使用ks作为脚本文件后缀
-var allow_custom_suffix: bool = true
+var allow_custom_suffix: bool = false
 
 ## 是否开启演员验证，开启后将针对所有演员语法进行验证，判断是否存在
 var enable_actor_validation: bool = true
@@ -50,20 +50,33 @@ var enable_actor_validation: bool = true
 # ====================================================== #
 
 ## 初始化解释器
-func init_insterpreter(flags: Dictionary[String, Variant]):
+func init_insterpreter(flags: Dictionary[String, Variant]) -> bool:
+	is_init = false
 	if flags.has("allow_custom_suffix"):
 		# 验证类型是否正确
 		if flags["allow_custom_suffix"] is not bool:
 			_scripts_warning(tmp_path, tmp_original_line_number, "allow_custom_suffix选项类型错误，应为bool类型")
-			return
-		allow_custom_suffix = flags["allow_custom_suffix"] as bool
+			return false
+		else:
+			allow_custom_suffix = flags["allow_custom_suffix"] as bool
 	if flags.has("enable_actor_validation"):
 		if flags["enable_actor_validation"] is not bool:
 			_scripts_warning(tmp_path, tmp_original_line_number, "enable_actor_validation选项类型错误，应为bool类型")
-			return
-		enable_actor_validation = flags["enable_actor_validation"] as bool
+			return false
+		else:
+			enable_actor_validation = flags["enable_actor_validation"] as bool
+		
+	# 提前初始化正则表达式，避免重复编译
+	dialogue_content_regex = RegEx.new()
+	dialogue_content_regex.compile("^\"(.*?)\"\\s+\"(.*?)\"(?:\\s+(\\S+))?$")
+
+	dialogue_metadata_regex = RegEx.new()
+	dialogue_metadata_regex.compile("^(shot_id)\\s+(\\S+)")
 	
+	print("解释器初始化完成" + " " + "flags: " + str(flags))
 	is_init = true
+	return true
+	
 
 ## 全文解析模式
 func process_scripts_to_data(path: String) -> DialogueShot:
@@ -96,12 +109,12 @@ func process_scripts_to_data(path: String) -> DialogueShot:
 	file.close()
 
 	
-	# 提前初始化正则表达式，避免重复编译
-	dialogue_content_regex = RegEx.new()
-	dialogue_content_regex.compile("^\"(.*?)\"\\s+\"(.*?)\"(?:\\s+(\\S+))?$")
-
-	dialogue_metadata_regex = RegEx.new()
-	dialogue_metadata_regex.compile("^(shot_id)\\s+(\\S+)")
+	## 提前初始化正则表达式，避免重复编译
+	#dialogue_content_regex = RegEx.new()
+	#dialogue_content_regex.compile("^\"(.*?)\"\\s+\"(.*?)\"(?:\\s+(\\S+))?$")
+#
+	#dialogue_metadata_regex = RegEx.new()
+	#dialogue_metadata_regex.compile("^(shot_id)\\s+(\\S+)")
 	
 	_scripts_info(path, 0, "开始解析脚本文件")
 
@@ -337,7 +350,7 @@ func _create_actor(parts: PackedStringArray) -> DialogueActor:
 	actor.character_name = parts[2]
 	actor.character_state = parts[3]
 	actor.actor_position = Vector2(parts[5].to_float(), parts[6].to_float())
-	actor.actor_scale = parts[8].to_float()
+	actor.actor_scale = parts[7].to_float()
 	if parts.size() == 10:
 		if parts[9] == "mirror":
 			actor.actor_mirror = true
