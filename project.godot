@@ -33,7 +33,7 @@ project/assembly_name="KonadoEditor"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/konado/plugin.cfg")
+enabled=PackedStringArray("res://addons/gut/plugin.cfg", "res://addons/konado/plugin.cfg")
 
 [gui]
 
