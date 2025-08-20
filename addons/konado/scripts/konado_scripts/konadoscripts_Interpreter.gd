@@ -437,23 +437,31 @@ func _parse_branch(line: String, dialog: Dialogue) -> bool:
 	dialog.branch_id = parts[1]
 
 	var tag_inner_line_number = tmp_line_number + 1
+	var expected_indent = "    "  # 预期的缩进（4个空格或制表符）
 
 	# 遍历标签内的行(缩进)
 	while tag_inner_line_number < tmp_content_lines.size():
-		var inner_line = tmp_content_lines[tag_inner_line_number].strip_edges()
-
-		# 检查缩进
-		if tmp_content_lines[tag_inner_line_number].begins_with("    ") or tmp_content_lines[tag_inner_line_number].begins_with("\t"):
+		var original_line = tmp_content_lines[tag_inner_line_number]
+		var inner_line = original_line.strip_edges()
+		
+		# 检查是否为空行或只有空白字符的行
+		if inner_line.is_empty():
 			tag_inner_line_number += 1
-			if not (inner_line.is_empty()):
-				if (inner_line.begins_with("branch")):
-					_scripts_debug(tmp_path, tag_inner_line_number + 1, "branch内不能嵌套branch")
-					return false
-				var inner_dialog = parse_line(inner_line, tag_inner_line_number + 1, tmp_path)
-				dialog.branch_dialogue.append(inner_dialog)
-				pass
-		else:
-			break
+			continue  # 跳过空行但继续处理后续内容
+		
+		# 检查缩进，允许4个空格或制表符
+		if not (original_line.begins_with("    ") or original_line.begins_with("\t")):
+			break  # 没有缩进，结束分支内容
+		
+		tag_inner_line_number += 1
+		
+		if inner_line.begins_with("branch"):
+			_scripts_debug(tmp_path, tag_inner_line_number, "branch内不能嵌套branch")
+			return false
+		
+		var inner_dialog = parse_line(inner_line, tag_inner_line_number, tmp_path)
+		if inner_dialog:
+			dialog.branch_dialogue.append(inner_dialog)
 
 	tmp_tags.append(dialog.branch_id)
 
