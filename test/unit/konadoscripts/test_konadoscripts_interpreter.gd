@@ -1,3 +1,14 @@
+################################################################################
+# Project: Konado
+# File: test_konadoscripts_interpreter.gd
+# Author: DSOE1024
+# Created: 2025-08-20
+# Last Modified: 2025-08-20
+# Description:
+#    Konado脚本解释器单元测试脚本，基于GutTest框架
+#    应该在每次更新解释器代码后运行此脚本以验证其正确性
+################################################################################
+
 extends GutTest
 
 var interpreter: KonadoScriptsInterpreter
