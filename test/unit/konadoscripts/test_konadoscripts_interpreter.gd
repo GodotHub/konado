@@ -1,3 +1,14 @@
+################################################################################
+# Project: Konado
+# File: test_konadoscripts_interpreter.gd
+# Author: DSOE1024
+# Created: 2025-08-20
+# Last Modified: 2025-08-20
+# Description:
+#    Konado脚本解释器单元测试脚本，基于GutTest框架
+#    应该在每次更新解释器代码后运行此脚本以验证其正确性
+################################################################################
+
 extends GutTest
 
 var interpreter: KonadoScriptsInterpreter
@@ -123,7 +134,7 @@ func test_parse_dialog():
 
 func test_parse_choice():
 	# 测试解析选项行
-	var line = 'choice "Option 1" tag1 "Option 2" tag2'
+	var line = 'choice "Option 1" tag1 "Option2" tag2'
 	var dialog = Dialogue.new()
 
 	var result = interpreter._parse_choice(line, dialog)
@@ -132,6 +143,8 @@ func test_parse_choice():
 	assert_eq(dialog.choices.size(), 2, "应该有两个选项")
 	assert_eq(dialog.choices[0].choice_text, "Option 1", "第一个选项文本应该匹配")
 	assert_eq(dialog.choices[0].jump_tag, "tag1", "第一个选项跳转标签应该匹配")
+	assert_eq(dialog.choices[1].choice_text, "Option2", "第二个选项文本应该匹配")
+	assert_eq(dialog.choices[1].jump_tag, "tag2", "第二个选项跳转标签应该匹配")
 
 
 func test_parse_branch():
@@ -182,37 +195,18 @@ func test_parse_line_with_unknown_syntax():
 
 	var result = interpreter.parse_line(line, 1, "test_path")
 	assert_null(result, "未知语法应该返回 null")
-	# 这里应该检查警告是否被触发
 
 
-# 集成测试 - 测试完整脚本处理
+# 集成测试，测试完整脚本处理
 func test_process_complete_script():
-	# 创建测试脚本文件
-	var script_content = """
-shot_id test_shot
-# 这是一个注释
-actor show chara1 normal 0 100 200 1.0
-"npc" "Hello, world!" voice_001
-choice "Option 1" tag1 "Option 2" tag2
-branch tag1
-	"npc" "You chose option 1"
-jump next_shot
-"""
-
-	var temp_file = "user://test_script.ks"
-	var file = FileAccess.open(temp_file, FileAccess.WRITE)
-	file.store_string(script_content)
-	file.close()
+	var temp_file = "res://test/unit/konadoscripts/test_shot.ks"
 
 	# 初始化解释器
 	interpreter.init_insterpreter({})
 
 	# 处理脚本
-	var result = interpreter.process_scripts_to_data(temp_file)
+	var result: DialogueShot = interpreter.process_scripts_to_data(temp_file)
 	assert_not_null(result, "应该成功处理脚本")
 	assert_eq(result.shot_id, "test_shot", "shot_id 应该匹配")
-	assert_eq(result.dialogs.size(), 4, "应该有4个对话")  # actor, dialog, choice, jump
-	assert_eq(result.branchs.size(), 1, "应该有一个分支")
-
-	# 清理
-	DirAccess.remove_absolute(temp_file)
+	assert_eq(result.dialogs.size(), 5, "应该有5个对话")
+	assert_eq(result.branchs.size(), 2, "应该有两个分支")
