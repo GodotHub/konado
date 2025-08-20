@@ -237,9 +237,9 @@ func _on_resolution_check_box_toggled(value) -> void:
 	pass
 ## 窗口居中显示
 func centre_the_window() -> void:
-	var Centre_Screen = DisplayServer.screen_get_position() + DisplayServer.screen_get_size()/2
-	var Window_Size = get_window().get_size_with_decorations()
-	get_window().set_position(Centre_Screen-Window_Size/2)
+	var center_screen = DisplayServer.screen_get_position() + DisplayServer.screen_get_size()/2
+	var window_size = get_window().get_size_with_decorations()
+	get_window().set_position(center_screen - window_size/2)
 
 ## 设置分辨率文字
 func _set_resolution_text() -> void:
