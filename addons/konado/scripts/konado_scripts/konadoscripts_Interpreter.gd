@@ -14,6 +14,9 @@ class_name KonadoScriptsInterpreter
 
 # Konado脚本解释器
 
+## 是否初始化完成
+var is_init: bool = false
+
 var tmp_path = ""
 # 源脚本行，显示在VSCode中
 var tmp_original_line_number = 0
@@ -36,8 +39,50 @@ var dep_characters: Array[String] = []
 var cur_tmp_option_lines = {}
 var tmp_tags = []
 
-# 全文解析模式
+# ====================== 编译选项 ====================== #
+
+## 是否允许自定义后缀脚本，开启后将不强制要求使用ks作为脚本文件后缀
+var allow_custom_suffix: bool = false
+
+## 是否开启演员验证，开启后将针对所有演员语法进行验证，判断是否存在
+var enable_actor_validation: bool = true
+
+# ====================================================== #
+
+## 初始化解释器
+func init_insterpreter(flags: Dictionary[String, Variant]) -> bool:
+	is_init = false
+	if flags.has("allow_custom_suffix"):
+		# 验证类型是否正确
+		if flags["allow_custom_suffix"] is not bool:
+			_scripts_warning(tmp_path, tmp_original_line_number, "allow_custom_suffix选项类型错误，应为bool类型")
+			return false
+		else:
+			allow_custom_suffix = flags["allow_custom_suffix"] as bool
+	if flags.has("enable_actor_validation"):
+		if flags["enable_actor_validation"] is not bool:
+			_scripts_warning(tmp_path, tmp_original_line_number, "enable_actor_validation选项类型错误，应为bool类型")
+			return false
+		else:
+			enable_actor_validation = flags["enable_actor_validation"] as bool
+		
+	# 提前初始化正则表达式，避免重复编译
+	dialogue_content_regex = RegEx.new()
+	dialogue_content_regex.compile("^\"(.*?)\"\\s+\"(.*?)\"(?:\\s+(\\S+))?$")
+
+	dialogue_metadata_regex = RegEx.new()
+	dialogue_metadata_regex.compile("^(shot_id)\\s+(\\S+)")
+	
+	print("解释器初始化完成" + " " + "flags: " + str(flags))
+	is_init = true
+	return true
+	
+
+## 全文解析模式
 func process_scripts_to_data(path: String) -> DialogueShot:
+	if not is_init:
+		_scripts_debug(path, 0, "解释器未初始化，无法解析脚本文件")
+		return
 	if not path:
 		_scripts_debug(path, 0, "路径为空，无法打开脚本文件")
 		return null
@@ -47,8 +92,11 @@ func process_scripts_to_data(path: String) -> DialogueShot:
 		return null
 
 	if not path.ends_with(".ks"):
-		_scripts_debug(path, 0, "文件后缀不正确，无法打开脚本文件")
-		return null
+		if allow_custom_suffix:
+			_scripts_warning(path, 0, "建议使用使用ks作为脚本文件后缀")
+		else:
+			_scripts_debug(path, 0, "编译器要求使用ks作为脚本文件后缀，如果需要使用自定义后缀，请开启allow_custom_suffix选项")
+			return null
 
 	tmp_path = path
 
@@ -61,12 +109,12 @@ func process_scripts_to_data(path: String) -> DialogueShot:
 	file.close()
 
 	
-	# 提前初始化正则表达式，避免重复编译
-	dialogue_content_regex = RegEx.new()
-	dialogue_content_regex.compile("^\"(.*?)\"\\s+\"(.*?)\"(?:\\s+(\\S+))?$")
-
-	dialogue_metadata_regex = RegEx.new()
-	dialogue_metadata_regex.compile("^(shot_id)\\s+(\\S+)")
+	## 提前初始化正则表达式，避免重复编译
+	#dialogue_content_regex = RegEx.new()
+	#dialogue_content_regex.compile("^\"(.*?)\"\\s+\"(.*?)\"(?:\\s+(\\S+))?$")
+#
+	#dialogue_metadata_regex = RegEx.new()
+	#dialogue_metadata_regex.compile("^(shot_id)\\s+(\\S+)")
 	
 	_scripts_info(path, 0, "开始解析脚本文件")
 
@@ -78,12 +126,6 @@ func process_scripts_to_data(path: String) -> DialogueShot:
 	if not metadata_result:
 		_scripts_debug(path, 0, "元数据解析失败")
 		return diadata
-	
-	# diadata.chapter_id = metadata_result[0]
-	# diadata.chapter_name = metadata_result[1]
-	# diadata.chapter_lang = metadata_result[2]
-	# diadata.chapter_author = metadata_result[3]
-	# diadata.chapter_desc = metadata_result[4]
 
 	diadata.shot_id = metadata_result[0]
 
@@ -95,7 +137,6 @@ func process_scripts_to_data(path: String) -> DialogueShot:
 
 	# 只保留内容行
 	var content_lines = lines.slice(1)
-	# var content_lines = lines
 
 	tmp_content_lines = content_lines
 
@@ -103,14 +144,14 @@ func process_scripts_to_data(path: String) -> DialogueShot:
 	for i in content_lines.size():
 		tmp_line_number = i
 		var line = content_lines[i]
-		var original_line_number =  i + 1
+		var original_line_number =  i + 2
 		print("解析第%d行" % original_line_number)
 		print("第%d行内容：" % original_line_number, line)
 		tmp_original_line_number = original_line_number
 		var dialog: Dialogue = parse_line(line, original_line_number, path)
 		if dialog:
 			# 如果是标签对话，则添加到标签对话字典中
-			if dialog.dialog_type == Dialogue.Type.Tag:
+			if dialog.dialog_type == Dialogue.Type.Branch:
 				diadata.branchs.set(dialog.branch_id, dialog)
 			else:
 				diadata.dialogs.append(dialog)
@@ -143,13 +184,19 @@ func parse_line(line: String, line_number: int, path: String) -> Dialogue:
 
 	line = line.strip_edges()
 	# 空行或注释行，必须提前处理strip_edges
-	if line.is_empty() or line.begins_with("#"):
-		print("解析成功：忽略空行或注释行\n")
+	if line.is_empty():
+		print("解析成功：忽略空行\n")
+		return null
+	if line.begins_with("##"):
+		print("解析成功：忽略特殊注释行\n")
 		return null
 
 	var dialog := Dialogue.new()
 	dialog.source_file_line = line_number
 	
+	if _parse_label(line, dialog):
+		print("解析成功：注释相关\n")
+		return dialog
 	if _parse_background(line, dialog):
 		print("解析成功：背景切换\n")
 		return dialog
@@ -162,8 +209,8 @@ func parse_line(line: String, line_number: int, path: String) -> Dialogue:
 	if _parse_choice(line, dialog): 
 		print("解析成功：选择相关\n")
 		return dialog
-	if _parse_jump(line, dialog):
-		print("解析成功：跳转相关\n")
+	if _parse_jumpshot(line, dialog):
+		print("解析成功：跳转镜头相关\n")
 		return dialog
 	if _parse_dialog(line, dialog):
 		print("解析成功：对话相关\n")
@@ -179,7 +226,7 @@ func parse_line(line: String, line_number: int, path: String) -> Dialogue:
 		return dialog
 
 	dialog = null
-	_scripts_tip(path, line_number, "解析失败：无法识别的语法，请检查语法是否正确或删除该行: %s" % line)
+	_scripts_warning(path, line_number, "解析失败：无法识别的语法，请检查语法是否正确或删除该行: %s" % line)
 	print("\n")
 	return null
 
@@ -204,6 +251,16 @@ func _parse_metadata(lines: PackedStringArray, path: String) -> PackedStringArra
 			"shot_id":
 				metadata.append(value)
 	return metadata
+
+# 解析注释
+func _parse_label(line: String, dialog: Dialogue) -> bool:
+	if not line.begins_with("#"):
+		return false
+
+	dialog.dialog_type = Dialogue.Type.LABEL
+	dialog.label_notes = line.replace("#", "")
+
+	return true
 
 # 背景切换解析
 func _parse_background(line: String, dialog: Dialogue) -> bool:
@@ -243,28 +300,32 @@ func _parse_actor(line: String, dialog: Dialogue) -> bool:
 			var actor = _create_actor(parts)
 			if actor: 
 				dialog.show_actor = actor
-				# 添加检查功能
-				if not cur_tmp_actors.has(actor.character_name):
-					cur_tmp_actors.append(actor.character_name)
 				if not dep_characters.has(actor.character_name):
 					dep_characters.append(actor.character_name)
-				else:
-					_scripts_debug(tmp_path, tmp_original_line_number, "角色已存在，请检查角色名称是否重复创建")
+				# 添加检查功能
+				if enable_actor_validation:
+					if not cur_tmp_actors.has(actor.character_name):
+						cur_tmp_actors.append(actor.character_name)
+					else:
+						_scripts_debug(tmp_path, tmp_original_line_number, "角色已存在，请检查角色名称是否重复创建")
+						return false
 		"exit":
 			dialog.dialog_type = Dialogue.Type.Exit_Actor
 			dialog.exit_actor = parts[2]
 			# 添加检查功能
-			if cur_tmp_actors.has(parts[2]):
-				cur_tmp_actors.erase(parts[2])
-			else:
-				_scripts_debug(tmp_path, tmp_original_line_number, "无法移除不存在的角色，请检查角色名称是否正确")
+			if enable_actor_validation:
+				if cur_tmp_actors.has(parts[2]):
+					cur_tmp_actors.erase(parts[2])
+				else:
+					_scripts_debug(tmp_path, tmp_original_line_number, "无法移除不存在的角色，请检查角色名称是否正确")
 		"change":
 			dialog.dialog_type = Dialogue.Type.Actor_Change_State
 			dialog.change_state_actor = parts[2]
 
 			# 添加检查功能
-			if not cur_tmp_actors.has(parts[2]):
-				_scripts_debug(tmp_path, tmp_original_line_number, "无法改变不存在的角色的状态，请检查角色名称是否正确")
+			if enable_actor_validation:
+				if not cur_tmp_actors.has(parts[2]):
+					_scripts_debug(tmp_path, tmp_original_line_number, "无法改变不存在的角色的状态，请检查角色名称是否正确")
 				
 			dialog.change_state = parts[3]
 		"move":
@@ -272,8 +333,9 @@ func _parse_actor(line: String, dialog: Dialogue) -> bool:
 			dialog.target_move_chara = parts[2]
 
 			# 添加检查功能
-			if not cur_tmp_actors.has(parts[2]):
-				_scripts_debug(tmp_path, tmp_original_line_number, "无法移动不存在的角色的位置，请检查角色名称是否正确")
+			if enable_actor_validation:
+				if not cur_tmp_actors.has(parts[2]):
+					_scripts_debug(tmp_path, tmp_original_line_number, "无法移动不存在的角色的位置，请检查角色名称是否正确")
 
 			dialog.target_move_pos = Vector2(parts[3].to_float(), parts[4].to_float())
 	
@@ -288,7 +350,7 @@ func _create_actor(parts: PackedStringArray) -> DialogueActor:
 	actor.character_name = parts[2]
 	actor.character_state = parts[3]
 	actor.actor_position = Vector2(parts[5].to_float(), parts[6].to_float())
-	actor.actor_scale = parts[8].to_float()
+	actor.actor_scale = parts[7].to_float()
 	if parts.size() == 10:
 		if parts[9] == "mirror":
 			actor.actor_mirror = true
@@ -339,7 +401,7 @@ func _parse_branch(line: String, dialog: Dialogue) -> bool:
 	if parts.size() < 2:
 		_scripts_debug(tmp_path, tmp_original_line_number, "branch格式错误")
 		return false
-	dialog.dialog_type = Dialogue.Type.Tag
+	dialog.dialog_type = Dialogue.Type.Branch
 	dialog.branch_id = parts[1]
 
 	var tag_inner_line_number = tmp_line_number + 1
@@ -351,7 +413,7 @@ func _parse_branch(line: String, dialog: Dialogue) -> bool:
 		# 检查缩进
 		if tmp_content_lines[tag_inner_line_number].begins_with("    ") or tmp_content_lines[tag_inner_line_number].begins_with("\t"):
 			tag_inner_line_number += 1
-			if not (inner_line.is_empty() or inner_line.begins_with("#")):
+			if not (inner_line.is_empty()):
 				if (inner_line.begins_with("branch")):
 					_scripts_debug(tmp_path, tag_inner_line_number + 1, "branch内不能嵌套branch")
 					return false
@@ -368,13 +430,13 @@ func _parse_branch(line: String, dialog: Dialogue) -> bool:
 	return true
 
 # 跳转解析
-func _parse_jump(line: String, dialog: Dialogue) -> bool:
+func _parse_jumpshot(line: String, dialog: Dialogue) -> bool:
 	if not line.begins_with("jump"):
 		return false
 	
 	var parts = line.split(" ", false)
-	dialog.dialog_type = Dialogue.Type.JUMP
-	dialog.jump_data_name = parts[1]
+	dialog.dialog_type = Dialogue.Type.JUMP_Shot
+	dialog.jump_shot_id = parts[1]
 	return true
 
 # 对话解析（使用正则表达式优化）
@@ -432,7 +494,7 @@ func _scripts_debug(path: String, line: int, error_info: String):
 
 
 # 警告提示
-func _scripts_tip(path: String, line: int, warning_info: String):
+func _scripts_warning(path: String, line: int, warning_info: String):
 	push_warning("警告：%s [行：%d] %s " % [path, line, warning_info])
 
 # 信息提示

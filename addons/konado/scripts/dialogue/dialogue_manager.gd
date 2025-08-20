@@ -59,6 +59,8 @@ var dialogueState: DialogState
 @onready var _audio_interface: DialogAudioInterface = $AudioInterface
 #存档UI界面接口
 @onready var _SaL_UI: SaL_UI = $DialogUI/SaLUI
+##回顾界面UI接口
+@onready var _review_UI := $"DialogUI/DialogReview"
 
 ## 对话的交互按钮，比如存档按钮，读档按钮，继续按钮
 ## 存档按钮
@@ -74,6 +76,9 @@ var dialogueState: DialogState
 @onready var _autoPlayButton: Button = $"DialogUI/DialogueInterface/DialogueBox/MarginContainer/DialogContent/ActionsContainer/自动"
 ## 选项容器（用于实现点击事件屏蔽）
 @onready var _choicesContainer: VBoxContainer = $DialogUI/DialogueInterface/ChoicesBox/ChoicesContainer
+## 回顾按钮
+@onready var _reviewButton : Button = $"DialogUI/DialogueInterface/DialogueBox/MarginContainer/DialogContent/ActionsContainer/回顾"
+
 
 ## 对话资源
 var dialog_data: DialogueShot = null
@@ -87,8 +92,8 @@ var se_id: String
 
 var option_triggered: bool = false
 
-
-
+# 添加节流器，防止快速点击
+var can_continue = true
 
 
 ## 资源列表
@@ -121,6 +126,9 @@ func _ready() -> void:
 	# Auto
 	if not _autoPlayButton.toggled.is_connected(start_autoplay):
 		_autoPlayButton.toggled.connect(start_autoplay)
+	# Review
+	if not _reviewButton.pressed.is_connected(_on_reviewbutton_press):
+		_reviewButton.pressed.connect(_on_reviewbutton_press)
 
 	# 为了适应Snowflake编辑器，在编辑器中不自动初始化对话，防止直接在编辑器场景自动播放
 	# 这个tool特性设计真的非常难蚌...
@@ -139,14 +147,14 @@ func _ready() -> void:
 			else:
 				_init_dialogue(func():
 					print("自动开始对话")
-					await get_tree().create_timer(0.1).timeout
+					#await get_tree().create_timer(0.1).timeout
+					await get_tree().process_frame
 					if dialog_data.dialogs[0].dialog_type == Dialogue.Type.START:
 						_start_dialogue()
 					else: 
 						print("第一句应该是START，请在脚本中修改")
-						# 暂停引擎
-						get_tree().paused = true
-						# _start_dialogue()
+						
+						_start_dialogue()
 					)
 		else:
 			print("请手动初始化对话")
@@ -177,11 +185,17 @@ func _init_dialogue(callback: Callable = Callable()) -> void:
 		if dialogue_chapter.dialogue_shots.size() <= 0:
 			printerr("对话列表没有对话")
 			return
-
-		dialog_data = dialogue_chapter.dialogue_shots[_dialog_data_id]
+		# 如果对话数据为空，则默认为第一个对话数据
+		if dialog_data == null:
+			if not dialogue_chapter.dialogue_shots.size() <= 0:
+				dialog_data = dialogue_chapter.dialogue_shots[0]
 	
 		# 将角色表传给acting_interface
 		_acting_interface.chara_list = chara_list
+
+	# 初始化各管理器
+	_acting_interface.delete_all_character()
+	_dialog_interface.init_dialog_box()
 
 	justenter = true
 	dialogueState == DialogState.OFF
@@ -234,7 +248,7 @@ func _start_dialogue() -> void:
 	print_rich("[color=yellow]开始对话 [/color]")
 
 
-func _physics_process(delta) -> void:
+func _process(delta) -> void:
 	match dialogueState:
 		# 关闭状态
 		DialogState.OFF:
@@ -274,14 +288,26 @@ func _physics_process(delta) -> void:
 						content = dialog.dialog_content
 					if dialog.voice_id:
 						voice_id = dialog.voice_id
+					
+					##以下：对话回顾用数据
+					if (dialog.character_id != null) and (dialog.dialog_content != null) :
+						var datas : Dictionary = {
+							"name" : "name",
+							"content" : "content"
+						}
+						datas["name"] = chara_id
+						datas["content"] = content
+						_review_UI._dialog_set(curline,datas["name"],datas["content"])
+					
 					var speed = dialogspeed
 					var playvoice
 					if voice_id:
 						playvoice = true
 					else:
 						playvoice = false
-					if not _dialog_interface.finish_typing.is_connected(isfinishtyping):
-						_dialog_interface.finish_typing.connect(isfinishtyping.bind(playvoice))
+					if _dialog_interface.finish_typing.is_connected(isfinishtyping):
+						_dialog_interface.finish_typing.disconnect(isfinishtyping)
+					_dialog_interface.finish_typing.connect(isfinishtyping.bind(playvoice))
 					# 显示UI
 					_dialog_interface.show()
 					# 设置角色高亮
@@ -367,28 +393,35 @@ func _physics_process(delta) -> void:
 					var se_name = dialog.soundeffect_name
 					_play_soundeffect(se_name)
 					pass
-				# 如果是剧情跳转
-				elif dialog_type == Dialogue.Type.JUMP:
-					var data_name = dialog.jump_data_name
-					_jump_dialog_data(data_name)
+				# 如果是镜头跳转
+				elif dialog_type == Dialogue.Type.JUMP_Shot:
+					var data_name = dialog.jump_shot_id
+					_jump_shot(data_name)
 					pass
 				# 如果是分支对话
-				elif dialog_type == Dialogue.Type.Tag:
+				elif dialog_type == Dialogue.Type.Branch:
 					print_rich("[color=orange]分支对话[/color]")
 					var tag_dialogues: Array[Dialogue] = dialog.branch_dialogue
 					var insert_position = curline + 1
 					for i in range(tag_dialogues.size()):
 						# 检查是否已经存在
-						if tag_dialogues[i].dialog_type == Dialogue.Type.Tag:
+						if tag_dialogues[i].dialog_type == Dialogue.Type.Branch:
 							print_rich("[color=red]标签对话中不能包含标签对话[/color]")
 							continue
 						dialog_data.dialogs.insert(insert_position + i, tag_dialogues[i])
-					await get_tree().create_timer(0.001).timeout
+					#await get_tree().create_timer(0.001).timeout
+					await get_tree().process_frame
 					
 					print("添加了 %d 个标签对话" % tag_dialogues.size())
 					print("当前对话总数: " + str(dialog_data.dialogs.size()))
 
-					await get_tree().create_timer(0.01).timeout
+					#await get_tree().create_timer(0.01).timeout
+					_process_next()
+					pass
+				# 跳过注释
+				elif dialog_type == Dialogue.Type.LABEL:
+					if Engine.is_editor_hint():
+						print("注释：" + dialog.label_notes)
 					_process_next()
 					pass
 				# 如果开始对话
@@ -434,24 +467,34 @@ func is_click_valid(event):
 
 ## 处理输入
 func _input(event):
+	if not can_continue:
+		return
 	if _check_opening() == false:
 		_audio_interface.stop_voice()
 		return
+
 	if not debug_mode:
-		if event is InputEventMouseButton:
-			if event.button_index == MOUSE_BUTTON_LEFT:
-				# 全屏点击下一句
-				if is_click_valid(event):
-					_continue()
-		if event is InputEventKey:
-			## 对话继续
-			if event.pressed and event.keycode == KEY_ENTER:
+		# 这么写是导致一切神奇bug的罪魁祸首，别学我。。。
+		# if event is InputEventMouseButton:
+		# 	if event.button_index == MOUSE_BUTTON_LEFT:
+		# 		# 全屏点击下一句
+		# 		if is_click_valid(event):
+		# 			_continue()
+
+		# 先用enter和空格键代替鼠标点击，全屏幕点击功能等后续修复
+		if event is InputEventKey and event.pressed:
+			if event.keycode in [KEY_ENTER, KEY_SPACE]:
+				can_continue = false
 				_continue()
+				#await get_tree().create_timer(0.2).timeout  # 200ms冷却
+				await get_tree().process_frame
+				can_continue = true
 		
 ## 打字完成
 func isfinishtyping(wait_voice: bool) -> void:
 	_dialog_interface.finish_typing.disconnect(isfinishtyping)
 	_dialogue_goto_state(DialogState.PAUSED)
+
 	print("触发打字完成信号")
 	# 如果自动播放还要检查配音是否播放完毕
 	if autoplay:
@@ -464,14 +507,18 @@ func isfinishtyping(wait_voice: bool) -> void:
 		_continue()
 
 	
+
+	
 ## 自动下一个
 func _process_next(s: Signal = Signal()) -> void:
-	if not s.is_null():
+	if not s.is_null() and s.is_connected(_process_next):
 		s.disconnect(_process_next)
 		print("触发自动下一个信号")
 	_dialogue_goto_state(DialogState.PAUSED)
+	
 	# 暂时先用等待的方法，没找到更好的解决方法
-	await get_tree().create_timer(0.001).timeout
+	#await get_tree().create_timer(0.001).timeout
+	await get_tree().process_frame
 	print_rich("[color=yellow]点击继续按钮，判断状态[/color]")
 	match dialogueState:
 		DialogState.OFF:
@@ -684,9 +731,14 @@ func _display_options(choices: Array[DialogueChoice]) -> void:
 func on_option_triggered(choice: DialogueChoice) -> void:
 	_dialogue_goto_state(DialogState.PAUSED)
 	_dialog_interface._choice_container.hide()
-
+	
 	print("玩家选择按钮： " + str(choice.choice_text))
 	_jump_tag(choice.jump_tag)
+	
+	#为对话回顾提供的文本
+	_review_UI.find_choosen(str(choice.choice_text))
+	
+
 	
 ## 跳转到对话标签的方法
 ## TODO：应该需要性能优化
@@ -702,34 +754,34 @@ func _jump_tag(tag: String) -> void:
 		目前只能用这种很逆天的两次判断的方法来防止重复添加对话，希望以后能找到更好的方法
 		如果你想尝试解决这个问题请查看该脚本的_input()函数和is_click_valid()函数，但我不确定问题在哪
 	"""
-	if not target_dialogue.is_tag_loaded:
+	if not target_dialogue.is_branch_loaded:
 		# _jump_cur_dialogue(target_dialogue)
 		dialog_data.dialogs.insert(curline + 1, target_dialogue)
 		print("插入标签，对话长度" + str(dialog_data.dialogs.size()))
-		target_dialogue.is_tag_loaded = true
+		target_dialogue.is_branch_loaded = true
 		_jump_curline(curline + 1)
 	# else:
 	# 	print("标签已加载和跳转")
 		
 
 ## 跳转剧情的方法
-func _jump_dialog_data(data_id: String) -> bool:
+func _jump_shot(data_id: String) -> bool:
 	var jumpdata: DialogueShot
 	jumpdata = _get_dialog_data(data_id)
 	if jumpdata == null:
-		print("无法完成跳转，没有这个剧情")
+		print("无法完成跳转，没有这个镜头")
 		return false
 	# 切换剧情
 	_switch_data(jumpdata)
-	print_rich("跳转到：" + str(jumpdata.chapter_name))
+	print_rich("跳转到：" + str(jumpdata.shot_id) + " 镜头")
 	return true
 
 ## 寻找指定剧情
-func _get_dialog_data(data_id: String) -> DialogueShot:
-	print(data_id)
+func _get_dialog_data(shot_id: String) -> DialogueShot:
+	print(shot_id)
 	var target_data: DialogueShot
-	for data in dialogue_chapter.dialogue_chapter:
-		if data.chapter_id == data_id:
+	for data in dialogue_chapter.dialogue_shots:
+		if data.shot_id == shot_id:
 			target_data = data
 	return target_data
 	
@@ -738,10 +790,11 @@ func _switch_data(data: DialogueShot) -> bool:
 	if not data and data.dialogs.size() > 0:
 		return false
 	_stop_dialogue()
-	print("切换到 " + data.chapter_name + " 剧情文件")
+	print("切换到 " + data.shot_id + " 剧情文件")
 	dialog_data = data
 	_init_dialogue()
-	await get_tree().create_timer(0.01).timeout
+	#await get_tree().create_timer(0.01).timeout
+	await get_tree().process_frame
 	_start_dialogue()
 	return true
 	
@@ -774,6 +827,10 @@ func _get_file_data(slot_id: int):
 func _on_loadbutton_press():
 	_SaL_UI.check_UI(2) # 打开UI，输入读档格式
 	pass
+
+## 按下回顾按钮
+func _on_reviewbutton_press():
+	_review_UI.change_visible()
 
 func _load_file_data(slot_id: int):
 	#用于获取变量
@@ -871,21 +928,25 @@ func _jump_curline(value: int) -> bool:
 						_display_character(actor)
 						# 创建定时器，不加这个给我来千手观音是吧
 						# Godot没有同步真的很难蚌
-						await get_tree().create_timer(0.01).timeout
+						# 抱歉，我找到了（
+						#await get_tree().create_timer(0.01).timeout
+						await get_tree().process_frame
 						pass
 					# 如果修改演员状态
 					if dialog_type == Dialogue.Type.Actor_Change_State:
 						var actor = dialog.change_state_actor
 						var target_state = dialog.change_state
 						_actor_change_state(actor, target_state)
-						await get_tree().create_timer(0.01).timeout
+						#await get_tree().create_timer(0.01).timeout
+						await get_tree().process_frame
 						pass
 					# 如果是移动演员
 					if dialog_type == Dialogue.Type.Move_Actor:
 						var actor = dialog.target_move_chara
 						var pos = dialog.target_move_pos
 						_acting_interface.move_actor(actor, pos)
-						await get_tree().create_timer(0.01).timeout
+						#await get_tree().create_timer(0.01).timeout
+						await get_tree().process_frame
 						pass
 					# 如果是删除演员
 					if dialog_type == Dialogue.Type.Exit_Actor:
@@ -893,7 +954,8 @@ func _jump_curline(value: int) -> bool:
 						var actor = dialog.exit_actor
 						_exit_actor(actor)
 
-						await get_tree().create_timer(0.01).timeout
+						#await get_tree().create_timer(0.01).timeout
+						await get_tree().process_frame
 						pass
 			_dialogue_goto_state(DialogState.OFF)
 			curline = value
@@ -913,7 +975,7 @@ func _jump_cur_dialogue(dialog: Dialogue) -> bool:
 
 ## 调试模式跳转到章节
 func debug_jump_data(value: String) -> bool:
-	var error = _jump_dialog_data(value)
+	var error = _jump_shot(value)
 	return error
 	
 ## 调试模式获取信息

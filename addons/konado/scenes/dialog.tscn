@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=3 uid="uid://bj8ynu8013j4j"]
+[gd_scene load_steps=62 format=3 uid="uid://bj8ynu8013j4j"]
 
 [ext_resource type="Script" uid="uid://dpo124xwpder5" path="res://addons/konado/scripts/dialogue/dialogue_manager.gd" id="1_buo3n"]
 [ext_resource type="Script" uid="uid://cyoedi0x84dxy" path="res://addons/konado/scripts/act/acting_Interface.gd" id="2_pq6sw"]
@@ -6,8 +6,9 @@
 [ext_resource type="Shader" uid="uid://dxr17ie00ux36" path="res://addons/konado/shader/Transition/BlindsEffect.gdshader" id="3_utfb4"]
 [ext_resource type="Script" uid="uid://5d4l66ex5dy" path="res://addons/konado/scripts/save_and_load/SaL_UI.gd" id="4_566op"]
 [ext_resource type="Script" uid="uid://cfbojxb1pdbrs" path="res://addons/konado/scripts/audio/audio_interface.gd" id="4_gd2ll"]
-[ext_resource type="Texture2D" uid="uid://bb7nhjioefh8a" path="res://addons/konado/sample/sample_arts/示例-咖啡馆-背景.png" id="4_qodmk"]
+[ext_resource type="Texture2D" uid="uid://bb7nhjioefh8a" path="res://sample/sample_arts/示例-咖啡馆-背景.png" id="4_qodmk"]
 [ext_resource type="Script" uid="uid://cbf7mvlofpiix" path="res://addons/konado/scripts/items/item_interface.gd" id="4_utfb4"]
+[ext_resource type="PackedScene" uid="uid://dahbi42p77rwu" path="res://addons/konado/scenes/dialog_review.tscn" id="8_qodmk"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_e5o0s"]
 
@@ -187,11 +188,7 @@ color = Color(0, 0, 0, 1)
 
 [node name="CharaControl" type="Control" parent="DialogUI/ActingInterface/BackgroundLayer"]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+anchors_preset = 0
 
 [node name="EffectLayer" type="ColorRect" parent="DialogUI/ActingInterface"]
 layout_mode = 2
@@ -269,8 +266,6 @@ bbcode_enabled = true
 fit_content = true
 autowrap_mode = 2
 tab_size = 8
-visible_characters = 0
-visible_ratio = 0.0
 
 [node name="ActionsContainer" type="HBoxContainer" parent="DialogUI/DialogueInterface/DialogueBox/MarginContainer/DialogContent"]
 layout_mode = 2
@@ -326,6 +321,17 @@ theme_override_styles/pressed = SubResource("StyleBoxEmpty_1xeec")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_3sqld")
 toggle_mode = true
 text = "自动播放"
+
+[node name="回顾" type="Button" parent="DialogUI/DialogueInterface/DialogueBox/MarginContainer/DialogContent/ActionsContainer"]
+custom_minimum_size = Vector2(75, 35)
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_f70o6")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_d61i7")
+theme_override_styles/hover = SubResource("StyleBoxTexture_vnydh")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_1xeec")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_3sqld")
+toggle_mode = true
+text = "回顾"
 
 [node name="ItemInterface" type="PanelContainer" parent="DialogUI"]
 visible = false
@@ -951,7 +957,12 @@ offset_bottom = 97.0
 theme_override_styles/normal = SubResource("StyleBoxFlat_sxvt2")
 text = "关闭"
 
+[node name="DialogReview" parent="DialogUI" instance=ExtResource("8_qodmk")]
+visible = false
+layout_mode = 2
+
 [node name="AudioInterface" type="Node2D" parent="."]
+visible = false
 script = ExtResource("4_gd2ll")
 
 [node name="BGMPlayer" type="AudioStreamPlayer" parent="AudioInterface"]
