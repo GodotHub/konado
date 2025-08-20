@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://bwskpda2vmn5x"]
+
+[node name="KnodoDialog" type="Node"]
+
+[node name="background" type="Node" parent="."]

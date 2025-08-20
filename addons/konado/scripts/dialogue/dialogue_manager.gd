@@ -75,7 +75,6 @@ var dialogueState: DialogState
 ## 选项容器（用于实现点击事件屏蔽）
 @onready var _choicesContainer: VBoxContainer = $DialogUI/DialogueInterface/ChoicesBox/ChoicesContainer
 
-	
 ## 对话资源
 var dialog_data: DialogueShot = null
 
