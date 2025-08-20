@@ -57,14 +57,12 @@ func init_insterpreter(flags: Dictionary[String, Variant]) -> bool:
 		if flags["allow_custom_suffix"] is not bool:
 			_scripts_warning(tmp_path, tmp_original_line_number, "allow_custom_suffix选项类型错误，应为bool类型")
 			return false
-		else:
-			allow_custom_suffix = flags["allow_custom_suffix"] as bool
+		allow_custom_suffix = flags["allow_custom_suffix"] as bool
 	if flags.has("enable_actor_validation"):
 		if flags["enable_actor_validation"] is not bool:
 			_scripts_warning(tmp_path, tmp_original_line_number, "enable_actor_validation选项类型错误，应为bool类型")
 			return false
-		else:
-			enable_actor_validation = flags["enable_actor_validation"] as bool
+		enable_actor_validation = flags["enable_actor_validation"] as bool
 		
 	# 提前初始化正则表达式，避免重复编译
 	dialogue_content_regex = RegEx.new()
