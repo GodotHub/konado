@@ -123,7 +123,7 @@ func test_parse_dialog():
 
 func test_parse_choice():
 	# 测试解析选项行
-	var line = 'choice "Option 1" tag1 "Option 2" tag2'
+	var line = 'choice "Option 1" tag1 "Option2" tag2'
 	var dialog = Dialogue.new()
 
 	var result = interpreter._parse_choice(line, dialog)
@@ -132,6 +132,8 @@ func test_parse_choice():
 	assert_eq(dialog.choices.size(), 2, "应该有两个选项")
 	assert_eq(dialog.choices[0].choice_text, "Option 1", "第一个选项文本应该匹配")
 	assert_eq(dialog.choices[0].jump_tag, "tag1", "第一个选项跳转标签应该匹配")
+	assert_eq(dialog.choices[1].choice_text, "Option2", "第二个选项文本应该匹配")
+	assert_eq(dialog.choices[1].jump_tag, "tag2", "第二个选项跳转标签应该匹配")
 
 
 func test_parse_branch():
@@ -196,6 +198,8 @@ actor show chara1 normal 0 100 200 1.0
 choice "Option 1" tag1 "Option 2" tag2
 branch tag1
 	"npc" "You chose option 1"
+branch tag2
+	"npc" "You chose option 2"
 jump next_shot
 """
 
@@ -204,15 +208,19 @@ jump next_shot
 	file.store_string(script_content)
 	file.close()
 
+	
+
 	# 初始化解释器
-	interpreter.init_insterpreter({})
+	#var init = interpreter.init_insterpreter({})
+
+	
 
 	# 处理脚本
-	var result = interpreter.process_scripts_to_data(temp_file)
+	var result: DialogueShot = interpreter.process_scripts_to_data(temp_file)
 	assert_not_null(result, "应该成功处理脚本")
 	assert_eq(result.shot_id, "test_shot", "shot_id 应该匹配")
-	assert_eq(result.dialogs.size(), 4, "应该有4个对话")  # actor, dialog, choice, jump
-	assert_eq(result.branchs.size(), 1, "应该有一个分支")
+	assert_eq(result.dialogs.size(), 4, "应该有4个对话") # actor, dialog, choice, jump
+	assert_eq(result.branchs.size(), 2, "应该有两个分支")
 
 	# 清理
 	DirAccess.remove_absolute(temp_file)

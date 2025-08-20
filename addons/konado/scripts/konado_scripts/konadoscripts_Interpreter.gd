@@ -238,10 +238,10 @@ func _parse_metadata(lines: PackedStringArray, path: String) -> PackedStringArra
 
 	var metadata: PackedStringArray = []
 
-	for i in 1:
-		var result = dialogue_metadata_regex.search(lines[i])
+	if lines[0]:
+		var result = dialogue_metadata_regex.search(lines[0])
 		if not result:
-			_scripts_debug(path, i + 1, "无效的元数据格式: %s" % lines[i])
+			_scripts_debug(path, 1, "无效的元数据格式: %s" % lines[0])
 			return []
 		
 		var key = result.get_string(1)
@@ -251,6 +251,8 @@ func _parse_metadata(lines: PackedStringArray, path: String) -> PackedStringArra
 			"shot_id":
 				metadata.append(value)
 	return metadata
+
+	
 
 # 解析注释
 func _parse_label(line: String, dialog: Dialogue) -> bool:
@@ -376,19 +378,51 @@ func _parse_choice(line: String, dialog: Dialogue) -> bool:
 		return false
 	
 	dialog.dialog_type = Dialogue.Type.Show_Choice
-	var choices = line.split(" ", false)
-	for i in range(1, choices.size()):
-		if i % 2 == 1 and i + 1 < choices.size():
+	dialog.choices.clear()  # 清空现有选项
+	
+	# 移除开头的"choice"关键字
+	var content = line.substr(6).strip_edges()
+	var in_quotes = false
+	var current_text = ""
+	var parts = []
+	
+	# 手动解析字符串，正确处理引号内的内容
+	for i in range(content.length()):
+		var c = content[i]
+		
+		if c == "\"":
+			if in_quotes and i > 0 and content[i-1] != "\\":  # 忽略转义的引号
+				in_quotes = false
+				if current_text != "":
+					parts.append(current_text)
+					current_text = ""
+			else:
+				in_quotes = true
+		elif c == " " and not in_quotes:
+			if current_text != "":
+				parts.append(current_text)
+				current_text = ""
+		else:
+			current_text += c
+	
+	# 添加最后一个部分
+	if current_text != "":
+		parts.append(current_text)
+	
+	# 创建选项对象
+	for i in range(0, parts.size(), 2):
+		if i + 1 < parts.size():
 			var choice = DialogueChoice.new()
-			choice.choice_text = choices[i].trim_prefix("\"").trim_suffix("\"")
-			choice.jump_tag = choices[i + 1]
+			choice.choice_text = parts[i].replace("\\\"", "\"")  # 恢复转义的引号
+			choice.jump_tag = parts[i + 1]
 			dialog.choices.append(choice)
+	
+	# 记录日志
 	var choices_strs = ""
 	for choice in dialog.choices:
-		choices_strs += choice.choice_text + " "
-	# 添加检查功能
+		choices_strs += "\"" + choice.choice_text + "\" "
+	
 	cur_tmp_option_lines[tmp_original_line_number] = line
-
 	_scripts_info(tmp_path, tmp_line_number + 1, "选项解析完成" + " " + "选项数量" + str(dialog.choices.size()) +  "  选项： " + choices_strs)
 	return true
 
