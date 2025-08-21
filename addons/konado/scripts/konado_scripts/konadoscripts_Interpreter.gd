@@ -343,14 +343,14 @@ func _parse_actor(line: String, dialog: Dialogue) -> bool:
 
 # 创建角色
 func _create_actor(parts: PackedStringArray) -> DialogueActor:
-	if parts.size() < 8:
+	if parts.size() < 9:
 		return null
 	
 	var actor = DialogueActor.new()
 	actor.character_name = parts[2]
 	actor.character_state = parts[3]
 	actor.actor_position = Vector2(parts[5].to_float(), parts[6].to_float())
-	actor.actor_scale = parts[7].to_float()
+	actor.actor_scale = parts[8].to_float()
 	if parts.size() == 10:
 		if parts[9] == "mirror":
 			actor.actor_mirror = true
