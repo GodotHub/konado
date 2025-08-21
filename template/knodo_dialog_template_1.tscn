@@ -1,0 +1,43 @@
+[gd_scene load_steps=5 format=3 uid="uid://dhljntqamnusm"]
+
+[ext_resource type="Script" uid="uid://co1jy8tti3d25" path="res://addons/konado/assets/template/knodo_dialog_template.gd" id="1_ofwfk"]
+[ext_resource type="PackedScene" uid="uid://dbfoi0nkkm0bx" path="res://template/background/background.tscn" id="2_ofwfk"]
+[ext_resource type="PackedScene" uid="uid://dcwk5so2ohcc2" path="res://template/character/character.tscn" id="3_6xqk1"]
+[ext_resource type="PackedScene" uid="uid://7b484a7p3s4w" path="res://template/dialogbox/​dialog_box.tscn" id="4_ofwfk"]
+
+[node name="KnodoDialog_template_1" type="CanvasLayer"]
+script = ExtResource("1_ofwfk")
+
+[node name="template_setting" type="Node" parent="."]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(960, 539)
+
+[node name="background" type="CanvasLayer" parent="."]
+
+[node name="background1" parent="background" instance=ExtResource("2_ofwfk")]
+
+[node name="character" type="CanvasLayer" parent="."]
+
+[node name="character1" parent="character" instance=ExtResource("3_6xqk1")]
+
+[node name="character2" parent="character" instance=ExtResource("3_6xqk1")]
+offset_left = 406.0
+offset_right = 406.0
+
+[node name="CanvasModulate" type="CanvasModulate" parent="character"]
+color = Color(0.29257, 0.580318, 0.617664, 1)
+
+[node name="​DialogBox" type="CanvasLayer" parent="."]
+
+[node name="​DialogBox1" parent="​DialogBox" instance=ExtResource("4_ofwfk")]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 283.0
+offset_top = 782.0
+offset_right = -283.0
+offset_bottom = -98.0003
+grow_horizontal = 2
+grow_vertical = 2

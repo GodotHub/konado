@@ -39,53 +39,20 @@ signal character_deleted
 signal character_state_changed
 ## 完成角色移动的信号
 signal character_moved
-
+## 演员位置预设（左）
+@export var LEFT_POS: Vector2 = Vector2(175, 113)
+## 演员位置预设（中）
+@export var CENTER_POS: Vector2 = Vector2(620, 113)
+## 演员位置预设（右）
+@export var RIGHT_POS: Vector2 = Vector2(1105, 113)
 # Tween效果动画节点
 var effect_tween: Tween
 #存档用背景id
 var background_id : String
 
-## 默认分辨率，用于计算位置，建议保持为1280x720
-@export var reference_resolution: Vector2 = Vector2(1280, 720)
-
-## 是否保持比例
-@export var keep_ratio: bool = true
-
-## 居中调整
-@export var center_adjust: bool = true
-
-
-func _ready() -> void:
+func _ready():
 	for child in _chara_controler.get_children():
 		child.queue_free()
-	
-	_chara_controler.set_size(reference_resolution)
-	_scale_resolution()
-
-	# 订阅窗口大小变化事件
-	get_viewport().size_changed.connect(_scale_resolution)
-
-## 缩放演员层的分辨率
-func _scale_resolution() -> void:
-	_chara_controler.set_position(Vector2(0, 0))
-	
-	var current_resolution = get_viewport().get_visible_rect().size
-	var scale_x = current_resolution.x / reference_resolution.x
-	var scale_y = current_resolution.y / reference_resolution.y
-	var scale = Vector2(scale_x, scale_y)
-
-	# 如果保持比例
-	if keep_ratio:
-		scale = min(scale_x, scale_y)
-
-	_chara_controler.set_scale(Vector2(scale, scale))
-	
-	# 如果居中调整
-	if center_adjust:
-		if scale_x > scale_y:
-			var move_x = (current_resolution.x - reference_resolution.x * scale) / 2
-			_chara_controler.set_position(Vector2(move_x, _chara_controler.position.y), 0)
-		
 
 ## 获取角色节点的方法
 func get_chara_node(actor_id: String) -> Node:
@@ -309,7 +276,7 @@ func highlight_actor(actor_id: String) -> void:
 	
 
 # 删除指定角色图片的方法
-func delete_character(chara_id: String) -> void:
+func delete_character(chara_id: String):
 	# 检查要删除的角色是否在容器和字典中
 	for actor in actor_dict.values():
 		if actor["id"] == chara_id:

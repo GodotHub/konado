@@ -25,7 +25,8 @@ KS_SAVE_AND_LOAD="*res://addons/konado/scripts/save_and_load/SaL.gd"
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
-window/stretch/aspect="expand"
+window/size/always_on_top=true
+window/stretch/aspect="ignore"
 
 [dotnet]
 

@@ -1,0 +1,23 @@
+[gd_scene load_steps=2 format=3 uid="uid://dbfoi0nkkm0bx"]
+
+[ext_resource type="Texture2D" uid="uid://bb7nhjioefh8a" path="res://sample/sample_arts/示例-咖啡馆-背景.png" id="1_dr0iu"]
+
+[node name="background1" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_dr0iu")
+expand_mode = 5
+stretch_mode = 6
+metadata/_edit_use_anchors_ = true

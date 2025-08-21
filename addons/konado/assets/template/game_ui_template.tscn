@@ -1,0 +1,230 @@
+[gd_scene load_steps=11 format=3 uid="uid://t5hwv7sqfex4"]
+
+[ext_resource type="Script" uid="uid://bruaou4gwjdwl" path="res://addons/konado/assets/template/ui_template/ui_template.gd" id="1_8pelu"]
+[ext_resource type="PackedScene" uid="uid://b5njwitmejk76" path="res://addons/konado/assets/template/ui_template/save_componect.tscn" id="1_jj3o7"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_jj3o7"]
+font_size = 35
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8a3b0"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ysc00"]
+
+[sub_resource type="Gradient" id="Gradient_ytwdp"]
+offsets = PackedFloat32Array(0, 0.996764, 1)
+colors = PackedColorArray(0.527091, 0.626497, 0.835147, 0.611765, 0.0801724, 0.0952924, 0.127029, 0.0930516, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_m86f6"]
+gradient = SubResource("Gradient_ytwdp")
+width = 512
+height = 512
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.7, 0.7)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5shdr"]
+texture = SubResource("GradientTexture2D_m86f6")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bewkk"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1mrvb"]
+
+[node name="game_ui" type="CanvasLayer"]
+layer = 50
+script = ExtResource("1_8pelu")
+
+[node name="setting" type="Control" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="setting"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"Background"
+
+[node name="setting2" type="Control" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="setting2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"Background"
+
+[node name="save_load" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="save_load"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"Background"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="save_load/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="save_load/Panel/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 150
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 100
+
+[node name="BoxContainer" type="BoxContainer" parent="save_load/Panel/ScrollContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 2
+theme_override_constants/separation = 50
+vertical = true
+
+[node name="save_componect" parent="save_load/Panel/ScrollContainer/MarginContainer/BoxContainer" instance=ExtResource("1_jj3o7")]
+layout_mode = 2
+
+[node name="save_componect3" parent="save_load/Panel/ScrollContainer/MarginContainer/BoxContainer" instance=ExtResource("1_jj3o7")]
+layout_mode = 2
+
+[node name="save_componect4" parent="save_load/Panel/ScrollContainer/MarginContainer/BoxContainer" instance=ExtResource("1_jj3o7")]
+layout_mode = 2
+
+[node name="save_componect5" parent="save_load/Panel/ScrollContainer/MarginContainer/BoxContainer" instance=ExtResource("1_jj3o7")]
+layout_mode = 2
+
+[node name="save_componect2" parent="save_load/Panel/ScrollContainer/MarginContainer/BoxContainer" instance=ExtResource("1_jj3o7")]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="save_load/Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -399.0
+offset_top = 65.0
+offset_right = -242.0
+offset_bottom = 124.0
+grow_horizontal = 2
+text = "存档系统"
+label_settings = SubResource("LabelSettings_jj3o7")
+
+[node name="game_ui_buttons" type="Panel" parent="."]
+custom_minimum_size = Vector2(0, 45)
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+metadata/_edit_group_ = true
+
+[node name="ActionsContainer" type="HBoxContainer" parent="game_ui_buttons"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1194.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="存档" type="Button" parent="game_ui_buttons/ActionsContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(90, 35)
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_8a3b0")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_ysc00")
+theme_override_styles/hover = SubResource("StyleBoxTexture_5shdr")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_bewkk")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_1mrvb")
+text = "存档"
+
+[node name="读档" type="Button" parent="game_ui_buttons/ActionsContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(90, 35)
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_8a3b0")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_ysc00")
+theme_override_styles/hover = SubResource("StyleBoxTexture_5shdr")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_bewkk")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_1mrvb")
+text = "读档"
+
+[node name="记录" type="Button" parent="game_ui_buttons/ActionsContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(90, 35)
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_8a3b0")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_ysc00")
+theme_override_styles/hover = SubResource("StyleBoxTexture_5shdr")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_bewkk")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_1mrvb")
+text = "记录"
+
+[node name="退出" type="Button" parent="game_ui_buttons/ActionsContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(90, 35)
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_8a3b0")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_ysc00")
+theme_override_styles/hover = SubResource("StyleBoxTexture_5shdr")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_bewkk")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_1mrvb")
+text = "退出"
+
+[node name="自动" type="Button" parent="game_ui_buttons/ActionsContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(90, 35)
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_8a3b0")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_ysc00")
+theme_override_styles/hover = SubResource("StyleBoxTexture_5shdr")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_bewkk")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_1mrvb")
+toggle_mode = true
+text = "自动播放"
+
+[node name="回顾" type="Button" parent="game_ui_buttons/ActionsContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(90, 35)
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_8a3b0")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_ysc00")
+theme_override_styles/hover = SubResource("StyleBoxTexture_5shdr")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_bewkk")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_1mrvb")
+toggle_mode = true
+text = "回顾"
