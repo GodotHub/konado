@@ -1,0 +1,30 @@
+[gd_scene load_steps=2 format=3 uid="uid://dcwk5so2ohcc2"]
+
+[ext_resource type="Texture2D" uid="uid://0go33s82b24j" path="res://sample/sample_arts/D.png" id="1_nu4it"]
+
+[node name="character1" type="Control"]
+layout_mode = 3
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="TextureRect" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(502.21, 800)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -400.0
+offset_top = -800.0
+offset_right = 400.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("1_nu4it")
+expand_mode = 2
+stretch_mode = 5

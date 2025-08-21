@@ -80,7 +80,6 @@ var dialogueState: DialogState
 @onready var _reviewButton : Button = $"DialogUI/DialogueInterface/DialogueBox/MarginContainer/DialogContent/ActionsContainer/回顾"
 
 
-	
 ## 对话资源
 var dialog_data: DialogueShot = null
 

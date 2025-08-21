@@ -4,7 +4,7 @@
 offset_right = 248.0
 offset_bottom = 38.0
 theme_type_variation = &"Component"
-text = "组件标签"
+text = "书签"
 
 [node name="Button" type="Button" parent="."]
 layout_mode = 1

@@ -23,11 +23,11 @@ shader_parameter/current_texture = ExtResource("4_qodmk")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_25pr6"]
 
-[sub_resource type="Gradient" id="Gradient_utfb4"]
+[sub_resource type="Gradient" id="Gradient_qodmk"]
 colors = PackedColorArray(0, 0, 0, 0.870588, 0.141176, 0.141176, 0.141176, 0.74902)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_qodmk"]
-gradient = SubResource("Gradient_utfb4")
+gradient = SubResource("Gradient_qodmk")
 fill_to = Vector2(1, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xjghb"]
@@ -46,7 +46,7 @@ fill_to = Vector2(1, 1)
 offsets = PackedFloat32Array(0, 0.996764, 1)
 colors = PackedColorArray(0.527091, 0.626497, 0.835147, 0.611765, 0.0801724, 0.0952924, 0.127029, 0.0930516, 1, 1, 1, 0)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_m86f6"]
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_sxvt2"]
 gradient = SubResource("Gradient_rm7mg")
 width = 512
 height = 512
@@ -55,7 +55,7 @@ fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.7, 0.7)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vnydh"]
-texture = SubResource("GradientTexture2D_m86f6")
+texture = SubResource("GradientTexture2D_sxvt2")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1xeec"]
 

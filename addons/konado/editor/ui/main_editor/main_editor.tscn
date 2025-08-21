@@ -2,7 +2,7 @@
 
 [ext_resource type="Theme" uid="uid://dwtf3ffxpbiox" path="res://addons/konado/theme_system/editor_theme.tres" id="1_lwc1q"]
 [ext_resource type="PackedScene" uid="uid://tdgiaaxwqgb2" path="res://addons/konado/editor/ui/main_editor/dock/文件管理区.tscn" id="2_lxpd5"]
-[ext_resource type="PackedScene" uid="uid://dtm3j0waaivyj" path="res://addons/konado/sample/konado_sample.tscn" id="3_pwu0a"]
+[ext_resource type="PackedScene" uid="uid://dtm3j0waaivyj" path="res://sample/konado_sample.tscn" id="3_pwu0a"]
 [ext_resource type="PackedScene" uid="uid://ngoysingi1jp" path="res://addons/konado/editor/ui/main_editor/dock/画布栏.tscn" id="4_lxpd5"]
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_lwc1q"]
@@ -100,6 +100,7 @@ button_group = SubResource("ButtonGroup_lwc1q")
 text = "编辑模式"
 
 [node name="Button2" type="Button" parent="BoxContainer/菜单栏/BoxContainer2/BoxContainer2"]
+visible = false
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 toggle_mode = true
@@ -116,11 +117,11 @@ text = "从头播放"
 
 [node name="Button2" type="Button" parent="BoxContainer/菜单栏/BoxContainer2/BoxContainer3"]
 layout_mode = 2
-text = "当前cut"
+text = "当前镜头"
 
 [node name="Button3" type="Button" parent="BoxContainer/菜单栏/BoxContainer2/BoxContainer3"]
 layout_mode = 2
-text = "指定cut"
+text = "指定镜头"
 
 [node name="占位" type="Control" parent="BoxContainer/菜单栏/BoxContainer2/BoxContainer3"]
 custom_minimum_size = Vector2(50, 0)
@@ -221,7 +222,7 @@ vertical = true
 layout_mode = 2
 current_tab = 0
 tab_count = 2
-tab_0/title = "文本模式"
+tab_0/title = "剧本模式"
 tab_1/title = "快照模式"
 
 [node name="HSeparator" type="HSeparator" parent="BoxContainer/SplitContainer3/Panel/Panel/BoxContainer"]
