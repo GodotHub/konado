@@ -12,11 +12,8 @@
 # Description: Visual Novel Game Engine Framework     #
 #_____________________________________________________#
 #                                                     #
-# License: MIT                                        #
-# Copyright © 2025 DSOE1024, Kamiki_                  #
-# Copyright © 2025 Starry Team                        #
+# License: BSD 3-Clause License                       #
+# Copyright (c) 2023-2025, StarryTeam                 #
+# Copyright (c) 2023-2025, DSOE1024                   #
+# Copyright (c) 2025, Kamiki_                         #
 # ____________________________________________________#
-#                                                     #
-# If you want to enjoy art,                           #
-# then you must be a person with artistic cultivation #
-#_____________________________________________________#
