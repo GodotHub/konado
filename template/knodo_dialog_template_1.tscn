@@ -19,25 +19,18 @@ position = Vector2(960, 539)
 
 [node name="character" type="CanvasLayer" parent="."]
 
+[node name="CanvasModulate" type="CanvasModulate" parent="character"]
+visible = false
+color = Color(0.29257, 0.580318, 0.617664, 1)
+
 [node name="character1" parent="character" instance=ExtResource("3_6xqk1")]
+offset_left = -314.0
+offset_right = -314.0
 
 [node name="character2" parent="character" instance=ExtResource("3_6xqk1")]
-offset_left = 406.0
-offset_right = 406.0
-
-[node name="CanvasModulate" type="CanvasModulate" parent="character"]
-color = Color(0.29257, 0.580318, 0.617664, 1)
+offset_left = 298.0
+offset_right = 298.0
 
 [node name="​DialogBox" type="CanvasLayer" parent="."]
 
 [node name="​DialogBox1" parent="​DialogBox" instance=ExtResource("4_ofwfk")]
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 283.0
-offset_top = 782.0
-offset_right = -283.0
-offset_bottom = -98.0003
-grow_horizontal = 2
-grow_vertical = 2

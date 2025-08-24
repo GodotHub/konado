@@ -1,11 +1,15 @@
-[gd_scene load_steps=6 format=3 uid="uid://bommt7l6wmdsa"]
+[gd_scene load_steps=10 format=3 uid="uid://bommt7l6wmdsa"]
 
 [ext_resource type="Theme" uid="uid://dwtf3ffxpbiox" path="res://addons/konado/theme_system/editor_theme.tres" id="1_lwc1q"]
+[ext_resource type="Script" uid="uid://c2u6ino7v7ixx" path="res://addons/konado/editor/ui/main_editor/ui_management.gd" id="1_nok4e"]
+[ext_resource type="Script" uid="uid://b04pryoxytbhb" path="res://addons/konado/editor/ui/main_editor/ui_shot_edit.gd" id="1_vy1oc"]
 [ext_resource type="PackedScene" uid="uid://tdgiaaxwqgb2" path="res://addons/konado/editor/ui/main_editor/dock/文件管理区.tscn" id="2_lxpd5"]
-[ext_resource type="PackedScene" uid="uid://dtm3j0waaivyj" path="res://sample/konado_sample.tscn" id="3_pwu0a"]
+[ext_resource type="PackedScene" uid="uid://bwskpda2vmn5x" path="res://addons/konado/scenes/new_dialog.tscn" id="3_vy1oc"]
 [ext_resource type="PackedScene" uid="uid://ngoysingi1jp" path="res://addons/konado/editor/ui/main_editor/dock/画布栏.tscn" id="4_lxpd5"]
+[ext_resource type="PackedScene" uid="uid://c5i8tukmns7cm" path="res://addons/konado/editor/ui/ui_components/shot_ui_component.tscn" id="4_nok4e"]
+[ext_resource type="Texture2D" uid="uid://cfau2duojvd33" path="res://addons/konado/assets/KonadoBanner.png" id="4_os5hq"]
 
-[sub_resource type="ButtonGroup" id="ButtonGroup_lwc1q"]
+[sub_resource type="ButtonGroup" id="ButtonGroup_nok4e"]
 
 [node name="MainEditor" type="Panel"]
 anchors_preset = 15
@@ -14,6 +18,18 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"Background"
+
+[node name="ui_management" type="Node" parent="."]
+script = ExtResource("1_nok4e")
+
+[node name="ui_data" type="Node" parent="ui_management"]
+
+[node name="ui_shot_editing" type="Node" parent="ui_management"]
+editor_description = "UI 管理组件
+镜头编辑界面的ui"
+script = ExtResource("1_vy1oc")
+zoom = 0.45
+position_offset = Vector2(200, 0)
 
 [node name="BoxContainer" type="BoxContainer" parent="."]
 layout_mode = 1
@@ -24,13 +40,13 @@ grow_horizontal = 2
 grow_vertical = 2
 vertical = true
 
-[node name="菜单栏" type="Panel" parent="BoxContainer"]
+[node name="menu_bar" type="Panel" parent="BoxContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 theme = ExtResource("1_lwc1q")
 theme_type_variation = &"MainMenu"
 
-[node name="BoxContainer2" type="BoxContainer" parent="BoxContainer/菜单栏"]
+[node name="BoxContainer2" type="BoxContainer" parent="BoxContainer/menu_bar"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -38,11 +54,11 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="BoxContainer" type="BoxContainer" parent="BoxContainer/菜单栏/BoxContainer2"]
+[node name="meun" type="BoxContainer" parent="BoxContainer/menu_bar/BoxContainer2"]
 custom_minimum_size = Vector2(100, 40)
 layout_mode = 2
 
-[node name="Button" type="MenuButton" parent="BoxContainer/菜单栏/BoxContainer2/BoxContainer"]
+[node name="Button" type="MenuButton" parent="BoxContainer/menu_bar/BoxContainer2/meun"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 text = "文件"
@@ -56,7 +72,7 @@ popup/item_2/text = "导出项目"
 popup/item_2/id = 2
 popup/item_3/id = 3
 
-[node name="Button2" type="MenuButton" parent="BoxContainer/菜单栏/BoxContainer2/BoxContainer"]
+[node name="Button2" type="MenuButton" parent="BoxContainer/menu_bar/BoxContainer2/meun"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 text = "编辑"
@@ -67,95 +83,558 @@ popup/item_0/id = 0
 popup/item_1/text = "首选项"
 popup/item_1/id = 1
 
-[node name="Button3" type="MenuButton" parent="BoxContainer/菜单栏/BoxContainer2/BoxContainer"]
+[node name="Button3" type="MenuButton" parent="BoxContainer/menu_bar/BoxContainer2/meun"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 text = "窗口"
 switch_on_hover = true
 
-[node name="Button4" type="MenuButton" parent="BoxContainer/菜单栏/BoxContainer2/BoxContainer"]
+[node name="Button4" type="MenuButton" parent="BoxContainer/menu_bar/BoxContainer2/meun"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 text = "帮助"
 switch_on_hover = true
 
-[node name="BoxContainer2" type="BoxContainer" parent="BoxContainer/菜单栏/BoxContainer2"]
+[node name="Control2" type="Control" parent="BoxContainer/menu_bar/BoxContainer2"]
 layout_mode = 2
-size_flags_horizontal = 10
-metadata/_edit_group_ = true
+size_flags_horizontal = 3
 
-[node name="Button3" type="Button" parent="BoxContainer/菜单栏/BoxContainer2/BoxContainer2"]
-custom_minimum_size = Vector2(100, 0)
+[node name="modules_bar" type="TabBar" parent="BoxContainer/menu_bar/BoxContainer2"]
+custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
-toggle_mode = true
-button_group = SubResource("ButtonGroup_lwc1q")
-text = "数据管理"
+size_flags_horizontal = 3
+current_tab = 0
+tab_alignment = 1
+clip_tabs = false
+tab_count = 3
+tab_0/title = "数据管理"
+tab_1/title = "镜头编辑"
+tab_2/title = "游戏系统"
 
-[node name="Button" type="Button" parent="BoxContainer/菜单栏/BoxContainer2/BoxContainer2"]
-custom_minimum_size = Vector2(100, 0)
+[node name="Control" type="Control" parent="BoxContainer/menu_bar/BoxContainer2"]
 layout_mode = 2
-toggle_mode = true
-button_pressed = true
-button_group = SubResource("ButtonGroup_lwc1q")
-text = "编辑模式"
+size_flags_horizontal = 3
 
-[node name="Button2" type="Button" parent="BoxContainer/菜单栏/BoxContainer2/BoxContainer2"]
-visible = false
-custom_minimum_size = Vector2(100, 0)
-layout_mode = 2
-toggle_mode = true
-button_group = SubResource("ButtonGroup_lwc1q")
-text = "系统管理"
-
-[node name="BoxContainer3" type="BoxContainer" parent="BoxContainer/菜单栏/BoxContainer2"]
+[node name="BoxContainer3" type="BoxContainer" parent="BoxContainer/menu_bar/BoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 10
 
-[node name="Button" type="Button" parent="BoxContainer/菜单栏/BoxContainer2/BoxContainer3"]
+[node name="Button" type="Button" parent="BoxContainer/menu_bar/BoxContainer2/BoxContainer3"]
 layout_mode = 2
 text = "从头播放"
 
-[node name="Button2" type="Button" parent="BoxContainer/菜单栏/BoxContainer2/BoxContainer3"]
+[node name="Button2" type="Button" parent="BoxContainer/menu_bar/BoxContainer2/BoxContainer3"]
 layout_mode = 2
 text = "当前镜头"
 
-[node name="Button3" type="Button" parent="BoxContainer/菜单栏/BoxContainer2/BoxContainer3"]
+[node name="Button3" type="Button" parent="BoxContainer/menu_bar/BoxContainer2/BoxContainer3"]
 layout_mode = 2
 text = "指定镜头"
 
-[node name="占位" type="Control" parent="BoxContainer/菜单栏/BoxContainer2/BoxContainer3"]
+[node name="占位" type="Control" parent="BoxContainer/menu_bar/BoxContainer2/BoxContainer3"]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 
-[node name="SplitContainer3" type="SplitContainer" parent="BoxContainer"]
+[node name="modules_container" type="TabContainer" parent="BoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+current_tab = 0
+tabs_visible = false
+
+[node name="data_manage" type="SplitContainer" parent="BoxContainer/modules_container"]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="Panel" type="Panel" parent="BoxContainer/modules_container/data_manage"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Button" type="Button" parent="BoxContainer/modules_container/data_manage/Panel"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -64.0
+offset_top = 16.0
+offset_right = -12.0
+offset_bottom = 54.0
+grow_horizontal = 0
+text = "隐藏"
+
+[node name="BoxContainer2" type="BoxContainer" parent="BoxContainer/modules_container/data_manage/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 29.0
+offset_top = 197.0
+offset_right = -29.0
+offset_bottom = -158.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+vertical = true
+
+[node name="TextureRect" type="TextureRect" parent="BoxContainer/modules_container/data_manage/Panel/BoxContainer2"]
+custom_minimum_size = Vector2(0, 300)
+layout_mode = 2
+texture = ExtResource("4_os5hq")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Label2" type="LineEdit" parent="BoxContainer/modules_container/data_manage/Panel/BoxContainer2"]
+layout_mode = 2
+placeholder_text = "游戏名称"
+
+[node name="TextEdit" type="TextEdit" parent="BoxContainer/modules_container/data_manage/Panel/BoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+placeholder_text = "游戏简介"
+
+[node name="Label" type="Label" parent="BoxContainer/modules_container/data_manage/Panel/BoxContainer2"]
+modulate = Color(1, 1, 1, 0.407843)
+layout_mode = 2
+text = "Konado 版本号   1.11"
+
+[node name="BoxContainer" type="BoxContainer" parent="BoxContainer/modules_container/data_manage"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+vertical = true
+
+[node name="Panel" type="Panel" parent="BoxContainer/modules_container/data_manage/BoxContainer"]
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+theme_type_variation = &"ButtonContainer"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="BoxContainer/modules_container/data_manage/BoxContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BoxContainer" type="BoxContainer" parent="BoxContainer/modules_container/data_manage/BoxContainer/Panel/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="SplitContainer2" type="SplitContainer" parent="BoxContainer/SplitContainer3"]
+[node name="Button" type="Button" parent="BoxContainer/modules_container/data_manage/BoxContainer/Panel/ScrollContainer/BoxContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"FlatButton"
+toggle_mode = true
+button_group = SubResource("ButtonGroup_nok4e")
+text = "角色"
+
+[node name="Button2" type="Button" parent="BoxContainer/modules_container/data_manage/BoxContainer/Panel/ScrollContainer/BoxContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"FlatButton"
+toggle_mode = true
+button_group = SubResource("ButtonGroup_nok4e")
+text = "场景"
+
+[node name="Button3" type="Button" parent="BoxContainer/modules_container/data_manage/BoxContainer/Panel/ScrollContainer/BoxContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"FlatButton"
+toggle_mode = true
+button_group = SubResource("ButtonGroup_nok4e")
+text = "镜头"
+
+[node name="Button4" type="Button" parent="BoxContainer/modules_container/data_manage/BoxContainer/Panel/ScrollContainer/BoxContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"FlatButton"
+toggle_mode = true
+button_group = SubResource("ButtonGroup_nok4e")
+text = "全局变量"
+
+[node name="data_manage" type="Panel" parent="BoxContainer/modules_container/data_manage/BoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 3.0
+theme_type_variation = &"Background"
+
+[node name="Tree" type="Tree" parent="BoxContainer/modules_container/data_manage/BoxContainer/data_manage"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="BoxContainer/modules_container/data_manage/BoxContainer/data_manage"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(744, 76)
+size_flags_vertical = 3
+
+[node name="BoxContainer" type="BoxContainer" parent="BoxContainer/modules_container/data_manage/BoxContainer/data_manage/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+vertical = true
+
+[node name="BoxContainer2" type="BoxContainer" parent="BoxContainer/modules_container/data_manage/BoxContainer/data_manage/ScrollContainer/BoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+vertical = true
+
+[node name="Label" type="Label" parent="BoxContainer/modules_container/data_manage/BoxContainer/data_manage/ScrollContainer/BoxContainer/BoxContainer2"]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+text = "序章 "
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="BoxContainer/modules_container/data_manage/BoxContainer/data_manage/ScrollContainer/BoxContainer/BoxContainer2/Label"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -55.0
+offset_top = -19.0
+offset_bottom = 19.0
+grow_horizontal = 0
+grow_vertical = 2
+tooltip_text = "添加镜头"
+text = "十"
+
+[node name="HSeparator" type="HSeparator" parent="BoxContainer/modules_container/data_manage/BoxContainer/data_manage/ScrollContainer/BoxContainer/BoxContainer2"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="FlowContainer" type="FlowContainer" parent="BoxContainer/modules_container/data_manage/BoxContainer/data_manage/ScrollContainer/BoxContainer/BoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/h_separation = 50
+theme_override_constants/v_separation = 55
+
+[node name="data_ui_component" parent="BoxContainer/modules_container/data_manage/BoxContainer/data_manage/ScrollContainer/BoxContainer/BoxContainer2/FlowContainer" instance=ExtResource("4_nok4e")]
+layout_mode = 2
+tooltip_text = "2025/1/1/12:00
+序章，主角初次登场"
+selected = true
+shot_name = "序章"
+timestamp = "2025/1/1/12:00"
+tip = "序章，主角初次登场"
+
+[node name="BoxContainer4" type="BoxContainer" parent="BoxContainer/modules_container/data_manage/BoxContainer/data_manage/ScrollContainer/BoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+vertical = true
+
+[node name="Label" type="Label" parent="BoxContainer/modules_container/data_manage/BoxContainer/data_manage/ScrollContainer/BoxContainer/BoxContainer4"]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+text = "章节1 "
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="BoxContainer/modules_container/data_manage/BoxContainer/data_manage/ScrollContainer/BoxContainer/BoxContainer4/Label"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -55.0
+offset_top = -19.0
+offset_bottom = 19.0
+grow_horizontal = 0
+grow_vertical = 2
+tooltip_text = "添加镜头"
+text = "十"
+
+[node name="HSeparator" type="HSeparator" parent="BoxContainer/modules_container/data_manage/BoxContainer/data_manage/ScrollContainer/BoxContainer/BoxContainer4"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="FlowContainer" type="FlowContainer" parent="BoxContainer/modules_container/data_manage/BoxContainer/data_manage/ScrollContainer/BoxContainer/BoxContainer4"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/h_separation = 50
+theme_override_constants/v_separation = 55
+
+[node name="data_ui_component" parent="BoxContainer/modules_container/data_manage/BoxContainer/data_manage/ScrollContainer/BoxContainer/BoxContainer4/FlowContainer" instance=ExtResource("4_nok4e")]
+layout_mode = 2
+tooltip_text = "镜头 
+2025/8/23 
+10：51
+主角登场"
+timestamp = "2025/1/1/12:00"
+
+[node name="data_ui_component2" parent="BoxContainer/modules_container/data_manage/BoxContainer/data_manage/ScrollContainer/BoxContainer/BoxContainer4/FlowContainer" instance=ExtResource("4_nok4e")]
+layout_mode = 2
+tooltip_text = "镜头 
+2025/8/23 
+10：51
+"
+timestamp = "2025/1/1/12:00"
+
+[node name="data_ui_component3" parent="BoxContainer/modules_container/data_manage/BoxContainer/data_manage/ScrollContainer/BoxContainer/BoxContainer4/FlowContainer" instance=ExtResource("4_nok4e")]
+layout_mode = 2
+tooltip_text = "镜头 
+2025/8/23 
+10：51
+"
+timestamp = "2025/1/1/12:00"
+
+[node name="data_ui_component4" parent="BoxContainer/modules_container/data_manage/BoxContainer/data_manage/ScrollContainer/BoxContainer/BoxContainer4/FlowContainer" instance=ExtResource("4_nok4e")]
+layout_mode = 2
+tooltip_text = "镜头 
+2025/8/23 
+10：51
+"
+timestamp = "2025/1/1/12:00"
+
+[node name="data_ui_component5" parent="BoxContainer/modules_container/data_manage/BoxContainer/data_manage/ScrollContainer/BoxContainer/BoxContainer4/FlowContainer" instance=ExtResource("4_nok4e")]
+layout_mode = 2
+tooltip_text = "镜头 
+2025/8/23 
+10：51
+"
+timestamp = "2025/1/1/12:00"
+
+[node name="data_ui_component6" parent="BoxContainer/modules_container/data_manage/BoxContainer/data_manage/ScrollContainer/BoxContainer/BoxContainer4/FlowContainer" instance=ExtResource("4_nok4e")]
+layout_mode = 2
+tooltip_text = "镜头 
+2025/8/23 
+10：51
+"
+timestamp = "2025/1/1/12:00"
+
+[node name="data_ui_component18" parent="BoxContainer/modules_container/data_manage/BoxContainer/data_manage/ScrollContainer/BoxContainer/BoxContainer4/FlowContainer" instance=ExtResource("4_nok4e")]
+layout_mode = 2
+tooltip_text = "镜头 
+2025/8/23 
+10：51
+"
+timestamp = "2025/1/1/12:00"
+
+[node name="BoxContainer3" type="BoxContainer" parent="BoxContainer/modules_container/data_manage/BoxContainer/data_manage/ScrollContainer/BoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+vertical = true
+
+[node name="Label" type="Label" parent="BoxContainer/modules_container/data_manage/BoxContainer/data_manage/ScrollContainer/BoxContainer/BoxContainer3"]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+text = "章节2"
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="BoxContainer/modules_container/data_manage/BoxContainer/data_manage/ScrollContainer/BoxContainer/BoxContainer3/Label"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -55.0
+offset_top = -19.0
+offset_bottom = 19.0
+grow_horizontal = 0
+grow_vertical = 2
+tooltip_text = "添加镜头"
+text = "十"
+
+[node name="HSeparator" type="HSeparator" parent="BoxContainer/modules_container/data_manage/BoxContainer/data_manage/ScrollContainer/BoxContainer/BoxContainer3"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="FlowContainer" type="FlowContainer" parent="BoxContainer/modules_container/data_manage/BoxContainer/data_manage/ScrollContainer/BoxContainer/BoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/h_separation = 50
+theme_override_constants/v_separation = 55
+
+[node name="data_ui_component" parent="BoxContainer/modules_container/data_manage/BoxContainer/data_manage/ScrollContainer/BoxContainer/BoxContainer3/FlowContainer" instance=ExtResource("4_nok4e")]
+layout_mode = 2
+tooltip_text = "镜头 
+2025/8/23 
+10：51
+"
+timestamp = "2025/1/1/12:00"
+
+[node name="data_ui_component2" parent="BoxContainer/modules_container/data_manage/BoxContainer/data_manage/ScrollContainer/BoxContainer/BoxContainer3/FlowContainer" instance=ExtResource("4_nok4e")]
+layout_mode = 2
+tooltip_text = "镜头 
+2025/8/23 
+10：51
+"
+timestamp = "2025/1/1/12:00"
+
+[node name="data_ui_component3" parent="BoxContainer/modules_container/data_manage/BoxContainer/data_manage/ScrollContainer/BoxContainer/BoxContainer3/FlowContainer" instance=ExtResource("4_nok4e")]
+layout_mode = 2
+tooltip_text = "镜头 
+2025/8/23 
+10：51
+"
+timestamp = "2025/1/1/12:00"
+
+[node name="data_ui_component4" parent="BoxContainer/modules_container/data_manage/BoxContainer/data_manage/ScrollContainer/BoxContainer/BoxContainer3/FlowContainer" instance=ExtResource("4_nok4e")]
+layout_mode = 2
+tooltip_text = "镜头 
+2025/8/23 
+10：51
+"
+timestamp = "2025/1/1/12:00"
+
+[node name="data_ui_component5" parent="BoxContainer/modules_container/data_manage/BoxContainer/data_manage/ScrollContainer/BoxContainer/BoxContainer3/FlowContainer" instance=ExtResource("4_nok4e")]
+layout_mode = 2
+tooltip_text = "镜头 
+2025/8/23 
+10：51
+"
+timestamp = "2025/1/1/12:00"
+
+[node name="data_ui_component6" parent="BoxContainer/modules_container/data_manage/BoxContainer/data_manage/ScrollContainer/BoxContainer/BoxContainer3/FlowContainer" instance=ExtResource("4_nok4e")]
+layout_mode = 2
+tooltip_text = "镜头 
+2025/8/23 
+10：51
+"
+timestamp = "2025/1/1/12:00"
+
+[node name="data_ui_component7" parent="BoxContainer/modules_container/data_manage/BoxContainer/data_manage/ScrollContainer/BoxContainer/BoxContainer3/FlowContainer" instance=ExtResource("4_nok4e")]
+layout_mode = 2
+tooltip_text = "镜头 
+2025/8/23 
+10：51
+"
+timestamp = "2025/1/1/12:00"
+
+[node name="data_ui_component8" parent="BoxContainer/modules_container/data_manage/BoxContainer/data_manage/ScrollContainer/BoxContainer/BoxContainer3/FlowContainer" instance=ExtResource("4_nok4e")]
+layout_mode = 2
+tooltip_text = "镜头 
+2025/8/23 
+10：51
+"
+timestamp = "2025/1/1/12:00"
+
+[node name="data_ui_component9" parent="BoxContainer/modules_container/data_manage/BoxContainer/data_manage/ScrollContainer/BoxContainer/BoxContainer3/FlowContainer" instance=ExtResource("4_nok4e")]
+layout_mode = 2
+tooltip_text = "镜头 
+2025/8/23 
+10：51
+"
+timestamp = "2025/1/1/12:00"
+
+[node name="data_ui_component10" parent="BoxContainer/modules_container/data_manage/BoxContainer/data_manage/ScrollContainer/BoxContainer/BoxContainer3/FlowContainer" instance=ExtResource("4_nok4e")]
+layout_mode = 2
+tooltip_text = "镜头 
+2025/8/23 
+10：51
+"
+timestamp = "2025/1/1/12:00"
+
+[node name="data_ui_component11" parent="BoxContainer/modules_container/data_manage/BoxContainer/data_manage/ScrollContainer/BoxContainer/BoxContainer3/FlowContainer" instance=ExtResource("4_nok4e")]
+layout_mode = 2
+tooltip_text = "镜头 
+2025/8/23 
+10：51
+"
+timestamp = "2025/1/1/12:00"
+
+[node name="data_ui_component12" parent="BoxContainer/modules_container/data_manage/BoxContainer/data_manage/ScrollContainer/BoxContainer/BoxContainer3/FlowContainer" instance=ExtResource("4_nok4e")]
+layout_mode = 2
+tooltip_text = "镜头 
+2025/8/23 
+10：51
+"
+timestamp = "2025/1/1/12:00"
+
+[node name="data_ui_component13" parent="BoxContainer/modules_container/data_manage/BoxContainer/data_manage/ScrollContainer/BoxContainer/BoxContainer3/FlowContainer" instance=ExtResource("4_nok4e")]
+layout_mode = 2
+tooltip_text = "镜头 
+2025/8/23 
+10：51
+"
+timestamp = "2025/1/1/12:00"
+
+[node name="data_ui_component14" parent="BoxContainer/modules_container/data_manage/BoxContainer/data_manage/ScrollContainer/BoxContainer/BoxContainer3/FlowContainer" instance=ExtResource("4_nok4e")]
+layout_mode = 2
+tooltip_text = "镜头 
+2025/8/23 
+10：51
+"
+timestamp = "2025/1/1/12:00"
+
+[node name="data_ui_component15" parent="BoxContainer/modules_container/data_manage/BoxContainer/data_manage/ScrollContainer/BoxContainer/BoxContainer3/FlowContainer" instance=ExtResource("4_nok4e")]
+layout_mode = 2
+tooltip_text = "镜头 
+2025/8/23 
+10：51
+"
+timestamp = "2025/1/1/12:00"
+
+[node name="data_ui_component16" parent="BoxContainer/modules_container/data_manage/BoxContainer/data_manage/ScrollContainer/BoxContainer/BoxContainer3/FlowContainer" instance=ExtResource("4_nok4e")]
+layout_mode = 2
+tooltip_text = "镜头 
+2025/8/23 
+10：51
+"
+timestamp = "2025/1/1/12:00"
+
+[node name="data_ui_component17" parent="BoxContainer/modules_container/data_manage/BoxContainer/data_manage/ScrollContainer/BoxContainer/BoxContainer3/FlowContainer" instance=ExtResource("4_nok4e")]
+layout_mode = 2
+tooltip_text = "镜头 
+2025/8/23 
+10：51
+"
+timestamp = "2025/1/1/12:00"
+
+[node name="data_ui_component18" parent="BoxContainer/modules_container/data_manage/BoxContainer/data_manage/ScrollContainer/BoxContainer/BoxContainer3/FlowContainer" instance=ExtResource("4_nok4e")]
+layout_mode = 2
+tooltip_text = "镜头 
+2025/8/23 
+10：51
+"
+timestamp = "2025/1/1/12:00"
+
+[node name="shot_editing" type="SplitContainer" parent="BoxContainer/modules_container"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+metadata/_tab_index = 1
+
+[node name="SplitContainer2" type="SplitContainer" parent="BoxContainer/modules_container/shot_editing"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 4.0
 split_offset = 250
 vertical = true
-drag_area_highlight_in_editor = true
 
-[node name="SplitContainer" type="SplitContainer" parent="BoxContainer/SplitContainer3/SplitContainer2"]
+[node name="SplitContainer" type="SplitContainer" parent="BoxContainer/modules_container/shot_editing/SplitContainer2"]
 layout_mode = 2
 size_flags_vertical = 3
-drag_area_highlight_in_editor = true
 
-[node name="文件管理区" parent="BoxContainer/SplitContainer3/SplitContainer2/SplitContainer" instance=ExtResource("2_lxpd5")]
+[node name="文件管理区" parent="BoxContainer/modules_container/shot_editing/SplitContainer2/SplitContainer" instance=ExtResource("2_lxpd5")]
 layout_mode = 2
 
-[node name="画布区" type="Panel" parent="BoxContainer/SplitContainer3/SplitContainer2/SplitContainer"]
+[node name="画布区" type="Panel" parent="BoxContainer/modules_container/shot_editing/SplitContainer2/SplitContainer"]
 custom_minimum_size = Vector2(500, 300)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 4.0
 
-[node name="BoxContainer2" type="BoxContainer" parent="BoxContainer/SplitContainer3/SplitContainer2/SplitContainer/画布区"]
+[node name="BoxContainer2" type="BoxContainer" parent="BoxContainer/modules_container/shot_editing/SplitContainer2/SplitContainer/画布区"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 1
 anchors_preset = 15
@@ -165,41 +644,88 @@ grow_horizontal = 2
 grow_vertical = 2
 vertical = true
 
-[node name="BoxContainer" type="BoxContainer" parent="BoxContainer/SplitContainer3/SplitContainer2/SplitContainer/画布区/BoxContainer2"]
+[node name="BoxContainer" type="BoxContainer" parent="BoxContainer/modules_container/shot_editing/SplitContainer2/SplitContainer/画布区/BoxContainer2"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 size_flags_horizontal = 3
-vertical = true
 
-[node name="Label" type="Label" parent="BoxContainer/SplitContainer3/SplitContainer2/SplitContainer/画布区/BoxContainer2/BoxContainer"]
+[node name="Label" type="Label" parent="BoxContainer/modules_container/shot_editing/SplitContainer2/SplitContainer/画布区/BoxContainer2/BoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 3
 size_flags_vertical = 0
-text = "画布"
+text = "镜头 1"
 
-[node name="HSeparator" type="HSeparator" parent="BoxContainer/SplitContainer3/SplitContainer2/SplitContainer/画布区/BoxContainer2"]
-layout_mode = 2
-
-[node name="ScrollContainer" type="ScrollContainer" parent="BoxContainer/SplitContainer3/SplitContainer2/SplitContainer/画布区/BoxContainer2"]
+[node name="Control" type="Control" parent="BoxContainer/modules_container/shot_editing/SplitContainer2/SplitContainer/画布区/BoxContainer2/BoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 3
 
-[node name="KonadoSample" parent="BoxContainer/SplitContainer3/SplitContainer2/SplitContainer/画布区/BoxContainer2/ScrollContainer" instance=ExtResource("3_pwu0a")]
+[node name="zoom_button" type="OptionButton" parent="BoxContainer/modules_container/shot_editing/SplitContainer2/SplitContainer/画布区/BoxContainer2/BoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(130, 0)
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 8
+selected = 1
+item_count = 5
+popup/item_0/text = "20 %"
+popup/item_0/id = 0
+popup/item_1/text = "50 %"
+popup/item_1/id = 1
+popup/item_2/text = "80 %"
+popup/item_2/id = 2
+popup/item_3/text = "100 %"
+popup/item_3/id = 3
+popup/item_4/text = "自适应"
+popup/item_4/id = 4
+
+[node name="center​_button" type="Button" parent="BoxContainer/modules_container/shot_editing/SplitContainer2/SplitContainer/画布区/BoxContainer2/BoxContainer"]
+layout_mode = 2
+text = "居中"
+
+[node name="HSeparator" type="HSeparator" parent="BoxContainer/modules_container/shot_editing/SplitContainer2/SplitContainer/画布区/BoxContainer2"]
+layout_mode = 2
+
+[node name="CanvasContainer" type="Control" parent="BoxContainer/modules_container/shot_editing/SplitContainer2/SplitContainer/画布区/BoxContainer2"]
+unique_name_in_owner = true
+clip_contents = true
+layout_mode = 2
 size_flags_vertical = 3
 
-[node name="画布层" parent="BoxContainer/SplitContainer3/SplitContainer2" instance=ExtResource("4_lxpd5")]
+[node name="Panel" type="Panel" parent="BoxContainer/modules_container/shot_editing/SplitContainer2/SplitContainer/画布区/BoxContainer2/CanvasContainer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"Background"
+
+[node name="Canvas" type="SubViewportContainer" parent="BoxContainer/modules_container/shot_editing/SplitContainer2/SplitContainer/画布区/BoxContainer2/CanvasContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+offset_left = 20.0
+offset_top = 10.0
+offset_right = 1940.0
+offset_bottom = 1090.0
+mouse_filter = 2
+stretch_shrink = 2
+mouse_target = true
+
+[node name="SubViewport" type="SubViewport" parent="BoxContainer/modules_container/shot_editing/SplitContainer2/SplitContainer/画布区/BoxContainer2/CanvasContainer/Canvas"]
+handle_input_locally = false
+size = Vector2i(1920, 1080)
+render_target_update_mode = 0
+
+[node name="new_dialog" parent="BoxContainer/modules_container/shot_editing/SplitContainer2/SplitContainer/画布区/BoxContainer2/CanvasContainer/Canvas/SubViewport" instance=ExtResource("3_vy1oc")]
+
+[node name="画布层" parent="BoxContainer/modules_container/shot_editing/SplitContainer2" instance=ExtResource("4_lxpd5")]
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 
-[node name="Panel" type="Panel" parent="BoxContainer/SplitContainer3"]
+[node name="Panel" type="Panel" parent="BoxContainer/modules_container/shot_editing"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Panel" type="Panel" parent="BoxContainer/SplitContainer3/Panel"]
+[node name="Panel" type="Panel" parent="BoxContainer/modules_container/shot_editing/Panel"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 1
 anchors_preset = 10
@@ -207,7 +733,7 @@ anchor_right = 1.0
 grow_horizontal = 2
 theme_type_variation = &"Background"
 
-[node name="BoxContainer" type="BoxContainer" parent="BoxContainer/SplitContainer3/Panel/Panel"]
+[node name="BoxContainer" type="BoxContainer" parent="BoxContainer/modules_container/shot_editing/Panel/Panel"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 1
 anchors_preset = 15
@@ -218,16 +744,27 @@ grow_horizontal = 2
 grow_vertical = 2
 vertical = true
 
-[node name="TabBar" type="TabBar" parent="BoxContainer/SplitContainer3/Panel/Panel/BoxContainer"]
+[node name="TabBar" type="TabBar" parent="BoxContainer/modules_container/shot_editing/Panel/Panel/BoxContainer"]
 layout_mode = 2
 current_tab = 0
 tab_count = 2
 tab_0/title = "剧本模式"
 tab_1/title = "快照模式"
 
-[node name="HSeparator" type="HSeparator" parent="BoxContainer/SplitContainer3/Panel/Panel/BoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="BoxContainer/modules_container/shot_editing/Panel/Panel/BoxContainer"]
 layout_mode = 2
 
-[node name="信息栏" type="BoxContainer" parent="BoxContainer"]
+[node name="system_configuration" type="Panel" parent="BoxContainer/modules_container"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 2
+
+[node name="info_bar" type="BoxContainer" parent="BoxContainer"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
+
+[connection signal="tab_changed" from="BoxContainer/menu_bar/BoxContainer2/modules_bar" to="ui_management" method="_on_modules_bar_tab_changed"]
+[connection signal="item_selected" from="BoxContainer/modules_container/shot_editing/SplitContainer2/SplitContainer/画布区/BoxContainer2/BoxContainer/zoom_button" to="ui_management/ui_shot_editing" method="_on_zoom_button_item_selected"]
+[connection signal="pressed" from="BoxContainer/modules_container/shot_editing/SplitContainer2/SplitContainer/画布区/BoxContainer2/BoxContainer/center​_button" to="ui_management/ui_shot_editing" method="_on_center_button_pressed"]
+[connection signal="gui_input" from="BoxContainer/modules_container/shot_editing/SplitContainer2/SplitContainer/画布区/BoxContainer2/CanvasContainer/Panel" to="ui_management/ui_shot_editing" method="_on_canvas_gui_input"]
+[connection signal="resized" from="BoxContainer/modules_container/shot_editing/SplitContainer2/SplitContainer/画布区/BoxContainer2/CanvasContainer/Panel" to="ui_management/ui_shot_editing" method="_on_panel_resized"]

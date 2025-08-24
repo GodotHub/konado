@@ -12,6 +12,7 @@ func execute_command(command: Command):
 	if undo_stack.size() > history:   # 限制历史记录长度
 		undo_stack.pop_front()
 	redo_stack.clear() # 清空重做列表
+
 func undo():
 	var inf:String 
 	if undo_stack.size() > 0:

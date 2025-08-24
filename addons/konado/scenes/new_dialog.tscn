@@ -7,7 +7,6 @@
 [node name="new_dialog" type="Node"]
 
 [node name="AudioInterface" type="Node2D" parent="."]
-visible = false
 script = ExtResource("1_ytwdp")
 
 [node name="BGMPlayer" type="AudioStreamPlayer" parent="AudioInterface"]
