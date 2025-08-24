@@ -44,6 +44,9 @@ var tmp_tags = []
 ## 是否允许自定义后缀脚本，开启后将不强制要求使用ks作为脚本文件后缀
 var allow_custom_suffix: bool = false
 
+## 是否允许跳过错误语法行，开启后将跳过错误语法行，继续解析后续语法，只打印警告信息
+var allow_skip_error_line: bool = false
+
 ## 是否开启演员验证，开启后将针对所有演员语法进行验证，判断是否存在
 var enable_actor_validation: bool = true
 
@@ -55,12 +58,17 @@ func init_insterpreter(flags: Dictionary[String, Variant]) -> bool:
 	if flags.has("allow_custom_suffix"):
 		# 验证类型是否正确
 		if flags["allow_custom_suffix"] is not bool:
-			_scripts_warning(tmp_path, tmp_original_line_number, "allow_custom_suffix选项类型错误，应为bool类型")
+			_scripts_debug(tmp_path, tmp_original_line_number, "allow_custom_suffix选项类型错误，应为bool类型")
 			return false
 		allow_custom_suffix = flags["allow_custom_suffix"] as bool
+	if flags.has("allow_skip_error_line"):
+		if flags["allow_skip_error_line"] is not bool:
+			_scripts_debug(tmp_path, tmp_original_line_number, "allow_skip_error_line选项类型错误，应为bool类型")
+			return false
+		allow_skip_error_line = flags["allow_skip_error_line"] as bool
 	if flags.has("enable_actor_validation"):
 		if flags["enable_actor_validation"] is not bool:
-			_scripts_warning(tmp_path, tmp_original_line_number, "enable_actor_validation选项类型错误，应为bool类型")
+			_scripts_debug(tmp_path, tmp_original_line_number, "enable_actor_validation选项类型错误，应为bool类型")
 			return false
 		enable_actor_validation = flags["enable_actor_validation"] as bool
 		
@@ -107,13 +115,6 @@ func process_scripts_to_data(path: String) -> DialogueShot:
 	file.close()
 
 	
-	## 提前初始化正则表达式，避免重复编译
-	#dialogue_content_regex = RegEx.new()
-	#dialogue_content_regex.compile("^\"(.*?)\"\\s+\"(.*?)\"(?:\\s+(\\S+))?$")
-#
-	#dialogue_metadata_regex = RegEx.new()
-	#dialogue_metadata_regex.compile("^(shot_id)\\s+(\\S+)")
-	
 	_scripts_info(path, 0, "开始解析脚本文件")
 
 	var diadata: DialogueShot = DialogueShot.new()
@@ -143,9 +144,25 @@ func process_scripts_to_data(path: String) -> DialogueShot:
 		tmp_line_number = i
 		var line = content_lines[i]
 		var original_line_number =  i + 2
+
+		tmp_original_line_number = original_line_number
+
+		# 不处理缩进的行
+		if line.begins_with("    ") or line.begins_with("\t"):
+			#print("解析成功：忽略标签内缩进行\n")
+			continue
+		line = line.strip_edges()
+		# 空行或注释行，必须提前处理strip_edges
+		if line.is_empty():
+			#print("解析成功：忽略空行\n")
+			continue
+		if line.begins_with("##"):
+			#print("解析成功：忽略特殊注释行\n")
+			continue
+
 		print("解析第%d行" % original_line_number)
 		print("第%d行内容：" % original_line_number, line)
-		tmp_original_line_number = original_line_number
+
 		var dialog: Dialogue = parse_line(line, original_line_number, path)
 		if dialog:
 			# 如果是标签对话，则添加到标签对话字典中
@@ -153,6 +170,14 @@ func process_scripts_to_data(path: String) -> DialogueShot:
 				diadata.branchs.set(dialog.branch_id, dialog)
 			else:
 				diadata.dialogs.append(dialog)
+		else:
+			if allow_skip_error_line:
+				_scripts_warning(path, original_line_number, "解析失败：无法识别的语法，请检查语法是否正确或删除该行: %s" % line)
+				continue
+			else:
+				_scripts_debug(path, original_line_number, "解析失败：无法识别的语法，请检查语法是否正确或删除该行: %s" % line)
+				break
+			print("\n")
 
 	diadata.dep_characters = dep_characters
 
@@ -175,19 +200,19 @@ func parse_single_line(line: String, line_number: int, path: String) -> Dialogue
 
 # 内部解析实现
 func parse_line(line: String, line_number: int, path: String) -> Dialogue:
-	# 不处理缩进的行
-	if line.begins_with("    ") or line.begins_with("\t"):
-		print("解析成功：忽略标签内缩进行\n")
-		return null
+	# # 不处理缩进的行
+	# if line.begins_with("    ") or line.begins_with("\t"):
+	# 	print("解析成功：忽略标签内缩进行\n")
+	# 	return null
 
-	line = line.strip_edges()
-	# 空行或注释行，必须提前处理strip_edges
-	if line.is_empty():
-		print("解析成功：忽略空行\n")
-		return null
-	if line.begins_with("##"):
-		print("解析成功：忽略特殊注释行\n")
-		return null
+	# line = line.strip_edges()
+	# # 空行或注释行，必须提前处理strip_edges
+	# if line.is_empty():
+	# 	print("解析成功：忽略空行\n")
+	# 	return null
+	# if line.begins_with("##"):
+	# 	print("解析成功：忽略特殊注释行\n")
+	# 	return null
 
 	var dialog := Dialogue.new()
 	dialog.source_file_line = line_number
@@ -224,8 +249,7 @@ func parse_line(line: String, line_number: int, path: String) -> Dialogue:
 		return dialog
 
 	dialog = null
-	_scripts_warning(path, line_number, "解析失败：无法识别的语法，请检查语法是否正确或删除该行: %s" % line)
-	print("\n")
+
 	return null
 
 # 解析元数据（前两行）
