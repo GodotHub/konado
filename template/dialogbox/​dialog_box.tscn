@@ -9,14 +9,11 @@ font_color = Color(0, 0, 0, 1)
 [node name="​DialogBox1" type="Control"]
 custom_minimum_size = Vector2(0, 200)
 layout_mode = 3
-anchor_left = 0.147396
-anchor_top = 0.649074
-anchor_right = 0.852604
-anchor_bottom = 0.834259
-offset_top = 81.0
-offset_bottom = 81.0
-grow_horizontal = 0
-grow_vertical = 0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 theme = ExtResource("1_wfnuw")
 
 [node name="Panel​DialogBox" type="Panel" parent="."]
@@ -34,16 +31,32 @@ layout_mode = 0
 offset_right = 1354.0
 offset_bottom = 202.0
 
-[node name="name" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_left = 56.9997
-offset_top = -106.0
-offset_right = 185.0
-offset_bottom = -20.9997
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+clip_contents = false
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 137.0
+offset_top = -342.0
+offset_right = -208.0
+offset_bottom = -111.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "角色对话"
 metadata/_edit_group_ = true
 
-[node name="TextureRect" type="TextureRect" parent="name"]
+[node name="name" type="Control" parent="RichTextLabel"]
+layout_mode = 1
+anchors_preset = 0
+offset_left = -4.0
+offset_top = -101.0
+offset_right = -3.99998
+offset_bottom = -101.0
+metadata/_edit_group_ = true
+
+[node name="TextureRect" type="TextureRect" parent="RichTextLabel/name"]
 visible = false
 layout_mode = 0
 offset_left = 283.0
@@ -51,7 +64,7 @@ offset_top = 701.0
 offset_right = 1637.0
 offset_bottom = 903.0
 
-[node name="character_name" type="Label" parent="name"]
+[node name="character_name" type="Label" parent="RichTextLabel/name"]
 layout_mode = 1
 offset_right = 63.0
 offset_bottom = 41.0
@@ -59,32 +72,18 @@ theme_type_variation = &"GraphFrameTitleLabel"
 text = "角色名"
 label_settings = SubResource("LabelSettings_bewkk")
 
-[node name="RichTextLabel" type="RichTextLabel" parent="."]
+[node name="Button" type="Button" parent="RichTextLabel"]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 43.0
-offset_top = 20.0
-offset_right = -16.0
-offset_bottom = -20.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "角色对话"
-metadata/_edit_group_ = true
-
-[node name="Button" type="Button" parent="."]
-layout_mode = 1
-anchors_preset = 3
+anchors_preset = 6
 anchor_left = 1.0
-anchor_top = 1.0
+anchor_top = 0.5
 anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 25.0
-offset_top = -53.0
-offset_right = 145.0
-offset_bottom = -11.0
+anchor_bottom = 0.5
+offset_left = 27.0
+offset_top = 49.5
+offset_right = 147.0
+offset_bottom = 117.5
 grow_horizontal = 0
-grow_vertical = 0
+grow_vertical = 2
 theme_type_variation = &"Component"
 text = "确认按钮"

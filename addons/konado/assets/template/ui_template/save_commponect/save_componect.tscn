@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://b5njwitmejk76"]
+[gd_scene load_steps=5 format=3 uid="uid://b5njwitmejk76"]
 
-[ext_resource type="Texture2D" uid="uid://cfau2duojvd33" path="res://addons/konado/assets/KonadoBanner.png" id="1_kt3kp"]
+[ext_resource type="Script" uid="uid://cqjotblvlkg3y" path="res://addons/konado/assets/template/ui_template/save_commponect/save_componect.gd" id="1_4ot8c"]
+[ext_resource type="Texture2D" uid="uid://cfau2duojvd33" path="res://addons/konado/assets/KonadoBanner.png" id="2_8xdhd"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kt3kp"]
 bg_color = Color(0.915066, 0.431991, 0.379989, 1)
@@ -14,6 +15,7 @@ clip_contents = true
 custom_minimum_size = Vector2(800, 200)
 offset_right = 901.0
 offset_bottom = 200.0
+script = ExtResource("1_4ot8c")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1
@@ -25,6 +27,7 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="autosave_sign" type="Label" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -40,7 +43,8 @@ text = "自动保存"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Label" type="Label" parent="."]
+[node name="name_label" type="Label" parent="."]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -54,7 +58,8 @@ text = "存档1"
 label_settings = SubResource("LabelSettings_kt3kp")
 vertical_alignment = 1
 
-[node name="Label2" type="Label" parent="."]
+[node name="save_time_label" type="Label" parent="."]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -62,10 +67,23 @@ anchor_bottom = 1.0
 offset_left = 388.0
 offset_top = -107.0
 offset_right = 675.0
-offset_bottom = -10.0
+offset_bottom = -66.0
 grow_vertical = 0
-text = "存档时间 8 / 23 / 12：00 
-游戏时长 3h2min"
+text = "存档时间 8 / 23 / 12：00 "
+vertical_alignment = 1
+
+[node name="game_time_label" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 388.0
+offset_top = -66.0
+offset_right = 675.0
+offset_bottom = -25.0
+grow_vertical = 0
+text = "游戏时长 3h2min"
 vertical_alignment = 1
 
 [node name="Button" type="Button" parent="."]
@@ -104,6 +122,6 @@ layout_mode = 1
 offset_right = 369.0
 offset_bottom = 200.0
 mouse_filter = 2
-texture = ExtResource("1_kt3kp")
+texture = ExtResource("2_8xdhd")
 expand_mode = 1
 stretch_mode = 6

@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=3 uid="uid://t5hwv7sqfex4"]
 
 [ext_resource type="Script" uid="uid://bruaou4gwjdwl" path="res://addons/konado/assets/template/ui_template/ui_template.gd" id="1_8pelu"]
-[ext_resource type="PackedScene" uid="uid://b5njwitmejk76" path="res://addons/konado/assets/template/ui_template/save_componect.tscn" id="1_jj3o7"]
+[ext_resource type="PackedScene" uid="uid://b5njwitmejk76" path="res://addons/konado/assets/template/ui_template/save_commponect/save_componect.tscn" id="1_jj3o7"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_jj3o7"]
 font_size = 35
@@ -73,6 +73,7 @@ theme_type_variation = &"Background"
 
 [node name="save_load" type="Control" parent="."]
 unique_name_in_owner = true
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -115,18 +116,14 @@ vertical = true
 
 [node name="save_componect" parent="save_load/Panel/ScrollContainer/MarginContainer/BoxContainer" instance=ExtResource("1_jj3o7")]
 layout_mode = 2
-
-[node name="save_componect3" parent="save_load/Panel/ScrollContainer/MarginContainer/BoxContainer" instance=ExtResource("1_jj3o7")]
-layout_mode = 2
-
-[node name="save_componect4" parent="save_load/Panel/ScrollContainer/MarginContainer/BoxContainer" instance=ExtResource("1_jj3o7")]
-layout_mode = 2
-
-[node name="save_componect5" parent="save_load/Panel/ScrollContainer/MarginContainer/BoxContainer" instance=ExtResource("1_jj3o7")]
-layout_mode = 2
+save_name = "存档1"
+save_time = "2025/8/25/12:20  "
+game_time = "3h2min "
 
 [node name="save_componect2" parent="save_load/Panel/ScrollContainer/MarginContainer/BoxContainer" instance=ExtResource("1_jj3o7")]
 layout_mode = 2
+save_name = "存档2"
+auto_save = true
 
 [node name="Label" type="Label" parent="save_load/Panel"]
 layout_mode = 1
@@ -147,17 +144,22 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = -45.0
 grow_horizontal = 2
 grow_vertical = 0
 metadata/_edit_group_ = true
 
 [node name="ActionsContainer" type="HBoxContainer" parent="game_ui_buttons"]
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
 anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 1194.0
-grow_horizontal = 2
+anchor_bottom = 0.5
+offset_left = -555.0
+offset_top = -17.5
+offset_bottom = 17.5
+grow_horizontal = 0
 grow_vertical = 2
 alignment = 1
 
