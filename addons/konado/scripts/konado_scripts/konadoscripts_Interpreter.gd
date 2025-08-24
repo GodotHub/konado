@@ -44,6 +44,9 @@ var tmp_tags = []
 ## 是否允许自定义后缀脚本，开启后将不强制要求使用ks作为脚本文件后缀
 var allow_custom_suffix: bool = false
 
+## 是否允许跳过错误语法行，开启后将跳过错误语法行，继续解析后续语法，只打印警告信息
+var allow_skip_error_line: bool = false
+
 ## 是否开启演员验证，开启后将针对所有演员语法进行验证，判断是否存在
 var enable_actor_validation: bool = true
 
@@ -55,16 +58,19 @@ func init_insterpreter(flags: Dictionary[String, Variant]) -> bool:
 	if flags.has("allow_custom_suffix"):
 		# 验证类型是否正确
 		if flags["allow_custom_suffix"] is not bool:
-			_scripts_warning(tmp_path, tmp_original_line_number, "allow_custom_suffix选项类型错误，应为bool类型")
+			_scripts_debug(tmp_path, tmp_original_line_number, "allow_custom_suffix选项类型错误，应为bool类型")
 			return false
-		else:
-			allow_custom_suffix = flags["allow_custom_suffix"] as bool
+		allow_custom_suffix = flags["allow_custom_suffix"] as bool
+	if flags.has("allow_skip_error_line"):
+		if flags["allow_skip_error_line"] is not bool:
+			_scripts_debug(tmp_path, tmp_original_line_number, "allow_skip_error_line选项类型错误，应为bool类型")
+			return false
+		allow_skip_error_line = flags["allow_skip_error_line"] as bool
 	if flags.has("enable_actor_validation"):
 		if flags["enable_actor_validation"] is not bool:
-			_scripts_warning(tmp_path, tmp_original_line_number, "enable_actor_validation选项类型错误，应为bool类型")
+			_scripts_debug(tmp_path, tmp_original_line_number, "enable_actor_validation选项类型错误，应为bool类型")
 			return false
-		else:
-			enable_actor_validation = flags["enable_actor_validation"] as bool
+		enable_actor_validation = flags["enable_actor_validation"] as bool
 		
 	# 提前初始化正则表达式，避免重复编译
 	dialogue_content_regex = RegEx.new()
@@ -109,13 +115,6 @@ func process_scripts_to_data(path: String) -> DialogueShot:
 	file.close()
 
 	
-	## 提前初始化正则表达式，避免重复编译
-	#dialogue_content_regex = RegEx.new()
-	#dialogue_content_regex.compile("^\"(.*?)\"\\s+\"(.*?)\"(?:\\s+(\\S+))?$")
-#
-	#dialogue_metadata_regex = RegEx.new()
-	#dialogue_metadata_regex.compile("^(shot_id)\\s+(\\S+)")
-	
 	_scripts_info(path, 0, "开始解析脚本文件")
 
 	var diadata: DialogueShot = DialogueShot.new()
@@ -145,9 +144,25 @@ func process_scripts_to_data(path: String) -> DialogueShot:
 		tmp_line_number = i
 		var line = content_lines[i]
 		var original_line_number =  i + 2
+
+		tmp_original_line_number = original_line_number
+
+		# 不处理缩进的行
+		if line.begins_with("    ") or line.begins_with("\t"):
+			#print("解析成功：忽略标签内缩进行\n")
+			continue
+		line = line.strip_edges()
+		# 空行或注释行，必须提前处理strip_edges
+		if line.is_empty():
+			#print("解析成功：忽略空行\n")
+			continue
+		if line.begins_with("##"):
+			#print("解析成功：忽略特殊注释行\n")
+			continue
+
 		print("解析第%d行" % original_line_number)
 		print("第%d行内容：" % original_line_number, line)
-		tmp_original_line_number = original_line_number
+
 		var dialog: Dialogue = parse_line(line, original_line_number, path)
 		if dialog:
 			# 如果是标签对话，则添加到标签对话字典中
@@ -155,6 +170,14 @@ func process_scripts_to_data(path: String) -> DialogueShot:
 				diadata.branchs.set(dialog.branch_id, dialog)
 			else:
 				diadata.dialogs.append(dialog)
+		else:
+			if allow_skip_error_line:
+				_scripts_warning(path, original_line_number, "解析失败：无法识别的语法，请检查语法是否正确或删除该行: %s" % line)
+				continue
+			else:
+				_scripts_debug(path, original_line_number, "解析失败：无法识别的语法，请检查语法是否正确或删除该行: %s" % line)
+				break
+			print("\n")
 
 	diadata.dep_characters = dep_characters
 
@@ -177,19 +200,19 @@ func parse_single_line(line: String, line_number: int, path: String) -> Dialogue
 
 # 内部解析实现
 func parse_line(line: String, line_number: int, path: String) -> Dialogue:
-	# 不处理缩进的行
-	if line.begins_with("    ") or line.begins_with("\t"):
-		print("解析成功：忽略标签内缩进行\n")
-		return null
+	# # 不处理缩进的行
+	# if line.begins_with("    ") or line.begins_with("\t"):
+	# 	print("解析成功：忽略标签内缩进行\n")
+	# 	return null
 
-	line = line.strip_edges()
-	# 空行或注释行，必须提前处理strip_edges
-	if line.is_empty():
-		print("解析成功：忽略空行\n")
-		return null
-	if line.begins_with("##"):
-		print("解析成功：忽略特殊注释行\n")
-		return null
+	# line = line.strip_edges()
+	# # 空行或注释行，必须提前处理strip_edges
+	# if line.is_empty():
+	# 	print("解析成功：忽略空行\n")
+	# 	return null
+	# if line.begins_with("##"):
+	# 	print("解析成功：忽略特殊注释行\n")
+	# 	return null
 
 	var dialog := Dialogue.new()
 	dialog.source_file_line = line_number
@@ -226,8 +249,7 @@ func parse_line(line: String, line_number: int, path: String) -> Dialogue:
 		return dialog
 
 	dialog = null
-	_scripts_warning(path, line_number, "解析失败：无法识别的语法，请检查语法是否正确或删除该行: %s" % line)
-	print("\n")
+
 	return null
 
 # 解析元数据（前两行）
@@ -238,10 +260,10 @@ func _parse_metadata(lines: PackedStringArray, path: String) -> PackedStringArra
 
 	var metadata: PackedStringArray = []
 
-	for i in 1:
-		var result = dialogue_metadata_regex.search(lines[i])
+	if lines[0]:
+		var result = dialogue_metadata_regex.search(lines[0])
 		if not result:
-			_scripts_debug(path, i + 1, "无效的元数据格式: %s" % lines[i])
+			_scripts_debug(path, 1, "无效的元数据格式: %s" % lines[0])
 			return []
 		
 		var key = result.get_string(1)
@@ -251,6 +273,8 @@ func _parse_metadata(lines: PackedStringArray, path: String) -> PackedStringArra
 			"shot_id":
 				metadata.append(value)
 	return metadata
+
+	
 
 # 解析注释
 func _parse_label(line: String, dialog: Dialogue) -> bool:
@@ -343,14 +367,14 @@ func _parse_actor(line: String, dialog: Dialogue) -> bool:
 
 # 创建角色
 func _create_actor(parts: PackedStringArray) -> DialogueActor:
-	if parts.size() < 8:
+	if parts.size() < 9:
 		return null
 	
 	var actor = DialogueActor.new()
 	actor.character_name = parts[2]
 	actor.character_state = parts[3]
 	actor.actor_position = Vector2(parts[5].to_float(), parts[6].to_float())
-	actor.actor_scale = parts[7].to_float()
+	actor.actor_scale = parts[8].to_float()
 	if parts.size() == 10:
 		if parts[9] == "mirror":
 			actor.actor_mirror = true
@@ -376,19 +400,51 @@ func _parse_choice(line: String, dialog: Dialogue) -> bool:
 		return false
 	
 	dialog.dialog_type = Dialogue.Type.Show_Choice
-	var choices = line.split(" ", false)
-	for i in range(1, choices.size()):
-		if i % 2 == 1 and i + 1 < choices.size():
+	dialog.choices.clear()  # 清空现有选项
+	
+	# 移除开头的"choice"关键字
+	var content = line.substr(6).strip_edges()
+	var in_quotes = false
+	var current_text = ""
+	var parts = []
+	
+	# 手动解析字符串，正确处理引号内的内容
+	for i in range(content.length()):
+		var c = content[i]
+		
+		if c == "\"":
+			if in_quotes and i > 0 and content[i-1] != "\\":  # 忽略转义的引号
+				in_quotes = false
+				if current_text != "":
+					parts.append(current_text)
+					current_text = ""
+			else:
+				in_quotes = true
+		elif c == " " and not in_quotes:
+			if current_text != "":
+				parts.append(current_text)
+				current_text = ""
+		else:
+			current_text += c
+	
+	# 添加最后一个部分
+	if current_text != "":
+		parts.append(current_text)
+	
+	# 创建选项对象
+	for i in range(0, parts.size(), 2):
+		if i + 1 < parts.size():
 			var choice = DialogueChoice.new()
-			choice.choice_text = choices[i].trim_prefix("\"").trim_suffix("\"")
-			choice.jump_tag = choices[i + 1]
+			choice.choice_text = parts[i].replace("\\\"", "\"")  # 恢复转义的引号
+			choice.jump_tag = parts[i + 1]
 			dialog.choices.append(choice)
+	
+	# 记录日志
 	var choices_strs = ""
 	for choice in dialog.choices:
-		choices_strs += choice.choice_text + " "
-	# 添加检查功能
+		choices_strs += "\"" + choice.choice_text + "\" "
+	
 	cur_tmp_option_lines[tmp_original_line_number] = line
-
 	_scripts_info(tmp_path, tmp_line_number + 1, "选项解析完成" + " " + "选项数量" + str(dialog.choices.size()) +  "  选项： " + choices_strs)
 	return true
 
@@ -405,23 +461,31 @@ func _parse_branch(line: String, dialog: Dialogue) -> bool:
 	dialog.branch_id = parts[1]
 
 	var tag_inner_line_number = tmp_line_number + 1
+	var expected_indent = "    "  # 预期的缩进（4个空格或制表符）
 
 	# 遍历标签内的行(缩进)
 	while tag_inner_line_number < tmp_content_lines.size():
-		var inner_line = tmp_content_lines[tag_inner_line_number].strip_edges()
-
-		# 检查缩进
-		if tmp_content_lines[tag_inner_line_number].begins_with("    ") or tmp_content_lines[tag_inner_line_number].begins_with("\t"):
+		var original_line = tmp_content_lines[tag_inner_line_number]
+		var inner_line = original_line.strip_edges()
+		
+		# 检查是否为空行或只有空白字符的行
+		if inner_line.is_empty():
 			tag_inner_line_number += 1
-			if not (inner_line.is_empty()):
-				if (inner_line.begins_with("branch")):
-					_scripts_debug(tmp_path, tag_inner_line_number + 1, "branch内不能嵌套branch")
-					return false
-				var inner_dialog = parse_line(inner_line, tag_inner_line_number + 1, tmp_path)
-				dialog.branch_dialogue.append(inner_dialog)
-				pass
-		else:
-			break
+			continue  # 跳过空行但继续处理后续内容
+		
+		# 检查缩进，允许4个空格或制表符
+		if not (original_line.begins_with("    ") or original_line.begins_with("\t")):
+			break  # 没有缩进，结束分支内容
+		
+		tag_inner_line_number += 1
+		
+		if inner_line.begins_with("branch"):
+			_scripts_debug(tmp_path, tag_inner_line_number, "branch内不能嵌套branch")
+			return false
+		
+		var inner_dialog = parse_line(inner_line, tag_inner_line_number, tmp_path)
+		if inner_dialog:
+			dialog.branch_dialogue.append(inner_dialog)
 
 	tmp_tags.append(dialog.branch_id)
 

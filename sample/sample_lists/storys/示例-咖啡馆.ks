@@ -21,7 +21,9 @@ actor change 可娜 享受1
 choice "好啊，给我来一杯" coffee_choice "不用了，我喝水就好" water_choice
 
 branch coffee_choice
+
     "可娜" "马上就好！店长特制的咖啡豆..."
+
     "黛西" "哇，这个香气！"
     "可娜" "喝完一定会觉得神清气爽的！"
     choice "不用了，我喝水就好" water_choice
