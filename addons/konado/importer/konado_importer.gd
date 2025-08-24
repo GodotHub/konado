@@ -14,7 +14,7 @@ func _get_visible_name():
 	return "Konado Scripts"
 
 func _get_recognized_extensions():
-	return ["ks", "txt"]
+	return ["ks"]
 
 func _get_save_extension():
 	return "res"
