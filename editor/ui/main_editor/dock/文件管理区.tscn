@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://tdgiaaxwqgb2"]
 
-[ext_resource type="PackedScene" uid="uid://djq23ftlfwkn1" path="res://addons/konado/editor/ui/main_editor/dock/dock.tscn" id="1_ae77l"]
+[ext_resource type="PackedScene" uid="uid://djq23ftlfwkn1" path="res://editor/ui/main_editor/dock/dock.tscn" id="1_ae77l"]
 
 [node name="文件管理区" type="Panel"]
 anchors_preset = -1

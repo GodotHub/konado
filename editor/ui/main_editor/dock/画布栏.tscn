@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://ngoysingi1jp"]
 
-[ext_resource type="Script" uid="uid://s1iea3esjkda" path="res://addons/konado/editor/ui/main_editor/dock/画布编辑.gd" id="1_408mo"]
+[ext_resource type="Script" uid="uid://s1iea3esjkda" path="res://editor/ui/main_editor/dock/画布编辑.gd" id="1_408mo"]
 
 [node name="画布编辑" type="BoxContainer"]
 custom_minimum_size = Vector2(300, 300)
