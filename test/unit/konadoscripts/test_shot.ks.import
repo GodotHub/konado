@@ -12,3 +12,5 @@ dest_files=["res://.godot/imported/test_shot.ks-2421df59a2649dc2c463e1099a0089d9
 
 [params]
 
+allow_skip_error_line=false
+enable_actor_validation=true

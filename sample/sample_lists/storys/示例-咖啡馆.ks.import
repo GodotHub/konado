@@ -12,3 +12,5 @@ dest_files=["res://.godot/imported/示例-咖啡馆.ks-27c197cf9bbbfb0c98f5df32a
 
 [params]
 
+allow_skip_error_line=false
+enable_actor_validation=true

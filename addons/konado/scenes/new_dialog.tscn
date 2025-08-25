@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://bwskpda2vmn5x"]
 
-[ext_resource type="PackedScene" uid="uid://dhljntqamnusm" path="res://template/knodo_dialog_template_1.tscn" id="1_ysc00"]
+[ext_resource type="PackedScene" uid="uid://dhljntqamnusm" path="res://template/konado_dialog_template_1.tscn" id="1_ysc00"]
 [ext_resource type="Script" uid="uid://cfbojxb1pdbrs" path="res://addons/konado/scripts/audio/audio_interface.gd" id="1_ytwdp"]
 [ext_resource type="PackedScene" uid="uid://t5hwv7sqfex4" path="res://addons/konado/assets/template/game_ui_template.tscn" id="3_5shdr"]
 
