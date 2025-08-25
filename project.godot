@@ -13,13 +13,14 @@ config_version=5
 config/name="Konado Editor"
 config/description="Konado Editor，Konado编辑器"
 run/main_scene="uid://bommt7l6wmdsa"
-config/features=PackedStringArray("4.4", "Forward Plus")
+config/features=PackedStringArray("4.4", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
 ComponentFactory="*res://editor/ui/ui_components/component_factory.gd"
 KS_SAVE_AND_LOAD="*res://addons/konado/scripts/save_and_load/SaL.gd"
+DialogueManagerAPI="*res://addons/konadotnet/api/DialogueManagerAPI.cs"
 
 [display]
 
@@ -30,11 +31,11 @@ window/stretch/aspect="ignore"
 
 [dotnet]
 
-project/assembly_name="KonadoEditor"
+project/assembly_name="Konado"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/gut/plugin.cfg", "res://addons/konado/plugin.cfg")
+enabled=PackedStringArray("res://addons/gut/plugin.cfg", "res://addons/konado/plugin.cfg", "res://addons/konadotnet/plugin.cfg")
 
 [gui]
 

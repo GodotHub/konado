@@ -18,7 +18,7 @@ var konado_editor_instance: KonadoEditorWindow = null
 const DIALOGUE_DATA_SCRIPT := preload("res://addons/konado/scripts/dialogue/dialogue_shot.gd")
 const IMPORTER_SCRIPT := preload("res://addons/konado/importer/konado_importer.gd")
 const SAVE_AND_LOAD := "res://addons/konado/scripts/save_and_load/SaL.gd"
-const Component_Factory = "res://addons/konado/editor/ui/ui_components/component_factory.gd"
+const Component_Factory = "res://editor/ui/ui_components/component_factory.gd"
 
 ## 插件成员
 var import_plugin: EditorImportPlugin

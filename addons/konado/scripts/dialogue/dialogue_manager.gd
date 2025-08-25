@@ -141,20 +141,20 @@ func _ready() -> void:
 			print("自动初始化对话")
 			# 初始化对话
 			if not autostart:
-				_init_dialogue(func():
+				init_dialogue(func():
 					print("请手动开始对话")
 					)
 			else:
-				_init_dialogue(func():
+				init_dialogue(func():
 					print("自动开始对话")
 					#await get_tree().create_timer(0.1).timeout
 					await get_tree().process_frame
 					if dialog_data.dialogs[0].dialog_type == Dialogue.Type.START:
-						_start_dialogue()
+						start_dialogue()
 					else: 
 						print("第一句应该是START，请在脚本中修改")
 						
-						_start_dialogue()
+						start_dialogue()
 					)
 		else:
 			print("请手动初始化对话")
@@ -177,7 +177,7 @@ func print_hello() -> bool:
 
 
 ## 初始化对话的方法
-func _init_dialogue(callback: Callable = Callable()) -> void:
+func init_dialogue(callback: Callable = Callable()) -> void:
 	if not debug_mode:
 		if dialogue_chapter == null:
 			printerr("对话列表资源为空")
@@ -211,7 +211,13 @@ func set_dialogue_data(dialogue_data: DialogueShot) -> void:
 	if dialogue_data == null:
 		printerr("对话数据为空")
 		return
-	print(dialogue_data.to_string())
+	self.dialog_data = dialogue_data
+
+func load_dialogue_data_from_path(path: String) -> void:
+	var dialogue_data = load(path)
+	if dialogue_data == null:
+		printerr("对话数据为空")
+		return
 	self.dialog_data = dialogue_data
 
 ## 设置角色表的方法
@@ -237,7 +243,7 @@ func set_bgm_list(bgm_list: DialogBGMList) -> void:
 	self.bgm_list = bgm_list
 
 ## 开始对话的方法
-func _start_dialogue() -> void:
+func start_dialogue() -> void:
 	# 显示
 	if !_dialog_interface:
 		_dialog_interface.show()
@@ -427,7 +433,7 @@ func _process(delta) -> void:
 				# 如果开始对话
 				elif dialog_type == Dialogue.Type.START:
 					if dialogueState != DialogState.PLAYING:
-						_start_dialogue()
+						start_dialogue()
 					_process_next()
 					pass
 				# 如果剧终
@@ -792,10 +798,10 @@ func _switch_data(data: DialogueShot) -> bool:
 	_stop_dialogue()
 	print("切换到 " + data.shot_id + " 剧情文件")
 	dialog_data = data
-	_init_dialogue()
+	init_dialogue()
 	#await get_tree().create_timer(0.01).timeout
 	await get_tree().process_frame
-	_start_dialogue()
+	start_dialogue()
 	return true
 	
 ## 按下存档按钮

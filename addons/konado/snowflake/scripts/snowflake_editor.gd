@@ -122,8 +122,8 @@ func load_ks_file(path: String) -> void:
 	
 	#dialogue_manager.set_chara_list()
 	dialogue_manager.set_dialogue_data(diadata)
-	dialogue_manager._init_dialogue()
-	dialogue_manager._start_dialogue()
+	dialogue_manager.init_dialogue()
+	dialogue_manager.start_dialogue()
 
 
 ## 清空对话盒
