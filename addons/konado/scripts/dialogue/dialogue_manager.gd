@@ -114,6 +114,18 @@ var can_continue = true
 ## 调试模式
 @export var debug_mode = false
 
+## 镜头开启播放的信号
+signal shot_start
+
+## 镜头结束播放的信号
+signal shot_end
+
+## 对话开始播放的信号
+signal dialogue_line_start(line: int)
+
+## 对话结束播放的信号
+signal dialogue_line_end(line: int)
+
 
 func _ready() -> void:
 	# 连接按钮信号
@@ -253,6 +265,9 @@ func start_dialogue() -> void:
 	_dialogue_goto_state(DialogState.PLAYING)
 	print_rich("[color=yellow]开始对话 [/color]")
 
+	# 播放镜头信号
+	shot_start.emit()
+
 
 func _process(delta) -> void:
 	match dialogueState:
@@ -278,6 +293,9 @@ func _process(delta) -> void:
 				var dialog_type = dialog_data.dialogs[curline].dialog_type
 				# 对话当前句
 				var dialog = dialog_data.dialogs[curline]
+
+				dialogue_line_start.emit(curline)
+
 				# 隐藏选项
 				_dialog_interface._choice_container.hide()
 
@@ -439,7 +457,7 @@ func _process(delta) -> void:
 				# 如果剧终
 				elif dialog_type == Dialogue.Type.THE_END:
 					# 停止对话
-					_stop_dialogue()
+					stop_dialogue()
 					pass
 					
 		# 完成下一个状态
@@ -521,6 +539,7 @@ func _process_next(s: Signal = Signal()) -> void:
 		s.disconnect(_process_next)
 		print("触发自动下一个信号")
 	_dialogue_goto_state(DialogState.PAUSED)
+
 	
 	# 暂时先用等待的方法，没找到更好的解决方法
 	#await get_tree().create_timer(0.001).timeout
@@ -548,10 +567,12 @@ func _process_next(s: Signal = Signal()) -> void:
 
 	
 ## 关闭对话的方法
-func _stop_dialogue() -> void:
+func stop_dialogue() -> void:
 	print_rich("[color=yellow]关闭对话[/color]")
 	# 切换到关闭状态
 	_dialogue_goto_state(DialogState.OFF)
+
+	shot_end.emit()
 	
 ## 对话状态切换的方法
 func _dialogue_goto_state(dialogstate: DialogState) -> void:
@@ -572,6 +593,7 @@ func _nextline() -> void:
 
 ## 继续，下一句按钮
 func _continue() -> void:
+	dialogue_line_end.emit(curline)
 	print_rich("[color=yellow]点击继续按钮，判断状态[/color]")
 	match dialogueState:
 		DialogState.OFF:
@@ -795,7 +817,7 @@ func _get_dialog_data(shot_id: String) -> DialogueShot:
 func _switch_data(data: DialogueShot) -> bool:
 	if not data and data.dialogs.size() > 0:
 		return false
-	_stop_dialogue()
+	stop_dialogue()
 	print("切换到 " + data.shot_id + " 剧情文件")
 	dialog_data = data
 	init_dialogue()
@@ -1020,5 +1042,5 @@ func debug_load_dialog_data(data) -> bool:
 ## 退出节点
 func _exit_tree():
 	if not is_in_editor_and_idle():
-		_stop_dialogue()
+		stop_dialogue()
 	pass
