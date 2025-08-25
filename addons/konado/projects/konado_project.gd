@@ -3,7 +3,7 @@
 # File: konado_project.gd
 # Author: DSOE1024
 # Created: 2025-08-03
-# Last Modified: 2025-08-03
+# Last Modified: 2025-08-25
 # Description:
 #   Konado工程配置文件
 ################################################################################
@@ -13,7 +13,7 @@ extends Resource
 class_name KonadoProject
 
 # 默认项目配置
-const DEFAULT_PRO_NAME = "Default Project"
+const DEFAULT_PRO_NAME = "Konado Project"
 const DEFAULT_PRO_VER = "0.0.1"
 const DEFAULT_PRO_URL = "https://gitcode.com/godothub/konado"
 const DEFAULT_PRO_DESC = "This is a game project powered by Konado."
@@ -45,33 +45,59 @@ const DEFAULT_PRO_DESC = "This is a game project powered by Konado."
 		notify_property_list_changed()
 		apply_to_project_settings()
 
+## BGM列表
+@export var bgm_list: DialogBGMList
 
-## 从json字典加载
-func from_json(json: Dictionary) -> void:
-	project_name = json["project_name"]
-	project_version = json["project_version"]
-	project_url = json["project_url"]
-	project_author = json["project_author"]
-	project_description = json["project_description"]
+## 音效列表
+@export var se_list: DialogSoundEffectList
 
-## 从json字符串加载
-func from_json_string(json_string: String) -> void:
-	from_json(JSON.parse_string(json_string))
+## 配音列表
+@export var voice_list: DialogVoiceList
 
+## 角色列表
+@export var character_list: CharacterList
 
-## 转化为json字典
-func to_json() -> Dictionary:
-	return {
-		"project_name": project_name,
-		"project_version": project_version,
-		"project_url": project_url,
-		"project_author": project_author,
-		"project_description": project_description
-	}
+## 背景列表
+@export var background_list: BackgroundList
 
-## 从json字符串加载
-func to_json_string() -> String:
-	return JSON.stringify(to_json())
+# 对话镜头
+@export var dialogue_shots: Dictionary = {}
+
+## 添加对话镜头，chapter为章节名，shot为镜头
+func add_dialogue_shot(chapter: String, shot_path: String) -> void:
+	if not dialogue_shots.has(chapter):
+		dialogue_shots[chapter] = []
+
+	if not FileAccess.file_exists(shot_path):
+		printerr("对话镜头文件不存在: " + shot_path)
+		return
+
+	dialogue_shots[chapter].append(shot_path)
+	print("添加对话镜头: " + chapter + " " + shot_path)
+
+## 是否有对话镜头，chapter为章节名，index为镜头索引
+func has_dialogue_shot(chapter: String, index: int) -> bool:
+	if not dialogue_shots.has(chapter):
+		printerr("章节没有找到: " + chapter)
+		return false
+	return index < dialogue_shots[chapter].size()
+
+## 获取对话镜头，chapter为章节名，index为镜头索引
+func get_dialogue_shot(chapter: String, index: int) -> String:
+	if not dialogue_shots.has(chapter):
+		printerr("章节没有找到: " + chapter)
+		return ""
+	return dialogue_shots[chapter][index]
+
+## 删除对话镜头，chapter为章节名，index为镜头索引
+func delete_dialogue_shot(chapter: String, index: int) -> void:
+	if not dialogue_shots.has(chapter):
+		printerr("章节没有找到: " + chapter)
+		return
+	var shot_path = dialogue_shots[chapter][index]
+	dialogue_shots[chapter].remove(index)
+	print("删除对话镜头: " + chapter + " " + shot_path)
+	
 
 ## 生成默认项目
 func gen_default_project() -> void:
@@ -90,3 +116,6 @@ func apply_to_project_settings() -> void:
 		ProjectSettings.set("application/config/name", project_name)
 		ProjectSettings.set("application/config/version", project_version)
 		ProjectSettings.set("application/config/description", project_description)
+
+	else:
+		print("非编辑器模式无法应用项目设置")
