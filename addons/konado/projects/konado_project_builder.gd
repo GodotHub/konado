@@ -11,6 +11,9 @@
 extends Node
 class_name KonadoProjectBuilder
 
+func gen_konado_project(project: KonadoProject, project_path: String) -> void:
+	pass
+
 
 ## 生成Godot工程
 func gen_godot_project(project: KonadoProject, project_path: String, main_scene_path: String) -> void:
