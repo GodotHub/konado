@@ -5,11 +5,18 @@
 # Created: 2025-08-03
 # Last Modified: 2025-08-03
 # Description:
-#   Konado工程生成器
+#   Konado工程生成器，用于生成Konado工程文件以及一个完整的Godot Konado工程
+#   在此工程中，Konado插件已经启用，并且可以正常使用
 ################################################################################
 
 extends Node
 class_name KonadoProjectBuilder
+
+
+func _ready() -> void:
+	gen_godot_project(KonadoProject.new(), "E:/konado_test", "res://main.tscn")
+	# 开始复制过程
+	copy_konado_directory("E:/konado_test")
 
 func gen_konado_project(project: KonadoProject, project_path: String) -> void:
 	pass
@@ -17,6 +24,11 @@ func gen_konado_project(project: KonadoProject, project_path: String) -> void:
 
 ## 生成Godot工程
 func gen_godot_project(project: KonadoProject, project_path: String, main_scene_path: String) -> void:
+	# 检查目录是否存在，不存在则创建
+	if ensure_directory_exists(project_path) == false:
+		print("无法创建项目目录，退出")
+		return
+
 	var project_file_path = project_path + "/project.godot"
 	if FileAccess.file_exists(project_file_path) == false:
 		var project_file = FileAccess.open(project_file_path, FileAccess.WRITE)
@@ -40,7 +52,151 @@ func gen_godot_project(project: KonadoProject, project_path: String, main_scene_
 		# 获取指定路径场景文件或者UID
 		project_config.set_value("application", "run/main_scene", main_scene_path)
 
+		var enabled_plugins: PackedStringArray = ["res://addons/konado/plugin.cfg"]
+
+		project_config.set_value("editor_plugins", "enabled", enabled_plugins)
+
 		project_file.store_string(project_config.encode_to_text())
 		project_file.close()
 	else:
 		print("project.godot已经存在，无法在此路径下生成工程")
+
+## 确保目录存在，如果不存在则创建，返回true表示成功，false表示失败
+func ensure_directory_exists(path: String) -> bool:
+	if DirAccess.dir_exists_absolute(path):
+		print("目录已经存在: " + path)
+		return true
+	var err = DirAccess.make_dir_absolute(path)
+	if err != OK:
+		print("无法创建目录: " + path + ", 错误: " + str(err))
+		return false
+	print("成功创建目录: " + path)
+	return true
+
+## 复制konado插件目录
+func copy_konado_directory(project_path: String):
+	# 检查目录是否存在，不存在则创建
+	if ensure_directory_exists(project_path) == false:
+		print("无法创建项目目录，退出")
+		return
+
+	var source_dir = ""
+
+	# 逆天bug，Engine.is_editor_hint() 在编辑器中竟然返回false ？？？气笑了
+	# 似乎只有C#版本的Godot有这个问题，哪位好心人能帮我看看怎么解决吗？
+	# 临时解决方案：通过判断可执行文件路径是否包含"Godot"来区分编辑器和运行时
+	if OS.get_executable_path().contains("Godot"):
+		source_dir = "res://addons/konado"
+	else:
+		source_dir = OS.get_executable_path().get_base_dir().path_join("template/addons/konado")
+
+	print("源目录: " + source_dir)
+	
+	if source_dir == "":
+		push_error("无法获取源目录")
+		return
+	if source_dir == project_path:
+		push_error("源目录和目标目录相同")
+		return
+	if DirAccess.dir_exists_absolute(source_dir) == false:
+		push_error("源目录不存在: " + source_dir)
+		return
+
+	var target_dir = project_path.path_join("addons/konado")
+
+	# 确保源目录存在
+	if not DirAccess.dir_exists_absolute(source_dir):
+		push_error("源目录不存在: " + source_dir)
+		return
+
+	# 复制目录内容
+	if copy_directory_recursive(source_dir, target_dir):
+		print("成功复制目录从 " + source_dir + " 到 " + target_dir)
+	else:
+		push_error("复制目录失败")
+
+
+# 递归复制目录
+func copy_directory_recursive(source: String, target: String) -> bool:
+	# 确保目标目录存在
+	var dir = DirAccess.open(target.get_base_dir())
+	if dir == null:
+		# 尝试创建父目录
+		if not make_dir_recursive(target.get_base_dir()):
+			push_error("无法创建父目录: " + target.get_base_dir())
+			return false
+		dir = DirAccess.open(target.get_base_dir())
+		if dir == null:
+			push_error("无法打开目录: " + target.get_base_dir())
+			return false
+
+	# 复制目录
+	var source_dir = DirAccess.open(source)
+	if source_dir == null:
+		push_error("无法打开源目录: " + source)
+		return false
+
+	# 确保目标目录存在
+	if not DirAccess.dir_exists_absolute(target):
+		var err = dir.make_dir_recursive(target)
+		if err != OK:
+			push_error("创建目录失败: " + target + ", 错误: " + str(err))
+			return false
+
+	# 打开目标目录
+	var target_dir = DirAccess.open(target)
+	if target_dir == null:
+		push_error("无法打开目标目录: " + target)
+		return false
+
+	# 列出源目录中的所有项目
+	source_dir.list_dir_begin()
+	var file_name = source_dir.get_next()
+
+	while file_name != "":
+		if file_name != "." and file_name != "..":
+			var source_path = source.path_join(file_name)
+			var target_path = target.path_join(file_name)
+
+			if source_dir.current_is_dir():
+				# 如果是目录，递归复制
+				if not copy_directory_recursive(source_path, target_path):
+					source_dir.list_dir_end()
+					return false
+			else:
+				# 如果是文件，复制文件
+				if FileAccess.file_exists(target_path):
+					print("文件已存在，跳过: " + target_path)
+				else:
+					var err = DirAccess.copy_absolute(source_path, target_path)
+					if err != OK:
+						push_error(
+							"复制文件失败: " + source_path + " 到 " + target_path + ", 错误: " + str(err)
+						)
+						source_dir.list_dir_end()
+						return false
+
+		file_name = source_dir.get_next()
+
+	source_dir.list_dir_end()
+	return true
+
+
+# 安全地创建目录
+func make_dir_recursive(path: String) -> bool:
+	# 处理特殊路径（如 user://）
+	if path.begins_with("user://"):
+		var user_dir = DirAccess.open("user://")
+		if user_dir == null:
+			push_error("无法打开用户目录")
+			return false
+
+		# 移除 user:// 前缀
+		var relative_path = path.replace("user://", "")
+		return user_dir.make_dir_recursive(relative_path) == OK
+	else:
+		# 对于其他路径，使用标准方法
+		var dir = DirAccess.open(path.get_base_dir())
+		if dir == null:
+			return false
+		return dir.make_dir_recursive(path) == OK
