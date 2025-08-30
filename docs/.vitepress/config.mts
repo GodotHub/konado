@@ -197,30 +197,30 @@ export default defineConfig({
       }
     },
 
-    tc: {
-      label: '繁体中文',
-      lang: 'zh-TW',
-      themeConfig: {
-        nav: [
-          { text: 'Home', link: '/' },
-        ],
-        sidebar: [
-          { text: 'Guide', link: '/' }
-        ]
-      }
-    },
+    // tc: {
+    //   label: '繁体中文',
+    //   lang: 'zh-TW',
+    //   themeConfig: {
+    //     nav: [
+    //       { text: 'Home', link: '/' },
+    //     ],
+    //     sidebar: [
+    //       { text: 'Guide', link: '/' }
+    //     ]
+    //   }
+    // },
 
-    en: {
-      label: 'English',
-      lang: 'en',
-      themeConfig: {
-        nav: [
-          { text: 'Home', link: '/' },
-        ],
-        sidebar: [
-          { text: 'Guide', link: '/' }
-        ]
-      }
-    }
+    // en: {
+    //   label: 'English',
+    //   lang: 'en',
+    //   themeConfig: {
+    //     nav: [
+    //       { text: 'Home', link: '/' },
+    //     ],
+    //     sidebar: [
+    //       { text: 'Guide', link: '/' }
+    //     ]
+    //   }
+    // }
   }
 })
