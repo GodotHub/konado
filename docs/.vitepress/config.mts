@@ -1,5 +1,4 @@
 import { defineConfig } from 'vitepress'
-import { execSync } from 'child_process'
 import { MermaidMarkdown, MermaidPlugin } from 'vitepress-plugin-mermaid';
 
 export default defineConfig({
