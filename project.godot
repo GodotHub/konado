@@ -12,7 +12,7 @@ config_version=5
 
 config/name="Konado Editor"
 config/description="Konado Editor，Konado编辑器"
-run/main_scene="uid://bommt7l6wmdsa"
+run/main_scene="res://sample/konado_sample.tscn"
 config/features=PackedStringArray("4.4", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -35,7 +35,7 @@ project/assembly_name="Konado"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/gut/plugin.cfg", "res://addons/konado/plugin.cfg", "res://addons/konadotnet/plugin.cfg")
+enabled=PackedStringArray("res://addons/gut/plugin.cfg", "res://addons/konado/plugin.cfg", "res://addons/konadotnet/plugin.cfg", "res://addons/main_scene_switcher/plugin.cfg")
 
 [gui]
 
