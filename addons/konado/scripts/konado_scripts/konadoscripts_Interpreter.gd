@@ -3,7 +3,7 @@
 # File: konadoscripts_Interpreter.gd
 # Author: DSOE1024
 # Created: 2025-07-12
-# Last Modified: 2025-07-14
+# Last Modified: 2025-09-04
 # Description:
 #    Konado脚本解释器
 ################################################################################
