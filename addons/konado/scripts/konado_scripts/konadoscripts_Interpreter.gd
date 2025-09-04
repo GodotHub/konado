@@ -156,8 +156,8 @@ func process_scripts_to_data(path: String) -> DialogueShot:
 		if line.is_empty():
 			#print("解析成功：忽略空行\n")
 			continue
-		if line.begins_with("##"):
-			#print("解析成功：忽略特殊注释行\n")
+		if line.begins_with("#") and not line.begins_with("##"):
+			_scripts_debug(path, original_line_number, "注释行请用 ## 代替 #：%s" % line)
 			continue
 
 		print("解析第%d行" % original_line_number)
@@ -189,6 +189,34 @@ func process_scripts_to_data(path: String) -> DialogueShot:
 	if not _check_tag_and_choice():
 		_scripts_debug(path, 0, "标签和选项解析失败")
 
+	# 生成演员快照
+	var cur_actor_dic: Dictionary = {}
+	for dialogue in diadata.dialogs:
+		print("当前演员快照：", cur_actor_dic)
+		if dialogue.dialog_type == Dialogue.Type.Display_Actor:
+				var actor: DialogueActor = dialogue.show_actor
+				var chara_dict := {
+					"id": actor.character_name,
+					"x": actor.actor_position.x,
+					"y": actor.actor_position.y,
+					"state": actor.character_state,
+					"c_scale": actor.actor_scale,
+					"mirror": actor.actor_mirror
+					}
+				cur_actor_dic[actor.character_name] = chara_dict
+		if dialogue.dialog_type == Dialogue.Type.Exit_Actor:
+			if cur_actor_dic.has(dialogue.exit_actor):
+				cur_actor_dic.erase(dialogue.exit_actor)
+		if dialogue.dialog_type == Dialogue.Type.Actor_Change_State:
+			if cur_actor_dic.has(dialogue.change_state_actor):
+				cur_actor_dic[dialogue.change_state_actor]["state"] = dialogue.change_state
+		if dialogue.dialog_type == Dialogue.Type.Move_Actor:
+			if cur_actor_dic.has(dialogue.target_move_chara):
+				cur_actor_dic[dialogue.target_move_chara]["x"] = dialogue.target_move_pos.x
+				cur_actor_dic[dialogue.target_move_chara]["y"] = dialogue.target_move_pos.y
+		dialogue.actor_snapshots = cur_actor_dic
+	
+
 
 	return diadata
 
@@ -200,20 +228,6 @@ func parse_single_line(line: String, line_number: int, path: String) -> Dialogue
 
 # 内部解析实现
 func parse_line(line: String, line_number: int, path: String) -> Dialogue:
-	# # 不处理缩进的行
-	# if line.begins_with("    ") or line.begins_with("\t"):
-	# 	print("解析成功：忽略标签内缩进行\n")
-	# 	return null
-
-	# line = line.strip_edges()
-	# # 空行或注释行，必须提前处理strip_edges
-	# if line.is_empty():
-	# 	print("解析成功：忽略空行\n")
-	# 	return null
-	# if line.begins_with("##"):
-	# 	print("解析成功：忽略特殊注释行\n")
-	# 	return null
-
 	var dialog := Dialogue.new()
 	dialog.source_file_line = line_number
 	
@@ -278,11 +292,11 @@ func _parse_metadata(lines: PackedStringArray, path: String) -> PackedStringArra
 
 # 解析注释
 func _parse_label(line: String, dialog: Dialogue) -> bool:
-	if not line.begins_with("#"):
+	if not line.begins_with("##"):
 		return false
 
 	dialog.dialog_type = Dialogue.Type.LABEL
-	dialog.label_notes = line.replace("#", "")
+	dialog.label_notes = line.replace("##", "").strip_edges()
 
 	return true
 
@@ -535,6 +549,9 @@ func _check_tag_and_choice() -> bool:
 				return false
 		target_jump_tag = []
 	return true
+
+
+
 
 
 # 解析开始
