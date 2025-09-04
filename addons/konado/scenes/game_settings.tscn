@@ -1,8 +1,6 @@
-[gd_scene load_steps=18 format=3 uid="uid://dxukekl4aa0oo"]
+[gd_scene load_steps=16 format=3 uid="uid://dxukekl4aa0oo"]
 
 [ext_resource type="Script" uid="uid://c3tlablrhwbwo" path="res://addons/konado/scripts/setting_system/setting_manager.gd" id="1_rbjrk"]
-[ext_resource type="AudioStream" uid="uid://mss3k4dvu8nn" path="res://konado_example/bgm/Rain Fuse.mp3" id="2_w6aew"]
-[ext_resource type="AudioStream" uid="uid://bare7liolt10v" path="res://konado_example/bgm/Rained out.wav" id="3_ik1vh"]
 
 [sub_resource type="Gradient" id="Gradient_maqkw"]
 colors = PackedColorArray(0.435294, 0.435294, 0.588235, 1, 0.682353, 0.819608, 0.682353, 1)
@@ -151,6 +149,7 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_fbptt")
 selected = 0
 item_count = 3
 popup/item_0/text = "窗口"
+popup/item_0/id = 0
 popup/item_1/text = "全屏"
 popup/item_1/id = 1
 popup/item_2/text = "无边框"
@@ -171,6 +170,7 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_g80n3")
 selected = 0
 item_count = 6
 popup/item_0/text = "1280x720"
+popup/item_0/id = 0
 popup/item_1/text = "1366x768"
 popup/item_1/id = 1
 popup/item_2/text = "1920x1080"
@@ -197,6 +197,7 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_g80n3")
 selected = 0
 item_count = 2
 popup/item_0/text = "开"
+popup/item_0/id = 0
 popup/item_1/text = "关"
 popup/item_1/id = 1
 
@@ -255,6 +256,7 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_g80n3")
 selected = 1
 item_count = 2
 popup/item_0/text = "开"
+popup/item_0/id = 0
 popup/item_1/text = "关"
 popup/item_1/id = 1
 
@@ -273,6 +275,7 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_g80n3")
 selected = 0
 item_count = 2
 popup/item_0/text = "开"
+popup/item_0/id = 0
 popup/item_1/text = "关"
 popup/item_1/id = 1
 
@@ -308,18 +311,3 @@ theme_override_styles/hover = SubResource("StyleBoxEmpty_ow321")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_c0l82")
 text = "用户许可条款"
 alignment = 0
-
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("2_w6aew")
-autoplay = true
-bus = &"BGM"
-
-[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("3_ik1vh")
-autoplay = true
-bus = &"Voice"
-
-[node name="AudioStreamPlayer3" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("2_w6aew")
-autoplay = true
-bus = &"SE"
