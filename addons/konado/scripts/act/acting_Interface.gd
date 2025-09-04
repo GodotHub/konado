@@ -282,7 +282,7 @@ func create_character_from_dic(_actor_dic: Dictionary) -> void:
 		var target_chara: Character = null
 
 		
-		for character in chara_list:
+		for character in chara_list.characters:
 			if character.chara_name == chara_id:
 				target_chara = chara
 				break
