@@ -74,6 +74,18 @@ var jump_shot_id: String
 ## 注释
 var label_notes: String
 
+# 保存不同分支故事线的演员字典，默认故事线为"main"
+# 角色信息字典结构说明:
+# {
+#     "id": int,        # 角色唯一标识
+#     "x": float,       # X轴坐标
+#     "y": float,       # Y轴坐标
+#     "state": String,   # 当前状态标识
+#     "c_scale": float, # 缩放系数
+#     "mirror": bool    # 是否镜像翻转
+# }
+@export var actor_snapshots: Dictionary = {}
+
 class Label_Template:
 	@export var label_notes: String = ""
 	static func get_property_infos():

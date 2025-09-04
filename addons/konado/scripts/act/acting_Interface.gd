@@ -267,7 +267,53 @@ func create_character_from_dic(_actor_dic: Dictionary) -> void:
 		var state = chara["state"]
 		var c_scale = chara["c_scale"]
 		var mirror = chara["mirror"]
-		# TODO： 未来应该放到存档系统实现，这里没法获取演员状态表
+		
+		var node_name : String = chara_id
+		var temp_node : Node2D = Node2D.new()
+		temp_node.name = node_name
+		temp_node.set_position(pos)
+		# 创建角色的TextureRect
+		var chara_tex = TextureRect.new()
+		# 先隐藏
+		chara_tex.modulate = Color(1, 1, 1, 0)
+		chara_tex.name = node_name
+
+		var tex: Texture = Texture.new()
+		var target_chara: Character = null
+
+		
+		for character in chara_list:
+			if character.chara_name == chara_id:
+				target_chara = chara
+				break
+		
+		if target_chara == null:
+			print("目标角色为空")
+			continue
+			
+		# 读取对话的角色状态图片ID
+		var target_states = target_chara.chara_status
+
+		var target_state_tex
+		for character_state in target_states:
+			if state.status_name == state:
+				target_state_tex = state.status_texture
+				break
+
+		chara_tex.set_texture(tex)
+		chara_tex.scale = Vector2(c_scale, c_scale)
+		# 设置演员立绘水平镜像翻转，减少立绘文件资源占用
+		chara_tex.flip_h = mirror
+		temp_node.set_name(node_name)
+		temp_node.add_child(chara_tex)
+
+		# 添加到角色容器
+		_chara_controler.add_child(temp_node)
+		# _chara_controler.add_child(chara_tex)
+		
+		character_created.emit()
+		print("在位置："+str(pos)+" 新建了演员："+str(chara_id)+" 演员状态："+str(state))
+		
 	pass
 		
 # 切换演员的状态
