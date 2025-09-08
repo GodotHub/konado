@@ -1,0 +1,298 @@
+[gd_scene load_steps=17 format=3 uid="uid://cpj8rtg7ckees"]
+
+[ext_resource type="Script" uid="uid://ddfceaqisollq" path="res://剧情编辑器/子面板/节点面板/文本节点/弹窗/文本编辑弹窗.gd" id="1_j41nw"]
+[ext_resource type="Script" uid="uid://8bn3xh6svcsp" path="res://剧情编辑器/子面板/节点面板/文本节点/弹窗/文本编辑按钮.gd" id="2_2iase"]
+[ext_resource type="Script" uid="uid://b5djxdiepwbob" path="res://addons/markdownlabel/markdownlabel.gd" id="2_22yka"]
+[ext_resource type="Script" uid="uid://c0v8jwxkl7gy7" path="res://剧情编辑器/子面板/节点面板/文本节点/弹窗/序号.gd" id="2_agq67"]
+[ext_resource type="Script" uid="uid://l2qxyetyp6k6" path="res://addons/markdownlabel/header_formats/h1_format.gd" id="3_pwqpf"]
+[ext_resource type="Script" uid="uid://dlkkownlo6m3g" path="res://addons/markdownlabel/header_formats/h2_format.gd" id="4_6cksb"]
+[ext_resource type="Script" uid="uid://ckcxqx5uqa41q" path="res://addons/markdownlabel/header_formats/h3_format.gd" id="5_lie82"]
+[ext_resource type="Script" uid="uid://bedjb8iun0km0" path="res://addons/markdownlabel/header_formats/h4_format.gd" id="6_ghigf"]
+[ext_resource type="Script" uid="uid://bvgwchb72nk1t" path="res://addons/markdownlabel/header_formats/h5_format.gd" id="7_7388r"]
+[ext_resource type="Script" uid="uid://6yl7fstceu2b" path="res://addons/markdownlabel/header_formats/h6_format.gd" id="8_wryra"]
+
+[sub_resource type="Resource" id="Resource_awe88"]
+resource_local_to_scene = true
+script = ExtResource("3_pwqpf")
+font_size = 2.285
+is_bold = false
+is_italic = false
+is_underlined = false
+override_font_color = false
+font_color = Color(1, 1, 1, 1)
+
+[sub_resource type="Resource" id="Resource_nsrea"]
+resource_local_to_scene = true
+script = ExtResource("4_6cksb")
+font_size = 1.714
+is_bold = false
+is_italic = false
+is_underlined = false
+override_font_color = false
+font_color = Color(1, 1, 1, 1)
+
+[sub_resource type="Resource" id="Resource_ghije"]
+resource_local_to_scene = true
+script = ExtResource("5_lie82")
+font_size = 1.428
+is_bold = false
+is_italic = false
+is_underlined = false
+override_font_color = false
+font_color = Color(1, 1, 1, 1)
+
+[sub_resource type="Resource" id="Resource_avw05"]
+resource_local_to_scene = true
+script = ExtResource("6_ghigf")
+font_size = 1.142
+is_bold = false
+is_italic = false
+is_underlined = false
+override_font_color = false
+font_color = Color(1, 1, 1, 1)
+
+[sub_resource type="Resource" id="Resource_ex75d"]
+resource_local_to_scene = true
+script = ExtResource("7_7388r")
+font_size = 1.0
+is_bold = false
+is_italic = false
+is_underlined = false
+override_font_color = false
+font_color = Color(1, 1, 1, 1)
+
+[sub_resource type="Resource" id="Resource_huqsv"]
+resource_local_to_scene = true
+script = ExtResource("8_wryra")
+font_size = 0.857
+is_bold = false
+is_italic = false
+is_underlined = false
+override_font_color = false
+font_color = Color(1, 1, 1, 1)
+
+[node name="文本编辑" type="Window"]
+title = "文本编辑"
+initial_position = 1
+size = Vector2i(1255, 800)
+transient = true
+exclusive = true
+min_size = Vector2i(1100, 500)
+max_size = Vector2i(3840, 2160)
+script = ExtResource("1_j41nw")
+
+[node name="Panel2" type="Panel" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"Window_panel"
+
+[node name="Panel" type="Panel" parent="Panel2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Panel2/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="按钮栏" type="MarginContainer" parent="Panel2/Panel/VBoxContainer2"]
+custom_minimum_size = Vector2(900, 0)
+layout_mode = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 20
+script = ExtResource("2_2iase")
+
+[node name="Panel" type="Panel" parent="Panel2/Panel/VBoxContainer2/按钮栏"]
+custom_minimum_size = Vector2(950, 50)
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_stretch_ratio = 0.0
+theme_type_variation = &"ButtonContainer"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel2/Panel/VBoxContainer2/按钮栏/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -389.0
+offset_top = -14.5
+offset_right = 389.0
+offset_bottom = 14.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="标题" type="Button" parent="Panel2/Panel/VBoxContainer2/按钮栏/Panel/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = " 标题"
+
+[node name="标题2" type="Button" parent="Panel2/Panel/VBoxContainer2/按钮栏/Panel/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = " 标题2"
+
+[node name="标题3" type="Button" parent="Panel2/Panel/VBoxContainer2/按钮栏/Panel/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = " 标题3"
+
+[node name="正文" type="Button" parent="Panel2/Panel/VBoxContainer2/按钮栏/Panel/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = " 正文"
+
+[node name="VSeparator" type="VSeparator" parent="Panel2/Panel/VBoxContainer2/按钮栏/Panel/HBoxContainer"]
+custom_minimum_size = Vector2(33, 0)
+layout_mode = 2
+
+[node name="加粗" type="Button" parent="Panel2/Panel/VBoxContainer2/按钮栏/Panel/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = " 加粗"
+
+[node name="倾斜" type="Button" parent="Panel2/Panel/VBoxContainer2/按钮栏/Panel/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = " 倾斜"
+
+[node name="删除线" type="Button" parent="Panel2/Panel/VBoxContainer2/按钮栏/Panel/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "删除线"
+
+[node name="VSeparator3" type="VSeparator" parent="Panel2/Panel/VBoxContainer2/按钮栏/Panel/HBoxContainer"]
+custom_minimum_size = Vector2(33, 0)
+layout_mode = 2
+
+[node name="序号" type="Button" parent="Panel2/Panel/VBoxContainer2/按钮栏/Panel/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "序号"
+script = ExtResource("2_agq67")
+
+[node name="项目符号" type="Button" parent="Panel2/Panel/VBoxContainer2/按钮栏/Panel/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "项目符号"
+
+[node name="VSeparator4" type="VSeparator" parent="Panel2/Panel/VBoxContainer2/按钮栏/Panel/HBoxContainer"]
+custom_minimum_size = Vector2(33, 0)
+layout_mode = 2
+
+[node name="分割线" type="Button" parent="Panel2/Panel/VBoxContainer2/按钮栏/Panel/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "分割线"
+
+[node name="插入链接" type="Button" parent="Panel2/Panel/VBoxContainer2/按钮栏/Panel/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "插入链接"
+
+[node name="预览开关" type="CheckButton" parent="Panel2/Panel/VBoxContainer2/按钮栏"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+tooltip_text = "预览文本"
+button_pressed = true
+text = "预览"
+expand_icon = true
+
+[node name="HSplitContainer" type="HSplitContainer" parent="Panel2/Panel/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="预览面板" type="MarginContainer" parent="Panel2/Panel/VBoxContainer2/HSplitContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="MarkdownLabel" type="RichTextLabel" parent="Panel2/Panel/VBoxContainer2/HSplitContainer/预览面板"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+script = ExtResource("2_22yka")
+h1 = SubResource("Resource_awe88")
+h2 = SubResource("Resource_nsrea")
+h3 = SubResource("Resource_ghije")
+h4 = SubResource("Resource_avw05")
+h5 = SubResource("Resource_ex75d")
+h6 = SubResource("Resource_huqsv")
+
+[node name="MarginContainer2" type="MarginContainer" parent="Panel2/Panel/VBoxContainer2/HSplitContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 3.0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Panel" type="Panel" parent="Panel2/Panel/VBoxContainer2/HSplitContainer/MarginContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+theme_type_variation = &"TextEditBox"
+
+[node name="TextEdit" type="TextEdit" parent="Panel2/Panel/VBoxContainer2/HSplitContainer/MarginContainer2/Panel"]
+unique_name_in_owner = true
+layout_mode = 2
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 741.0
+offset_bottom = 724.0
+placeholder_text = "输入文本"
+deselect_on_focus_loss_enabled = false
+wrap_mode = 1
+scroll_smooth = true
+
+[node name="CodeEdit" type="CodeEdit" parent="Panel2/Panel/VBoxContainer2/HSplitContainer/MarginContainer2/Panel"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel2/Panel/VBoxContainer2"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 10
+
+[node name="WordCount" type="Label" parent="Panel2/Panel/VBoxContainer2/MarginContainer"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0.443137)
+layout_mode = 2
+size_flags_horizontal = 8
+text = "文本统计  字数 "
+
+[connection signal="close_requested" from="." to="." method="_on_close_button_down"]
+[connection signal="pressed" from="Panel2/Panel/VBoxContainer2/按钮栏/Panel/HBoxContainer/序号" to="Panel2/Panel/VBoxContainer2/按钮栏/Panel/HBoxContainer/序号" method="_on_number_button_pressed"]
+[connection signal="text_changed" from="Panel2/Panel/VBoxContainer2/HSplitContainer/MarginContainer2/Panel/TextEdit" to="." method="_on_textedit_text_changed"]

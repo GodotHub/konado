@@ -3,7 +3,7 @@ class_name KonadoEditorWindow
 
 const konado_editor = preload("res://addons/konado/snowflake/SnowFlake.tscn")
 
-    
+	
 func _init() -> void:
 	# 禁用默认主题
 	theme = null

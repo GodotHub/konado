@@ -12,7 +12,6 @@ config_version=5
 
 config/name="Konado Editor"
 config/description="Konado Editor，Konado编辑器"
-run/main_scene="uid://bommt7l6wmdsa"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -25,7 +24,6 @@ KS_SAVE_AND_LOAD="*res://addons/konado/scripts/save_and_load/SaL.gd"
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
-window/size/always_on_top=true
 window/stretch/aspect="ignore"
 
 [dotnet]
@@ -34,8 +32,8 @@ project/assembly_name="KonadoEditor"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/gut/plugin.cfg", "res://addons/konado/plugin.cfg")
+enabled=PackedStringArray("res://addons/gut/plugin.cfg", "res://addons/konado/plugin.cfg", "res://addons/theme_gen_save_sync/plugin.cfg")
 
 [gui]
 
-theme/custom="uid://dwtf3ffxpbiox"
+theme/custom="uid://cao2ht3baecs8"

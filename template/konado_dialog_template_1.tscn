@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://dhljntqamnusm"]
+[gd_scene load_steps=5 format=3 uid="uid://0sc04evetbux"]
 
 [ext_resource type="Script" uid="uid://co1jy8tti3d25" path="res://addons/konado/assets/template/knodo_dialog_template.gd" id="1_ofwfk"]
 [ext_resource type="PackedScene" uid="uid://dbfoi0nkkm0bx" path="res://template/background/background.tscn" id="2_ofwfk"]
@@ -14,6 +14,7 @@ script = ExtResource("1_ofwfk")
 position = Vector2(960, 539)
 
 [node name="background" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="background1" parent="background" instance=ExtResource("2_ofwfk")]
 

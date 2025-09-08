@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://7b484a7p3s4w"]
 
-[ext_resource type="Theme" uid="uid://elufy8cdi03c" path="res://addons/konado/theme_system/game_theme.tres" id="1_wfnuw"]
+[ext_resource type="Theme" uid="uid://bb865dga7c5sp" path="res://addons/konado/theme_system/game_theme.tres" id="1_42kt7"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_bewkk"]
 font_size = 21
@@ -14,7 +14,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("1_wfnuw")
+theme = ExtResource("1_42kt7")
 
 [node name="Panel​DialogBox" type="Panel" parent="."]
 visible = false
@@ -85,5 +85,4 @@ offset_right = 147.0
 offset_bottom = 117.5
 grow_horizontal = 0
 grow_vertical = 2
-theme_type_variation = &"Component"
 text = "确认按钮"

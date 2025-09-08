@@ -1,0 +1,52 @@
+[gd_scene load_steps=2 format=3 uid="uid://cnhbt7n7ln2gw"]
+
+[ext_resource type="PackedScene" uid="uid://c5i8tukmns7cm" path="res://editor/ui/ui_components/shot_ui_component.tscn" id="1_uyhfn"]
+
+[node name="folder_item" type="BoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+vertical = true
+
+[node name="Label" type="Label" parent="."]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+text = "序章 "
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="Label"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -55.0
+offset_top = -19.0
+offset_bottom = 19.0
+grow_horizontal = 0
+grow_vertical = 2
+tooltip_text = "添加镜头"
+text = "十"
+
+[node name="HSeparator" type="HSeparator" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="FlowContainer" type="FlowContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/h_separation = 50
+theme_override_constants/v_separation = 55
+
+[node name="data_ui_component" parent="FlowContainer" instance=ExtResource("1_uyhfn")]
+layout_mode = 2
+tooltip_text = "2025/1/1/12:00
+序章，主角初次登场"
+selected = true
+shot_name = "序章"
+timestamp = "2025/1/1/12:00"
+tip = "序章，主角初次登场"
