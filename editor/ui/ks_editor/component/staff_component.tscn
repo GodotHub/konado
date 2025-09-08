@@ -1,0 +1,68 @@
+[gd_scene load_steps=6 format=3 uid="uid://bybbh76d07hoo"]
+
+[ext_resource type="Script" uid="uid://bthw861stienm" path="res://editor/ui/ks_editor/component/staff_component.gd" id="1_o2hu1"]
+[ext_resource type="Script" uid="uid://5dxx84u6uyy0" path="res://addons/konado/scripts/character/character.gd" id="2_i2b6h"]
+[ext_resource type="Script" uid="uid://dxbtmvyauvfln" path="res://addons/konado/scripts/character/character_status.gd" id="3_yeqx8"]
+
+[sub_resource type="Resource" id="Resource_lp73c"]
+script = ExtResource("2_i2b6h")
+"角色姓名" = "ssss"
+"角色状态" = Array[ExtResource("3_yeqx8")]([])
+metadata/_custom_type_script = "uid://5dxx84u6uyy0"
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_px02i"]
+content_margin_left = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 4.0
+bg_color = Color(0.25826, 0.457502, 0.704714, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="staff_component" type="BoxContainer"]
+anchors_preset = -1
+anchor_right = 0.213021
+anchor_bottom = 0.0425926
+offset_right = -409.0
+offset_bottom = -46.0
+size_flags_horizontal = 3
+size_flags_vertical = 0
+script = ExtResource("1_o2hu1")
+actor = "张三"
+charactor = SubResource("Resource_lp73c")
+metadata/_edit_use_anchors_ = true
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 2
+text = "≡"
+
+[node name="actor_name" type="LineEdit" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "演员名称"
+
+[node name="Control" type="Control" parent="."]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+
+[node name="CharacterLabel" type="Label" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_px02i")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Control2" type="Control" parent="."]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+
+[node name="delect" type="Button" parent="."]
+layout_mode = 2
+text = "╳"
+
+[connection signal="pressed" from="delect" to="." method="_on_delect_pressed"]

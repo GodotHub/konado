@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=12 format=3 uid="uid://elufy8cdi03c"]
+[gd_resource type="Theme" load_steps=12 format=3 uid="uid://bb865dga7c5sp"]
 
 [ext_resource type="Texture2D" uid="uid://cu3qd3p2n0tdr" path="res://addons/konado/assets/template/dialog_box/​DialogBox_1.png" id="1_nhitb"]
 
@@ -86,6 +86,7 @@ axis_stretch_vertical = 1
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nhitb"]
 
 [resource]
+Button/colors/font_color = Color(0, 0, 0, 1)
 Button/styles/disabled = SubResource("StyleBoxTexture_247yt")
 Button/styles/focus = SubResource("StyleBoxTexture_ivnom")
 Button/styles/hover = SubResource("StyleBoxTexture_7jvpy")

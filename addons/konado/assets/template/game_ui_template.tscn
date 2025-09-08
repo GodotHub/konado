@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://t5hwv7sqfex4"]
+[gd_scene load_steps=12 format=3 uid="uid://t5hwv7sqfex4"]
 
 [ext_resource type="Script" uid="uid://bruaou4gwjdwl" path="res://addons/konado/assets/template/ui_template/ui_template.gd" id="1_8pelu"]
 [ext_resource type="PackedScene" uid="uid://b5njwitmejk76" path="res://addons/konado/assets/template/ui_template/save_commponect/save_componect.tscn" id="1_jj3o7"]
+[ext_resource type="Theme" uid="uid://bb865dga7c5sp" path="res://addons/konado/theme_system/game_theme.tres" id="3_or8n0"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_jj3o7"]
 font_size = 35
@@ -147,6 +148,7 @@ anchor_bottom = 1.0
 offset_top = -45.0
 grow_horizontal = 2
 grow_vertical = 0
+theme = ExtResource("3_or8n0")
 metadata/_edit_group_ = true
 
 [node name="ActionsContainer" type="HBoxContainer" parent="game_ui_buttons"]

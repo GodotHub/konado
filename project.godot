@@ -26,7 +26,6 @@ DialogueManagerAPI="*res://addons/konadotnet/api/DialogueManagerAPI.cs"
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
-window/size/always_on_top=true
 window/stretch/aspect="ignore"
 
 [dotnet]
@@ -39,4 +38,4 @@ enabled=PackedStringArray("res://addons/gut/plugin.cfg", "res://addons/konado/pl
 
 [gui]
 
-theme/custom="uid://dwtf3ffxpbiox"
+theme/custom="uid://cao2ht3baecs8"

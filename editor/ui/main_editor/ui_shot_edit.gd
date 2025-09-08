@@ -1,5 +1,6 @@
 extends Node
-## ui数据层
+## 画布交互组件
+## 画布层操作
 
 ## ui组件
 @onready var canvas: SubViewportContainer = %Canvas          ## 游戏运行时画面
@@ -8,7 +9,7 @@ extends Node
 
 ## ui数据
 @export var canvas_size := Vector2i(1920,1080)               ## 画布分辨率
-@export var zoom            := 0.5:                           ## 画布缩放 
+@export var zoom            := 0.5:                          ## 画布缩放 
 	set(value):
 		if value != zoom :
 			zoom =  value
@@ -16,8 +17,7 @@ extends Node
 				canvas.scale = Vector2(zoom,zoom)
 			if zoom_button:
 				zoom_button.text = str(int(value*100)) + "%"
-
-@export var position_offset := Vector2.ZERO:                  ## 画布滚动值 
+@export var position_offset := Vector2.ZERO:                 ## 画布滚动值 
 
 	set(value):
 		if value != position_offset :

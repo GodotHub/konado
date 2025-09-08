@@ -82,7 +82,7 @@ func init_insterpreter(flags: Dictionary[String, Variant]) -> bool:
 	print("解释器初始化完成" + " " + "flags: " + str(flags))
 	is_init = true
 	return true
-	
+
 
 ## 全文解析模式
 func process_scripts_to_data(path: String) -> DialogueShot:
@@ -219,8 +219,6 @@ func process_scripts_to_data(path: String) -> DialogueShot:
 
 
 	return diadata
-
-
 
 # 单行解析模式
 func parse_single_line(line: String, line_number: int, path: String) -> Dialogue:

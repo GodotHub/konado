@@ -32,7 +32,7 @@ var open_konado_editor_btn: Button = null
 func _enter_tree() -> void:
 	# 添加自动加载单例
 	add_autoload_singleton("KS_SAVE_AND_LOAD",SAVE_AND_LOAD)
-	add_autoload_singleton("ComponentFactory",Component_Factory)
+	#add_autoload_singleton("ComponentFactory",Component_Factory)
 	
 	# 注册自定义资源类型
 	add_custom_type("DialogueData", "Resource", DIALOGUE_DATA_SCRIPT, null)
