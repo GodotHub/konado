@@ -18,7 +18,6 @@ var konado_editor_instance: KonadoEditorWindow = null
 const DIALOGUE_DATA_SCRIPT := preload("res://addons/konado/scripts/dialogue/dialogue_shot.gd")
 const IMPORTER_SCRIPT := preload("res://addons/konado/importer/konado_importer.gd")
 const SAVE_AND_LOAD := "res://addons/konado/scripts/save_and_load/SaL.gd"
-const Component_Factory = "res://editor/ui/ui_components/component_factory.gd"
 
 ## 插件成员
 var import_plugin: EditorImportPlugin
@@ -32,7 +31,6 @@ var open_konado_editor_btn: Button = null
 func _enter_tree() -> void:
 	# 添加自动加载单例
 	add_autoload_singleton("KS_SAVE_AND_LOAD",SAVE_AND_LOAD)
-	#add_autoload_singleton("ComponentFactory",Component_Factory)
 	
 	# 注册自定义资源类型
 	add_custom_type("DialogueData", "Resource", DIALOGUE_DATA_SCRIPT, null)

@@ -3,30 +3,10 @@ extends Node
 @onready var button_container: BoxContainer = %ButtonContainer
 @onready var code_edit: CodeEdit = %CodeEdit
 @onready var statement_tree: Tree = %StatementTree
-var ks_statement_path:="res://editor/ui/ks_editor/工作簿1.csv"
+var ks_statement_path := "res://addons/konado/editor/ui/ks_editor/工作簿1.csv"
 
-var ks_statement = {
-	"标签1": {
-		"按钮A": "这是按钮A的说明",
-		"按钮B": "这是按钮B的说明"
-		},
-	"标签2": {
-		"按钮C": "这是按钮C的说明",
-		"按钮D": "这是按钮D的说明"
-		},
-	"标签3": {
-		"按钮C": "这是按钮C的说明",
-		"按钮D": "这是按钮D的说明"
-		},
-	"标签4": {
-		"按钮A": "这是按钮A的说明",
-		"按钮B": "这是按钮B的说明"
-		},
-	"标签5": {
-		"按钮C": "这是按钮C的说明",
-		"按钮D": "这是按钮D的说明"
-		},	
-	}
+# TODO:66666
+var ks_statement: Dictionary = {}
 
 func _ready() -> void:
 	ks_statement = load_csv()
@@ -45,7 +25,7 @@ func load_csv() -> Dictionary:
 	# 读取数据行
 	while not file.eof_reached():
 		var line = file.get_csv_line()
-		if line.size() > 0 and line[0] != "":  # 跳过空行和空键的行
+		if line.size() > 0 and line[0] != "": # 跳过空行和空键的行
 			var key = line[0]
 			var entry = {
 				"按钮名称": line[1] if line.size() > 1 else "",
@@ -100,7 +80,7 @@ func create_tree_from_dict():
 						button_item.set_icon(0, icon)
 				
 				# 存储所有数据到元数据
-				button_item.set_metadata(0,str(entry["插入语句"]))
+				button_item.set_metadata(0, str(entry["插入语句"]))
 				button_item.set_selectable(0, true)
 		elif typeof(label_data) == TYPE_DICTIONARY:
 			# 处理字典情况（单个条目）
@@ -118,8 +98,8 @@ func create_tree_from_dict():
 					button_item.set_icon(0, icon)
 			
 			# 存储所有数据到元数据
-			button_item.set_metadata(0,(label_data["插入语句"]))
-			print(";;dksd;;" ,label_data["插入语句"])
+			button_item.set_metadata(0, (label_data["插入语句"]))
+			print(";;dksd;;", label_data["插入语句"])
 			button_item.set_selectable(0, true)
 	
 	# 恢复为单列显示
@@ -145,13 +125,13 @@ func on_button_pressed(ks_statement: String):
 	var current_line = code_edit.get_caret_line()
 	var line_text: String = code_edit.get_line(current_line).strip_edges()
 	
-	if line_text != "":  # 如果当前行有文字（非空）
+	if line_text != "": # 如果当前行有文字（非空）
 		# 自动回车换行
 		#code_edit.insert_text("\n", current_line)
 		code_edit.insert_line_at(current_line + 1, ks_statement)
-		code_edit.set_caret_line(current_line + 1)  # 将光标移动到新行
+		code_edit.set_caret_line(current_line + 1) # 将光标移动到新行
 		print("插入语句: ", ks_statement, "在行: ", current_line + 1)
-	else:  # 如果当前行是空的
+	else: # 如果当前行是空的
 		code_edit.set_line(current_line, ks_statement)
 		code_edit.set_caret_line(current_line)
 	code_edit.grab_focus()

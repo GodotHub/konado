@@ -1,15 +1,14 @@
-[gd_scene load_steps=12 format=3 uid="uid://bommt7l6wmdsa"]
+[gd_scene load_steps=11 format=3 uid="uid://bommt7l6wmdsa"]
 
 [ext_resource type="Theme" uid="uid://cao2ht3baecs8" path="res://addons/konado/theme_system/dark_theme.tres" id="1_i4xdp"]
-[ext_resource type="Script" uid="uid://c2u6ino7v7ixx" path="res://editor/ui/main_editor/ui_management.gd" id="1_nok4e"]
-[ext_resource type="Script" uid="uid://b04pryoxytbhb" path="res://editor/ui/main_editor/ui_shot_edit.gd" id="1_vy1oc"]
-[ext_resource type="PackedScene" uid="uid://tdgiaaxwqgb2" path="res://editor/ui/main_editor/dock/文件管理区.tscn" id="2_lxpd5"]
+[ext_resource type="Script" uid="uid://c2u6ino7v7ixx" path="res://addons/konado/editor/ui/main_editor/ui_management.gd" id="1_nok4e"]
+[ext_resource type="Script" uid="uid://b04pryoxytbhb" path="res://addons/konado/editor/ui/main_editor/ui_shot_edit.gd" id="1_vy1oc"]
+[ext_resource type="PackedScene" uid="uid://tdgiaaxwqgb2" path="res://addons/konado/editor/ui/main_editor/dock/文件管理区.tscn" id="2_lxpd5"]
 [ext_resource type="PackedScene" uid="uid://bwskpda2vmn5x" path="res://addons/konado/scenes/new_dialog.tscn" id="3_vy1oc"]
-[ext_resource type="PackedScene" uid="uid://ngoysingi1jp" path="res://editor/ui/main_editor/dock/画布栏.tscn" id="4_lxpd5"]
 [ext_resource type="Texture2D" uid="uid://cfau2duojvd33" path="res://addons/konado/assets/KonadoBanner.png" id="4_os5hq"]
-[ext_resource type="PackedScene" uid="uid://cnhbt7n7ln2gw" path="res://editor/ui/ui_components/ui_data_manage/​folder_item_a.tscn" id="5_fbjbo"]
-[ext_resource type="PackedScene" uid="uid://c6k1vele8f84n" path="res://editor/ui/main_editor/starpanel/启动界面.tscn" id="11_1idkc"]
-[ext_resource type="PackedScene" uid="uid://x8t7cxfhviko" path="res://editor/ui/ks_editor/ks_editor.tscn" id="11_4nts7"]
+[ext_resource type="PackedScene" uid="uid://cnhbt7n7ln2gw" path="res://addons/konado/editor/ui/ui_components/ui_data_manage/​folder_item_a.tscn" id="5_fbjbo"]
+[ext_resource type="PackedScene" uid="uid://c6k1vele8f84n" path="res://addons/konado/editor/ui/main_editor/starpanel/启动界面.tscn" id="11_1idkc"]
+[ext_resource type="PackedScene" uid="uid://x8t7cxfhviko" path="res://addons/konado/editor/ui/ks_editor/ks_editor.tscn" id="11_4nts7"]
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_nok4e"]
 
@@ -415,11 +414,6 @@ render_target_update_mode = 0
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 3.0
-
-[node name="画布层" parent="BoxContainer/modules_container/shot_editing/SplitContainer2" instance=ExtResource("4_lxpd5")]
-visible = false
-custom_minimum_size = Vector2(100, 100)
-layout_mode = 2
 
 [node name="Panel" type="Panel" parent="BoxContainer/modules_container/shot_editing"]
 custom_minimum_size = Vector2(0, 40)
