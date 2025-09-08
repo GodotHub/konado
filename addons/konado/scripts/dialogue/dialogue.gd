@@ -6,114 +6,6 @@ class_name Dialogue
 var source_file_line: int = -1
 
 ## 对话类型
-"""
-## 通用字段
-所有对话类型都包含以下基础字段：
-- `source_file_line: int` - 源对话文件行号
-- `dialog_type: Type` - 对话类型枚举
-
-## 各对话类型的数据结构
-
-### 1. START (开始)
-- 无额外字段
-
-### 2. Ordinary_Dialog (普通对话)
-```typescript
-{
-  character_id: string;      // 对话人物ID
-  dialog_content: string;    // 对话内容
-  voice_id: string;          // 语音名称
-}
-```
-
-### 3. Display_Actor (显示演员)
-```typescript
-{
-  show_actor: DialogueActor; // 显示的角色对象
-}
-```
-
-### 4. Actor_Change_State (演员切换状态)
-```typescript
-{
-  change_state_actor: string; // 要切换状态的角色ID
-  change_state: string;       // 要切换的状态
-}
-```
-
-### 5. Move_Actor (移动角色)
-```typescript
-{
-  target_move_chara: string; // 要移动的角色ID
-  target_move_pos: Vector2;  // 角色要移动的位置
-}
-```
-
-### 6. Switch_Background (切换背景)
-```typescript
-{
-  background_image_name: string;          // 背景图片名称
-  background_toggle_effects: EffectsType; // 背景切换特效类型
-}
-```
-
-### 7. Exit_Actor (演员退场)
-```typescript
-{
-  exit_actor: string; // 要退场的演员ID
-}
-```
-
-### 8. Play_BGM (播放BGM)
-```typescript
-{
-  bgm_name: string; // BGM名称
-}
-```
-
-### 9. Stop_BGM (停止播放BGM)
-- 无额外字段
-
-### 10. Play_SoundEffect (播放音效)
-```typescript
-{
-  soundeffect_name: string; // 音效名称
-}
-```
-
-### 11. Show_Choice (显示选项)
-```typescript
-{
-  choices: DialogueChoice[]; // 选项数组
-}
-```
-
-### 12. Branch (分支)
-```typescript
-{
-  branch_id: string;           // 分支ID/标记跳转点
-  branch_dialogue: Dialogue[]; // 分支对话内容
-  is_branch_loaded: boolean;   // 是否加载完成
-}
-```
-
-### 13. JUMP_Shot (跳转)
-```typescript
-{
-  jump_shot_id: string; // 目标跳转的镜头ID
-}
-```
-
-### 14. THE_END (剧终)
-- 无额外字段
-
-### 15. LABEL (注释标签)
-```typescript
-{
-  label_notes: string; // 注释内容
-}
-```
-"""
 enum Type {
 	START, ## 开始
 	Ordinary_Dialog, ## 普通对话
@@ -181,6 +73,18 @@ var jump_shot_id: String
 
 ## 注释
 var label_notes: String
+
+# 保存不同分支故事线的演员字典，默认故事线为"main"
+# 角色信息字典结构说明:
+# {
+#     "id": int,        # 角色唯一标识
+#     "x": float,       # X轴坐标
+#     "y": float,       # Y轴坐标
+#     "state": String,   # 当前状态标识
+#     "c_scale": float, # 缩放系数
+#     "mirror": bool    # 是否镜像翻转
+# }
+@export var actor_snapshots: Dictionary = {}
 
 class Label_Template:
 	@export var label_notes: String = ""
