@@ -1,4 +1,4 @@
-@tool
+# @tool
 extends Node
 @onready var button_container: BoxContainer = %ButtonContainer
 @onready var code_edit: CodeEdit = %CodeEdit
@@ -143,11 +143,14 @@ func on_button_pressed(ks_statement: String):
 		return
 	
 	var current_line = code_edit.get_caret_line()
-	var line_text = code_edit.get_line(current_line).strip_edges()
+	var line_text: String = code_edit.get_line(current_line).strip_edges()
 	
-	if line_text:  # 如果当前行有文字（非空）
+	if line_text != "":  # 如果当前行有文字（非空）
+		# 自动回车换行
+		#code_edit.insert_text("\n", current_line)
 		code_edit.insert_line_at(current_line + 1, ks_statement)
 		code_edit.set_caret_line(current_line + 1)  # 将光标移动到新行
+		print("插入语句: ", ks_statement, "在行: ", current_line + 1)
 	else:  # 如果当前行是空的
 		code_edit.set_line(current_line, ks_statement)
 		code_edit.set_caret_line(current_line)

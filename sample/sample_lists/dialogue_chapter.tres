@@ -8,6 +8,7 @@
 [sub_resource type="Resource" id="Resource_ewk0n"]
 script = ExtResource("3_8qc74")
 dialog_type = 1
+actor_snapshots = {}
 character_id = "hello"
 dialog_content = "hello"
 voice_id = ""
