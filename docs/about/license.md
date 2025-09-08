@@ -18,6 +18,7 @@ BSD 3-Clause License
 
 Copyright (c) 2023-2025, StarryTeam
 Copyright (c) 2023-2025, DSOE1024
+Copyright (c) 2025, Putyk
 Copyright (c) 2025, Kamiki_
 
 Redistribution and use in source and binary forms, with or without
