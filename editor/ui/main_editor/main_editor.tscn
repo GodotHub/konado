@@ -126,11 +126,10 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
-current_tab = 1
+current_tab = 0
 tabs_visible = false
 
 [node name="data_manage" type="SplitContainer" parent="BoxContainer/modules_container"]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -190,10 +189,11 @@ text = "Konado 版本号   1.11"
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 4.0
-current_tab = 0
+current_tab = 1
 tabs_visible = false
 
 [node name="启动界面" parent="BoxContainer/modules_container/data_manage/TabContainer" instance=ExtResource("11_1idkc")]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -201,7 +201,6 @@ size_flags_stretch_ratio = 4.0
 metadata/_tab_index = 0
 
 [node name="BoxContainer" type="BoxContainer" parent="BoxContainer/modules_container/data_manage/TabContainer"]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 4.0
@@ -296,6 +295,7 @@ vertical = true
 layout_mode = 2
 
 [node name="shot_editing" type="SplitContainer" parent="BoxContainer/modules_container"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -407,7 +407,7 @@ mouse_target = true
 [node name="SubViewport" type="SubViewport" parent="BoxContainer/modules_container/shot_editing/SplitContainer2/SplitContainer/画布区/BoxContainer2/CanvasContainer/Canvas"]
 handle_input_locally = false
 size = Vector2i(1920, 1080)
-render_target_update_mode = 4
+render_target_update_mode = 0
 
 [node name="new_dialog" parent="BoxContainer/modules_container/shot_editing/SplitContainer2/SplitContainer/画布区/BoxContainer2/CanvasContainer/Canvas/SubViewport" instance=ExtResource("3_vy1oc")]
 

@@ -1,10 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://x8t7cxfhviko"]
+[gd_scene load_steps=9 format=3 uid="uid://x8t7cxfhviko"]
 
 [ext_resource type="Script" uid="uid://ctvwjllbiqhh1" path="res://editor/ui/ks_editor/edit_control.gd" id="1_bxnau"]
 [ext_resource type="PackedScene" uid="uid://djq23ftlfwkn1" path="res://editor/ui/main_editor/dock/dock.tscn" id="1_cfuhs"]
 [ext_resource type="Script" uid="uid://uw6s0ovn0vi1" path="res://editor/ui/ks_editor/shot_data_edit.gd" id="1_fqhf8"]
 [ext_resource type="Script" uid="uid://c2anqfrl1qe27" path="res://editor/ui/ks_editor/ks_editor.gd" id="1_qu5wb"]
-[ext_resource type="Script" uid="uid://b6leecqikvwpe" path="res://editor/ui/ks_editor/button_rename.gd" id="2_ggagf"]
 [ext_resource type="Script" uid="uid://byqad5mu76fj5" path="res://addons/konado/theme_system/code_edit.gd" id="3_43nnm"]
 [ext_resource type="Script" uid="uid://brfpi4t4c2ui3" path="res://editor/ui/ks_editor/staff_window.gd" id="5_bxnau"]
 
@@ -78,154 +77,6 @@ custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_ggagf")
-
-[node name="ScrollContainer" type="ScrollContainer" parent="dock/VBoxContainer2/Panel"]
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="ButtonContainer" type="BoxContainer" parent="dock/VBoxContainer2/Panel/ScrollContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 6
-vertical = true
-script = ExtResource("2_ggagf")
-
-[node name="镜头" type="Label" parent="dock/VBoxContainer2/Panel/ScrollContainer/ButtonContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "镜头"
-horizontal_alignment = 1
-
-[node name="镜头跳转" type="Button" parent="dock/VBoxContainer2/Panel/ScrollContainer/ButtonContainer"]
-unique_name_in_owner = true
-editor_description = "jump <目标镜头id>"
-custom_minimum_size = Vector2(65, 0)
-layout_mode = 2
-theme_type_variation = &"KSButton"
-text = "镜头跳转"
-
-[node name="标记" type="Label" parent="dock/VBoxContainer2/Panel/ScrollContainer/ButtonContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "标记"
-horizontal_alignment = 1
-
-[node name="注释" type="Button" parent="dock/VBoxContainer2/Panel/ScrollContainer/ButtonContainer"]
-unique_name_in_owner = true
-editor_description = "##"
-custom_minimum_size = Vector2(65, 0)
-layout_mode = 2
-theme_type_variation = &"KSButton"
-text = "注释"
-
-[node name="开始标记" type="Button" parent="dock/VBoxContainer2/Panel/ScrollContainer/ButtonContainer"]
-unique_name_in_owner = true
-visible = false
-custom_minimum_size = Vector2(65, 0)
-layout_mode = 2
-theme_type_variation = &"KSButton"
-text = "开始标记"
-
-[node name="背景" type="Label" parent="dock/VBoxContainer2/Panel/ScrollContainer/ButtonContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "背景"
-horizontal_alignment = 1
-
-[node name="背景切换" type="Button" parent="dock/VBoxContainer2/Panel/ScrollContainer/ButtonContainer"]
-unique_name_in_owner = true
-editor_description = "background <背景图片名称> [效果类型]"
-custom_minimum_size = Vector2(65, 0)
-layout_mode = 2
-theme_type_variation = &"KSButton"
-text = "背景切换"
-
-[node name="背景效果" type="Button" parent="dock/VBoxContainer2/Panel/ScrollContainer/ButtonContainer"]
-unique_name_in_owner = true
-visible = false
-custom_minimum_size = Vector2(65, 0)
-layout_mode = 2
-theme_type_variation = &"KSButton"
-text = "背景效果"
-
-[node name="角色" type="Label" parent="dock/VBoxContainer2/Panel/ScrollContainer/ButtonContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "角色"
-horizontal_alignment = 1
-
-[node name="角色显示" type="Button" parent="dock/VBoxContainer2/Panel/ScrollContainer/ButtonContainer"]
-unique_name_in_owner = true
-editor_description = "actor show <角色名称> <角色状态> at <x坐标> <y坐标> scale <缩放比例> [mirror]"
-custom_minimum_size = Vector2(65, 0)
-layout_mode = 2
-theme_type_variation = &"KSButton"
-text = "角色显示"
-
-[node name="角色退出" type="Button" parent="dock/VBoxContainer2/Panel/ScrollContainer/ButtonContainer"]
-unique_name_in_owner = true
-editor_description = "actor exit <角色名称>"
-custom_minimum_size = Vector2(65, 0)
-layout_mode = 2
-theme_type_variation = &"KSButton"
-text = "角色退出"
-
-[node name="音频" type="Label" parent="dock/VBoxContainer2/Panel/ScrollContainer/ButtonContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "音频"
-horizontal_alignment = 1
-
-[node name="播放bgm" type="Button" parent="dock/VBoxContainer2/Panel/ScrollContainer/ButtonContainer"]
-unique_name_in_owner = true
-editor_description = "play bgm <BGM名称>"
-custom_minimum_size = Vector2(65, 0)
-layout_mode = 2
-theme_type_variation = &"KSButton"
-text = "播放bgm"
-
-[node name="对话内容" type="Label" parent="dock/VBoxContainer2/Panel/ScrollContainer/ButtonContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "对话内容"
-horizontal_alignment = 1
-
-[node name="插入对话" type="Button" parent="dock/VBoxContainer2/Panel/ScrollContainer/ButtonContainer"]
-unique_name_in_owner = true
-editor_description = "\"角色ID\" \"对话内容\" [语音ID]"
-custom_minimum_size = Vector2(65, 0)
-layout_mode = 2
-theme_type_variation = &"KSButton"
-text = "插入对话"
-
-[node name="选项分支" type="Label" parent="dock/VBoxContainer2/Panel/ScrollContainer/ButtonContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "选项分支"
-horizontal_alignment = 1
-
-[node name="分支标签" type="Button" parent="dock/VBoxContainer2/Panel/ScrollContainer/ButtonContainer"]
-unique_name_in_owner = true
-editor_description = "branch <分支标签名称>
-    缩进的内容行"
-custom_minimum_size = Vector2(65, 0)
-layout_mode = 2
-theme_type_variation = &"KSButton"
-text = "分支标签"
-
-[node name="选项分支2" type="Button" parent="dock/VBoxContainer2/Panel/ScrollContainer/ButtonContainer"]
-unique_name_in_owner = true
-editor_description = "choice \"选项文本1\" <跳转标签1> \"选项文本2\" <跳转标签2> ..."
-custom_minimum_size = Vector2(65, 0)
-layout_mode = 2
-theme_type_variation = &"KSButton"
-text = "选项分支"
 
 [node name="StatementTree" type="Tree" parent="dock/VBoxContainer2/Panel"]
 unique_name_in_owner = true
@@ -331,6 +182,7 @@ editor_description = "文本节点的高级编辑器"
 title = "演员表"
 initial_position = 1
 size = Vector2i(800, 500)
+visible = false
 transient = true
 exclusive = true
 min_size = Vector2i(800, 500)
