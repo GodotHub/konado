@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bmk2spp308g8" path="res://editor/ui/main_editor/starpanel/启动界面.gd" id="1_u8wpy"]
 
-[node name="启动界面" type="Control"]
+[node name="Launcher" type="Control"]
 clip_contents = true
 layout_mode = 3
 anchors_preset = 15
