@@ -1,11 +1,11 @@
 [gd_scene load_steps=9 format=3 uid="uid://x8t7cxfhviko"]
 
-[ext_resource type="Script" uid="uid://ctvwjllbiqhh1" path="res://editor/ui/ks_editor/edit_control.gd" id="1_bxnau"]
-[ext_resource type="PackedScene" uid="uid://djq23ftlfwkn1" path="res://editor/ui/main_editor/dock/dock.tscn" id="1_cfuhs"]
-[ext_resource type="Script" uid="uid://uw6s0ovn0vi1" path="res://editor/ui/ks_editor/shot_data_edit.gd" id="1_fqhf8"]
-[ext_resource type="Script" uid="uid://c2anqfrl1qe27" path="res://editor/ui/ks_editor/ks_editor.gd" id="1_qu5wb"]
+[ext_resource type="Script" uid="uid://ctvwjllbiqhh1" path="res://addons/konado/editor/ui/ks_editor/edit_control.gd" id="1_bxnau"]
+[ext_resource type="PackedScene" uid="uid://djq23ftlfwkn1" path="res://addons/konado/editor/ui/main_editor/dock/dock.tscn" id="1_cfuhs"]
+[ext_resource type="Script" uid="uid://uw6s0ovn0vi1" path="res://addons/konado/editor/ui/ks_editor/shot_data_edit.gd" id="1_fqhf8"]
+[ext_resource type="Script" uid="uid://c2anqfrl1qe27" path="res://addons/konado/editor/ui/ks_editor/ks_editor.gd" id="1_qu5wb"]
 [ext_resource type="Script" uid="uid://byqad5mu76fj5" path="res://addons/konado/theme_system/code_edit.gd" id="3_43nnm"]
-[ext_resource type="Script" uid="uid://brfpi4t4c2ui3" path="res://editor/ui/ks_editor/staff_window.gd" id="5_bxnau"]
+[ext_resource type="Script" uid="uid://brfpi4t4c2ui3" path="res://addons/konado/editor/ui/ks_editor/staff_window.gd" id="5_bxnau"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ggagf"]
 bg_color = Color(0.0846, 0.0873, 0.09, 1)

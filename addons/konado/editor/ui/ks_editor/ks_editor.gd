@@ -3,7 +3,7 @@ extends Node
 @onready var button_container: BoxContainer = %ButtonContainer
 @onready var code_edit: CodeEdit = %CodeEdit
 @onready var statement_tree: Tree = %StatementTree
-var ks_statement_path := "res://editor/ui/ks_editor/工作簿1.csv"
+var ks_statement_path := "res://addons/konado/editor/ui/ks_editor/工作簿1.csv"
 
 # TODO:66666
 var ks_statement: Dictionary = {}
