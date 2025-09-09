@@ -124,12 +124,13 @@ func on_button_pressed(ks_statement: String):
 	
 	var current_line = code_edit.get_caret_line()
 	var line_text: String = code_edit.get_line(current_line).strip_edges()
+	var total_lines = code_edit.get_line_count()
 	
 	if line_text != "": # 如果当前行有文字（非空）
 		# 自动回车换行
-		#code_edit.insert_text("\n", current_line)
-		code_edit.insert_line_at(current_line + 1, ks_statement)
-		code_edit.set_caret_line(current_line + 1) # 将光标移动到新行
+		code_edit.text = code_edit.text + "\n"
+		code_edit.insert_line_at(total_lines, ks_statement)
+		code_edit.set_caret_line(total_lines + 1) # 将光标移动到新行
 		print("插入语句: ", ks_statement, "在行: ", current_line + 1)
 	else: # 如果当前行是空的
 		code_edit.set_line(current_line, ks_statement)
