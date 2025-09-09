@@ -127,7 +127,7 @@ func on_button_pressed(ks_statement: String):
 	var total_lines = code_edit.get_line_count()
 	
 	if line_text != "": # 如果当前行有文字（非空）
-		# 自动回车换行
+		# 自动回车换行，否则无法越界插入
 		code_edit.text = code_edit.text + "\n"
 		code_edit.insert_line_at(total_lines, ks_statement)
 		code_edit.set_caret_line(total_lines + 1) # 将光标移动到新行
