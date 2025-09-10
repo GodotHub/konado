@@ -144,7 +144,8 @@ export default defineConfig({
                 items: [
                   { text: '创建演员', link: '/script/create-actor' },
                   { text: '演员退场', link: '/script/actor-leave' },
-                  { text: '演员移动', link: '/script/actor-move' }
+                  { text: '演员移动', link: '/script/actor-move' },
+                  { text: '演员切换状态', link: '/script/actor-change-state' }
                 ]
               },
               {
