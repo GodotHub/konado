@@ -7,12 +7,12 @@ using System.Collections.Generic;
 /// Konadotnet插件入口类
 /// </summary>
 [Tool]
-public partial class konadotnet : EditorPlugin
+public partial class Konadotnet : EditorPlugin
 {
 	/// <summary>
 	/// 插件自动加载的类，键为类名，值为类路径
 	/// </summary>
-	private Dictionary<string, string> _autoloads = new Dictionary<string, string>()
+	private readonly Dictionary<string, string> _autoloads = new Dictionary<string, string>()
 	{
 		{"DialogueManagerAPI", "res://addons/konadotnet/api/DialogueManagerAPI.cs"}
 	};
@@ -23,13 +23,14 @@ public partial class konadotnet : EditorPlugin
 	{
 		GD.Print("Konadotnet插件加载中...");
 		// 检查插件路径
-		if (FileAccess.FileExists("res://addons/konado/plugin.cfg") == false)
+		if (!FileAccess.FileExists("res://addons/konado/plugin.cfg"))
 		{
 			GD.PrintErr("Konado插件未安装，无法加载Konadotnet插件");
 			return;
 		}
 
-		Godot.Collections.Array<string> pluginConfig = ProjectSettings.GetSetting("editor_plugins/enabled").As<Godot.Collections.Array<string>>();
+		var pluginConfig = ProjectSettings.GetSetting("editor_plugins/enabled")
+			.As<Godot.Collections.Array<string>>();
 
 		if (pluginConfig != null)
 		{

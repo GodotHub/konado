@@ -2,4 +2,5 @@
 .godot/
 /android/
 /exports/
-/.idea/
+.vscode
+.idea
