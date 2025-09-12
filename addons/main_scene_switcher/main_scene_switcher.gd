@@ -1,8 +1,7 @@
 @tool
 extends EditorPlugin
 
-const CONFIG_FILE = "res://presets_main_scenes.json"
-
+const CONFIG_FILE: String = "res://presets_main_scenes.json"
 var menu_button: MenuButton
 var popup: PopupMenu
 var config_data: Dictionary
@@ -12,7 +11,7 @@ func _enter_tree() -> void:
 	# 创建菜单按钮
 	menu_button = MenuButton.new()
 	menu_button.text = "主场景"
-	menu_button.tooltip_text = "切换导出预设的主场景"
+	menu_button.tooltip_text = "切换项目的主场景"
 
 	# 添加菜单按钮到编辑器顶部栏
 	add_control_to_container(EditorPlugin.CONTAINER_TOOLBAR, menu_button)
@@ -27,15 +26,13 @@ func _enter_tree() -> void:
 
 
 func _exit_tree() -> void:
-	# 清理资源
 	if menu_button:
 		remove_control_from_container(EditorPlugin.CONTAINER_TOOLBAR, menu_button)
 		menu_button.queue_free()
-
-
+		
+		
 func load_config() -> void:
 	config_data = {}
-
 	if FileAccess.file_exists(CONFIG_FILE):
 		var file = FileAccess.open(CONFIG_FILE, FileAccess.READ)
 		if file:
@@ -45,6 +42,7 @@ func load_config() -> void:
 				config_data = json.data
 			else:
 				push_error("解析JSON配置文件失败: " + json.get_error_message())
+				config_data.clear()
 			file.close()
 	else:
 		# 如果配置文件不存在，创建一个示例配置
@@ -53,8 +51,7 @@ func load_config() -> void:
 
 func create_sample_config() -> void:
 	config_data = {
-		"Android": "res://scenes/main_android.tscn",
-		"Windows": "res://scenes/main_windows.tscn"
+		"Android": "res://scenes/main_android.tscn", "Windows": "res://scenes/main_windows.tscn"
 	}
 
 	save_config()
@@ -78,7 +75,7 @@ func update_menu() -> void:
 		popup.set_item_disabled(0, true)
 		return
 
-	var index = 0
+	var index: int = 0
 	for preset_name in config_data:
 		popup.add_item(preset_name, index)
 		index += 1
@@ -94,8 +91,13 @@ func _on_menu_item_selected(id: int) -> void:
 
 	if id < item_count:
 		# 选择的是预设项
-		var preset_name = config_data.keys()[id]
-		var scene_path = config_data[preset_name]
+		var preset_name: String = config_data.keys()[id]
+		var scene_path: String = config_data[preset_name]
+
+		if not FileAccess.file_exists(scene_path):
+			printerr("无法设置不存在的主场景，请检查配置文件路径")
+			return
+
 		set_main_scene(scene_path, preset_name)
 	elif id == item_count:
 		# 重新加载配置

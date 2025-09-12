@@ -1,34 +1,34 @@
 @tool
 extends EditorImportPlugin
 
-func _get_importer_name():
+func _get_importer_name() -> String:
 	return "konado.scripts"
 	
 func _get_import_order() -> int:
 	return 0
 	
-func _get_priority():
+func _get_priority() -> float:
 	return 1.0
 
-func _get_visible_name():
+func _get_visible_name() -> String:
 	return "Konado Scripts"
 
-func _get_recognized_extensions():
+func _get_recognized_extensions() -> PackedStringArray:
 	return ["ks"]
 
-func _get_save_extension():
+func _get_save_extension() -> String:
 	return "res"
 
-func _get_resource_type():
+func _get_resource_type() -> String:
 	return "Resource"
 
-func _get_preset_count():
+func _get_preset_count() -> int:
 	return 1
 
-func _get_preset_name(preset_index):
+func _get_preset_name(preset_index) -> String:
 	return "Default"
 
-func _get_import_options(path, preset_index):
+func _get_import_options(path, preset_index) -> Array[Dictionary]:
 	return [
 		{
 			"name": "allow_skip_error_line",
@@ -40,10 +40,10 @@ func _get_import_options(path, preset_index):
 		}
 		]
 
-func _get_option_visibility(path, option_name, options):
+func _get_option_visibility(path, option_name, options) -> bool:
 	return true
 
-func _import(source_file, save_path, options, platform_variants, gen_files):
+func _import(source_file, save_path, options, platform_variants, gen_files) -> Error:
 	var interpreter = KonadoScriptsInterpreter.new()
 
 	interpreter.init_insterpreter({

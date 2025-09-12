@@ -14,6 +14,8 @@ Konado的.NET API，用于在Godot C#项目中使用Konado API来控制Konado对
 
 请先启用Konado插件，然后再启用Konado .NET API插件。
 
+如果无法启用插件，并且在MSBuild中没有任何报错，可以尝试关闭项目后，删除项目根目录的 .godot/ 文件夹，然后重新生成项目。
+
 
 ## 许可证
 
