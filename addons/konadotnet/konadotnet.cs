@@ -68,4 +68,5 @@ public partial class Konadotnet : EditorPlugin
 		}
 	}
 }
+
 #endif

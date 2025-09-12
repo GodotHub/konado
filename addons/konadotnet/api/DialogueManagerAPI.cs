@@ -66,7 +66,7 @@ namespace Konado.Runtime.API
         /// <summary>
         /// 连接信号,当 Konado DialogueManager 节点发出对应信号时，调用对应方法
         /// </summary>
-        public void ConnectSignals()
+        private void ConnectSignals()
         {
             // 定义需要连接的信号，以及对应的方法
             var signals = new Dictionary<string, StringName>(){
