@@ -1,0 +1,16 @@
+[remap]
+
+importer="konado.scripts"
+type="Resource"
+uid="uid://ctx7dvx2myuse"
+path="res://.godot/imported/test.ks-2277cdb524011a0b9c59cdd0a4ac14c5.res"
+
+[deps]
+
+source_file="res://sample/demo/sample_lists/storys/test.ks"
+dest_files=["res://.godot/imported/test.ks-2277cdb524011a0b9c59cdd0a4ac14c5.res"]
+
+[params]
+
+allow_skip_error_line=false
+enable_actor_validation=true

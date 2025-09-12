@@ -6,7 +6,7 @@
 [ext_resource type="Shader" uid="uid://dxr17ie00ux36" path="res://addons/konado/shader/Transition/BlindsEffect.gdshader" id="3_utfb4"]
 [ext_resource type="Script" uid="uid://5d4l66ex5dy" path="res://addons/konado/scripts/save_and_load/SaL_UI.gd" id="4_566op"]
 [ext_resource type="Script" uid="uid://cfbojxb1pdbrs" path="res://addons/konado/scripts/audio/audio_interface.gd" id="4_gd2ll"]
-[ext_resource type="Texture2D" uid="uid://bb7nhjioefh8a" path="res://sample/sample_arts/示例-咖啡馆-背景.png" id="4_qodmk"]
+[ext_resource type="Texture2D" uid="uid://bb7nhjioefh8a" path="res://sample/demo/sample_arts/示例-咖啡馆-背景.png" id="4_qodmk"]
 [ext_resource type="Script" uid="uid://cbf7mvlofpiix" path="res://addons/konado/scripts/items/item_interface.gd" id="4_utfb4"]
 [ext_resource type="PackedScene" uid="uid://dahbi42p77rwu" path="res://addons/konado/scenes/dialog_review.tscn" id="8_qodmk"]
 
@@ -191,7 +191,7 @@ layout_mode = 1
 anchors_preset = 0
 offset_right = 1280.0
 offset_bottom = 720.0
-scale = Vector2(0.922656, 0.922656)
+scale = Vector2(0.9625, 0.9625)
 
 [node name="EffectLayer" type="ColorRect" parent="DialogUI/ActingInterface"]
 layout_mode = 2

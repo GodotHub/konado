@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://di66ghc1qq8e5" path="res://addons/konado/scripts/background/background.gd" id="1_g8kxy"]
 [ext_resource type="Script" uid="uid://5aqgmxi8gxcw" path="res://addons/konado/scripts/background/background_list.gd" id="2_0rr68"]
-[ext_resource type="Resource" uid="uid://dnukkmbjbsx0p" path="res://sample/sample_lists/backgrounds/咖啡厅背景.tres" id="2_r5256"]
+[ext_resource type="Resource" uid="uid://dnukkmbjbsx0p" path="res://sample/demo/sample_lists/backgrounds/咖啡厅背景.tres" id="2_r5256"]
 
 [resource]
 script = ExtResource("2_0rr68")

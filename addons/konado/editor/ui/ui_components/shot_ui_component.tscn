@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://c5i8tukmns7cm"]
 
-[ext_resource type="Script" uid="uid://ca88dmkffnhmr" path="res://editor/ui/ui_components/data_ui_component.gd" id="1_6y5jx"]
-[ext_resource type="Texture2D" uid="uid://bb7nhjioefh8a" path="res://sample/sample_arts/示例-咖啡馆-背景.png" id="2_h725x"]
+[ext_resource type="Script" uid="uid://ca88dmkffnhmr" path="res://addons/konado/editor/ui/ui_components/data_ui_component.gd" id="1_6y5jx"]
+[ext_resource type="Texture2D" uid="uid://bb7nhjioefh8a" path="res://sample/demo/sample_arts/示例-咖啡馆-背景.png" id="2_h725x"]
 
 [node name="data_ui_component" type="Control"]
 editor_description = "数据显示组件"

@@ -14,7 +14,6 @@ script = ExtResource("1_ofwfk")
 position = Vector2(960, 539)
 
 [node name="background" type="CanvasLayer" parent="."]
-visible = false
 
 [node name="background1" parent="background" instance=ExtResource("2_ofwfk")]
 
@@ -22,7 +21,6 @@ visible = false
 
 [node name="CanvasModulate" type="CanvasModulate" parent="character"]
 visible = false
-color = Color(0.29257, 0.580318, 0.617664, 1)
 
 [node name="character1" parent="character" instance=ExtResource("3_6xqk1")]
 offset_left = -314.0

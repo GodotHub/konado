@@ -1,0 +1,47 @@
+[gd_resource type="Resource" script_class="KND_Shot" load_steps=5 format=3 uid="uid://t28vikc0uj5t"]
+
+[ext_resource type="Script" uid="uid://dhdevqsupo6em" path="res://addons/konado/knd_data/knd_dialogue.gd" id="1_qvdff"]
+[ext_resource type="Script" uid="uid://7ihubvnlrdq8" path="res://addons/konado/knd_data/dialogue/knd_ordinary_dialogue.gd" id="2_8kuts"]
+[ext_resource type="Script" uid="uid://bktw5v4hqxfy0" path="res://addons/konado/knd_data/knd_shot.gd" id="2_cpo0e"]
+
+[sub_resource type="Resource" id="Resource_cpo0e"]
+script = ExtResource("2_8kuts")
+character_id = ""
+dialog_content = ""
+name = "New Dialogue_18"
+source_data = {
+"character_id": "",
+"data_deps": Array[int]([]),
+"dialog_content": "",
+"id": 17,
+"knd_dialogue.gd": null,
+"knd_ordinary_dialogue.gd": null,
+"metadata/_custom_type_script": "uid://7ihubvnlrdq8",
+"name": "New Dialogue_18",
+"source_file_line": -1
+}
+data_deps = Array[int]([])
+metadata/_custom_type_script = "uid://7ihubvnlrdq8"
+
+[resource]
+script = ExtResource("2_cpo0e")
+name = "New Shot_11"
+dialogs = Array[ExtResource("1_qvdff")]([SubResource("Resource_cpo0e")])
+branchs = {}
+actor_character_map = Dictionary[String, int]({})
+last_shots = Array[String]([])
+next_shots = Array[String]([])
+source_data = {
+"actor_character_map": Dictionary[String, int]({}),
+"branchs": {},
+"data_deps": Array[int]([]),
+"dialogs": Array[ExtResource("1_qvdff")]([]),
+"id": 10,
+"knd_shot.gd": null,
+"last_shots": Array[String]([]),
+"metadata/_custom_type_script": "uid://bktw5v4hqxfy0",
+"name": "New Shot_11",
+"next_shots": Array[String]([])
+}
+data_deps = Array[int]([])
+metadata/_custom_type_script = "uid://bktw5v4hqxfy0"

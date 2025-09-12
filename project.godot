@@ -12,15 +12,15 @@ config_version=5
 
 config/name="Konado Editor"
 config/description="Konado Editor，Konado编辑器"
-run/main_scene="res://addons/konado/editor/ui/main_editor/main_editor.tscn"
+run/main_scene="res://sample/demo/konado_sample.tscn"
 config/features=PackedStringArray("4.4", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
 ComponentFactory="*res://editor/ui/ui_components/component_factory.gd"
-KS_SAVE_AND_LOAD="*res://addons/konado/scripts/save_and_load/SaL.gd"
 DialogueManagerAPI="*res://addons/konadotnet/api/DialogueManagerAPI.cs"
+KS_SAVE_AND_LOAD="*res://addons/konado/scripts/save_and_load/SaL.gd"
 
 [display]
 

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://5dxx84u6uyy0" path="res://addons/konado/scripts/character/character.gd" id="1_mpe3s"]
 [ext_resource type="Script" uid="uid://dxbtmvyauvfln" path="res://addons/konado/scripts/character/character_status.gd" id="2_0n4va"]
-[ext_resource type="Texture2D" uid="uid://0go33s82b24j" path="res://sample/sample_arts/D.png" id="3_0n4va"]
+[ext_resource type="Texture2D" uid="uid://0go33s82b24j" path="res://sample/demo/sample_arts/D.png" id="3_0n4va"]
 
 [sub_resource type="Resource" id="Resource_6uvnk"]
 script = ExtResource("2_0n4va")
