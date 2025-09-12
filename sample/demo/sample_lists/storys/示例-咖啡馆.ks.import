@@ -1,0 +1,16 @@
+[remap]
+
+importer="konado.scripts"
+type="Resource"
+uid="uid://cgapmujpubonf"
+path="res://.godot/imported/示例-咖啡馆.ks-0f30ffb2790297a4595ef89b9e0cae2e.res"
+
+[deps]
+
+source_file="res://sample/demo/sample_lists/storys/示例-咖啡馆.ks"
+dest_files=["res://.godot/imported/示例-咖啡馆.ks-0f30ffb2790297a4595ef89b9e0cae2e.res"]
+
+[params]
+
+allow_skip_error_line=false
+enable_actor_validation=true
