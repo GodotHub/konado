@@ -30,7 +30,6 @@ namespace Konado.Runtime.API
         [Signal]
         public delegate void DialogueLineEndEventHandler(int lineIndex);
 
-        private Node _targetDialogueManagerNode;
         private GodotObject _dialogueManager;
 
         /// <summary>
@@ -100,17 +99,17 @@ namespace Konado.Runtime.API
         /// <param name="nodePath"></param>
         private void FindTargetNode(string nodePath)
         {
-            _targetDialogueManagerNode = GetNode<Node>(nodePath);
+            var node = GetNode<Node>(nodePath);
 
-            if (_targetDialogueManagerNode != null)
+            if (node != null)
             {
-                GD.Print("Target node found: ", _targetDialogueManagerNode.Name);
+                GD.Print("Target node found: ", node.Name);
 
-                _dialogueManager = _targetDialogueManagerNode;
+                _dialogueManager = node;
 
                 _isApiReady = true;
 
-                EmitSignal(SignalName.ApiReady);
+                EmitSignalApiReady();
             }
             else
             {
@@ -122,47 +121,23 @@ namespace Konado.Runtime.API
         /// <summary>
         /// 初始化对话，调用 Konado DialogueManager 节点的 init_dialogue 方法
         /// </summary>
-        public void InitDialogue()
-        {
-            if (IsApiReady)
-            {
-                _dialogueManager.Call("init_dialogue");
-            }
-        }
-
+        public void InitDialogue() => _dialogueManager?.Call("init_dialogue");
+            
         /// <summary>
         /// 开始对话，调用 Konado DialogueManager 节点的 start_dialogue 方法
         /// </summary>
-        public void StartDialogue()
-        {
-            if (IsApiReady)
-            {
-                _dialogueManager.Call("start_dialogue");
-            }
-        }
+        public void StartDialogue() => _dialogueManager?.Call("start_dialogue");
 
         /// <summary>
         /// 停止对话，调用 Konado DialogueManager 节点的 stop_dialogue 方法
         /// </summary>
-        public void StopDialogue()
-        {
-            if (IsApiReady)
-            {
-                _dialogueManager.Call("stop_dialogue");
-            }
-        }
+        public void StopDialogue() => _dialogueManager?.Call("stop_dialogue");
 
         /// <summary>
         /// 从指定路径加载对话，调用 Konado DialogueManager 节点的 load_dialogue_data_from_path 方法
         /// </summary>
         /// <param name="path"></param>
-        public void LoadDialogueShot(string path)
-        {
-            if (IsApiReady)
-            {
-                _dialogueManager.Call("load_dialogue_data_from_path", path);
-            }
-        }
+        public void LoadDialogueShot(string path) => _dialogueManager?.Call("load_dialogue_data_from_path", path);
 
 
 
