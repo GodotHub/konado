@@ -30,24 +30,36 @@ namespace Konado.Runtime.API
         [Signal]
         public delegate void DialogueLineEndEventHandler(int lineIndex);
 
-        private Node targetDialogueManagerNode;
-        public GodotObject dialogueManager;
+        private Node _targetDialogueManagerNode;
+        private GodotObject _dialogueManager;
+
+        /// <summary>
+        /// 检查 API 是否已准备好
+        /// </summary>
+        /// <returns></returns>
+        public bool IsApiReady
+        {
+            get
+            {
+                if (!_isApiReady)
+                {
+                    GD.PrintErr("API is not ready.");
+                }
+                return _isApiReady;
+            }
+        }
 
         /// <summary>
         /// 是否已准备好 API，用于检查目标节点是否已找到
         /// </summary>
-        public bool isApiReady = false;
-
+        private bool _isApiReady = false;
 
         public override void _Ready()
         {
             Instance = this;
-            isApiReady = false;
+            _isApiReady = false;
 
-            ApiReady += () =>
-            {
-                ConnectSignals();
-            };
+            ApiReady += ConnectSignals;
 
             Callable.From(() => FindTargetNode("/root/KonadoSample/DialogManager")).CallDeferred();
         }
@@ -64,73 +76,47 @@ namespace Konado.Runtime.API
                 {"dialogue_line_start", MethodName.OnDialogueLineStart},
                 {"dialogue_line_end", MethodName.OnDialogueLineEnd}
             };
-            if (IsApiReady())
+            if (IsApiReady)
             {
                 GD.Print("Connecting signals...");
                 foreach (var signal in signals)
                 {
-                    dialogueManager.Connect(signal.Key, new Callable(this, signal.Value));
+                    _dialogueManager.Connect(signal.Key, new Callable(this, signal.Value));
                 }
             }
         }
 
-        private void OnShotStart()
-        {
-            EmitSignal(SignalName.ShotStart);
-        }
+        private void OnShotStart() => EmitSignalShotStart();
 
-        private void OnShotEnd()
-        {
-            EmitSignal(SignalName.ShotEnd);
-        }
+        private void OnShotEnd() => EmitSignalShotEnd();
 
-        private void OnDialogueLineStart(int lineIndex)
-        {
-            EmitSignal(SignalName.DialogueLineStart, lineIndex);
-        }
+        private void OnDialogueLineStart(int lineIndex) => EmitSignalDialogueLineStart(lineIndex);
 
-        private void OnDialogueLineEnd(int lineIndex)
-        {
-            EmitSignal(SignalName.DialogueLineEnd, lineIndex);
-        }
-
+        private void OnDialogueLineEnd(int lineIndex) => EmitSignalDialogueLineEnd(lineIndex);
 
         /// <summary>
         /// 查找目标节点
         /// </summary>
         /// <param name="nodePath"></param>
-        public void FindTargetNode(string nodePath)
+        private void FindTargetNode(string nodePath)
         {
-            targetDialogueManagerNode = GetNode<Node>(nodePath);
+            _targetDialogueManagerNode = GetNode<Node>(nodePath);
 
-            if (targetDialogueManagerNode != null)
+            if (_targetDialogueManagerNode != null)
             {
-                GD.Print("Target node found: ", targetDialogueManagerNode.Name);
+                GD.Print("Target node found: ", _targetDialogueManagerNode.Name);
 
-                dialogueManager = targetDialogueManagerNode;
+                _dialogueManager = _targetDialogueManagerNode;
 
-                isApiReady = true;
+                _isApiReady = true;
 
                 EmitSignal(SignalName.ApiReady);
             }
             else
             {
-                isApiReady = false;
+                _isApiReady = false;
                 GD.PrintErr("Target node not found at path: ", nodePath);
             }
-        }
-
-        /// <summary>
-        /// 检查 API 是否已准备好
-        /// </summary>
-        /// <returns></returns>
-        public bool IsApiReady()
-        {
-            if (!isApiReady)
-            {
-                GD.PrintErr("API is not ready.");
-            }
-            return isApiReady;
         }
 
         /// <summary>
@@ -138,9 +124,9 @@ namespace Konado.Runtime.API
         /// </summary>
         public void InitDialogue()
         {
-            if (IsApiReady())
+            if (IsApiReady)
             {
-                dialogueManager.Call("init_dialogue");
+                _dialogueManager.Call("init_dialogue");
             }
         }
 
@@ -149,9 +135,9 @@ namespace Konado.Runtime.API
         /// </summary>
         public void StartDialogue()
         {
-            if (IsApiReady())
+            if (IsApiReady)
             {
-                dialogueManager.Call("start_dialogue");
+                _dialogueManager.Call("start_dialogue");
             }
         }
 
@@ -160,9 +146,9 @@ namespace Konado.Runtime.API
         /// </summary>
         public void StopDialogue()
         {
-            if (IsApiReady())
+            if (IsApiReady)
             {
-                dialogueManager.Call("stop_dialogue");
+                _dialogueManager.Call("stop_dialogue");
             }
         }
 
@@ -172,9 +158,9 @@ namespace Konado.Runtime.API
         /// <param name="path"></param>
         public void LoadDialogueShot(string path)
         {
-            if (IsApiReady())
+            if (IsApiReady)
             {
-                dialogueManager.Call("load_dialogue_data_from_path", path);
+                _dialogueManager.Call("load_dialogue_data_from_path", path);
             }
         }
 
