@@ -2,5 +2,13 @@
 .godot/
 /android/
 /exports/
-.vscode
-.idea
+
+# Konado specific ignores
+/konado_data/
+knd_project.kson
+
+# VS Code specific ignores
+.vscode/
+
+# Jetbrain IDE specific ignores
+.idea/
