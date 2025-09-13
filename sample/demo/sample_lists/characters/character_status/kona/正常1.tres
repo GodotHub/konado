@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="CharacterStatus" load_steps=3 format=3 uid="uid://b37nt2e4rbers"]
 
 [ext_resource type="Script" uid="uid://dxbtmvyauvfln" path="res://addons/konado/scripts/character/character_status.gd" id="1_li05w"]
-[ext_resource type="Texture2D" uid="uid://hecjc8cwyd0b" path="res://sample/sample_arts/Konado_Simple.png" id="2_exgqx"]
+[ext_resource type="Texture2D" uid="uid://hecjc8cwyd0b" path="res://sample/demo/sample_arts/Konado_Simple.png" id="2_exgqx"]
 
 [resource]
 script = ExtResource("1_li05w")

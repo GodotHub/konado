@@ -48,8 +48,8 @@ func _init() -> void:
 	gen_source_data()
 	
 	
-		
-	rename(get("name")) # 重命名
+	if get("name") != null:
+		rename(get("name")) # 重命名
 	data_list.append(self)
 	data_id_map[id] = get("name")
 	emit_changed()
@@ -74,7 +74,7 @@ func update():
 		emit_changed()
 		
 ## 重命名，并且保证命名唯一化 new_name:名字 ，name_list:名字集合
-func rename(new_name):
+func rename(new_name: String) -> void:
 	var number = id_number
 	for i in data_id_map:
 		if get("name") == data_id_map[i]:

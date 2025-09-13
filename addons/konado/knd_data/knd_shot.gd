@@ -5,7 +5,7 @@ class_name KND_Shot
 @export var name: String = "New Shot"
 
 # 对话列表
-@export var dialogs: Array[KND_Dialogue] = []
+@export var dialogs: Array[int] = []
 # tag字典
 @export var branchs: Dictionary = {}
 

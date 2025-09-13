@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://hecjc8cwyd0b"
-path="res://.godot/imported/Konado_Simple.png-21487ce65d17a8a4cb4d88b053584516.ctex"
+uid="uid://dic4tp4l03x08"
+path="res://.godot/imported/Konado_Enjoy.png-f164567a13580215d3d14d8548c3af8c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sample/sample_arts/Konado_Simple.png"
-dest_files=["res://.godot/imported/Konado_Simple.png-21487ce65d17a8a4cb4d88b053584516.ctex"]
+source_file="res://sample/demo/sample_arts/Konado_Enjoy.png"
+dest_files=["res://.godot/imported/Konado_Enjoy.png-f164567a13580215d3d14d8548c3af8c.ctex"]
 
 [params]
 

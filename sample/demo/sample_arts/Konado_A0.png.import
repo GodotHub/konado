@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bb7nhjioefh8a"
-path="res://.godot/imported/示例-咖啡馆-背景.png-a14540a708e62c3b7080db2ee50599e8.ctex"
+uid="uid://bmdrrvmbvpoy0"
+path="res://.godot/imported/Konado_A0.png-62720ecbacac77bbb09748fb15fc50db.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sample/sample_arts/示例-咖啡馆-背景.png"
-dest_files=["res://.godot/imported/示例-咖啡馆-背景.png-a14540a708e62c3b7080db2ee50599e8.ctex"]
+source_file="res://sample/demo/sample_arts/Konado_A0.png"
+dest_files=["res://.godot/imported/Konado_A0.png-62720ecbacac77bbb09748fb15fc50db.ctex"]
 
 [params]
 
