@@ -57,7 +57,7 @@ func _import(source_file, save_path, options, platform_variants, gen_files) -> E
 		printerr("Parsed JSON is not a Dictionary. Type: ", typeof(json_data))
 		return ERR_INVALID_DATA
 
-	data.source_data = json_data
+	data._source_data = json_data
 
 	var output_path = "%s.%s" % [save_path, _get_save_extension()]
 	var error = ResourceSaver.save(
@@ -70,4 +70,3 @@ func _import(source_file, save_path, options, platform_variants, gen_files) -> E
 		return error
 
 	return OK
-

@@ -23,6 +23,9 @@ const SAVE_AND_LOAD := "res://addons/konado/scripts/save_and_load/SaL.gd"
 
 const KONADO_EDITOR := preload("uid://bommt7l6wmdsa")
 
+## 数据库
+const KND_DATABASE := "res://addons/konado/database/knd_database.gd"
+
 
 ## 插件成员
 var import_plugin: EditorImportPlugin
@@ -39,6 +42,7 @@ var open_konado_editor_btn: Button = null
 func _enter_tree() -> void:
 	# 添加自动加载单例
 	add_autoload_singleton("KS_SAVE_AND_LOAD",SAVE_AND_LOAD)
+	add_autoload_singleton("KND_Database", KND_DATABASE)
 	
 	# 注册自定义资源类型
 	#add_custom_type("DialogueData", "Resource", DIALOGUE_DATA_SCRIPT, null)
@@ -118,5 +122,5 @@ func _exit_tree() -> void:
 
 	# 清理自动加载和自定义类型
 	remove_autoload_singleton("KS_SAVE_AND_LOAD")
-	remove_custom_type("DialogueData")
+	remove_autoload_singleton("KND_Database")
 	print("Konado unloaded")
