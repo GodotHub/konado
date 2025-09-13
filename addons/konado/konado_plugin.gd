@@ -24,8 +24,6 @@ const SAVE_AND_LOAD := "res://addons/konado/scripts/save_and_load/SaL.gd"
 const KONADO_EDITOR := preload("uid://bommt7l6wmdsa")
 
 
-
-
 ## 插件成员
 var import_plugin: EditorImportPlugin
 var kdb_import_plugin: EditorImportPlugin
@@ -44,7 +42,6 @@ func _enter_tree() -> void:
 	
 	# 注册自定义资源类型
 	#add_custom_type("DialogueData", "Resource", DIALOGUE_DATA_SCRIPT, null)
-	#add_custom_type("KND_Data", "Resource", KDB, null)
 
 	# 初始化导入插件
 	## TODO: 未来用字典遍历方式添加

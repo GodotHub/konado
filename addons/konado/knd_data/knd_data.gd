@@ -2,15 +2,13 @@
 extends Resource
 class_name KND_Data
 
-
 static var id_number := 0 ## id 计数
 
 ## 数据id，为-1的时候需要重新赋值
 var id: int
 
-
 ## 源数据字典
-@export var source_data: Dictionary = {}
+@export var _source_data: Dictionary = {}
 
 ## 依赖管理，保存id
 @export var data_deps: Array[int] = []
@@ -56,6 +54,9 @@ func _init() -> void:
 	print_data()
 	
 
+func get_source_data() -> Dictionary:
+	gen_source_data()
+	return self.source_data
 
 func gen_source_data() -> void:
 	var property_list = get_property_list()
@@ -64,13 +65,13 @@ func gen_source_data() -> void:
 		var property_name = property["name"]
 		if property_name in black_list: # 添加其他需要排除的属性名
 			continue
-		source_data[property_name] = get(property_name)
+		_source_data[property_name] = get(property_name)
 	pass
 
 ## 从字典更新数据到属性
 func update():
-	for property in source_data:
-		set(property, source_data[property])
+	for property in _source_data:
+		set(property, _source_data[property])
 		emit_changed()
 		
 ## 重命名，并且保证命名唯一化 new_name:名字 ，name_list:名字集合
@@ -80,11 +81,68 @@ func rename(new_name: String) -> void:
 		if get("name") == data_id_map[i]:
 			set("name", new_name + "_" + str(number))
 			number += 1
-	source_data["name"] = get("name")
+	_source_data["name"] = get("name")
 	data_id_map[id] = get("name")
 	print("重命名 ", get("name"))
 
 ## 打印数据
 func print_data():
-	print("数据 id %s %s" % [id, source_data])
+	print("数据 id %s %s" % [id, _source_data])
 	
+## 将数据保存到本地
+func save_data(path: String) -> void:
+	# 首先确保目录存在
+	var dir_path = path.get_base_dir()
+	if not ensure_directory_exists(dir_path):
+		print("无法创建目录: ", dir_path)
+		return
+	
+	var file = FileAccess.open(path, FileAccess.WRITE)
+	if file == null:
+		var error = FileAccess.get_open_error()
+		print("文件打开失败，错误代码: ", error)
+		return
+	
+	var json_string: String = JSON.stringify(_source_data, "\t")
+	file.store_line(json_string)
+	file.close()
+	print("保存数据 " + path)
+
+
+## 从本地加载数据
+func load_data(path: String) -> void:
+	# 检查文件是否存在
+	if not FileAccess.file_exists(path):
+		print("文件不存在: ", path)
+		return
+	
+	var file = FileAccess.open(path, FileAccess.READ)
+	if file == null:
+		var error = FileAccess.get_open_error()
+		print("文件打开失败，错误代码: ", error)
+		return
+	
+	var data = file.get_line()
+	file.close()
+	
+	# 使用 JSON.parse_string() 替代已弃用的 JSON.parse()
+	var json = JSON.new()
+	var parse_result = json.parse(data)
+	if parse_result == OK:
+		_source_data = json.get_data()
+		update()
+		print("加载数据 " + path)
+	else:
+		print("JSON 解析失败，错误: ", json.get_error_message(), " 在位置: ", json.get_error_line())
+
+# 确保目录存在的函数
+func ensure_directory_exists(path: String) -> bool:
+	var dir = DirAccess.open(path)
+	if dir == null:
+		# 尝试创建目录
+		dir = DirAccess.open(path.get_base_dir())
+		if dir == null:
+			return false
+		var error = dir.make_dir_recursive(path)
+		return error == OK
+	return true
