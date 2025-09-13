@@ -12,11 +12,9 @@ class_name KND_Shot
 ## key是演员名，value是角色id
 @export var actor_character_map: Dictionary[String, int] = {}
 
-## 依赖的角色，整个对话中出现的角色
-##@export var dep_characters: Array[String] = []
 
-## 以下以备连线时使用
+## 描述
+@export var tip: String = "描述"
 
-@export var last_shots: Array[String] = []
-
-@export var next_shots: Array[String] = []
+## 收藏
+@export var love: bool = false

@@ -6,9 +6,11 @@
 # Konado specific ignores
 /konado_data/
 knd_project.kson
+data.cfg
 
 # VS Code specific ignores
 .vscode/
+.VSCodeCounter
 
 # Jetbrain IDE specific ignores
 .idea/
