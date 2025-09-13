@@ -35,7 +35,7 @@ func _init() -> void:
 	id = id_number
 	id_number += 1
 	
-	_save_data_config()
+	
 
 	gen_source_data()
 	
@@ -44,6 +44,7 @@ func _init() -> void:
 	data_id_map[id] = get("name")
 	emit_changed()
 	print_data()
+	_save_data_config()
 	
 func _save_data_config() -> void:
 	## TODO: 需要优化
@@ -96,14 +97,14 @@ func update():
 		
 ## 重命名，并且保证命名唯一化 new_name:名字 ，name_list:名字集合
 func rename(new_name: String) -> void:
-	var number = id_number
-	if data_id_map.has(new_name):
-		set("name", new_name + "_" + str(number))
-		number += 1
-	#for i in data_id_map:
-		#if get("name") == data_id_map[i]:
-			#set("name", new_name + "_" + str(number))
-			#number += 1
+	var number = 1
+	#if data_id_map.has(new_name):
+		#set("name", new_name + "_" + str(number))
+		#number += 1
+	for i in data_id_map.keys():
+		if get("name") == data_id_map[i]:
+			set("name", new_name + "_" + str(number))
+			number += 1
 	_source_data["name"] = get("name")
 	data_id_map[id] = get("name")
 	print("重命名 ", get("name"))
