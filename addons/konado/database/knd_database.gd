@@ -1,28 +1,50 @@
+## KND_Database数据库类
+@tool
 extends Node
-class_name KND_Database
+#class_name KND_Database
 
-## 项目资源
+## 项目资源表，未来考虑分页（现在应该写进去一部红楼梦没问题）
 @export var knd_data_dic: Dictionary[int, String] = {}
+
 
 ## 数据类型,key为类型名，value为脚本路径
 const KND_CLASS_DB: Dictionary[String, String] = {
+## KND_Data 基类
 	"KND_Data": "res://addons/konado/knd_data/knd_data.gd",
-	"KND_Shot": "res://addons/konado/knd_data/knd_shot.gd",
+## 资源
+	"KND_Character": "res://addons/konado/knd_data/act/knd_character.gd",
+	"KND_Background": "res://addons/konado/knd_data/act/knd_background.gd",
+	"KND_Soundeffect": "res://addons/konado/knd_data/audio/knd_soundeffect.gd",
+	"KND_Bgm": "res://addons/konado/knd_data/audio/knd_bgm.gd",
+	"KND_Voice": "res://addons/konado/knd_data/audio/knd_voice.gd",
+## 镜头
+	"KND_Shot": "res://addons/konado/knd_data/shot/knd_shot.gd",
+## 对话
 	"KND_Dialogue": "res://addons/konado/knd_data/knd_dialogue.gd",
-	"KND_Ordinary_Dialogue": "res://addons/konado/knd_data/dialogue/knd_ordinary_dialogue.gd"
+## 具体的对话类型
+	"KND_Ordinary_Dialogue": "res://addons/konado/knd_data/dialogue/knd_ordinary_dialogue.gd",
+	"KND_DisplayActor_Dialogue": "res://addons/konado/knd_data/dialogue/knd_display_actor_dialogue.gd",
+	"KND_Actor_Change_State_Dialogue": "res://addons/konado/knd_data/dialogue/knd_actor_change_state_dialogue.gd"
 }
 
 ## 判断是否有这个类型，保证创建数据时不会出错
-func has_data_type(type: String) -> bool:
+func _has_data_type(type: String) -> bool:
 	if type == "":
 		printerr("type不能为空")
 		return false
 	return KND_CLASS_DB.has(type)
+	
+## 判断是否有这个data
+func _has_data(id: int) -> bool:
+	if not knd_data_dic.has(id):
+		printerr("KND_Database没有这个数据"+str(id))
+		return false
+	return true
 
 
 ## 创建数据实例，如果创建失败，返回null
 func create_data_instance(type: String) -> KND_Data:
-	if has_data_type(type) == false:
+	if _has_data_type(type) == false:
 		return null
 	var script_path = KND_CLASS_DB[type]
 	var script: GDScript = load(script_path)
@@ -35,7 +57,7 @@ func create_data_instance(type: String) -> KND_Data:
 
 ## 新建数据 type : 数据类名，返回数据id，如果创建失败，返回-1
 func create_data(type: String) -> int:
-	if has_data_type(type) == false:
+	if _has_data_type(type) == false:
 		return -1
 	
 	var data: KND_Data = create_data_instance(type)
@@ -45,8 +67,10 @@ func create_data(type: String) -> int:
 	# type变小写
 	var path_type_str: String = type.to_lower().replace("knd_", "konado_")
 
+	# 文件路径
 	var folder_path: String = "res://konado_data/" + path_type_str
-
+	
+	# 保存路径
 	var save_path: String = folder_path + "/" + str(data.id) + ".kdb"
 
 	if ensure_directory_exists(folder_path) == false:
@@ -60,6 +84,11 @@ func create_data(type: String) -> int:
 	knd_data_dic[id] = save_path
 
 	return id
+	
+func delete_data(id: int) -> void:
+	if not knd_data_dic.has(id):
+		return
+	pass
 
 func get_data(id: int) -> Dictionary:
 	if not knd_data_dic.has(id):
@@ -124,25 +153,3 @@ func ensure_directory_exists(path: String) -> bool:
 	else:
 		print("目录创建失败，错误代码: ", error)
 		return false
-
-# func delect_data(id: int) -> void:
-#     pass
-
-# ## 获取数据资源
-# func get_data(id: int) -> KND_Data:
-#     return null
-
-# ## 获取数据字典
-# func get_data_dic(id: int) -> Dictionary:
-#     return {}
-
-# ## 获取数据属性
-# func get_property(id: int, property: String) -> Variant:
-#     return null
-
-# ## 设置数据属性
-# func set_property(id: int, property: String) -> bool:
-#     return knd_data_dic[id].set(property)
-
-# func save_data():
-#     pass

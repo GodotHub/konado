@@ -12,7 +12,7 @@ config_version=5
 
 config/name="Konado Editor"
 config/description="Konado Editor，Konado编辑器"
-run/main_scene="res://sample/demo/konado_sample.tscn"
+run/main_scene="res://addons/konado/editor/ui/main_editor/main_editor.tscn"
 config/features=PackedStringArray("4.4", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -21,6 +21,7 @@ config/icon="res://icon.svg"
 ComponentFactory="*res://editor/ui/ui_components/component_factory.gd"
 DialogueManagerAPI="*res://addons/konadotnet/api/DialogueManagerAPI.cs"
 KS_SAVE_AND_LOAD="*res://addons/konado/scripts/save_and_load/SaL.gd"
+KND_Database="*res://addons/konado/database/knd_database.gd"
 
 [display]
 
