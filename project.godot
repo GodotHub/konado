@@ -14,7 +14,8 @@ config/name="Konado Editor"
 config/description="Konado Editor，Konado编辑器"
 run/main_scene="res://addons/konado/editor/ui/main_editor/main_editor.tscn"
 config/features=PackedStringArray("4.4", "C#", "Forward Plus")
-config/icon="res://icon.svg"
+boot_splash/image="uid://d1yhkro0quuae"
+config/icon="uid://b5olx2vwoscbr"
 
 [autoload]
 
@@ -35,7 +36,7 @@ project/assembly_name="Konado"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/gut/plugin.cfg", "res://addons/konado/plugin.cfg", "res://addons/konadotnet/plugin.cfg", "res://addons/main_scene_switcher/plugin.cfg", "res://addons/theme_gen_save_sync/plugin.cfg")
+enabled=PackedStringArray("res://addons/gut/plugin.cfg", "res://addons/konado/plugin.cfg", "res://addons/main_scene_switcher/plugin.cfg", "res://addons/theme_gen_save_sync/plugin.cfg")
 
 [gui]
 
