@@ -53,6 +53,8 @@ namespace Konado.Runtime.API
         /// </summary>
         private bool _isApiReady = false;
 
+        private DialogueManagerAPI() { }
+
         public override void _Ready()
         {
             Instance = this;
