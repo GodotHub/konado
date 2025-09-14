@@ -2,6 +2,7 @@ using Godot;
 using Konado.Runtime.API;
 using System;
 
+using static Konado.Runtime.API.KonadoAPI;
 public partial class DatabaseTest : Node
 {
     public override void _Ready()
