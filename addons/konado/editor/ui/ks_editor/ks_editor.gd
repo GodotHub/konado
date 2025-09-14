@@ -6,15 +6,16 @@ extends Node
 
 @onready var statement_tree: Tree = %StatementTree
 
-var ks_statement_path := "res://addons/konado/editor/ui/ks_editor/工作簿1.csv"
 
 var ks_statement: Dictionary = {}
 
 func _ready() -> void:
 	# ks_statement = load_csv()
-
+	var kscsv := KsCsvDict.new()
+	kscsv = ResourceLoader.load( "uid://dbf8118ftqyvc" ) 
+	print(kscsv.csv_data)
 	## 直接从资源加载
-	ks_statement = (ResourceLoader.load("uid://dbf8118ftqyvc") as KsCsvDict).csv_data
+	ks_statement =kscsv.csv_data
 	create_tree_from_dict()
 
 ## TODO：已经在ks_csv_importer中实现，这里不再需要，未来考虑删除
