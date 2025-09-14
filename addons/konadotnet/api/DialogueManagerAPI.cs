@@ -23,7 +23,7 @@ namespace Konado.Runtime.API
         public delegate void DialogueLineEndEventHandler(int lineIndex);
 
         private Node _source;
-
+        private Dictionary<string, Callable> _signals = [];
         public override void _Ready()
         {
             _source = GetNodeOrNull("/root/KonadoSample/DialogManager");
@@ -34,21 +34,30 @@ namespace Konado.Runtime.API
             ConnectSignals();
         }
 
-        private void ConnectSignals()
+        public override void _ExitTree()
         {
-            // 定义需要连接的信号，以及对应的方法
-            var signals = new Dictionary<string, StringName>(){
-                {"shot_start", MethodName.OnShotStart},
-                {"shot_end", MethodName.OnShotEnd},
-                {"dialogue_line_start", MethodName.OnDialogueLineStart},
-                {"dialogue_line_end", MethodName.OnDialogueLineEnd}
+            foreach (var signal in _signals)
+            {
+                if (_source.IsConnected(signal.Key, signal.Value))
+                {
+                    _source.Disconnect(signal.Key, signal.Value);
+                }                
+            }     
+        }
+
+        private void ConnectSignals()
+        {            
+            _signals = new Dictionary<string, Callable>(){
+                {"shot_start", Callable.From(OnShotStart)},
+                {"shot_end", Callable.From(OnShotEnd)},
+                {"dialogue_line_start", Callable.From<int>(OnDialogueLineStart)},
+                {"dialogue_line_end", Callable.From<int>(OnDialogueLineEnd)}
             };
             GD.Print("Connecting signals...");
-            foreach (var signal in signals)
+            foreach (var signal in _signals)
             {
-                _source.Connect(signal.Key, new Callable(this, signal.Value));
+                _source.Connect(signal.Key, signal.Value);
             }
-            
         }
 
         private void OnShotStart() => EmitSignalShotStart();
