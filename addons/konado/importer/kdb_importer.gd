@@ -52,9 +52,15 @@ func _import(source_file, save_path, options, platform_variants, gen_files) -> E
 		file.close()
 		return ERR_FILE_CORRUPT
 	
-	# 读取文件内容作为变量
-	var json_data = file.get_var()
+	var source_text = file.get_as_text()
 	file.close()
+
+	var json = JSON.new()
+	var parse_result = json.parse(source_text)
+	if parse_result != OK:
+		printerr("JSON Parse Error: ", json.get_error_message(), " at line ", json.get_error_line())
+		return parse_result
+	var json_data = json.get_data()
 	
 	if json_data == null:
 		printerr("Failed to parse file data as variable")

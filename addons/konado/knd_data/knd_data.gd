@@ -18,6 +18,9 @@ var id: int
 ## 依赖管理，保存id
 @export var data_deps: Array[int] = []
 
+## 保存路径
+@export var save_path: String = ""
+
 
 ## 黑名单，不保存到文件中
 const black_list: Array[String] = ["_source_data",
@@ -38,6 +41,7 @@ func _init(load_mode: bool = true) -> void:
 	if load_mode:
 		print("加载模式")
 		update()
+		emit_changed()
 		return
 	else:
 		_load_data_config()
@@ -84,7 +88,7 @@ func _load_data_config() -> void:
 	
 func get_source_data() -> Dictionary:
 	gen_source_data()
-	return self.source_data
+	return self._source_data
 
 func gen_source_data() -> void:
 	var property_list = get_property_list()
@@ -95,6 +99,25 @@ func gen_source_data() -> void:
 			continue
 		_source_data[property_name] = get(property_name)
 	pass
+	
+func add_sub_source_data(id: int, data: Dictionary) -> void:
+	if sub_source_data.has(id):
+		printerr("无法添加子资源")
+		return
+	
+	sub_source_data[id] = data
+	
+func load_sub_source_data(id: int) -> Dictionary:
+	if not sub_source_data.has(id):
+		printerr("没有这个子资源")
+		return {}
+	return sub_source_data[id]
+	
+func update_sub_source_data(id: int, new: Dictionary) -> void:
+	if not sub_source_data.has(id):
+		printerr("无法修改子资源")
+		return
+	sub_source_data[id] = new
 
 ## 从字典更新数据到属性
 func update():
@@ -122,6 +145,7 @@ func print_data():
 	
 ## 将数据保存到本地
 func save_data(path: String) -> void:
+	gen_source_data()
 	# 首先确保目录存在
 	var dir_path = path.get_base_dir()
 	if not ensure_directory_exists(dir_path):
@@ -133,11 +157,12 @@ func save_data(path: String) -> void:
 		var error = FileAccess.get_open_error()
 		print("文件打开失败，错误代码: ", error)
 		return
-	file.store_var(_source_data, true)
+	#file.store_var(_source_data, true)
 	
-	#var json_string: String = JSON.stringify(_source_data, "\t")
-	#file.store_line(json_string)
+	var json_string: String = JSON.stringify(_source_data, "\t")
+	file.store_line(json_string)
 	file.close()
+	
 	print("保存数据 " + path)
 
 
@@ -154,18 +179,18 @@ func load_data(path: String) -> void:
 		print("文件打开失败，错误代码: ", error)
 		return
 	
-	#var data = file.get_line()
+	var data = file.get_line()
 	file.close()
-	_source_data = file.get_var(true)
+	#_source_data = file.get_var(true)
 	
-	#var json = JSON.new()
-	#var parse_result = json.parse(data)
-	#if parse_result == OK:
-		#_source_data = json.get_data()
-		#update()
-		#print("加载数据 " + path)
-	#else:
-		#print("JSON 解析失败，错误: ", json.get_error_message(), " 在位置: ", json.get_error_line())
+	var json = JSON.new()
+	var parse_result = json.parse(data)
+	if parse_result == OK:
+		_source_data = json.get_data()
+		update()
+		print("加载数据 " + path)
+	else:
+		print("JSON 解析失败，错误: ", json.get_error_message(), " 在位置: ", json.get_error_line())
 	update()
 
 # 确保目录存在的函数
