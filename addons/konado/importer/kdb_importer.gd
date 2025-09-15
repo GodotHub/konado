@@ -35,30 +35,45 @@ func _get_option_visibility(path, option_name, options) -> bool:
 	return true
 
 func _import(source_file, save_path, options, platform_variants, gen_files) -> Error:
-	var data = KND_Data.new()
+	
 
 	print("Importing %s" % source_file)
+	
+	# 读取文件内容
 	var file = FileAccess.open(source_file, FileAccess.READ)
 	if file == null:
 		var error = FileAccess.get_open_error()
 		printerr("Failed to open file: ", source_file, " Error code: ", error)
 		return ERR_CANT_OPEN
-	var source_text = file.get_as_text()
+	
+	# 检查文件是否为空
+	if file.get_length() == 0:
+		printerr("File is empty: ", source_file)
+		file.close()
+		return ERR_FILE_CORRUPT
+	
+	# 读取文件内容作为变量
+	var json_data = file.get_var()
 	file.close()
+	
+	if json_data == null:
+		printerr("Failed to parse file data as variable")
+		return ERR_PARSE_ERROR
 
-	var json = JSON.new()
-	var parse_result = json.parse(source_text)
-	if parse_result != OK:
-		printerr("JSON Parse Error: ", json.get_error_message(), " at line ", json.get_error_line())
-		return parse_result
-	var json_data = json.get_data()
-
+	# 确保读取的数据是字典类型
 	if typeof(json_data) != TYPE_DICTIONARY:
-		printerr("Parsed JSON is not a Dictionary. Type: ", typeof(json_data))
+		printerr("Parsed data is not a Dictionary. Type: ", typeof(json_data))
 		return ERR_INVALID_DATA
-
+	var data = KND_Data.new(true)
 	data._source_data = json_data
+	data.update()
 
+	# 确保保存路径存在
+	var dir = DirAccess.open("res://")
+	if not DirAccess.dir_exists_absolute(save_path.get_base_dir()):
+		DirAccess.make_dir_recursive_absolute(save_path.get_base_dir())
+
+	# 保存资源
 	var output_path = "%s.%s" % [save_path, _get_save_extension()]
 	var error = ResourceSaver.save(
 		data,

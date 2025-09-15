@@ -49,7 +49,7 @@ func create_data_instance(type: String) -> KND_Data:
 	var script_path = KND_CLASS_DB[type]
 	var script: GDScript = load(script_path)
 	if script != null && script is GDScript:
-		return script.new()
+		return script.new(false)
 	else:
 		push_error("Script not found or is not GDScript: " + script_path)
 		return null
@@ -94,6 +94,11 @@ func get_data(id: int) -> Dictionary:
 	if not knd_data_dic.has(id):
 		return {}
 	var knd_file_path: String = knd_data_dic[id]
+	if not FileAccess.file_exists(knd_file_path):
+		printerr("数据已不存在")
+		knd_data_dic.erase(id)
+		return {}
+		
 	var knd_data: KND_Data = load(knd_file_path)
 	var data: Dictionary = knd_data.get_source_data()
 	return data
