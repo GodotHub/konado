@@ -21,7 +21,7 @@ features:
   - title: 强大平台
     details: 为世界上最流行的开源引擎打造
   - title: 值得信赖
-    details: 由Starry Team长期开发和维护
+    details: 由社区驱动长期开发和维护
   - title: 易如反掌
     details: 创作游戏就像写文案一样简单
 ---

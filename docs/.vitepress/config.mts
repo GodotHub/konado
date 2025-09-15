@@ -60,7 +60,7 @@ export default defineConfig({
     ],
     footer: {
       message: 'Released under BSD3-Clause License.',
-      copyright: 'Copyright © 2025 Starry Team. <br>All rights reserved.'
+      copyright: 'Copyright © 2025 Konado Project. <br> Copyright © 2025 Starry Team. <br> All rights reserved.'
     }
   },
 
@@ -74,7 +74,7 @@ export default defineConfig({
         lastUpdatedText: '最后更新于',
         editLink: {
           pattern: 'https://gitcode.com/godothub/konado/edit/master/docs/:path',
-          text: '在 GitCode 上编辑此页'
+          text: '在线编辑此页'
         },
         outlineTitle: '本页目录',
         returnToTopLabel: '返回顶部',
@@ -175,6 +175,23 @@ export default defineConfig({
             ]
           },
           {
+            text: ' Konado .NET',
+            items: [
+              { text: '安装konadotnet', link: '/konadotnet/install_konadotnet' },
+              { 
+                text: 'KonadoAPI' , 
+                collapsed: true,
+                items: [
+                  { text: 'KonadoAPI介绍', link: '/konadotnet/konadoapi' },
+                  { text: 'KonadoAPI使用', link: '/konadotnet/konadoapi_use' },
+                  { text: '对话管理', link: '/konadotnet/konadoapi_example' },
+                  { text: 'KonadoAPI示例', link: '/konadotnet/konadoapi_example' }
+                ]
+              }
+            ]
+
+          },
+          {
             text: '开发',
             items: [
               { text: '版本规划', link: '/develop/roadmap' },
@@ -185,7 +202,6 @@ export default defineConfig({
           },
           {
             text: '关于',
-            collapsed: true,
             items: [
               { text: '关于Konado', link: '/about/konado' },
               { text: '看板娘Kona', link: '/about/kona' },
