@@ -2,7 +2,7 @@
 
 ## 关于许可证
 
-`Konado` 是一个开源项目，我们希望`Konado`能够被更多的人使用，因此我们选择了 `BSD 3-Clause` 许可证，同时Konado项目的sample中包含一些立绘素材，这些素材均由Starry Team的marukles创作和提供，素材使用CC-NC-SA 4.0许可证，如果您的项目使用了这些素材，请遵守CC-NC-SA 4.0许可证的相关规定，并在您的项目中声明素材的相关信息。
+`Konado` 是一个开源项目，我们希望 `Konado` 能够被更多的人使用，因此我们选择了 `BSD 3-Clause` 许可证，同时Konado项目的sample中包含一些立绘素材，素材使用`CC BY-NC-SA 4.0`许可证，如果您的项目使用了这些素材，请遵守`CC BY-NC-SA 4.0`许可证的相关规定，并在您的项目中声明素材的相关信息。
 
 ## 声明信息
 
@@ -49,7 +49,13 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ```
 
 
-项目看板娘 Kona 以及 sample 下的示例素材立绘使用 CC-NC-SA 4.0 许可证，由StarryTeam的[marukles](https://gitcode.com/marukles)设计和绘画，以下是许可证全文：
+项目看板娘 Kona 以及 sample 下的示例素材立绘使用 CC-NC-SA 4.0 许可证
+
+Kona 2.0立绘素材由Konado Project的[ioniccrystal](https://github.com/ioniccrystal)设计和绘画
+
+Kona 1.0立绘素材由StarryTeam的[marukles](https://gitcode.com/marukles)设计和绘画
+
+以下是许可证全文：
 
 ```
 Attribution-NonCommercial-ShareAlike 4.0 International
