@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 
 /// <summary>
-/// Konadotnet插件入口类
+/// Konadotnet插件入口类，继承自EditorPlugin
 /// </summary>
 [Tool]
 public partial class Konadotnet : EditorPlugin
