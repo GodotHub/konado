@@ -90,6 +90,7 @@ func get_source_data() -> Dictionary:
 	gen_source_data()
 	return self._source_data
 
+## 生成源数据，在保存到本地时需要调用
 func gen_source_data() -> void:
 	var property_list = get_property_list()
 	# 将属性写到data字典
@@ -106,6 +107,11 @@ func add_sub_source_data(id: int, data: Dictionary) -> void:
 		return
 	
 	sub_source_data[id] = data
+	print("添加子资源" + str(id) + str(data))
+	
+	# 需要再次保存到本地
+	gen_source_data()
+	save_data(save_path)
 	
 func load_sub_source_data(id: int) -> Dictionary:
 	if not sub_source_data.has(id):
@@ -118,6 +124,8 @@ func update_sub_source_data(id: int, new: Dictionary) -> void:
 		printerr("无法修改子资源")
 		return
 	sub_source_data[id] = new
+	gen_source_data()
+	save_data(save_path)
 
 ## 从字典更新数据到属性
 func update():
@@ -157,7 +165,6 @@ func save_data(path: String) -> void:
 		var error = FileAccess.get_open_error()
 		print("文件打开失败，错误代码: ", error)
 		return
-	#file.store_var(_source_data, true)
 	
 	var json_string: String = JSON.stringify(_source_data, "\t")
 	file.store_line(json_string)
@@ -181,7 +188,6 @@ func load_data(path: String) -> void:
 	
 	var data = file.get_line()
 	file.close()
-	#_source_data = file.get_var(true)
 	
 	var json = JSON.new()
 	var parse_result = json.parse(data)
