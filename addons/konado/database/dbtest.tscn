@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://deybtqs7gssqm"]
 
-[ext_resource type="Script" uid="uid://3bph4cfltxrx" path="res://addons/konado/database/db_test.gd" id="1_f23ui"]
+[ext_resource type="Script" uid="uid://chuqjwqmx7rrg" path="res://addons/konadotnet/sample/DatabaseTest.cs" id="1_f23ui"]
 
 [node name="Dbtest" type="Node"]
 script = ExtResource("1_f23ui")

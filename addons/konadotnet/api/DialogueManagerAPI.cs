@@ -30,6 +30,7 @@ namespace Konado.Runtime.API
             if (_source == null)
             {
                 GD.PrintErr("未找到对话管理器节点。请确保已安装 Konado 插件，并且已初始化对话管理器节点。");
+                return;
             }
             ConnectSignals();
         }

@@ -26,14 +26,14 @@ public partial class DialogueManagerAPISample : Node
         };
 
         // 等待1秒
-        Konado.Runtime.API.KonadoAPI.API.ApiReady += () =>
+        if (API.IsApiReady)
         {
             GD.Print("API Ready");
 
             DialogueManager.InitDialogue();
             DialogueManager.StartDialogue();
             //DialogueManagerAPI.Instance.LoadDialogueShot("res://sample/sample_lists/storys/test.ks");
-        };
+        }
 
 
     }
