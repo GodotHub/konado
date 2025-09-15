@@ -2,11 +2,11 @@
 
 ## 项目简介
 
-Konado是一款基于Godot Engine开发的开源视觉小说引擎框架，由月夜繁星工作室（StarryTeam）负责开发和维护。该框架致力于为开发者提供高效、便捷的视觉小说开发体验，帮助创作者快速构建出高质量的视觉小说作品。
+Konado是一款基于Godot Engine开发的开源视觉小说引擎框架，该框架致力于为开发者提供高效、便捷的视觉小说开发体验，帮助创作者快速构建出高质量的视觉小说作品。
 
 ## 发展历程
 
-Konado最初是月夜繁星工作室（StarryTeam）内部孵化的实验性项目，随着功能不断完善与体系逐渐成熟，我们决定将其开源。目前，Konado由月夜繁星工作室（StarryTeam）持续开发与维护，并由GodotHub提供项目运营及文档支持。项目代码已开源发布于GitCode平台。
+Konado最初是月夜繁星工作室（StarryTeam）内部孵化的实验性项目，随着功能不断完善与体系逐渐成熟，我们决定将其开源。目前，Konado由月夜繁星工作室（StarryTeam）和社区开发者持续开发与维护，并由GodotHub提供项目运营及文档支持。项目代码已开源发布于GitCode平台。
 
 ## 我们的目标
 
@@ -14,7 +14,7 @@ Konado最初是月夜繁星工作室（StarryTeam）内部孵化的实验性项�
 
 ## 联系我们
 
-如有问题反馈或功能建议，欢迎前往Konado的项目仓库提交Issue，也欢迎您加入我们的QQ频道交流使用心得：
+如有问题反馈或功能建议，欢迎前往Konado的项目[仓库提交Issue](https://gitcode.com/godothub/konado/issues)，也欢迎您加入我们的QQ频道交流使用心得：
 
 QQ频道交流群组：https://pd.qq.com/g/GodotHub999/text/707799746
 
