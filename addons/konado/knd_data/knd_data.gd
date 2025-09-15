@@ -12,6 +12,9 @@ var id: int
 ## 源数据字典
 @export var _source_data: Dictionary = {}
 
+## 子资源
+@export var sub_source_data: Dictionary[int, Dictionary] = {}
+
 ## 依赖管理，保存id
 @export var data_deps: Array[int] = []
 
@@ -29,22 +32,26 @@ const black_list: Array[String] = ["_source_data",
  "Built-in script",
  "knd_data.gd"]
 
-
-func _init() -> void:
-	_load_data_config()
-	id = id_number
-	id_number += 1
-	
-	
-
-	gen_source_data()
-	
-	if get("name") != null:
-		rename(get("name")) # 重命名
-	data_id_map[id] = get("name")
-	emit_changed()
-	print_data()
-	_save_data_config()
+## 如果是加载资源并实例化 load_mode 应为true，如果是新建资源 load_mode 应为false
+func _init(load_mode: bool = true) -> void:
+	# 判断是否是加载模式
+	if load_mode:
+		print("加载模式")
+		update()
+		return
+	else:
+		_load_data_config()
+		id = id_number
+		id_number += 1
+		
+		gen_source_data()
+		
+		if get("name") != null:
+			rename(get("name")) # 重命名
+		data_id_map[id] = get("name")
+		emit_changed()
+		print_data()
+		_save_data_config()
 	
 func _save_data_config() -> void:
 	## TODO: 需要优化
@@ -126,9 +133,10 @@ func save_data(path: String) -> void:
 		var error = FileAccess.get_open_error()
 		print("文件打开失败，错误代码: ", error)
 		return
+	file.store_var(_source_data, true)
 	
-	var json_string: String = JSON.stringify(_source_data, "\t")
-	file.store_line(json_string)
+	#var json_string: String = JSON.stringify(_source_data, "\t")
+	#file.store_line(json_string)
 	file.close()
 	print("保存数据 " + path)
 
@@ -146,18 +154,19 @@ func load_data(path: String) -> void:
 		print("文件打开失败，错误代码: ", error)
 		return
 	
-	var data = file.get_line()
+	#var data = file.get_line()
 	file.close()
+	_source_data = file.get_var(true)
 	
-	# 使用 JSON.parse_string() 替代已弃用的 JSON.parse()
-	var json = JSON.new()
-	var parse_result = json.parse(data)
-	if parse_result == OK:
-		_source_data = json.get_data()
-		update()
-		print("加载数据 " + path)
-	else:
-		print("JSON 解析失败，错误: ", json.get_error_message(), " 在位置: ", json.get_error_line())
+	#var json = JSON.new()
+	#var parse_result = json.parse(data)
+	#if parse_result == OK:
+		#_source_data = json.get_data()
+		#update()
+		#print("加载数据 " + path)
+	#else:
+		#print("JSON 解析失败，错误: ", json.get_error_message(), " 在位置: ", json.get_error_line())
+	update()
 
 # 确保目录存在的函数
 func ensure_directory_exists(path: String) -> bool:
