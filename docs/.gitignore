@@ -3,3 +3,5 @@ node_modules/
 !.vitepress/config.mts
 !.vitepress/theme
 pnpm-lock.yaml
+package-lock.json
+yarn.lock
