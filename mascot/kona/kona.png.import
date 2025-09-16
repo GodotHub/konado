@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cargjy7wp8wfn"
-path="res://.godot/imported/kona.png-704bb8a72b0afff00a91a32b67dd6f25.ctex"
+path="res://.godot/imported/kona.png-7bc5f7c6fd10a825a07c88a1b99aa5f6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sample/demo/sample_arts/kona.png"
-dest_files=["res://.godot/imported/kona.png-704bb8a72b0afff00a91a32b67dd6f25.ctex"]
+source_file="res://mascot/kona/kona.png"
+dest_files=["res://.godot/imported/kona.png-7bc5f7c6fd10a825a07c88a1b99aa5f6.ctex"]
 
 [params]
 
