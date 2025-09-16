@@ -2,6 +2,8 @@
 
 ![star](https://gitcode.com/godothub/konado/star/badge.svg)
 ![License]( https://img.shields.io/badge/License-BSD_3--Clause-orange.svg)
+![GitHub Last Commit](https://img.shields.io/github/last-commit/godothub/konado.svg)
+
 
 <p align="center">
   <img src="addons/konado/assets/KonadoBanner.png" alt="看板娘可娜" width=596px>
@@ -20,7 +22,7 @@ Konado是一个视觉小说引擎框架，提供多种对话模板以及对话�
 
 ## 快速开始
 
-请参考 [快速开始](https://godothub.com/konado/) 文档，了解如何快速开始使用Konado。
+请参考 [快速开始](https://godothub.com/konado/tutorial/install.html) 文档，了解如何快速开始使用Konado。
 
 
 ## 文档
@@ -45,17 +47,4 @@ Konado是一个视觉小说引擎框架，提供多种对话模板以及对话�
 
 ## 开源许可证
 
-项目看板娘 Kona 及位于 `sample` 目录下的示例素材立绘采用 知识共享-署名-非商业性使用-相同方式共享 4.0（CC-NC-SA 4.0） 许可证，具体内容请参阅 [Assets_License](./sample/Assets_License.txt) 文件。
-
-Konado 项目整体采用 BSD 3 条款许可证，具体条款详见 [LICENSE](./LICENSE) 文件。
-
----
-
-<p align="center">
-Licensed under BSD 3-Clause License.
-</p>
-<p align="center">
-Copyright © 2025 StarryTeam. All rights reserved.
-</p>
-
----
+Konado 项目采用 BSD 3 条款许可证，具体条款详见 [LICENSE](./LICENSE) 文件。
