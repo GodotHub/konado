@@ -86,6 +86,7 @@ func _load_data_config() -> void:
 	id_number = config.get_value("data", "id_number")
 	data_id_map = config.get_value("data", "data_id_map")
 	
+## 获取源数据
 func get_source_data() -> Dictionary:
 	gen_source_data()
 	return self._source_data
@@ -95,11 +96,13 @@ func gen_source_data() -> void:
 	var property_list = get_property_list()
 	# 将属性写到data字典
 	for property in property_list:
-		var property_name = property["name"]
+		var property_name: String = property["name"]
 		if property_name in black_list: # 添加其他需要排除的属性名
 			continue
+		# 屏蔽脚本
+		if property_name.ends_with(".gd"):
+			continue
 		_source_data[property_name] = get(property_name)
-	pass
 	
 func add_sub_source_data(id: int, data: Dictionary) -> void:
 	if sub_source_data.has(id):
@@ -128,7 +131,7 @@ func update_sub_source_data(id: int, new: Dictionary) -> void:
 	save_data(save_path)
 
 ## 从字典更新数据到属性
-func update():
+func update() -> void:
 	for property in _source_data:
 		set(property, _source_data[property])
 		emit_changed()
@@ -136,9 +139,6 @@ func update():
 ## 重命名，并且保证命名唯一化 new_name:名字 ，name_list:名字集合
 func rename(new_name: String) -> void:
 	var number = 1
-	#if data_id_map.has(new_name):
-		#set("name", new_name + "_" + str(number))
-		#number += 1
 	for i in data_id_map.keys():
 		if get("name") == data_id_map[i]:
 			set("name", new_name + "_" + str(number))
@@ -148,7 +148,7 @@ func rename(new_name: String) -> void:
 	print("重命名 ", get("name"))
 
 ## 打印数据
-func print_data():
+func print_data() -> void:
 	print("数据 id %s %s" % [id, _source_data])
 	
 ## 将数据保存到本地
