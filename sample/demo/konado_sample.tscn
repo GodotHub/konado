@@ -1,6 +1,7 @@
-[gd_scene load_steps=14 format=3 uid="uid://dtm3j0waaivyj"]
+[gd_scene load_steps=15 format=3 uid="uid://dtm3j0waaivyj"]
 
 [ext_resource type="PackedScene" uid="uid://bj8ynu8013j4j" path="res://addons/konado/scenes/dialog.tscn" id="1_hpqsc"]
+[ext_resource type="Script" uid="uid://cn042ni2qad57" path="res://addons/konadotnet/sample/DialogueManagerAPISample.cs" id="1_v3sqs"]
 [ext_resource type="Resource" uid="uid://bjtt4547g54v0" path="res://sample/demo/sample_lists/konado_sample_chara_list.tres" id="2_icnme"]
 [ext_resource type="Resource" uid="uid://dlk03c6v0ju4r" path="res://sample/demo/sample_lists/konado_sample_background_list.tres" id="3_icnme"]
 [ext_resource type="Resource" uid="uid://cj8f3lckkwmj0" path="res://sample/demo/sample_lists/dialogue_chapter.tres" id="4_nix8x"]
@@ -33,6 +34,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_v3sqs")
 
 [node name="DialogManager" parent="." instance=ExtResource("1_hpqsc")]
 layout_mode = 1
