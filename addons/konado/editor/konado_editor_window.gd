@@ -1,14 +1,15 @@
+@tool
 extends Window
-class_name KonadoEditorWindow 
+class_name KonadoEditorWindow
 
-const konado_editor = preload("res://addons/konado/snowflake/SnowFlake.tscn")
+## 编辑主场景路径
+const konado_editor = preload("uid://bommt7l6wmdsa")
 
-	
 func _init() -> void:
 	# 禁用默认主题
-	theme = null
-	title = "Snowflake Editor (雪花编辑器)"
-	size = Vector2(1280, 720)
+	theme = load("uid://cao2ht3baecs8")
+	title = "Konado Editor"
+	size = DisplayServer.window_get_size() * 0.7
 	initial_position = Window.WINDOW_INITIAL_POSITION_CENTER_MAIN_WINDOW_SCREEN
 
 	close_requested.connect(func(): 
@@ -33,6 +34,6 @@ func _init() -> void:
 
 	min_size = size
 
-	var editor = konado_editor.instantiate() as SnowflakeEditor
-	add_child(editor)
+	var editor = konado_editor.instantiate() as Control
+	self.add_child(editor)
 	pass
