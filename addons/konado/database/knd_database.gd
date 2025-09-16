@@ -9,7 +9,6 @@ extends Node
 ## 缓存数据库，在缓存中操作然后再调用 save_database() 持久化保存数据库
 var tmp_knd_data_dic: Dictionary[int, KND_Data] = {}
 
-
 ## 数据类型,key为类型名，value为脚本路径
 const KND_CLASS_DB: Dictionary[String, String] = {
 ## KND_Data 基类
@@ -30,6 +29,20 @@ const KND_CLASS_DB: Dictionary[String, String] = {
 	"KND_Actor_Change_State_Dialogue": "res://addons/konado/knd_data/dialogue/knd_actor_change_state_dialogue.gd"
 }
 
+## 获取指定类型的所有资源ID数组
+func get_all_data_ids_by_type(type: String) -> Array[int]:
+	if not _has_data_type(type):
+		return []
+	
+	var result: Array[int] = []
+	var target_script: GDScript = load(KND_CLASS_DB[type])
+	
+	for id in tmp_knd_data_dic:
+		var data: KND_Data = tmp_knd_data_dic[id]
+		if data.get_script() == target_script:
+			result.append(id)
+	
+	return result
 
 ## 判断是否有这个类型，保证创建数据时不会出错
 func _has_data_type(type: String) -> bool:
@@ -47,7 +60,6 @@ func _has_data(id: int) -> bool:
 		printerr("KND_Database没有这个数据"+str(id))
 		return false
 	return true
-
 
 ## 创建数据实例，如果创建失败，返回null
 func create_data_instance(type: String) -> KND_Data:
@@ -70,7 +82,6 @@ func create_sub_data(type: String) -> Dictionary:
 	if data == null:
 		return {}
 	return { "id": data.id, "data": data.get_source_data() }
-
 
 ## 新建数据 type : 数据类名，返回数据id，如果创建失败，返回-1
 func create_data(type: String) -> int:
@@ -120,13 +131,6 @@ func delete_data(id: int) -> void:
 	
 
 func get_data(id: int) -> Dictionary:
-	#if not knd_data_file_dic.has(id):
-		#return {}
-	#var knd_file_path: String = knd_data_file_dic[id]
-	#if not FileAccess.file_exists(knd_file_path):
-		#printerr("数据已不存在")
-		#knd_data_file_dic.erase(id)
-		#return {}
 	if not tmp_knd_data_dic.has(id):
 		return {}
 	
@@ -137,7 +141,6 @@ func get_data(id: int) -> Dictionary:
 func set_data(id: int, property: String, value: Variant) -> void:
 	if not tmp_knd_data_dic.has(id):
 		return
-	#var knd_file_path: String = knd_data_file_dic[id]
 	var knd_data: KND_Data = tmp_knd_data_dic[id]
 	knd_data.set(property, value)
 	
@@ -145,7 +148,6 @@ func set_data(id: int, property: String, value: Variant) -> void:
 func add_sub_source_data(parent: int, id: int, data: Dictionary) -> void:
 	if not tmp_knd_data_dic.has(parent):
 		printerr("无父节数据")
-	#var knd_file_path: String = tmp_knd_data_dic[parent]
 	var knd_data: KND_Data = tmp_knd_data_dic[parent]
 	knd_data.add_sub_source_data(id, data)
 	
@@ -156,9 +158,6 @@ func save_database() -> void:
 	for tkd in tmp_knd_data_dic.keys():
 		if not tmp_knd_data_dic[tkd] == null:
 			knd_data_file_dic[tkd] = tmp_knd_data_dic[tkd].save_path
-	# 防止写入空数据
-	#if knd_data_file_dic == null or knd_data_file_dic == {}:
-		#return
 	var json_string = JSON.stringify(knd_data_file_dic, "\t")
 	## 写入到项目根目录，创建一个 knd_project.kson 文件
 	var file = FileAccess.open("res://knd_project.kson", FileAccess.WRITE)
@@ -230,7 +229,6 @@ func load_database() -> void:
 			data._source_data = json_data
 			data.update()
 			tmp_knd_data_dic[kdf] = data
-
 
 func ensure_directory_exists(path: String) -> bool:
 	# 检查目录是否已经存在
