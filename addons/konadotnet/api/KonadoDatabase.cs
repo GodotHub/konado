@@ -19,6 +19,8 @@ public partial class KonadoDatabase : Node
     
     public IReadOnlyDictionary<long, string> Data => _source?.Get("knd_data_dic").AsGodotDictionary<long, string>();
 
+    public Godot.Collections.Dictionary CreateSubData(string type) => _source?.Call("create_sub_data", type).AsGodotDictionary();
+
     public long CreateData(string type) => (long)_source?.Call("create_data", type).AsInt64();
 
     public void DeleteData(long id) => _source?.Call("delete_data", id);
@@ -26,6 +28,8 @@ public partial class KonadoDatabase : Node
     public Godot.Collections.Dictionary GetData(long id) => _source?.Call("get_data", id).AsGodotDictionary();
 
     public void SetData(long id, string property, Variant value) => _source?.Call("set_data", id, property, value);
+
+    public void AddSubSourceData(long parent, long id, Godot.Collections.Dictionary data) => _source?.Call("add_sub_source_data", parent, id, data);
 
     public void SaveDatabase() => _source?.Call("save_database");
 

@@ -1,24 +1,30 @@
 using Godot;
 using Konado.Runtime.API;
 using System;
-
+using System.Diagnostics;
+using System.Threading.Tasks;
 using static Konado.Runtime.API.KonadoAPI;
 public partial class DatabaseTest : Node
 {
-    public override void _Ready()
+    public override async void _Ready()
     {
-        for (int i = 0; i < 3; i++)
+        var timeWatch = new Stopwatch();
+        timeWatch.Start();
+        Database.LoadDatabase();
+
+        for (int i = 0; i < 5; i++)
         {
-            Database.CreateData("KND_Character");
-        }
-        foreach (var kvp in Database.Data)
-        {
-            GD.Print($"【CS Test】ID: {kvp.Key}, Name: {kvp.Value}");
-            GD.Print("【CS Test】", Database.GetData(kvp.Key));
-            Database.SetData(kvp.Key, "name", "New Name");
-            GD.Print("【CS Test】", Database.GetData(kvp.Key));
+            var id = Database.CreateData("KND_Shot");
+            var sub = Database.CreateSubData("KND_Dialogue");
+            Database.AddSubSourceData(id, sub["id"].AsInt64(), sub["data"].AsGodotDictionary());
         }
 
+        await Task.Delay(100);
+
+        Database.SaveDatabase();
+
+        timeWatch.Stop();
+        GD.Print("测试用时(ms): ", timeWatch.ElapsedMilliseconds);
 
     }
 }

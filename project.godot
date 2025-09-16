@@ -24,7 +24,6 @@ ComponentFactory="*res://editor/ui/ui_components/component_factory.gd"
 KS_SAVE_AND_LOAD="*res://addons/konado/scripts/save_and_load/SaL.gd"
 KND_Database="*res://addons/konado/database/knd_database.gd"
 KonadoAPI="*res://addons/konadotnet/api/KonadoAPI.cs"
-DialogueManagerAPI="*res://addons/konadotnet/api/DialogueManagerAPI.cs"
 
 [display]
 
