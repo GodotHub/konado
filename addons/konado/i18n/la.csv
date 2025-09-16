@@ -1,0 +1,19 @@
+keys,en,ja,zh
+FILE,File,ファイル,文件
+EDIT,Edit,編集,编辑
+WINDOW,Window,ウィンドウ,窗口
+HELP,Help,ヘルプ,帮助
+DATA_MANAGEMENT,Data Management,データ管理,数据管理
+SHOT_EDITING,Shot Editing,ショット編集,镜头编辑
+GAME_SYSTEM,Game System,ゲームシステム,游戏系统
+PLAY_FROM_START,Play from Start,最初から再生,从头播放
+CURRENT_SHOT,Current Shot,現在のショット,当前镜头
+SPECIFY_SHOT,Specify Shot,指定ショット,指定镜头
+WINDOW_ALWAYS_ON_TOP,Window Always on Top,ウィンドウを最前面に,窗口置顶
+SHOT_MANAGEMENT,Shot Management,ショット管理,镜头管理
+OPEN,Open,開く,打开
+SHOT_ID,Shot ID,ショットID,镜头ID
+ACTOR,Actor,出演者,输出演员
+CHARACTER_A,Character A,キャラクターA,角色A
+NUMBER_1,1,1,1
+INPUT_TEXT,Input Text,テキスト入力,输入文本

@@ -1,3 +1,4 @@
+@tool
 extends CodeEdit
 
 # 已知的角色列表（可以从项目配置中加载）

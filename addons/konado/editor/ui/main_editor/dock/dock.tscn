@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://djq23ftlfwkn1"]
 
-[ext_resource type="Script" uid="uid://dljnr7medkybu" path="res://editor/ui/main_editor/dock/dock.gd" id="1_syi1d"]
+[ext_resource type="Script" uid="uid://dljnr7medkybu" path="res://addons/konado/editor/ui/main_editor/dock/dock.gd" id="1_syi1d"]
 
 [node name="dock" type="BoxContainer"]
 anchors_preset = 15
@@ -33,10 +33,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
 text = "镜头管理"
-
-[node name="Button" type="Button" parent="dock_bg/BoxContainer"]
-layout_mode = 2
-text = "弹出窗口"
 
 [node name="HSeparator" type="HSeparator" parent="dock_bg"]
 layout_mode = 1

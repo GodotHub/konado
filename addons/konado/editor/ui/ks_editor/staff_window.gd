@@ -1,3 +1,4 @@
+@tool
 extends Window
 ## 角色演员对照表弹窗
 

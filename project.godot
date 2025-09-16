@@ -25,10 +25,10 @@ config/icon="uid://b5olx2vwoscbr"
 [autoload]
 
 ComponentFactory="*res://editor/ui/ui_components/component_factory.gd"
-KonadoAPI="*res://addons/konadotnet/api/KonadoAPI.cs"
 DialogueManagerAPI="*res://addons/konadotnet/api/DialogueManagerAPI.cs"
 KS_SAVE_AND_LOAD="*res://addons/konado/scripts/save_and_load/SaL.gd"
 KND_Database="*res://addons/konado/database/knd_database.gd"
+KonadoAPI="*res://addons/konadotnet/api/KonadoAPI.cs"
 
 [display]
 
@@ -47,3 +47,8 @@ enabled=PackedStringArray("res://addons/gut/plugin.cfg", "res://addons/konado/pl
 [gui]
 
 theme/custom="uid://cao2ht3baecs8"
+
+[internationalization]
+
+locale/translations=PackedStringArray("res://addons/konado/i18n/la.en.translation", "res://addons/konado/i18n/la.ja.translation", "res://addons/konado/i18n/la.zh.translation")
+locale/locale_filter_mode=1

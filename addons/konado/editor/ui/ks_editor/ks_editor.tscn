@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://djq23ftlfwkn1" path="res://addons/konado/editor/ui/main_editor/dock/dock.tscn" id="1_cfuhs"]
 [ext_resource type="Script" uid="uid://uw6s0ovn0vi1" path="res://addons/konado/editor/ui/ks_editor/shot_data_edit.gd" id="1_fqhf8"]
 [ext_resource type="Script" uid="uid://c2anqfrl1qe27" path="res://addons/konado/editor/ui/ks_editor/ks_editor.gd" id="1_qu5wb"]
-[ext_resource type="Script" uid="uid://byqad5mu76fj5" path="res://addons/konado/theme_system/code_edit.gd" id="3_43nnm"]
+[ext_resource type="Script" uid="uid://byqad5mu76fj5" path="res://addons/konado/editor/ui/ks_editor/code_edit.gd" id="3_43nnm"]
 [ext_resource type="Script" uid="uid://brfpi4t4c2ui3" path="res://addons/konado/editor/ui/ks_editor/staff_window.gd" id="5_bxnau"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ggagf"]
@@ -49,22 +49,7 @@ layout_mode = 2
 [node name="Button" type="Button" parent="dock/BoxContainer"]
 layout_mode = 2
 text = "打开"
-
-[node name="BoxContainer2" type="BoxContainer" parent="dock/BoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 10
-
-[node name="弹出" type="Button" parent="dock/BoxContainer/BoxContainer2"]
-layout_mode = 2
-text = "打开"
-
-[node name="弹出2" type="Button" parent="dock/BoxContainer/BoxContainer2"]
-layout_mode = 2
-text = "打开"
-
-[node name="弹出3" type="Button" parent="dock/BoxContainer/BoxContainer2"]
-layout_mode = 2
-text = "弹出窗口"
+language = "en"
 
 [node name="VBoxContainer2" type="SplitContainer" parent="dock"]
 layout_mode = 2
@@ -86,8 +71,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_colors/relationship_line_color = Color(0, 0, 0, 0)
 theme_override_colors/guide_color = Color(0, 0, 0, 0)
+theme_override_colors/relationship_line_color = Color(0, 0, 0, 0)
 hide_root = true
 
 [node name="editor" type="MarginContainer" parent="dock/VBoxContainer2"]

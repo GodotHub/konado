@@ -117,6 +117,14 @@ text = "当前镜头"
 layout_mode = 2
 text = "指定镜头"
 
+[node name="占位2" type="Control" parent="BoxContainer/BoxContainer2/BoxContainer3"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+
+[node name="Button4" type="Button" parent="BoxContainer/BoxContainer2/BoxContainer3"]
+layout_mode = 2
+text = "窗口置顶"
+
 [node name="占位" type="Control" parent="BoxContainer/BoxContainer2/BoxContainer3"]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
@@ -125,10 +133,11 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
-current_tab = 0
+current_tab = 1
 tabs_visible = false
 
 [node name="data_manage" type="SplitContainer" parent="BoxContainer/modules_container"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -294,7 +303,6 @@ vertical = true
 layout_mode = 2
 
 [node name="shot_editing" type="SplitContainer" parent="BoxContainer/modules_container"]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -309,6 +317,7 @@ split_offset = 250
 vertical = true
 
 [node name="SplitContainer" type="SplitContainer" parent="BoxContainer/modules_container/shot_editing/SplitContainer2"]
+visible = false
 layout_mode = 2
 size_flags_vertical = 3
 
@@ -420,34 +429,13 @@ custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Panel" type="Panel" parent="BoxContainer/modules_container/shot_editing/Panel"]
-custom_minimum_size = Vector2(0, 40)
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-grow_horizontal = 2
-theme_type_variation = &"Background"
-
-[node name="BoxContainer" type="BoxContainer" parent="BoxContainer/modules_container/shot_editing/Panel/Panel"]
-custom_minimum_size = Vector2(0, 40)
+[node name="CodeEdit" type="CodeEdit" parent="BoxContainer/modules_container/shot_editing/Panel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_bottom = 7.0
 grow_horizontal = 2
 grow_vertical = 2
-vertical = true
-
-[node name="TabBar" type="TabBar" parent="BoxContainer/modules_container/shot_editing/Panel/Panel/BoxContainer"]
-layout_mode = 2
-current_tab = 0
-tab_count = 2
-tab_0/title = "剧本模式"
-tab_1/title = "快照模式"
-
-[node name="HSeparator" type="HSeparator" parent="BoxContainer/modules_container/shot_editing/Panel/Panel/BoxContainer"]
-layout_mode = 2
 
 [node name="system_configuration" type="Panel" parent="BoxContainer/modules_container"]
 visible = false
