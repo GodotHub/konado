@@ -12,7 +12,7 @@
 extends EditorPlugin
 
 
-var konado_editor_instance: Control = null
+var konado_editor_instance: KonadoEditorWindow = null
 
 ## 配置常量
 const DIALOGUE_DATA_SCRIPT := preload("res://addons/konado/scripts/dialogue/dialogue_shot.gd")
@@ -21,13 +21,10 @@ const KDB_SCRIPT := preload("res://addons/konado/importer/kdb_importer.gd")
 const CSV_IMPORTER_SCRIPT := preload("res://addons/konado/editor/ks_csv_importer/ks_csv_importer.gd")
 const SAVE_AND_LOAD := "res://addons/konado/scripts/save_and_load/SaL.gd"
 
-const KONADO_EDITOR := preload("uid://bommt7l6wmdsa")
-
 ## 数据库
 const KND_DATABASE := "res://addons/konado/database/knd_database.gd"
 
-
-## 插件成员
+## 导入器插件
 var import_plugin: EditorImportPlugin
 var kdb_import_plugin: EditorImportPlugin
 var csv_import_plugin: EditorImportPlugin
@@ -57,12 +54,10 @@ func _enter_tree() -> void:
 	add_import_plugin(kdb_import_plugin)
 	add_import_plugin(csv_import_plugin)
 
-	
-
 	# 从version.txt读取字符串并打印
 	print(load_string("res://addons/konado/version.txt"))
 
-	help_doc_btn = _create_toolbar_btn()
+	help_doc_btn = _create_docs_btn()
 	open_konado_editor_btn = _create_editor_toolbar_btn()
 
 	add_control_to_container(EditorPlugin.CONTAINER_TOOLBAR, help_doc_btn)
@@ -73,24 +68,25 @@ func _enter_tree() -> void:
 func load_string(path: String) -> String:
 	return FileAccess.open(path, FileAccess.READ).get_as_text()
 
-
-func open_snowflake_editor() -> void:
+## 打开Konado编辑器
+func open_konado_editor() -> void:
 	if konado_editor_instance and is_instance_valid(konado_editor_instance):
-		konado_editor_instance.show()
+		konado_editor_instance.popup()
 	else:
-		konado_editor_instance = KONADO_EDITOR.instantiate()
-		var subWindow = get_editor_interface().add_subwindow(konado_editor_instance)
+		konado_editor_instance = KonadoEditorWindow.new()
 		get_editor_interface().get_base_control().add_child(konado_editor_instance)
-		konado_editor_instance.show()
+		konado_editor_instance.popup()
 	pass
 
-func _create_toolbar_btn() -> Button:
+func _create_docs_btn() -> Button:
 	var btn = Button.new()
-	btn.text = "Konado文档"
+	btn.text = "Konado 文档"
 	btn.pressed.connect(func(): 
 		# 跳转到Konado文档
 		var url = "https://godothub.com/konado/tutorial/install.html"
-		OS.shell_open(url)
+		var error = OS.shell_open(url)
+		if error:
+			printerr("请手动打开 https://godothub.com/konado/tutorial/install.html 网页")
 	)
 	return btn
 
@@ -98,7 +94,7 @@ func _create_editor_toolbar_btn() -> Button:
 	var btn = Button.new()
 	btn.text = "Konado 编辑器"
 	btn.pressed.connect(func():
-		open_snowflake_editor()
+		open_konado_editor()
 	)
 	return btn
 
