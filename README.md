@@ -6,7 +6,7 @@
 
 
 <p align="center">
-  <img src="addons/konado/assets/KonadoBanner.png" alt="看板娘可娜" width=596px>
+  <img src="./mascot/banner/1.0/KonadoBanner-1.0.png" alt="看板娘可娜" width=596px>
 </p>
 
 <p align="center">
@@ -28,6 +28,12 @@ Konado是一个视觉小说引擎框架，提供多种对话模板以及对话�
 ## 文档
 
 欢迎访问我们的项目网站：https://godothub.com/konado 获取更多详细文档和教程。
+
+## 社区
+
+欢迎加入我们的社区，与其他Konado用户交流经验，分享创意。您可以通过以下方式加入我们的社区：
+
+- 加入我们的QQ频道群组：[点击加入](https://pd.qq.com/g/GodotHub999/text/707799746)
 
 
 ## 参与开发
