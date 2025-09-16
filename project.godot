@@ -8,22 +8,27 @@
 
 config_version=5
 
+[accessibility]
+
+general/accessibility_support=2
+
 [application]
 
 config/name="Konado Editor"
 config/description="Konado Editor，Konado编辑器"
 config/version="2.0"
 run/main_scene="res://addons/konado/editor/ui/main_editor/main_editor.tscn"
-config/features=PackedStringArray("4.4", "C#", "Forward Plus")
+config/features=PackedStringArray("4.5", "C#", "Forward Plus")
 boot_splash/image="uid://d1yhkro0quuae"
 config/icon="uid://b5olx2vwoscbr"
 
 [autoload]
 
 ComponentFactory="*res://editor/ui/ui_components/component_factory.gd"
+KonadoAPI="*res://addons/konadotnet/api/KonadoAPI.cs"
+DialogueManagerAPI="*res://addons/konadotnet/api/DialogueManagerAPI.cs"
 KS_SAVE_AND_LOAD="*res://addons/konado/scripts/save_and_load/SaL.gd"
 KND_Database="*res://addons/konado/database/knd_database.gd"
-KonadoAPI="*res://addons/konadotnet/api/KonadoAPI.cs"
 
 [display]
 
