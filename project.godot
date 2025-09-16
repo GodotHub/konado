@@ -24,10 +24,9 @@ config/icon="uid://b5olx2vwoscbr"
 
 [autoload]
 
-KonadoAPI="*res://addons/konadotnet/api/KonadoAPI.cs"
-DialogueManagerAPI="*res://addons/konadotnet/api/DialogueManagerAPI.cs"
 KS_SAVE_AND_LOAD="*res://addons/konado/scripts/save_and_load/SaL.gd"
 KND_Database="*res://addons/konado/database/knd_database.gd"
+KonadoAPI="*res://addons/konadotnet/api/KonadoAPI.cs"
 
 [display]
 
@@ -41,7 +40,7 @@ project/assembly_name="Konado"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/gut/plugin.cfg", "res://addons/konado/plugin.cfg", "res://addons/main_scene_switcher/plugin.cfg", "res://addons/theme_gen_save_sync/plugin.cfg")
+enabled=PackedStringArray("res://addons/gut/plugin.cfg", "res://addons/konado/plugin.cfg", "res://addons/konadotnet/plugin.cfg", "res://addons/main_scene_switcher/plugin.cfg", "res://addons/theme_gen_save_sync/plugin.cfg")
 
 [gui]
 
