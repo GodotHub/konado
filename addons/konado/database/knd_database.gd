@@ -9,6 +9,9 @@ extends Node
 ## 缓存数据库，在缓存中操作然后再调用 save_database() 持久化保存数据库
 var tmp_knd_data_dic: Dictionary[int, KND_Data] = {}
 
+## 数据类型列表 {data_type:[id]}
+var data_type_map:Dictionary = {}
+
 ## 数据类型,key为类型名，value为脚本路径
 const KND_CLASS_DB: Dictionary[String, String] = {
 ## KND_Data 基类
@@ -29,21 +32,30 @@ const KND_CLASS_DB: Dictionary[String, String] = {
 	"KND_Actor_Change_State_Dialogue": "res://addons/konado/knd_data/dialogue/knd_actor_change_state_dialogue.gd"
 }
 
+## TODO :
+var cur_shot ## 当前镜头
+
+
 ## 获取指定类型的所有资源ID数组
-func get_all_data_ids_by_type(type: String) -> Array[int]:
+func get_data_list(type: String) -> Array:
 	if not _has_data_type(type):
 		return []
+	return data_type_map[type]
 	
-	var result: Array[int] = []
-	var target_script: GDScript = load(KND_CLASS_DB[type])
+#func get_all_data_ids_by_type(type: String) -> Array[int]:
+	#if not _has_data_type(type):
+		#return []
+	#return KND_Data.data_type_map[type]
+	#
+	#var result: Array[int] = []
+	#var target_script: GDScript = load(KND_CLASS_DB[type])
+	#
+	#for id in tmp_knd_data_dic:
+		#var data: KND_Data = tmp_knd_data_dic[id]
+		#if data.get_script() == target_script:
+			#result.append(id)
+	#return result
 	
-	for id in tmp_knd_data_dic:
-		var data: KND_Data = tmp_knd_data_dic[id]
-		if data.get_script() == target_script:
-			result.append(id)
-	
-	return result
-
 ## 判断是否有这个类型，保证创建数据时不会出错
 func _has_data_type(type: String) -> bool:
 	if type == "":
@@ -89,6 +101,8 @@ func create_data(type: String) -> int:
 		return -1
 	
 	var data: KND_Data = create_data_instance(type)
+	
+	
 	if data == null:
 		return -1
 
@@ -119,18 +133,51 @@ func create_data(type: String) -> int:
 	
 	# 添加到缓存
 	tmp_knd_data_dic[data.id] = data
-	
+
 	var id = data.id
-	
+	data.type = type
+	## TODO :测试	
+	# 将数据添加到对应列表
+	if data_type_map.has(type):
+		data_type_map[type].append(id)
+	else :
+		var data_list:Array = []
+		data_list.append(id)
+		data_type_map[type] = data_list
+		
+		
 	return id
-	
+
+## TODO : BUG 
+## 删除数据
 func delete_data(id: int) -> void:
 	if not tmp_knd_data_dic.has(id):
 		return
+	# 删除属性表数据
+	var type:String = get_data_type(id)
+	data_type_map[type].erase(id)
+	print(KND_Data.data_id_map[id])
+	# 删除文件
+	var data : KND_Data = tmp_knd_data_dic.get(id)
+	var path : String =data.save_path
+	if !FileAccess.file_exists(path):
+		print("文件不存在: ", path)
+		return
+	var dir = DirAccess.open(path)
+	
+	var error = dir.remove(path)
+	if error != OK:
+		print("删除文件失败，错误代码: ", error)
+		return
+		
+	print("文件删除成功: ", path)
+	print("当前数据名字表: ",KND_Data.data_id_map)
+	KND_Data.data_id_map.erase(id)
 	tmp_knd_data_dic.erase(id)
 	
 
-func get_data(id: int) -> Dictionary:
+## 获取数据的属性字典
+func get_source_data(id: int) -> Dictionary:
 	if not tmp_knd_data_dic.has(id):
 		return {}
 	
@@ -138,20 +185,39 @@ func get_data(id: int) -> Dictionary:
 	var data: Dictionary = knd_data.get_source_data()
 	return data
 	
+## 获取数据类型
+func get_data_type(id: int) -> String:
+	return get_source_data(id).get("type")
+
+## TODO :测试
+## 获取数据属性
+func get_data_property(id: int, property: String) -> Variant:
+	if not tmp_knd_data_dic.has(id):
+		return null
+	var knd_data: KND_Data = tmp_knd_data_dic[id]
+	return knd_data.get(property)
+
+## 设置数据属性
 func set_data(id: int, property: String, value: Variant) -> void:
 	if not tmp_knd_data_dic.has(id):
 		return
 	var knd_data: KND_Data = tmp_knd_data_dic[id]
 	knd_data.set(property, value)
-	
-	
+
+## TODO : 测试	
+## 数据重命名
+func rename_data(id:int, new_name:String):
+	var data: KND_Data = tmp_knd_data_dic[id]
+	data.rename(new_name)
+
 func add_sub_source_data(parent: int, id: int, data: Dictionary) -> void:
 	if not tmp_knd_data_dic.has(parent):
 		printerr("无父节数据")
 	var knd_data: KND_Data = tmp_knd_data_dic[parent]
 	knd_data.add_sub_source_data(id, data)
-	
 
+
+## TODO : 保存data_type_map数据
 ## 保存数据库到本地
 func save_database() -> void:
 	knd_data_file_dic = {}
@@ -163,7 +229,8 @@ func save_database() -> void:
 	var file = FileAccess.open("res://knd_project.kson", FileAccess.WRITE)
 	file.store_string(json_string)
 	file.close()
-	
+
+## TODO : 加载data_type_map数据
 ## 从本地加载数据库
 func load_database() -> void:
 	var file = FileAccess.open("res://knd_project.kson", FileAccess.READ)

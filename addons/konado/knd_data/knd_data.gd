@@ -1,11 +1,11 @@
 @tool
+#@abstract
 extends Resource
 class_name KND_Data
 
 static var id_number: int = 0 ## id 计数
 ## 数据名称 集合
-static var data_id_map: Dictionary = {}  ## {id:Data}
-
+static var data_id_map: Dictionary = {} 
 ## 数据id，为-1的时候需要重新赋值
 var id: int
 
@@ -21,6 +21,8 @@ var id: int
 ## 保存路径
 @export var save_path: String = ""
 
+## 数据类型
+var type: String = ""
 
 ## 黑名单，不保存到文件中
 const black_list: Array[String] = ["_source_data",
@@ -52,7 +54,6 @@ func _init(load_mode: bool = true) -> void:
 		
 		if get("name") != null:
 			rename(get("name")) # 重命名
-		data_id_map[id] = get("name")
 		emit_changed()
 		print_data()
 		_save_data_config()
@@ -172,7 +173,6 @@ func save_data(path: String) -> void:
 	
 	print("保存数据 " + path)
 
-
 ## 从本地加载数据
 func load_data(path: String) -> void:
 	# 检查文件是否存在
@@ -199,7 +199,7 @@ func load_data(path: String) -> void:
 		print("JSON 解析失败，错误: ", json.get_error_message(), " 在位置: ", json.get_error_line())
 	update()
 
-# 确保目录存在的函数
+## 确保目录存在的函数
 func ensure_directory_exists(path: String) -> bool:
 	var dir = DirAccess.open(path)
 	if dir == null:

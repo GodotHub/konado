@@ -7,3 +7,6 @@ class_name KND_Character
 
 ## 角色状态图集
 @export var character_status: Dictionary[String, String]
+
+## 数据图标
+const icon =preload("uid://q2w6piu3t1md")
