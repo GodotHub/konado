@@ -1,3 +1,4 @@
+@tool
 extends Control
 ## 初始界面
 @onready var popup_mask: ColorRect = %popup_mask

@@ -1,0 +1,17 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://t8p0yxosof6r"
+
+[deps]
+
+files=["res://addons/konado/i18n/la.en.translation", "res://addons/konado/i18n/la.ja.translation", "res://addons/konado/i18n/la.zh.translation"]
+
+source_file="res://addons/konado/i18n/la.csv"
+dest_files=["res://addons/konado/i18n/la.en.translation", "res://addons/konado/i18n/la.ja.translation", "res://addons/konado/i18n/la.zh.translation"]
+
+[params]
+
+compress=true
+delimiter=0

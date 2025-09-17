@@ -1,7 +1,5 @@
 extends Node
 
-@onready var button_container: BoxContainer = %ButtonContainer
-
 @onready var code_edit: CodeEdit = %CodeEdit
 
 @onready var statement_tree: Tree = %StatementTree
