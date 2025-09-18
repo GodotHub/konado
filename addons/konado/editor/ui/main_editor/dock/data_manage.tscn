@@ -240,7 +240,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TabBar" type="TabBar" parent="TabContainer/BoxContainer3/BoxContainer2/Panel/ScrollContainer"]
+[node name="TypeTabBar" type="TabBar" parent="TabContainer/BoxContainer3/BoxContainer2/Panel/ScrollContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -251,20 +252,22 @@ theme_override_styles/tab_selected = SubResource("StyleBoxEmpty_j02lb")
 theme_override_styles/button_pressed = SubResource("StyleBoxEmpty_j02lb")
 theme_override_styles/button_highlight = SubResource("StyleBoxEmpty_j02lb")
 current_tab = 0
-tab_alignment = 1
-close_with_middle_mouse = false
 tab_count = 5
 tab_0/title = "角色"
-tab_0/tooltip = "角色数据"
+tab_0/tooltip = "KND_Character"
 tab_0/icon = ExtResource("8_y70an")
 tab_1/title = "场景"
+tab_1/tooltip = "KND_Background"
 tab_1/icon = ExtResource("9_guuyf")
 tab_2/title = "BGM"
+tab_2/tooltip = "KND_Bgm"
 tab_2/icon = ExtResource("10_md0xx")
-tab_3/title = "变量"
-tab_3/icon = ExtResource("15_5ob65")
-tab_4/title = "模板"
-tab_4/icon = ExtResource("12_guuyf")
+tab_3/title = "模板"
+tab_3/tooltip = "KND_Template"
+tab_3/icon = ExtResource("12_guuyf")
+tab_4/title = "变量"
+tab_4/icon = ExtResource("15_5ob65")
+tab_4/disabled = true
 
 [node name="data_manage" type="Panel" parent="TabContainer/BoxContainer3/BoxContainer2"]
 layout_mode = 2
@@ -272,7 +275,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 3.0
 
-[node name="Tree" type="Tree" parent="TabContainer/BoxContainer3/BoxContainer2/data_manage"]
+[node name="DataTree" type="Tree" parent="TabContainer/BoxContainer3/BoxContainer2/data_manage"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -332,6 +335,7 @@ icon_alignment = 1
 [connection signal="pressed" from="TabContainer/BoxContainer3/BoxContainer/data_manage/HBoxContainer2/add" to="Knd_shot_tree" method="_on_add_pressed"]
 [connection signal="pressed" from="TabContainer/BoxContainer3/BoxContainer/data_manage/HBoxContainer2/copy" to="." method="_on_copy_pressed"]
 [connection signal="pressed" from="TabContainer/BoxContainer3/BoxContainer/data_manage/HBoxContainer2/delete" to="Knd_shot_tree" method="_on_delete_pressed"]
-[connection signal="item_selected" from="TabContainer/BoxContainer3/BoxContainer2/data_manage/Tree" to="." method="_on_tree_item_selected"]
-[connection signal="pressed" from="TabContainer/BoxContainer3/BoxContainer2/data_manage/HBoxContainer2/add" to="." method="_on_add_pressed"]
-[connection signal="pressed" from="TabContainer/BoxContainer3/BoxContainer2/data_manage/HBoxContainer2/delete" to="." method="_on_delete_pressed"]
+[connection signal="tab_changed" from="TabContainer/BoxContainer3/BoxContainer2/Panel/ScrollContainer/TypeTabBar" to="Knd_data_tree" method="_on_type_tab_bar_tab_changed"]
+[connection signal="item_selected" from="TabContainer/BoxContainer3/BoxContainer2/data_manage/DataTree" to="Knd_data_tree" method="_on_tree_item_selected"]
+[connection signal="pressed" from="TabContainer/BoxContainer3/BoxContainer2/data_manage/HBoxContainer2/add" to="Knd_data_tree" method="_on_add_pressed"]
+[connection signal="pressed" from="TabContainer/BoxContainer3/BoxContainer2/data_manage/HBoxContainer2/delete" to="Knd_data_tree" method="_on_delete_pressed"]
