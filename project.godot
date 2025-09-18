@@ -25,6 +25,7 @@ boot_splash/image="uid://d1yhkro0quuae"
 
 KS_SAVE_AND_LOAD="*res://addons/konado/scripts/save_and_load/SaL.gd"
 KND_Database="*res://addons/konado/database/knd_database.gd"
+KonadoAPI="*res://addons/konadotnet/api/KonadoAPI.cs"
 
 [display]
 

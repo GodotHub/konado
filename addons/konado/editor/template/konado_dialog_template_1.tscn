@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://0sc04evetbux"]
 
 [ext_resource type="Script" uid="uid://co1jy8tti3d25" path="res://addons/konado/assets/template/knodo_dialog_template.gd" id="1_ofwfk"]
-[ext_resource type="PackedScene" uid="uid://dbfoi0nkkm0bx" path="res://template/background/background.tscn" id="2_ofwfk"]
-[ext_resource type="PackedScene" uid="uid://dcwk5so2ohcc2" path="res://template/character/character.tscn" id="3_6xqk1"]
-[ext_resource type="PackedScene" uid="uid://7b484a7p3s4w" path="res://template/dialogbox/​dialog_box.tscn" id="4_ofwfk"]
+[ext_resource type="PackedScene" uid="uid://dbfoi0nkkm0bx" path="res://addons/konado/editor/template/background/background.tscn" id="2_ofwfk"]
+[ext_resource type="PackedScene" uid="uid://dcwk5so2ohcc2" path="res://addons/konado/editor/template/character/character.tscn" id="3_6xqk1"]
+[ext_resource type="PackedScene" uid="uid://7b484a7p3s4w" path="res://addons/konado/editor/template/dialogbox/​dialog_box.tscn" id="4_ofwfk"]
 
 [node name="KnodoDialog_template_1" type="CanvasLayer"]
 script = ExtResource("1_ofwfk")

@@ -106,6 +106,7 @@ layout_mode = 2
 metadata/_tab_index = 0
 
 [node name="BoxContainer" type="BoxContainer" parent="TabContainer/BoxContainer3"]
+custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0
