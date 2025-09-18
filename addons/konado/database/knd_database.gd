@@ -41,6 +41,8 @@ var cur_shot ## 当前镜头
 func get_data_list(type: String) -> Array:
 	if not _has_data_type(type):
 		return []
+	if not data_type_map.has(type):
+		return []
 	return data_type_map[type]
 	
 #func get_all_data_ids_by_type(type: String) -> Array[int]:
