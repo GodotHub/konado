@@ -105,7 +105,7 @@ placeholder_text = "镜头ID"
 
 [node name="Label2" type="Label" parent="dock/VBoxContainer2/editor/BoxContainer/BoxContainer"]
 layout_mode = 2
-text = "出场演员"
+text = "本镜头演员"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="dock/VBoxContainer2/editor/BoxContainer/BoxContainer"]
 layout_mode = 2
@@ -141,7 +141,9 @@ highlight_current_line = true
 gutters_draw_line_numbers = true
 gutters_zero_pad_line_numbers = true
 gutters_draw_fold_gutter = true
+delimiter_strings = Array[String](["\" \"", "' '", "\" \""])
 code_completion_enabled = true
+code_completion_prefixes = Array[String]([" ", "\""])
 indent_use_spaces = true
 indent_automatic = true
 auto_brace_completion_enabled = true

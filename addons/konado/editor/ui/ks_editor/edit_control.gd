@@ -1,3 +1,4 @@
+@tool
 extends Node
 ## 镜头编辑器视图层交互操作
 
