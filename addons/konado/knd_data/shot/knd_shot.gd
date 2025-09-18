@@ -2,6 +2,9 @@
 extends KND_Data
 class_name KND_Shot
 
+## 镜头图标
+const icon = preload("uid://b62h640a6knig")
+
 @export var name: String = "New Shot"
 
 # 对话列表

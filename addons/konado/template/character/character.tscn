@@ -1,4 +1,6 @@
-[gd_scene format=3 uid="uid://dcwk5so2ohcc2"]
+[gd_scene load_steps=2 format=3 uid="uid://dcwk5so2ohcc2"]
+
+[ext_resource type="Texture2D" uid="uid://q2w6piu3t1md" path="res://addons/konado/editor/ui/icon/icon_19.svg" id="1_dbs1i"]
 
 [node name="character1" type="Control"]
 layout_mode = 3
@@ -23,5 +25,6 @@ offset_top = -800.0
 offset_right = 400.0
 grow_horizontal = 2
 grow_vertical = 0
+texture = ExtResource("1_dbs1i")
 expand_mode = 2
 stretch_mode = 5
