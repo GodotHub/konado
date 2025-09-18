@@ -1,18 +1,23 @@
-[gd_scene load_steps=13 format=3 uid="uid://c0d7dvfgwb76d"]
+[gd_scene load_steps=16 format=3 uid="uid://c0d7dvfgwb76d"]
 
 [ext_resource type="Script" uid="uid://c0lfpgnk7q5st" path="res://addons/konado/editor/ui/main_editor/data_manage.gd" id="1_bngbe"]
 [ext_resource type="Texture2D" uid="uid://cfau2duojvd33" path="res://addons/konado/assets/KonadoBanner.png" id="1_lfi02"]
+[ext_resource type="Script" uid="uid://b121le81g4yv1" path="res://addons/konado/editor/ui/main_editor/dock/data_manage_panel/knd_shot_tree.gd" id="2_md0xx"]
 [ext_resource type="PackedScene" uid="uid://cnhbt7n7ln2gw" path="res://addons/konado/editor/ui/ui_components/ui_data_manage/​folder_item_a.tscn" id="3_6h5t7"]
 [ext_resource type="Texture2D" uid="uid://dgyi8xxvrfl1" path="res://addons/konado/editor/ui/icon/icon_1.svg" id="3_7vuv8"]
 [ext_resource type="Texture2D" uid="uid://b62h640a6knig" path="res://addons/konado/editor/ui/icon/shot.svg" id="3_bngbe"]
+[ext_resource type="Script" uid="uid://c4283hxr0yl63" path="res://addons/konado/editor/ui/main_editor/dock/data_manage_panel/knd_data_tree.gd" id="3_j02lb"]
 [ext_resource type="Texture2D" uid="uid://bans4vtvjmrdw" path="res://addons/konado/editor/ui/icon/icon_28.svg" id="4_bngbe"]
 [ext_resource type="Texture2D" uid="uid://b7dk2ypmh0q7u" path="res://addons/konado/editor/ui/icon/icon_16.svg" id="5_am0c7"]
 [ext_resource type="Texture2D" uid="uid://q2w6piu3t1md" path="res://addons/konado/editor/ui/icon/icon_19.svg" id="8_y70an"]
 [ext_resource type="Texture2D" uid="uid://clfrj5ldg3i3k" path="res://addons/konado/editor/ui/icon/icon_20.svg" id="9_guuyf"]
 [ext_resource type="Texture2D" uid="uid://crrsfagp8citn" path="res://addons/konado/editor/ui/icon/audio.svg" id="10_md0xx"]
-[ext_resource type="Texture2D" uid="uid://b160xg1won5x4" path="res://addons/konado/editor/ui/icon/icon_3.svg" id="11_j02lb"]
+[ext_resource type="Texture2D" uid="uid://cpweu1qd7a5or" path="res://addons/konado/editor/ui/icon/icon_18.svg" id="12_guuyf"]
+[ext_resource type="Texture2D" uid="uid://cd3005ulx3nv6" path="res://addons/konado/editor/ui/icon/icon_27.svg" id="15_5ob65"]
 
-[sub_resource type="ButtonGroup" id="ButtonGroup_nok4e"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_j02lb"]
+content_margin_left = 20.0
+content_margin_right = 20.0
 
 [node name="data_manage" type="SplitContainer"]
 anchors_preset = 15
@@ -22,6 +27,12 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_bngbe")
 metadata/_tab_index = 0
+
+[node name="Knd_shot_tree" type="Node" parent="."]
+script = ExtResource("2_md0xx")
+
+[node name="Knd_data_tree" type="Node" parent="."]
+script = ExtResource("3_j02lb")
 
 [node name="project_inf" type="Panel" parent="."]
 custom_minimum_size = Vector2(300, 0)
@@ -211,6 +222,7 @@ icon = ExtResource("5_am0c7")
 icon_alignment = 1
 
 [node name="BoxContainer2" type="BoxContainer" parent="TabContainer/BoxContainer3"]
+custom_minimum_size = Vector2(500, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 4.0
@@ -228,80 +240,31 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="BoxContainer" type="BoxContainer" parent="TabContainer/BoxContainer3/BoxContainer2/Panel/ScrollContainer"]
+[node name="TabBar" type="TabBar" parent="TabContainer/BoxContainer3/BoxContainer2/Panel/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-
-[node name="Control" type="Control" parent="TabContainer/BoxContainer3/BoxContainer2/Panel/ScrollContainer/BoxContainer"]
-custom_minimum_size = Vector2(30, 0)
-layout_mode = 2
-
-[node name="Button" type="Button" parent="TabContainer/BoxContainer3/BoxContainer2/Panel/ScrollContainer/BoxContainer"]
-custom_minimum_size = Vector2(150, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-theme_type_variation = &"FlatButton"
-toggle_mode = true
-button_group = SubResource("ButtonGroup_nok4e")
-text = "角色"
-icon = ExtResource("8_y70an")
-
-[node name="Control2" type="Control" parent="TabContainer/BoxContainer3/BoxContainer2/Panel/ScrollContainer/BoxContainer"]
-custom_minimum_size = Vector2(30, 0)
-layout_mode = 2
-
-[node name="Button2" type="Button" parent="TabContainer/BoxContainer3/BoxContainer2/Panel/ScrollContainer/BoxContainer"]
-custom_minimum_size = Vector2(150, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-theme_type_variation = &"FlatButton"
-toggle_mode = true
-button_group = SubResource("ButtonGroup_nok4e")
-text = "场景"
-icon = ExtResource("9_guuyf")
-
-[node name="Control4" type="Control" parent="TabContainer/BoxContainer3/BoxContainer2/Panel/ScrollContainer/BoxContainer"]
-custom_minimum_size = Vector2(30, 0)
-layout_mode = 2
-
-[node name="Button3" type="Button" parent="TabContainer/BoxContainer3/BoxContainer2/Panel/ScrollContainer/BoxContainer"]
-visible = false
-custom_minimum_size = Vector2(150, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-theme_type_variation = &"FlatButton"
-toggle_mode = true
-button_group = SubResource("ButtonGroup_nok4e")
-text = "模板"
-
-[node name="Control5" type="Control" parent="TabContainer/BoxContainer3/BoxContainer2/Panel/ScrollContainer/BoxContainer"]
-custom_minimum_size = Vector2(30, 0)
-layout_mode = 2
-
-[node name="Button5" type="Button" parent="TabContainer/BoxContainer3/BoxContainer2/Panel/ScrollContainer/BoxContainer"]
-custom_minimum_size = Vector2(150, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-theme_type_variation = &"FlatButton"
-toggle_mode = true
-button_group = SubResource("ButtonGroup_nok4e")
-text = "bgm"
-icon = ExtResource("10_md0xx")
-
-[node name="Control3" type="Control" parent="TabContainer/BoxContainer3/BoxContainer2/Panel/ScrollContainer/BoxContainer"]
-custom_minimum_size = Vector2(30, 0)
-layout_mode = 2
-
-[node name="Button4" type="Button" parent="TabContainer/BoxContainer3/BoxContainer2/Panel/ScrollContainer/BoxContainer"]
-custom_minimum_size = Vector2(150, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-theme_type_variation = &"FlatButton"
-toggle_mode = true
-button_group = SubResource("ButtonGroup_nok4e")
-text = "全局变量"
-icon = ExtResource("11_j02lb")
+theme_override_colors/font_selected_color = Color(1, 0.69538736, 0.9455636, 1)
+theme_override_constants/tab_separation = 60
+theme_override_constants/icon_max_width = 65
+theme_override_styles/tab_selected = SubResource("StyleBoxEmpty_j02lb")
+theme_override_styles/button_pressed = SubResource("StyleBoxEmpty_j02lb")
+theme_override_styles/button_highlight = SubResource("StyleBoxEmpty_j02lb")
+current_tab = 0
+tab_alignment = 1
+close_with_middle_mouse = false
+tab_count = 5
+tab_0/title = "角色"
+tab_0/tooltip = "角色数据"
+tab_0/icon = ExtResource("8_y70an")
+tab_1/title = "场景"
+tab_1/icon = ExtResource("9_guuyf")
+tab_2/title = "BGM"
+tab_2/icon = ExtResource("10_md0xx")
+tab_3/title = "变量"
+tab_3/icon = ExtResource("15_5ob65")
+tab_4/title = "模板"
+tab_4/icon = ExtResource("12_guuyf")
 
 [node name="data_manage" type="Panel" parent="TabContainer/BoxContainer3/BoxContainer2"]
 layout_mode = 2
@@ -365,10 +328,10 @@ size_flags_horizontal = 10
 icon = ExtResource("5_am0c7")
 icon_alignment = 1
 
-[connection signal="item_selected" from="TabContainer/BoxContainer3/BoxContainer/data_manage/ShotTree" to="." method="_on_tree_item_selected"]
-[connection signal="pressed" from="TabContainer/BoxContainer3/BoxContainer/data_manage/HBoxContainer2/add" to="." method="_on_add_pressed"]
+[connection signal="item_selected" from="TabContainer/BoxContainer3/BoxContainer/data_manage/ShotTree" to="Knd_shot_tree" method="_on_shot_tree_item_selected"]
+[connection signal="pressed" from="TabContainer/BoxContainer3/BoxContainer/data_manage/HBoxContainer2/add" to="Knd_shot_tree" method="_on_add_pressed"]
 [connection signal="pressed" from="TabContainer/BoxContainer3/BoxContainer/data_manage/HBoxContainer2/copy" to="." method="_on_copy_pressed"]
-[connection signal="pressed" from="TabContainer/BoxContainer3/BoxContainer/data_manage/HBoxContainer2/delete" to="." method="_on_delete_pressed"]
+[connection signal="pressed" from="TabContainer/BoxContainer3/BoxContainer/data_manage/HBoxContainer2/delete" to="Knd_shot_tree" method="_on_delete_pressed"]
 [connection signal="item_selected" from="TabContainer/BoxContainer3/BoxContainer2/data_manage/Tree" to="." method="_on_tree_item_selected"]
 [connection signal="pressed" from="TabContainer/BoxContainer3/BoxContainer2/data_manage/HBoxContainer2/add" to="." method="_on_add_pressed"]
 [connection signal="pressed" from="TabContainer/BoxContainer3/BoxContainer2/data_manage/HBoxContainer2/delete" to="." method="_on_delete_pressed"]
