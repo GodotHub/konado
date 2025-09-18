@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bvrnfjkcmpr8s"
-path="res://.godot/imported/green.png-e3a17091688e10a7013279b38edc7f8a.ctex"
+uid="uid://sax5mdgm71dw"
+path="res://.godot/imported/kona_white.png-f2240f030e812ec34d71ef5d17ef85e3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/gut/images/green.png"
-dest_files=["res://.godot/imported/green.png-e3a17091688e10a7013279b38edc7f8a.ctex"]
+source_file="res://mascot/kona/kona_white.png"
+dest_files=["res://.godot/imported/kona_white.png-f2240f030e812ec34d71ef5d17ef85e3.ctex"]
 
 [params]
 
