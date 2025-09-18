@@ -1,0 +1,373 @@
+[gd_scene load_steps=13 format=3 uid="uid://c0d7dvfgwb76d"]
+
+[ext_resource type="Script" uid="uid://c0lfpgnk7q5st" path="res://addons/konado/editor/ui/main_editor/data_manage.gd" id="1_bngbe"]
+[ext_resource type="Texture2D" uid="uid://cfau2duojvd33" path="res://addons/konado/assets/KonadoBanner.png" id="1_lfi02"]
+[ext_resource type="PackedScene" uid="uid://cnhbt7n7ln2gw" path="res://addons/konado/editor/ui/ui_components/ui_data_manage/​folder_item_a.tscn" id="3_6h5t7"]
+[ext_resource type="Texture2D" uid="uid://dgyi8xxvrfl1" path="res://addons/konado/editor/ui/icon/icon_1.svg" id="3_7vuv8"]
+[ext_resource type="Texture2D" uid="uid://b62h640a6knig" path="res://addons/konado/editor/ui/icon/shot.svg" id="3_bngbe"]
+[ext_resource type="Texture2D" uid="uid://bans4vtvjmrdw" path="res://addons/konado/editor/ui/icon/icon_28.svg" id="4_bngbe"]
+[ext_resource type="Texture2D" uid="uid://b7dk2ypmh0q7u" path="res://addons/konado/editor/ui/icon/icon_16.svg" id="5_am0c7"]
+[ext_resource type="Texture2D" uid="uid://q2w6piu3t1md" path="res://addons/konado/editor/ui/icon/icon_19.svg" id="8_y70an"]
+[ext_resource type="Texture2D" uid="uid://clfrj5ldg3i3k" path="res://addons/konado/editor/ui/icon/icon_20.svg" id="9_guuyf"]
+[ext_resource type="Texture2D" uid="uid://crrsfagp8citn" path="res://addons/konado/editor/ui/icon/audio.svg" id="10_md0xx"]
+[ext_resource type="Texture2D" uid="uid://b160xg1won5x4" path="res://addons/konado/editor/ui/icon/icon_3.svg" id="11_j02lb"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_nok4e"]
+
+[node name="data_manage" type="SplitContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_bngbe")
+metadata/_tab_index = 0
+
+[node name="project_inf" type="Panel" parent="."]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Button" type="Button" parent="project_inf"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -64.0
+offset_top = 16.0
+offset_right = -12.0
+offset_bottom = 54.0
+grow_horizontal = 0
+text = "设置"
+
+[node name="BoxContainer2" type="BoxContainer" parent="project_inf"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 29.0
+offset_top = 197.0
+offset_right = -29.0
+offset_bottom = -158.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+vertical = true
+
+[node name="TextureRect" type="TextureRect" parent="project_inf/BoxContainer2"]
+custom_minimum_size = Vector2(0, 300)
+layout_mode = 2
+texture = ExtResource("1_lfi02")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Label2" type="LineEdit" parent="project_inf/BoxContainer2"]
+layout_mode = 2
+placeholder_text = "游戏名称"
+
+[node name="TextEdit" type="TextEdit" parent="project_inf/BoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+placeholder_text = "游戏简介"
+
+[node name="BoxContainer" type="BoxContainer" parent="project_inf/BoxContainer2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="project_inf/BoxContainer2/BoxContainer"]
+modulate = Color(1, 1, 1, 0.407843)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "版本号"
+
+[node name="Label2" type="Label" parent="project_inf/BoxContainer2/BoxContainer"]
+modulate = Color(1, 1, 1, 0.407843)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "2.0"
+
+[node name="LinkButton" type="LinkButton" parent="project_inf"]
+layout_mode = 0
+offset_left = 36.0
+offset_top = 19.0
+offset_right = 183.0
+offset_bottom = 59.0
+text = "Konado"
+uri = "https://godothub.com/konado/"
+
+[node name="TabContainer" type="TabContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 4.0
+current_tab = 0
+tabs_visible = false
+
+[node name="BoxContainer3" type="SplitContainer" parent="TabContainer"]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="BoxContainer" type="BoxContainer" parent="TabContainer/BoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+vertical = true
+
+[node name="Panel" type="Panel" parent="TabContainer/BoxContainer3/BoxContainer"]
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/BoxContainer3/BoxContainer/Panel"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 181.0
+offset_top = -21.0
+offset_right = 368.0
+offset_bottom = 24.0
+grow_vertical = 2
+text = "镜头"
+horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="TabContainer/BoxContainer3/BoxContainer/Panel"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 83.0
+offset_top = -32.0
+offset_right = 147.0
+offset_bottom = 32.0
+grow_vertical = 2
+texture = ExtResource("3_bngbe")
+
+[node name="data_manage" type="Panel" parent="TabContainer/BoxContainer3/BoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 3.0
+
+[node name="ShotTree" type="Tree" parent="TabContainer/BoxContainer3/BoxContainer/data_manage"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+hide_root = true
+
+[node name="ScrollContainer" type="ScrollContainer" parent="TabContainer/BoxContainer3/BoxContainer/data_manage"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(744, 76)
+size_flags_vertical = 3
+
+[node name="BoxContainer" type="BoxContainer" parent="TabContainer/BoxContainer3/BoxContainer/data_manage/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+vertical = true
+
+[node name="folder_item" parent="TabContainer/BoxContainer3/BoxContainer/data_manage/ScrollContainer/BoxContainer" instance=ExtResource("3_6h5t7")]
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="TabContainer/BoxContainer3/BoxContainer/data_manage"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = -50.0
+offset_right = -12.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 8
+
+[node name="add" type="Button" parent="TabContainer/BoxContainer3/BoxContainer/data_manage/HBoxContainer2"]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+icon = ExtResource("3_7vuv8")
+icon_alignment = 1
+
+[node name="copy" type="Button" parent="TabContainer/BoxContainer3/BoxContainer/data_manage/HBoxContainer2"]
+visible = false
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+icon = ExtResource("4_bngbe")
+icon_alignment = 1
+
+[node name="delete" type="Button" parent="TabContainer/BoxContainer3/BoxContainer/data_manage/HBoxContainer2"]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+icon = ExtResource("5_am0c7")
+icon_alignment = 1
+
+[node name="BoxContainer2" type="BoxContainer" parent="TabContainer/BoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 4.0
+vertical = true
+
+[node name="Panel" type="Panel" parent="TabContainer/BoxContainer3/BoxContainer2"]
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="TabContainer/BoxContainer3/BoxContainer2/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BoxContainer" type="BoxContainer" parent="TabContainer/BoxContainer3/BoxContainer2/Panel/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Control" type="Control" parent="TabContainer/BoxContainer3/BoxContainer2/Panel/ScrollContainer/BoxContainer"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+
+[node name="Button" type="Button" parent="TabContainer/BoxContainer3/BoxContainer2/Panel/ScrollContainer/BoxContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"FlatButton"
+toggle_mode = true
+button_group = SubResource("ButtonGroup_nok4e")
+text = "角色"
+icon = ExtResource("8_y70an")
+
+[node name="Control2" type="Control" parent="TabContainer/BoxContainer3/BoxContainer2/Panel/ScrollContainer/BoxContainer"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+
+[node name="Button2" type="Button" parent="TabContainer/BoxContainer3/BoxContainer2/Panel/ScrollContainer/BoxContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"FlatButton"
+toggle_mode = true
+button_group = SubResource("ButtonGroup_nok4e")
+text = "场景"
+icon = ExtResource("9_guuyf")
+
+[node name="Control4" type="Control" parent="TabContainer/BoxContainer3/BoxContainer2/Panel/ScrollContainer/BoxContainer"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+
+[node name="Button3" type="Button" parent="TabContainer/BoxContainer3/BoxContainer2/Panel/ScrollContainer/BoxContainer"]
+visible = false
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"FlatButton"
+toggle_mode = true
+button_group = SubResource("ButtonGroup_nok4e")
+text = "模板"
+
+[node name="Control5" type="Control" parent="TabContainer/BoxContainer3/BoxContainer2/Panel/ScrollContainer/BoxContainer"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+
+[node name="Button5" type="Button" parent="TabContainer/BoxContainer3/BoxContainer2/Panel/ScrollContainer/BoxContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"FlatButton"
+toggle_mode = true
+button_group = SubResource("ButtonGroup_nok4e")
+text = "bgm"
+icon = ExtResource("10_md0xx")
+
+[node name="Control3" type="Control" parent="TabContainer/BoxContainer3/BoxContainer2/Panel/ScrollContainer/BoxContainer"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+
+[node name="Button4" type="Button" parent="TabContainer/BoxContainer3/BoxContainer2/Panel/ScrollContainer/BoxContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"FlatButton"
+toggle_mode = true
+button_group = SubResource("ButtonGroup_nok4e")
+text = "全局变量"
+icon = ExtResource("11_j02lb")
+
+[node name="data_manage" type="Panel" parent="TabContainer/BoxContainer3/BoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 3.0
+
+[node name="Tree" type="Tree" parent="TabContainer/BoxContainer3/BoxContainer2/data_manage"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+hide_root = true
+
+[node name="ScrollContainer" type="ScrollContainer" parent="TabContainer/BoxContainer3/BoxContainer2/data_manage"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(744, 76)
+size_flags_vertical = 3
+
+[node name="BoxContainer" type="BoxContainer" parent="TabContainer/BoxContainer3/BoxContainer2/data_manage/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+vertical = true
+
+[node name="folder_item" parent="TabContainer/BoxContainer3/BoxContainer2/data_manage/ScrollContainer/BoxContainer" instance=ExtResource("3_6h5t7")]
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="TabContainer/BoxContainer3/BoxContainer2/data_manage"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = -50.0
+offset_right = -12.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 8
+
+[node name="add" type="Button" parent="TabContainer/BoxContainer3/BoxContainer2/data_manage/HBoxContainer2"]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+icon = ExtResource("3_7vuv8")
+icon_alignment = 1
+
+[node name="delete" type="Button" parent="TabContainer/BoxContainer3/BoxContainer2/data_manage/HBoxContainer2"]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+icon = ExtResource("5_am0c7")
+icon_alignment = 1
+
+[connection signal="item_selected" from="TabContainer/BoxContainer3/BoxContainer/data_manage/ShotTree" to="." method="_on_tree_item_selected"]
+[connection signal="pressed" from="TabContainer/BoxContainer3/BoxContainer/data_manage/HBoxContainer2/add" to="." method="_on_add_pressed"]
+[connection signal="pressed" from="TabContainer/BoxContainer3/BoxContainer/data_manage/HBoxContainer2/copy" to="." method="_on_copy_pressed"]
+[connection signal="pressed" from="TabContainer/BoxContainer3/BoxContainer/data_manage/HBoxContainer2/delete" to="." method="_on_delete_pressed"]
+[connection signal="item_selected" from="TabContainer/BoxContainer3/BoxContainer2/data_manage/Tree" to="." method="_on_tree_item_selected"]
+[connection signal="pressed" from="TabContainer/BoxContainer3/BoxContainer2/data_manage/HBoxContainer2/add" to="." method="_on_add_pressed"]
+[connection signal="pressed" from="TabContainer/BoxContainer3/BoxContainer2/data_manage/HBoxContainer2/delete" to="." method="_on_delete_pressed"]

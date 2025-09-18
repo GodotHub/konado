@@ -1,16 +1,14 @@
-[gd_scene load_steps=11 format=3 uid="uid://bommt7l6wmdsa"]
+[gd_scene load_steps=10 format=3 uid="uid://bommt7l6wmdsa"]
 
+[ext_resource type="Texture2D" uid="uid://bb7nhjioefh8a" path="res://sample/demo/sample_arts/示例-咖啡馆-背景.png" id="1_csa6c"]
 [ext_resource type="Theme" uid="uid://cao2ht3baecs8" path="res://addons/konado/theme_system/dark_theme.tres" id="1_i4xdp"]
 [ext_resource type="Script" uid="uid://c2u6ino7v7ixx" path="res://addons/konado/editor/ui/main_editor/ui_management.gd" id="1_nok4e"]
 [ext_resource type="Script" uid="uid://b04pryoxytbhb" path="res://addons/konado/editor/ui/main_editor/ui_shot_edit.gd" id="1_vy1oc"]
 [ext_resource type="PackedScene" uid="uid://tdgiaaxwqgb2" path="res://addons/konado/editor/ui/main_editor/dock/文件管理区.tscn" id="2_lxpd5"]
+[ext_resource type="PackedScene" uid="uid://c0d7dvfgwb76d" path="res://addons/konado/editor/ui/main_editor/dock/data_manage.tscn" id="3_nok4e"]
+[ext_resource type="Texture2D" uid="uid://6uvfpvvss883" path="res://addons/konado/editor/ui/icon/pin.svg" id="3_os5hq"]
 [ext_resource type="PackedScene" uid="uid://bwskpda2vmn5x" path="res://addons/konado/scenes/new_dialog.tscn" id="3_vy1oc"]
-[ext_resource type="Texture2D" uid="uid://cfau2duojvd33" path="res://addons/konado/assets/KonadoBanner.png" id="4_os5hq"]
-[ext_resource type="PackedScene" uid="uid://cnhbt7n7ln2gw" path="res://addons/konado/editor/ui/ui_components/ui_data_manage/​folder_item_a.tscn" id="5_fbjbo"]
-[ext_resource type="PackedScene" uid="uid://c6k1vele8f84n" path="res://addons/konado/editor/ui/main_editor/starpanel/启动界面.tscn" id="11_1idkc"]
 [ext_resource type="PackedScene" uid="uid://x8t7cxfhviko" path="res://addons/konado/editor/ui/ks_editor/ks_editor.tscn" id="11_4nts7"]
-
-[sub_resource type="ButtonGroup" id="ButtonGroup_nok4e"]
 
 [node name="MainEditor" type="Panel"]
 anchors_preset = 15
@@ -19,6 +17,16 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"Background"
+
+[node name="TextureRect" type="TextureRect" parent="."]
+self_modulate = Color(1, 1, 1, 0.043137256)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_csa6c")
 
 [node name="ui_management" type="Node" parent="."]
 script = ExtResource("1_nok4e")
@@ -40,6 +48,7 @@ layout_mode = 2
 theme_override_constants/separation = 0
 
 [node name="meun" type="BoxContainer" parent="BoxContainer/BoxContainer2"]
+visible = false
 custom_minimum_size = Vector2(100, 40)
 layout_mode = 2
 
@@ -98,6 +107,7 @@ tab_1/title = "镜头编辑"
 tab_2/title = "游戏系统"
 
 [node name="Control" type="Control" parent="BoxContainer/BoxContainer2"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -123,7 +133,9 @@ layout_mode = 2
 
 [node name="Button4" type="Button" parent="BoxContainer/BoxContainer2/BoxContainer3"]
 layout_mode = 2
-text = "窗口置顶"
+tooltip_text = "窗口置顶"
+toggle_mode = true
+icon = ExtResource("3_os5hq")
 
 [node name="占位" type="Control" parent="BoxContainer/BoxContainer2/BoxContainer3"]
 custom_minimum_size = Vector2(50, 0)
@@ -133,176 +145,14 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
-current_tab = 1
+current_tab = 0
 tabs_visible = false
 
-[node name="data_manage" type="SplitContainer" parent="BoxContainer/modules_container"]
-visible = false
-layout_mode = 2
-metadata/_tab_index = 0
-
-[node name="Panel" type="Panel" parent="BoxContainer/modules_container/data_manage"]
-custom_minimum_size = Vector2(300, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="Button" type="Button" parent="BoxContainer/modules_container/data_manage/Panel"]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -64.0
-offset_top = 16.0
-offset_right = -12.0
-offset_bottom = 54.0
-grow_horizontal = 0
-text = "隐藏"
-
-[node name="BoxContainer2" type="BoxContainer" parent="BoxContainer/modules_container/data_manage/Panel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 29.0
-offset_top = 197.0
-offset_right = -29.0
-offset_bottom = -158.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/separation = 20
-vertical = true
-
-[node name="TextureRect" type="TextureRect" parent="BoxContainer/modules_container/data_manage/Panel/BoxContainer2"]
-custom_minimum_size = Vector2(0, 300)
-layout_mode = 2
-texture = ExtResource("4_os5hq")
-expand_mode = 1
-stretch_mode = 6
-
-[node name="Label2" type="LineEdit" parent="BoxContainer/modules_container/data_manage/Panel/BoxContainer2"]
-layout_mode = 2
-placeholder_text = "游戏名称"
-
-[node name="TextEdit" type="TextEdit" parent="BoxContainer/modules_container/data_manage/Panel/BoxContainer2"]
-layout_mode = 2
-size_flags_vertical = 3
-placeholder_text = "游戏简介"
-
-[node name="Label" type="Label" parent="BoxContainer/modules_container/data_manage/Panel/BoxContainer2"]
-modulate = Color(1, 1, 1, 0.407843)
-layout_mode = 2
-text = "Konado 版本号   1.11"
-
-[node name="TabContainer" type="TabContainer" parent="BoxContainer/modules_container/data_manage"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 4.0
-current_tab = 1
-tabs_visible = false
-
-[node name="启动界面" parent="BoxContainer/modules_container/data_manage/TabContainer" instance=ExtResource("11_1idkc")]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-size_flags_stretch_ratio = 4.0
-metadata/_tab_index = 0
-
-[node name="BoxContainer" type="BoxContainer" parent="BoxContainer/modules_container/data_manage/TabContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 4.0
-vertical = true
-metadata/_tab_index = 1
-
-[node name="Panel" type="Panel" parent="BoxContainer/modules_container/data_manage/TabContainer/BoxContainer"]
-custom_minimum_size = Vector2(0, 150)
-layout_mode = 2
-
-[node name="ScrollContainer" type="ScrollContainer" parent="BoxContainer/modules_container/data_manage/TabContainer/BoxContainer/Panel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="BoxContainer" type="BoxContainer" parent="BoxContainer/modules_container/data_manage/TabContainer/BoxContainer/Panel/ScrollContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="Button" type="Button" parent="BoxContainer/modules_container/data_manage/TabContainer/BoxContainer/Panel/ScrollContainer/BoxContainer"]
-custom_minimum_size = Vector2(150, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-theme_type_variation = &"FlatButton"
-toggle_mode = true
-button_group = SubResource("ButtonGroup_nok4e")
-text = "角色"
-
-[node name="Button2" type="Button" parent="BoxContainer/modules_container/data_manage/TabContainer/BoxContainer/Panel/ScrollContainer/BoxContainer"]
-custom_minimum_size = Vector2(150, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-theme_type_variation = &"FlatButton"
-toggle_mode = true
-button_group = SubResource("ButtonGroup_nok4e")
-text = "场景"
-
-[node name="Button3" type="Button" parent="BoxContainer/modules_container/data_manage/TabContainer/BoxContainer/Panel/ScrollContainer/BoxContainer"]
-custom_minimum_size = Vector2(150, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-theme_type_variation = &"FlatButton"
-toggle_mode = true
-button_group = SubResource("ButtonGroup_nok4e")
-text = "镜头"
-
-[node name="Button4" type="Button" parent="BoxContainer/modules_container/data_manage/TabContainer/BoxContainer/Panel/ScrollContainer/BoxContainer"]
-custom_minimum_size = Vector2(150, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-theme_type_variation = &"FlatButton"
-toggle_mode = true
-button_group = SubResource("ButtonGroup_nok4e")
-text = "全局变量"
-
-[node name="data_manage" type="Panel" parent="BoxContainer/modules_container/data_manage/TabContainer/BoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-size_flags_stretch_ratio = 3.0
-theme_type_variation = &"Background"
-
-[node name="Tree" type="Tree" parent="BoxContainer/modules_container/data_manage/TabContainer/BoxContainer/data_manage"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="ScrollContainer" type="ScrollContainer" parent="BoxContainer/modules_container/data_manage/TabContainer/BoxContainer/data_manage"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(744, 76)
-size_flags_vertical = 3
-
-[node name="BoxContainer" type="BoxContainer" parent="BoxContainer/modules_container/data_manage/TabContainer/BoxContainer/data_manage/ScrollContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-vertical = true
-
-[node name="folder_item" parent="BoxContainer/modules_container/data_manage/TabContainer/BoxContainer/data_manage/ScrollContainer/BoxContainer" instance=ExtResource("5_fbjbo")]
+[node name="data_manage" parent="BoxContainer/modules_container" instance=ExtResource("3_nok4e")]
 layout_mode = 2
 
 [node name="shot_editing" type="SplitContainer" parent="BoxContainer/modules_container"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -445,17 +295,6 @@ metadata/_tab_index = 2
 [node name="info_bar" type="BoxContainer" parent="BoxContainer"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
-
-[node name="popup_mask" type="ColorRect" parent="."]
-unique_name_in_owner = true
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0, 0, 0, 0.407843)
 
 [connection signal="tab_changed" from="BoxContainer/BoxContainer2/modules_bar" to="ui_management" method="_on_modules_bar_tab_changed"]
 [connection signal="item_selected" from="BoxContainer/modules_container/shot_editing/SplitContainer2/SplitContainer/画布区/BoxContainer2/BoxContainer/zoom_button" to="BoxContainer/modules_container/shot_editing/SplitContainer2/SplitContainer/画布区/ui_shot_editing" method="_on_zoom_button_item_selected"]

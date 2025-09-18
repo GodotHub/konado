@@ -87,6 +87,20 @@ func setup_light_them():                     ## 保存主题
 	bg_color_3   = Color(0.75, 0.75, 0.75)  
 	set_save_path("res://addons/konado/theme_system/light_theme.tres")
 
+func setup_konado_them():                      ## 保存主题
+
+	main_color   = Color(0.778, 0.565, 0.889, 1.0)      ## 主题色 高亮显示
+	select_color = Color(0.778, 0.565, 0.889, 1.0) 
+	focus_color  = Color.GRAY                ## 文字|高亮显示
+	def_color    = Color(1,1,1,0.8)          ## 正常颜色
+	line_color   = Color(0.25, 0.25, 0.25)   ## 分割线|滑块 颜色
+
+	button_bg    = transparent
+	bg_color_1   = Color(0.18, 0.18, 0.2, 0.6)   ## 最浅的深色
+	bg_color_2   = Color(0.12, 0.12, 0.13, 0.384) 
+	bg_color_3   = Color(0.09, 0.09, 0.09)   ## 最深的颜色
+	set_save_path("res://addons/konado/theme_system/konado_theme.tres")
+
 func define_theme(): ## 设置主题
 	#define_default_font(ResourceLoader.load(def_font)) ## 设置默认字体
 	define_default_font_size(24)
@@ -289,7 +303,7 @@ func button_style():
 			expand_margin_right = 22.0,
 			axis_stretch_horizontal = 2,
 			axis_stretch_vertical = 1,
-			region_rect = Rect2(0, 0, 280, 55),
+			region_rect = Rect2(0, 0, 280, 58),
 			modulate_color = bg_color_1
 			}),
 		tab_unselected =  style_box_empty,

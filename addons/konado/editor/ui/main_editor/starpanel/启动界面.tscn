@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://c6k1vele8f84n"]
 
-[ext_resource type="Script" uid="uid://bmk2spp308g8" path="res://editor/ui/main_editor/starpanel/启动界面.gd" id="1_u8wpy"]
+[ext_resource type="Script" uid="uid://bmk2spp308g8" path="res://addons/konado/editor/ui/main_editor/starpanel/启动界面.gd" id="1_u8wpy"]
 
 [node name="Launcher" type="Control"]
 clip_contents = true
@@ -83,6 +83,12 @@ text = "近期工程"
 [node name="Tree" type="Tree" parent="Panel/Control"]
 layout_mode = 2
 size_flags_vertical = 3
+
+[node name="popup_mask" type="ColorRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
 [connection signal="pressed" from="Panel/Control/NewProject" to="." method="_on_new_project_pressed"]
 [connection signal="pressed" from="Panel/Control/OpenProject" to="." method="_on_open_project_pressed"]
