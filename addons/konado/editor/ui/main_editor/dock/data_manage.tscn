@@ -2,11 +2,11 @@
 
 [ext_resource type="Script" uid="uid://c0lfpgnk7q5st" path="res://addons/konado/editor/ui/main_editor/data_manage.gd" id="1_bngbe"]
 [ext_resource type="Texture2D" uid="uid://cfau2duojvd33" path="res://addons/konado/assets/KonadoBanner.png" id="1_lfi02"]
-[ext_resource type="Script" uid="uid://b121le81g4yv1" path="res://addons/konado/editor/ui/main_editor/dock/data_manage_panel/knd_shot_tree.gd" id="2_md0xx"]
+[ext_resource type="Script" uid="uid://b121le81g4yv1" path="res://addons/konado/editor/ui/main_editor/dock/knd_shot_tree.gd" id="2_md0xx"]
 [ext_resource type="PackedScene" uid="uid://cnhbt7n7ln2gw" path="res://addons/konado/editor/ui/ui_components/ui_data_manage/​folder_item_a.tscn" id="3_6h5t7"]
 [ext_resource type="Texture2D" uid="uid://dgyi8xxvrfl1" path="res://addons/konado/editor/ui/icon/icon_1.svg" id="3_7vuv8"]
 [ext_resource type="Texture2D" uid="uid://b62h640a6knig" path="res://addons/konado/editor/ui/icon/shot.svg" id="3_bngbe"]
-[ext_resource type="Script" uid="uid://c4283hxr0yl63" path="res://addons/konado/editor/ui/main_editor/dock/data_manage_panel/knd_data_tree.gd" id="3_j02lb"]
+[ext_resource type="Script" uid="uid://c4283hxr0yl63" path="res://addons/konado/editor/ui/main_editor/dock/knd_data_tree.gd" id="3_j02lb"]
 [ext_resource type="Texture2D" uid="uid://bans4vtvjmrdw" path="res://addons/konado/editor/ui/icon/icon_28.svg" id="4_bngbe"]
 [ext_resource type="Texture2D" uid="uid://b7dk2ypmh0q7u" path="res://addons/konado/editor/ui/icon/icon_16.svg" id="5_am0c7"]
 [ext_resource type="Texture2D" uid="uid://q2w6piu3t1md" path="res://addons/konado/editor/ui/icon/icon_19.svg" id="8_y70an"]
