@@ -1,3 +1,4 @@
+@tool
 extends Node
 
 ## 添加演员

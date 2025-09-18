@@ -1,3 +1,4 @@
+@tool
 extends Node
 
 @onready var code_edit: CodeEdit = %CodeEdit
