@@ -12,7 +12,6 @@ offset_bottom = 10.0
 grow_horizontal = 2
 grow_vertical = 2
 localize_numeral_system = false
-metadata/_custom_type_script = "uid://bdfbhfb6c7ywd"
 
 [node name="vm_data_management" type="Node" parent="."]
 

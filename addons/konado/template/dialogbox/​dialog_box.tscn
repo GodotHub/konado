@@ -33,18 +33,19 @@ offset_bottom = 202.0
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
 clip_contents = false
+custom_minimum_size = Vector2(0, 120)
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 137.0
-offset_top = -342.0
+offset_top = -231.0
 offset_right = -208.0
 offset_bottom = -111.0
 grow_horizontal = 2
 grow_vertical = 0
-text = "角色对话"
+text = "对话"
 metadata/_edit_group_ = true
 
 [node name="name" type="Control" parent="RichTextLabel"]
@@ -52,7 +53,7 @@ layout_mode = 1
 anchors_preset = 0
 offset_left = -4.0
 offset_top = -101.0
-offset_right = -3.99998
+offset_right = -3.9999847
 offset_bottom = -101.0
 metadata/_edit_group_ = true
 
