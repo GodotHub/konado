@@ -10,7 +10,7 @@ var ks_statement: Dictionary = {}
 func _ready() -> void:
 	# ks_statement = load_csv()
 	var kscsv := KsCsvDict.new()
-	kscsv = ResourceLoader.load( "uid://dbf8118ftqyvc" ) 
+	kscsv = ResourceLoader.load("res://addons/konado/editor/ui/ks_editor/ks_dict.kdic") 
 	print(kscsv.csv_data)
 	## 直接从资源加载
 	ks_statement =kscsv.csv_data

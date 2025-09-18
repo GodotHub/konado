@@ -14,7 +14,7 @@ func _get_visible_name() -> String:
 	return "Konado Editor CSV"
 
 func _get_recognized_extensions() -> PackedStringArray:
-	return ["csv"]
+	return ["kdic"]
 
 func _get_save_extension() -> String:
 	return "res"
