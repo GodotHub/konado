@@ -35,6 +35,19 @@ var help_doc_btn: Button = null
 var open_konado_editor_btn: Button = null
 
 
+# 翻译路径
+var translations_paths = PackedStringArray([
+	"res://addons/konado/i18n/i18n.zh.translation",
+	"res://addons/konado/i18n/i18n.zh_HK.translation",
+	"res://addons/konado/i18n/i18n.en.translation",
+	"res://addons/konado/i18n/i18n.ja.translation",
+	"res://addons/konado/i18n/i18n.ko.translation",
+	"res://addons/konado/i18n/i18n.de.translation"
+	])
+	
+	
+	
+
 
 func _enter_tree() -> void:
 	# 添加自动加载单例
@@ -62,6 +75,15 @@ func _enter_tree() -> void:
 	open_konado_editor_btn.toggle_mode = true
 	add_control_to_container(EditorPlugin.CONTAINER_TOOLBAR, help_doc_btn)
 	add_control_to_container(EditorPlugin.CONTAINER_TOOLBAR, open_konado_editor_btn)
+	
+	# 设置翻译文件路径
+	ProjectSettings.set_setting("internationalization/locale/translations", translations_paths)
+	
+	# 设置区域过滤模式为1 (允许所有区域)
+	ProjectSettings.set_setting("internationalization/locale/locale_filter_mode", 1)
+	
+	# 保存项目设置更改
+	ProjectSettings.save()
 
 	print("Konado loaded")
 
@@ -119,4 +141,7 @@ func _exit_tree() -> void:
 	# 清理自动加载和自定义类型
 	remove_autoload_singleton("KS_SAVE_AND_LOAD")
 	remove_autoload_singleton("KND_Database")
+	
+
+	
 	print("Konado unloaded")
