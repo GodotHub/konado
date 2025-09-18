@@ -17,6 +17,7 @@ const KND_CLASS_DB: Dictionary[String, String] = {
 ## KND_Data 基类
 	"KND_Data": "res://addons/konado/knd_data/knd_data.gd",
 ## 资源
+	"KND_Template":"res://addons/konado/knd_data/act/knd_template.gd",
 	"KND_Character": "res://addons/konado/knd_data/act/knd_character.gd",
 	"KND_Background": "res://addons/konado/knd_data/act/knd_background.gd",
 	"KND_Soundeffect": "res://addons/konado/knd_data/audio/knd_soundeffect.gd",
