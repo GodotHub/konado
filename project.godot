@@ -19,7 +19,6 @@ config/description="Konado Editor，Konado编辑器"
 config/version="2.0"
 run/main_scene="res://addons/konado/editor/ui/main_editor/main_editor.tscn"
 config/features=PackedStringArray("4.5", "C#", "Forward Plus")
-boot_splash/image="uid://d1yhkro0quuae"
 
 [autoload]
 

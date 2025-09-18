@@ -10,7 +10,7 @@ extends Node
 var tmp_knd_data_dic: Dictionary[int, KND_Data] = {}
 
 ## 数据类型列表 {data_type:[id]}
-var data_type_map:Dictionary = {}
+var data_type_map: Dictionary = {}
 
 ## 数据类型,key为类型名，value为脚本路径
 const KND_CLASS_DB: Dictionary[String, String] = {
@@ -102,7 +102,6 @@ func create_data(type: String) -> int:
 	
 	var data: KND_Data = create_data_instance(type)
 	
-	
 	if data == null:
 		return -1
 
@@ -128,8 +127,7 @@ func create_data(type: String) -> int:
 	
 	# 不知道有没有用，还能不能立即触发导入
 	if Engine.is_editor_hint():
-		var editor_file_system = EditorInterface.get_resource_filesystem()
-		editor_file_system.scan_sources()
+		EditorInterface.get_resource_filesystem().scan()
 	
 	# 添加到缓存
 	tmp_knd_data_dic[data.id] = data
@@ -149,31 +147,48 @@ func create_data(type: String) -> int:
 	return id
 
 ## TODO : BUG 
-## 删除数据
-func delete_data(id: int) -> void:
-	if not tmp_knd_data_dic.has(id):
-		return
+## 删除数据，如果删除成功返回 true，失败则返回 false
+func delete_data(id: int) -> bool:
+	if not _has_data(id):
+		printerr("数据库中没有这个数据" + str(id))
+		return false
 	# 删除属性表数据
 	var type:String = get_data_type(id)
-	data_type_map[type].erase(id)
+	if data_type_map.has(type):
+		data_type_map[type].erase(id)
+
 	print(KND_Data.data_id_map[id])
 	# 删除文件
-	var data : KND_Data = tmp_knd_data_dic.get(id)
-	var path : String =data.save_path
-	if !FileAccess.file_exists(path):
-		print("文件不存在: ", path)
-		return
-	var dir = DirAccess.open(path)
+	var data: KND_Data = tmp_knd_data_dic.get(id)
+	var path: String = data.save_path
+
+	var dir = DirAccess.open("res://")
+	if DirAccess.get_open_error() != OK:
+		printerr("无法访问res://")
+		return false
 	
-	var error = dir.remove(path)
-	if error != OK:
-		print("删除文件失败，错误代码: ", error)
-		return
+	if dir.file_exists(path):
+		var error = dir.remove(path)
+		if Engine.is_editor_hint():
+			EditorInterface.get_resource_filesystem().scan()
+		if error != OK:
+			printerr("删除文件失败，错误代码: ", error)
+			return false
+	else:
+		printerr("无法删除不存在的文件")
+		return false
 		
 	print("文件删除成功: ", path)
-	print("当前数据名字表: ",KND_Data.data_id_map)
-	KND_Data.data_id_map.erase(id)
+	#print("当前数据名字表: ",KND_Data.data_id_map)
+	
+	# 从id映射表删除
+	if KND_Data.data_id_map.has(id):
+		KND_Data.data_id_map.erase(id)
+		
+	# 从缓存表删除
 	tmp_knd_data_dic.erase(id)
+	
+	return true
 	
 
 ## 获取数据的属性字典
@@ -257,22 +272,39 @@ func load_database() -> void:
 		else:
 			push_error("Key %s is not a valid integer" % key)
 	
+	# 失效的数据
+	var invalidated_data_file: Array[String] = []
 	# 添加到缓存
 	tmp_knd_data_dic = {}
 	for kdf in knd_data_file_dic.keys():
-		if not knd_data_file_dic[kdf] == "":
+		var path = knd_data_file_dic[kdf]
+		if not path == "":
+			if not FileAccess.file_exists(path):
+				printerr("无法打开找不到的文件，可能已经被删除: ", path)
+				continue
 			# 读取文件内容
-			var kdffile = FileAccess.open(knd_data_file_dic[kdf], FileAccess.READ)
+			var kdffile = FileAccess.open(path, FileAccess.READ)
 			if kdffile == null:
 				var error = FileAccess.get_open_error()
-				printerr("Failed to open file: ", knd_data_file_dic[kdf], " Error code: ", error)
-				return
+				printerr("无法打开文件: ", path, " Error code: ", error)
+				invalidated_data_file.append(path)
+				continue
 	
 			# 检查文件是否为空
 			if kdffile.get_length() == 0:
-				printerr("File is empty: ", knd_data_file_dic[kdf])
+				printerr("跳过并删除空文件: ", path)
+				invalidated_data_file.append(path)
+				var dir = DirAccess.open("res://")
+				if DirAccess.get_open_error() != OK:
+					printerr("无法访问res://")
+				if dir.file_exists(path):
+					var error = dir.remove(path)
+					if error != OK:
+						printerr("删除文件失败，错误代码: ", error)
+					else:
+						printerr("无法删除不存在的文件")
 				kdffile.close()
-				return
+				continue
 				
 			var source_text = kdffile.get_as_text()
 			kdffile.close()
@@ -281,21 +313,37 @@ func load_database() -> void:
 			var parse_result = json.parse(source_text)
 			if parse_result != OK:
 				printerr("JSON Parse Error: ", json.get_error_message(), " at line ", json.get_error_line())
-				return
+				continue
 			var json_data = json.get_data()
 				
 			if json_data == null:
 				printerr("Failed to parse file data as variable")
-				return
+				continue
 
 			# 确保读取的数据是字典类型
 			if typeof(json_data) != TYPE_DICTIONARY:
 				printerr("Parsed data is not a Dictionary. Type: ", typeof(json_data))
-				return
+				continue
 			var data = KND_Data.new(true)
 			data._source_data = json_data
 			data.update()
 			tmp_knd_data_dic[kdf] = data
+			
+	# 遍历删除失效的数据
+	if invalidated_data_file.size() > 0:
+		var dir = DirAccess.open("res://")
+		if DirAccess.get_open_error() != OK:
+			printerr("无法访问res://")
+		for invalidated_path in invalidated_data_file:
+			if dir.file_exists(invalidated_path):
+				var error = dir.remove(invalidated_path)
+				print("删除无效数据文件", invalidated_path)
+				if error != OK:
+					printerr("删除文件失败，错误代码: ", error)
+				# 同时删除import文件
+				dir.remove(invalidated_path.replace(".kdb", ".kdb.import"))
+			else:
+				printerr("无法删除不存在的文件", invalidated_path)
 
 func ensure_directory_exists(path: String) -> bool:
 	# 检查目录是否已经存在
