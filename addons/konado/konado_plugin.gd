@@ -59,7 +59,7 @@ func _enter_tree() -> void:
 
 	help_doc_btn = _create_docs_btn()
 	open_konado_editor_btn = _create_editor_toolbar_btn()
-
+	open_konado_editor_btn.toggle_mode = true
 	add_control_to_container(EditorPlugin.CONTAINER_TOOLBAR, help_doc_btn)
 	add_control_to_container(EditorPlugin.CONTAINER_TOOLBAR, open_konado_editor_btn)
 

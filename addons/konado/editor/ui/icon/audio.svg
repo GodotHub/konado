@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <circle id="音乐" cx="9.6" cy="9.6" r="8.302" style="fill:white;fill-opacity:0.3;"/>
+    <g transform="matrix(1,0,0,1,0.279761,0.279761)">
+        <path d="M9.513,5.422C9.513,5.422 10.592,11.529 10.592,12.298C10.592,13.188 9.649,13.91 8.489,13.91C7.328,13.91 6.386,13.188 6.386,12.298C6.386,11.409 7.328,10.686 8.489,10.686C8.587,10.686 8.683,10.691 8.777,10.701L7.707,3.875L8.521,3.875C9.176,3.87 9.796,3.868 10.39,3.867C11.191,3.867 12.372,6.273 13.938,6.273L13.938,6.662C12.335,6.662 11.351,5.422 10.426,5.422L9.513,5.422Z" style="fill:white;"/>
+    </g>
+</svg>

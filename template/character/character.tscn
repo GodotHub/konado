@@ -1,6 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://dcwk5so2ohcc2"]
-
-[ext_resource type="Texture2D" uid="uid://0go33s82b24j" path="res://sample/demo/sample_arts/D.png" id="1_nu4it"]
+[gd_scene format=3 uid="uid://dcwk5so2ohcc2"]
 
 [node name="character1" type="Control"]
 layout_mode = 3
@@ -25,6 +23,5 @@ offset_top = -800.0
 offset_right = 400.0
 grow_horizontal = 2
 grow_vertical = 0
-texture = ExtResource("1_nu4it")
 expand_mode = 2
 stretch_mode = 5

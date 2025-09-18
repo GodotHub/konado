@@ -2,7 +2,9 @@
 extends Control
 ## 数据管理器窗口
 
+@onready var shot_tree: Tree = %ShotTree
 @onready var node_tree: Tree = %Tree
+
 var current_data_lise :Array     ## 当前数据
 var selected_item     :TreeItem
 var current_data_id   :int=-1
@@ -37,13 +39,10 @@ func _on_tree_item_selected() -> void:
 		current_data_id = -1
 	print("选中：",node_tree.get_selected(),current_data_id)
 
-
 func _on_add_pressed() -> void:
 	KND_Database.create_data("KND_Character")
 	_build_data_tree()
 
-func _on_copy_pressed() -> void:
-	pass
 	
 func _on_delete_pressed() -> void:
 	if current_data_id != -1:
