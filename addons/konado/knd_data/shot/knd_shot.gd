@@ -15,7 +15,6 @@ const icon = preload("uid://b62h640a6knig")
 ## key是演员名，value是角色id
 @export var actor_character_map: Dictionary[String, int] = {}
 
-
 ## 描述
 @export var tip: String = "描述"
 
