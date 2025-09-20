@@ -1,6 +1,8 @@
 @tool
 extends Node
 
+## 构建命令语句列表，可以在代码编辑器中插入对应语句
+
 @onready var code_edit: CodeEdit = %CodeEdit
 
 @onready var statement_tree: Tree = %StatementTree
@@ -21,13 +23,11 @@ func _ready() -> void:
 # func load_csv() -> Dictionary:
 # 	var file = FileAccess.open(ks_statement_path, FileAccess.READ)
 # 	var data: Dictionary = {}
-	
 # 	# 首先读取标题行
 # 	var headers = file.get_csv_line()
 # 	if headers.size() == 0:
 # 		file.close()
 # 		return data
-	
 # 	# 读取数据行
 # 	while not file.eof_reached():
 # 		var line = file.get_csv_line()
@@ -39,7 +39,6 @@ func _ready() -> void:
 # 				"插入语句": line[3] if line.size() > 3 else "",
 # 				"按钮备注": line[4] if line.size() > 4 else ""
 # 			}
-			
 # 			# 如果键已存在，创建或添加到嵌套字典中
 # 			if data.has(key):
 # 				if typeof(data[key]) == TYPE_DICTIONARY:
@@ -52,7 +51,6 @@ func _ready() -> void:
 # 			else:
 # 				# 键不存在，直接添加
 # 				data[key] = entry
-	
 # 	file.close()
 # 	print(data)
 # 	return data

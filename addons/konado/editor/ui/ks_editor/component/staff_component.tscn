@@ -1,14 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://bybbh76d07hoo"]
+[gd_scene load_steps=3 format=3 uid="uid://bybbh76d07hoo"]
 
-[ext_resource type="Script" uid="uid://bthw861stienm" path="res://editor/ui/ks_editor/component/staff_component.gd" id="1_o2hu1"]
-[ext_resource type="Script" uid="uid://5dxx84u6uyy0" path="res://addons/konado/scripts/character/character.gd" id="2_i2b6h"]
-[ext_resource type="Script" uid="uid://dxbtmvyauvfln" path="res://addons/konado/scripts/character/character_status.gd" id="3_yeqx8"]
-
-[sub_resource type="Resource" id="Resource_lp73c"]
-script = ExtResource("2_i2b6h")
-"角色姓名" = "ssss"
-"角色状态" = Array[ExtResource("3_yeqx8")]([])
-metadata/_custom_type_script = "uid://5dxx84u6uyy0"
+[ext_resource type="Script" uid="uid://bthw861stienm" path="res://addons/konado/editor/ui/ks_editor/component/staff_component.gd" id="1_o2hu1"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_px02i"]
 content_margin_left = 8.0
@@ -30,10 +22,11 @@ size_flags_horizontal = 3
 size_flags_vertical = 0
 script = ExtResource("1_o2hu1")
 actor = "张三"
-charactor = SubResource("Resource_lp73c")
+character = null
 metadata/_edit_use_anchors_ = true
 
 [node name="Button" type="Button" parent="."]
+visible = false
 layout_mode = 2
 text = "≡"
 
@@ -48,14 +41,12 @@ placeholder_text = "演员名称"
 custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
 
-[node name="CharacterLabel" type="Label" parent="."]
+[node name="CharacterLabel" type="OptionButton" parent="."]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/normal = SubResource("StyleBoxFlat_px02i")
-horizontal_alignment = 1
-vertical_alignment = 1
 
 [node name="Control2" type="Control" parent="."]
 custom_minimum_size = Vector2(80, 0)
@@ -65,4 +56,6 @@ layout_mode = 2
 layout_mode = 2
 text = "╳"
 
+[connection signal="item_selected" from="CharacterLabel" to="." method="_on_character_label_item_selected"]
+[connection signal="pressed" from="CharacterLabel" to="." method="_on_character_label_pressed"]
 [connection signal="pressed" from="delect" to="." method="_on_delect_pressed"]

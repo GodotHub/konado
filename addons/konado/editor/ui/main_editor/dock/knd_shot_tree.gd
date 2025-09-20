@@ -45,4 +45,6 @@ func _on_shot_tree_item_selected() -> void:
 		current_shot_id = selected_item.get_metadata(0)
 	else :
 		current_shot_id = -1
+	KND_Database.cur_shot = current_shot_id
+	
 	print("选中：",shot_tree.get_selected(),current_shot_id)

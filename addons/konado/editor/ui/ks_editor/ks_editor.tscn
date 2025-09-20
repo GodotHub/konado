@@ -7,11 +7,6 @@
 [ext_resource type="Script" uid="uid://byqad5mu76fj5" path="res://addons/konado/editor/ui/ks_editor/code_edit.gd" id="3_43nnm"]
 [ext_resource type="Script" uid="uid://brfpi4t4c2ui3" path="res://addons/konado/editor/ui/ks_editor/staff_window.gd" id="5_bxnau"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ggagf"]
-bg_color = Color(0.0846, 0.0873, 0.09, 1)
-corner_radius_top_right = 15
-corner_radius_bottom_right = 15
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_px02i"]
 content_margin_left = 8.0
 content_margin_right = 8.0
@@ -22,6 +17,11 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ggagf"]
+bg_color = Color(0.0846, 0.0873, 0.09, 1)
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+
 [node name="shot_edit_dock" type="Panel"]
 anchors_preset = 15
 anchor_right = 1.0
@@ -30,11 +30,23 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"WindowPanel"
 
+[node name="edit_control" type="Node" parent="."]
+script = ExtResource("1_bxnau")
+
 [node name="shot_data_edit" type="Node" parent="."]
 script = ExtResource("1_fqhf8")
 
-[node name="edit_control" type="Node" parent="."]
-script = ExtResource("1_bxnau")
+[node name="CharacterLabel" type="Label" parent="shot_data_edit"]
+unique_name_in_owner = true
+visible = false
+offset_left = 728.0
+offset_top = 109.0
+offset_right = 814.0
+offset_bottom = 147.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_px02i")
+text = "角色 A"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="ks_editor" type="Node" parent="."]
 script = ExtResource("1_qu5wb")
@@ -95,37 +107,31 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="dock/VBoxContainer2/editor/BoxContainer/BoxContainer"]
 layout_mode = 2
-text = "镜头ID"
+text = "镜头"
 
-[node name="shot_id2" type="LineEdit" parent="dock/VBoxContainer2/editor/BoxContainer/BoxContainer"]
+[node name="shot_id" type="OptionButton" parent="dock/VBoxContainer2/editor/BoxContainer/BoxContainer"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
-placeholder_text = "镜头ID"
 
 [node name="Label2" type="Label" parent="dock/VBoxContainer2/editor/BoxContainer/BoxContainer"]
 layout_mode = 2
 text = "本镜头演员"
 
+[node name="add_act" type="Button" parent="dock/VBoxContainer2/editor/BoxContainer/BoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "＋"
+
 [node name="ScrollContainer" type="ScrollContainer" parent="dock/VBoxContainer2/editor/BoxContainer/BoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="BoxContainer" type="BoxContainer" parent="dock/VBoxContainer2/editor/BoxContainer/BoxContainer/ScrollContainer"]
+[node name="charactr_label" type="BoxContainer" parent="dock/VBoxContainer2/editor/BoxContainer/BoxContainer/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-
-[node name="CharacterLabel" type="Label" parent="dock/VBoxContainer2/editor/BoxContainer/BoxContainer/ScrollContainer/BoxContainer"]
-layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_px02i")
-text = "角色 A"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="add_act" type="Button" parent="dock/VBoxContainer2/editor/BoxContainer/BoxContainer/ScrollContainer/BoxContainer"]
-layout_mode = 2
-text = "十"
 
 [node name="CodeEdit" type="CodeEdit" parent="dock/VBoxContainer2/editor/BoxContainer"]
 unique_name_in_owner = true
@@ -166,6 +172,7 @@ text = "统计"
 [node name="staff_window" type="Window" parent="." groups=["Window"]]
 unique_name_in_owner = true
 editor_description = "文本节点的高级编辑器"
+oversampling_override = 1.0
 title = "演员表"
 initial_position = 1
 size = Vector2i(800, 500)
@@ -229,9 +236,9 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 vertical = true
 
-[connection signal="focus_exited" from="dock/VBoxContainer2/editor/BoxContainer/BoxContainer/shot_id2" to="staff_window" method="_on_title_focus_exited"]
-[connection signal="text_submitted" from="dock/VBoxContainer2/editor/BoxContainer/BoxContainer/shot_id2" to="staff_window" method="_on_title_text_submitted"]
-[connection signal="pressed" from="dock/VBoxContainer2/editor/BoxContainer/BoxContainer/ScrollContainer/BoxContainer/add_act" to="edit_control" method="_on_add_act_pressed"]
+[connection signal="item_selected" from="dock/VBoxContainer2/editor/BoxContainer/BoxContainer/shot_id" to="edit_control" method="_on_shot_id_item_selected"]
+[connection signal="pressed" from="dock/VBoxContainer2/editor/BoxContainer/BoxContainer/shot_id" to="edit_control" method="_on_shot_id_pressed"]
+[connection signal="pressed" from="dock/VBoxContainer2/editor/BoxContainer/BoxContainer/add_act" to="edit_control" method="_on_add_act_pressed"]
 [connection signal="text_changed" from="dock/VBoxContainer2/editor/BoxContainer/CodeEdit" to="staff_window" method="_on_text_edit_text_changed"]
 [connection signal="close_requested" from="staff_window" to="staff_window" method="_on_close_requested"]
 [connection signal="pressed" from="staff_window/add_act" to="staff_window" method="_on_add_act_pressed"]

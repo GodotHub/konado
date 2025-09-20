@@ -2,6 +2,9 @@
 @tool
 extends Node
 
+## 当前镜头变更
+signal cur_shot_change
+
 ## 项目资源表，未来考虑分页（现在应该写进去一部红楼梦没问题）
 @export var knd_data_file_dic: Dictionary[int, String] = {}
 
@@ -42,12 +45,17 @@ const KND_CLASS_DB: Dictionary[String, String] = {
 }
 
 ## TODO :
-var cur_shot ## 当前镜头
+var cur_shot :int :## 当前镜头
+	set(value):
+		if value!=cur_shot:
+			cur_shot = value
+			cur_shot_change.emit()
 
 # 初始化
 func _ready() -> void:
 	# 自动加载数据库
-	load_database()
+	load_database()			
+
 
 ## 获取指定类型的所有资源ID数组
 func get_data_list(type: String) -> Array:
@@ -201,7 +209,6 @@ func delete_data(id: int) -> bool:
 	save_database()
 	
 	return true
-	
 
 ## 获取数据的属性字典
 func get_source_data(id: int) -> Dictionary:
@@ -247,6 +254,8 @@ func add_sub_source_data(parent: int, id: int, data: Dictionary) -> void:
 	var knd_data: KND_Data = tmp_knd_data_dic[parent]
 	knd_data.add_sub_source_data(id, data)
 
+
+## TODO : 保存data_type_map数据
 ## 保存数据库到本地
 func save_database() -> void:
 	# 更新文件路径字典
