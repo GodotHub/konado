@@ -60,7 +60,7 @@ export default defineConfig({
     ],
     footer: {
       message: 'Released under BSD3-Clause License.',
-      copyright: 'Copyright © 2025 Konado Project. <br> Copyright © 2025 Starry Team. <br> All rights reserved.'
+      copyright: 'Copyright © 2025 Konado Project. <br>All rights reserved.'
     }
   },
 
@@ -195,9 +195,9 @@ export default defineConfig({
             text: '开发',
             items: [
               { text: '版本规划', link: '/develop/roadmap' },
-              { text: '贡献翻译', link: '/develop/translate-contribute'},
               { text: '贡献代码', link: '/develop/code-contribute' },
               { text: '贡献文档', link: '/develop/doc-contribute' },
+              { text: '文档翻译', link: '/develop/translate-contribute'},
               { text: '问题反馈', link: '/develop/feedback' }
             ]
           },
