@@ -11,6 +11,12 @@ var tmp_knd_data_dic: Dictionary[int, KND_Data] = {}
 ## 数据类型列表 {data_type:[id]}
 var data_type_map: Dictionary = {}
 
+## 项目名称
+var project_name: String = ""
+
+## 项目描述
+var project_description: String = ""
+
 ## 项目配置文件路径
 const PROJECT_CONFIG_PATH: String = "res://knd_project.kson"
 
@@ -252,6 +258,8 @@ func save_database() -> void:
 	# 准备保存的数据
 	var save_data := {
 		"version": 2.0,
+		"pro_name": project_name,
+		"pro_desc": project_description,
 		"file_map": knd_data_file_dic,
 		"type_map": data_type_map,
 	}
@@ -299,7 +307,7 @@ func load_database() -> void:
 		printerr("JSON解析错误: ", json.get_error_message(), " at line ", json.get_error_line())
 		return
 	
-	var parsed = json.get_data()
+	var parsed: Dictionary = json.get_data()
 	if not parsed is Dictionary:
 		printerr("配置文件格式错误")
 		return
@@ -312,6 +320,8 @@ func load_database() -> void:
 		printerr("不支持的数据库文件版本",version)
 		return
 	else:
+		project_name = parsed.get("pro_name", "")
+		project_description = parsed.get("pro_desc", "")
 		data_type_map = parsed.get("type_map", {})
 		var tmp_dic = parsed.get("file_map", {})
 		for key in tmp_dic:
@@ -425,7 +435,23 @@ func get_data_by_type(type: String) -> Array:
 		if get_data_type(id) == type:
 			result.append(tmp_knd_data_dic[id])
 	return result
-
+	
+## 设置项目名称
+func set_project_name(name: String):
+	self.project_name = name
+	
+## 获取项目名称
+func get_project_name() -> String:
+	return self.project_name
+	
+## 设置项目描述
+func set_project_description(description: String):
+	self.project_description = description
+	
+## 获取项目描述
+func get_project_description() -> String:
+	return self.project_description
+	
 # 根据名称查找数据
 func find_data_by_name(name: String, type: String = "") -> Array:
 	var result := []
