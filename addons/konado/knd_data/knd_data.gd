@@ -24,6 +24,7 @@ var id: int
 ## 数据类型
 var type: String = ""
 
+
 ## 黑名单，不保存到文件中
 const black_list: Array[String] = ["_source_data",
  "RefCounted",
@@ -153,25 +154,26 @@ func print_data() -> void:
 	print("数据 id %s %s" % [id, _source_data])
 	
 ## 将数据保存到本地
-func save_data(path: String) -> void:
+func save_data(path: String) -> bool:
 	gen_source_data()
 	# 首先确保目录存在
 	var dir_path = path.get_base_dir()
 	if not ensure_directory_exists(dir_path):
 		print("无法创建目录: ", dir_path)
-		return
+		return false
 	
 	var file = FileAccess.open(path, FileAccess.WRITE)
 	if file == null:
 		var error = FileAccess.get_open_error()
 		print("文件打开失败，错误代码: ", error)
-		return
+		return false
 	
 	var json_string: String = JSON.stringify(_source_data, "\t")
 	file.store_line(json_string)
 	file.close()
 	
 	print("保存数据 " + path)
+	return true
 
 ## 从本地加载数据
 func load_data(path: String) -> void:
