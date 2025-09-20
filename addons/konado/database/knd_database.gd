@@ -1,7 +1,6 @@
-## KND_Database数据库类
+## KND_Database数据库类，将在Konado启用时添加到自动加载
 @tool
 extends Node
-#class_name KND_Database
 
 ## 项目资源表，未来考虑分页（现在应该写进去一部红楼梦没问题）
 @export var knd_data_file_dic: Dictionary[int, String] = {}
@@ -11,6 +10,9 @@ var tmp_knd_data_dic: Dictionary[int, KND_Data] = {}
 
 ## 数据类型列表 {data_type:[id]}
 var data_type_map: Dictionary = {}
+
+## 项目配置文件路径
+const PROJECT_CONFIG_PATH: String = "res://knd_project.kson"
 
 ## 数据类型,key为类型名，value为脚本路径
 const KND_CLASS_DB: Dictionary[String, String] = {
@@ -36,6 +38,10 @@ const KND_CLASS_DB: Dictionary[String, String] = {
 ## TODO :
 var cur_shot ## 当前镜头
 
+# 初始化
+func _ready() -> void:
+	# 自动加载数据库
+	load_database()
 
 ## 获取指定类型的所有资源ID数组
 func get_data_list(type: String) -> Array:
@@ -43,46 +49,33 @@ func get_data_list(type: String) -> Array:
 		return []
 	if not data_type_map.has(type):
 		return []
-	return data_type_map[type]
-	
-#func get_all_data_ids_by_type(type: String) -> Array[int]:
-	#if not _has_data_type(type):
-		#return []
-	#return KND_Data.data_type_map[type]
-	#
-	#var result: Array[int] = []
-	#var target_script: GDScript = load(KND_CLASS_DB[type])
-	#
-	#for id in tmp_knd_data_dic:
-		#var data: KND_Data = tmp_knd_data_dic[id]
-		#if data.get_script() == target_script:
-			#result.append(id)
-	#return result
-	
+	return data_type_map[type].duplicate()  # 返回副本避免外部修改
+
 ## 判断是否有这个类型，保证创建数据时不会出错
 func _has_data_type(type: String) -> bool:
-	if type == "":
+	if type.is_empty():
 		printerr("type不能为空")
 		return false
 	if not KND_CLASS_DB.has(type):
-		printerr("没有这个类型"+type)
+		printerr("没有这个类型: " + type)
 		return false
 	return true
 	
 ## 判断是否有这个data
 func _has_data(id: int) -> bool:
 	if not tmp_knd_data_dic.has(id):
-		printerr("KND_Database没有这个数据"+str(id))
+		printerr("KND_Database没有这个数据: " + str(id))
 		return false
 	return true
 
 ## 创建数据实例，如果创建失败，返回null
 func create_data_instance(type: String) -> KND_Data:
-	if _has_data_type(type) == false:
+	if not _has_data_type(type):
 		return null
+		
 	var script_path = KND_CLASS_DB[type]
 	var script: GDScript = load(script_path)
-	if script != null && script is GDScript:
+	if script != null and script is GDScript:
 		return script.new(false)
 	else:
 		printerr("Script not found or is not GDScript: " + script_path)
@@ -90,7 +83,7 @@ func create_data_instance(type: String) -> KND_Data:
 
 ## 创建子资源
 func create_sub_data(type: String) -> Dictionary:
-	if _has_data_type(type) == false:
+	if not _has_data_type(type):
 		return {}
 	
 	var data: KND_Data = create_data_instance(type)
@@ -100,11 +93,10 @@ func create_sub_data(type: String) -> Dictionary:
 
 ## 新建数据 type : 数据类名，返回数据id，如果创建失败，返回-1
 func create_data(type: String) -> int:
-	if _has_data_type(type) == false:
+	if not _has_data_type(type):
 		return -1
 	
 	var data: KND_Data = create_data_instance(type)
-	
 	if data == null:
 		return -1
 
@@ -118,49 +110,52 @@ func create_data(type: String) -> int:
 	var save_path: String = folder_path + "/" + str(data.id) + ".kdb"
 	
 	data.save_path = save_path
-	print(data.save_path)
+	data.type = type
 
-	if ensure_directory_exists(folder_path) == false:
-		printerr("创建目录失败")
+	if not ensure_directory_exists(folder_path):
+		printerr("创建目录失败: " + folder_path)
 		return -1
 	
-	data.save_data(save_path)
+	if not data.save_data(save_path):
+		printerr("保存数据失败: " + save_path)
+		return -1
 	
 	print("创建数据成功，保存路径为: ", save_path)
 	
-	# 不知道有没有用，还能不能立即触发导入
+	## TODO: 不知道有没有用，还能不能立即触发导入
 	if Engine.is_editor_hint():
 		EditorInterface.get_resource_filesystem().scan()
 	
 	# 添加到缓存
 	tmp_knd_data_dic[data.id] = data
 
-	var id = data.id
-	data.type = type
-	## TODO :测试	
 	# 将数据添加到对应列表
-	if data_type_map.has(type):
-		data_type_map[type].append(id)
-	else :
-		var data_list:Array = []
-		data_list.append(id)
-		data_type_map[type] = data_list
+	if not data_type_map.has(type):
+		data_type_map[type] = []
+	
+	if not data.id in data_type_map[type]:
+		data_type_map[type].append(data.id)
 		
+	# 自动保存数据库配置
+	save_database()
 		
-	return id
+	return data.id
 
-## TODO : BUG 
 ## 删除数据，如果删除成功返回 true，失败则返回 false
 func delete_data(id: int) -> bool:
 	if not _has_data(id):
-		printerr("数据库中没有这个数据" + str(id))
 		return false
+		
+	# 获取数据类型
+	var type: String = get_data_type(id)
+	if type.is_empty():
+		printerr("无法确定数据类型: " + str(id))
+		return false
+		
 	# 删除属性表数据
-	var type:String = get_data_type(id)
-	if data_type_map.has(type):
+	if data_type_map.has(type) and id in data_type_map[type]:
 		data_type_map[type].erase(id)
 
-	print(KND_Data.data_id_map[id])
 	# 删除文件
 	var data: KND_Data = tmp_knd_data_dic.get(id)
 	var path: String = data.save_path
@@ -172,17 +167,22 @@ func delete_data(id: int) -> bool:
 	
 	if dir.file_exists(path):
 		var error = dir.remove(path)
-		if Engine.is_editor_hint():
-			EditorInterface.get_resource_filesystem().scan()
 		if error != OK:
 			printerr("删除文件失败，错误代码: ", error)
 			return false
+			
+		# 删除对应的import文件
+		var import_path = path + ".import"
+		if dir.file_exists(import_path):
+			dir.remove(import_path)
+			
+		if Engine.is_editor_hint():
+			EditorInterface.get_resource_filesystem().scan()
 	else:
-		printerr("无法删除不存在的文件")
+		printerr("无法删除不存在的文件: ", path)
 		return false
 		
 	print("文件删除成功: ", path)
-	#print("当前数据名字表: ",KND_Data.data_id_map)
 	
 	# 从id映射表删除
 	if KND_Data.data_id_map.has(id):
@@ -190,6 +190,9 @@ func delete_data(id: int) -> bool:
 		
 	# 从缓存表删除
 	tmp_knd_data_dic.erase(id)
+	
+	# 更新配置文件
+	save_database()
 	
 	return true
 	
@@ -200,165 +203,235 @@ func get_source_data(id: int) -> Dictionary:
 		return {}
 	
 	var knd_data: KND_Data = tmp_knd_data_dic[id]
-	var data: Dictionary = knd_data.get_source_data()
-	return data
+	return knd_data.get_source_data()
 	
 ## 获取数据类型
 func get_data_type(id: int) -> String:
-	return get_source_data(id).get("type")
+	if not tmp_knd_data_dic.has(id):
+		return ""
+	return tmp_knd_data_dic[id].type
 
-## TODO :测试
 ## 获取数据属性
 func get_data_property(id: int, property: String) -> Variant:
 	if not tmp_knd_data_dic.has(id):
 		return null
-	var knd_data: KND_Data = tmp_knd_data_dic[id]
-	return knd_data.get(property)
+	# 因为无法实例化子类，所以直接读取source_data
+	return tmp_knd_data_dic[id]._source_data.get(property)
 
 ## 设置数据属性
 func set_data(id: int, property: String, value: Variant) -> void:
 	if not tmp_knd_data_dic.has(id):
 		return
-	var knd_data: KND_Data = tmp_knd_data_dic[id]
-	knd_data.set(property, value)
+	tmp_knd_data_dic[id].set(property, value)
 
-## TODO : 测试	
 ## 数据重命名
-func rename_data(id:int, new_name:String):
+func rename_data(id: int, new_name: String) -> bool:
+	if not tmp_knd_data_dic.has(id):
+		return false
+		
 	var data: KND_Data = tmp_knd_data_dic[id]
 	data.rename(new_name)
+	return true
 
 func add_sub_source_data(parent: int, id: int, data: Dictionary) -> void:
 	if not tmp_knd_data_dic.has(parent):
 		printerr("无父节数据")
+		return
+		
 	var knd_data: KND_Data = tmp_knd_data_dic[parent]
 	knd_data.add_sub_source_data(id, data)
 
-
-## TODO : 保存data_type_map数据
 ## 保存数据库到本地
 func save_database() -> void:
-	knd_data_file_dic = {}
-	for tkd in tmp_knd_data_dic.keys():
-		if not tmp_knd_data_dic[tkd] == null:
-			knd_data_file_dic[tkd] = tmp_knd_data_dic[tkd].save_path
-	var json_string = JSON.stringify(knd_data_file_dic, "\t")
-	## 写入到项目根目录，创建一个 knd_project.kson 文件
-	var file = FileAccess.open("res://knd_project.kson", FileAccess.WRITE)
+	# 更新文件路径字典
+	knd_data_file_dic.clear()
+	for id in tmp_knd_data_dic:
+		if is_instance_valid(tmp_knd_data_dic[id]):
+			knd_data_file_dic[id] = tmp_knd_data_dic[id].save_path
+	
+	# 准备保存的数据
+	var save_data := {
+		"version": 2.0,
+		"file_map": knd_data_file_dic,
+		"type_map": data_type_map,
+	}
+	
+	# 序列化为JSON
+	var json_string = JSON.stringify(save_data, "\t")
+	if json_string.is_empty():
+		printerr("JSON序列化失败")
+		return
+	
+	# 写入文件
+	var file = FileAccess.open(PROJECT_CONFIG_PATH, FileAccess.WRITE)
+	if file == null:
+		printerr("无法打开文件进行写入: ", PROJECT_CONFIG_PATH)
+		return
+		
 	file.store_string(json_string)
 	file.close()
+	
+	print("数据库配置保存成功: ", PROJECT_CONFIG_PATH)
 
-## TODO : 加载data_type_map数据
 ## 从本地加载数据库
 func load_database() -> void:
-	var file = FileAccess.open("res://knd_project.kson", FileAccess.READ)
-	if file == null:
-		printerr("文件不存在")
+	# 检查配置文件是否存在
+	if not FileAccess.file_exists(PROJECT_CONFIG_PATH):
+		print("项目配置文件不存在，创建新数据库")
 		return
+		
+	var file = FileAccess.open(PROJECT_CONFIG_PATH, FileAccess.READ)
+	if file == null:
+		printerr("无法打开配置文件: ", PROJECT_CONFIG_PATH)
+		return
+		
 	var json_string = file.get_as_text()
-	# 防止空文件报错
-	if json_string.length() <= 0:
-		json_string = "{}"
 	file.close()
 	
-	var parsed: Dictionary = JSON.parse_string(json_string) as Dictionary
-	if not parsed is Dictionary:
-		printerr("Invalid JSON format")
+	if json_string.is_empty():
+		printerr("配置文件为空")
 		return
 	
-	# 类型转换
-	knd_data_file_dic = {}
-	for key in parsed:
-		# 将字符串键转换为整数，保持值不变
-		if key is String and key.is_valid_int():
-			knd_data_file_dic[key.to_int()] = parsed[key]
-		else:
-			push_error("Key %s is not a valid integer" % key)
+	# 解析JSON
+	var json = JSON.new()
+	var error = json.parse(json_string)
+	if error != OK:
+		printerr("JSON解析错误: ", json.get_error_message(), " at line ", json.get_error_line())
+		return
 	
-	# 失效的数据
-	var invalidated_data_file: Array[String] = []
-	# 添加到缓存
-	tmp_knd_data_dic = {}
-	for kdf in knd_data_file_dic.keys():
-		var path = knd_data_file_dic[kdf]
-		if not path == "":
-			if not FileAccess.file_exists(path):
-				printerr("无法打开找不到的文件，可能已经被删除: ", path)
-				continue
-			# 读取文件内容
-			var kdffile = FileAccess.open(path, FileAccess.READ)
-			if kdffile == null:
-				var error = FileAccess.get_open_error()
-				printerr("无法打开文件: ", path, " Error code: ", error)
-				invalidated_data_file.append(path)
-				continue
+	var parsed = json.get_data()
+	if not parsed is Dictionary:
+		printerr("配置文件格式错误")
+		return
 	
-			# 检查文件是否为空
-			if kdffile.get_length() == 0:
-				printerr("跳过并删除空文件: ", path)
-				invalidated_data_file.append(path)
-				var dir = DirAccess.open("res://")
-				if DirAccess.get_open_error() != OK:
-					printerr("无法访问res://")
-				if dir.file_exists(path):
-					var error = dir.remove(path)
-					if error != OK:
-						printerr("删除文件失败，错误代码: ", error)
-					else:
-						printerr("无法删除不存在的文件")
-				kdffile.close()
-				continue
-				
-			var source_text = kdffile.get_as_text()
-			kdffile.close()
-
-			var json = JSON.new()
-			var parse_result = json.parse(source_text)
-			if parse_result != OK:
-				printerr("JSON Parse Error: ", json.get_error_message(), " at line ", json.get_error_line())
-				continue
-			var json_data = json.get_data()
-				
-			if json_data == null:
-				printerr("Failed to parse file data as variable")
-				continue
-
-			# 确保读取的数据是字典类型
-			if typeof(json_data) != TYPE_DICTIONARY:
-				printerr("Parsed data is not a Dictionary. Type: ", typeof(json_data))
-				continue
-			var data = KND_Data.new(true)
-			data._source_data = json_data
-			data.update()
-			tmp_knd_data_dic[kdf] = data
+	# 处理版本兼容性
+	var version = parsed.get("version", 0)
+	if version == 0:
+		printerr("不支持的数据库文件版本",version)
+	if version < 2.0:
+		printerr("不支持的数据库文件版本",version)
+		return
+	else:
+		data_type_map = parsed.get("type_map", {})
+		var tmp_dic = parsed.get("file_map", {})
+		for key in tmp_dic:
+			var key_int = key as int
+			knd_data_file_dic[key_int] = tmp_dic[key] as String
+	
+	# 加载所有数据文件
+	tmp_knd_data_dic.clear()
+	var invalidated_data_files: Array[String] = []
+	
+	for id in knd_data_file_dic:
+		var path = knd_data_file_dic[id]
+		if path.is_empty():
+			continue
 			
-	# 遍历删除失效的数据
-	if invalidated_data_file.size() > 0:
-		var dir = DirAccess.open("res://")
-		if DirAccess.get_open_error() != OK:
-			printerr("无法访问res://")
-		for invalidated_path in invalidated_data_file:
-			if dir.file_exists(invalidated_path):
-				var error = dir.remove(invalidated_path)
-				print("删除无效数据文件", invalidated_path)
-				if error != OK:
-					printerr("删除文件失败，错误代码: ", error)
-				# 同时删除import文件
-				dir.remove(invalidated_path.replace(".kdb", ".kdb.import"))
-			else:
-				printerr("无法删除不存在的文件", invalidated_path)
+		if not FileAccess.file_exists(path):
+			printerr("文件不存在: ", path)
+			invalidated_data_files.append(path)
+			continue
+		
+		# 读取文件内容
+		var data_file = FileAccess.open(path, FileAccess.READ)
+		if data_file == null:
+			printerr("无法打开文件: ", path, " Error code: ", FileAccess.get_open_error())
+			invalidated_data_files.append(path)
+			continue
+	
+		# 检查文件是否为空
+		if data_file.get_length() == 0:
+			printerr("文件为空: ", path)
+			invalidated_data_files.append(path)
+			data_file.close()
+			continue
+				
+		var source_text = data_file.get_as_text()
+		data_file.close()
 
+		# 解析数据文件
+		error = json.parse(source_text)
+		if error != OK:
+			printerr("数据文件JSON解析错误: ", json.get_error_message(), " at line ", json.get_error_line())
+			invalidated_data_files.append(path)
+			continue
+			
+		var json_data = json.get_data()
+		if json_data == null or not json_data is Dictionary:
+			printerr("数据文件格式错误: ", path)
+			invalidated_data_files.append(path)
+			continue
+
+		# 创建数据实例
+		var data = KND_Data.new(true)
+		data._source_data = json_data
+		data.update()
+		tmp_knd_data_dic[id] = data
+			
+	# 清理无效文件
+	if not invalidated_data_files.is_empty():
+		_cleanup_invalid_files(invalidated_data_files)
+		# 重新保存配置，移除无效条目
+		save_database()
+	
+	print("数据库加载完成，加载了 ", tmp_knd_data_dic.size(), " 个数据项")
+	
+
+# 清理无效文件
+func _cleanup_invalid_files(invalid_paths: Array) -> void:
+	var dir = DirAccess.open("res://")
+	if DirAccess.get_open_error() != OK:
+		printerr("无法访问res://目录")
+		return
+		
+	for path in invalid_paths:
+		if dir.file_exists(path):
+			var error = dir.remove(path)
+			if error == OK:
+				print("删除无效数据文件: ", path)
+				# 同时删除import文件
+				var import_path = path + ".import"
+				if dir.file_exists(import_path):
+					dir.remove(import_path)
+			else:
+				printerr("删除文件失败，错误代码: ", error, " 文件: ", path)
+		else:
+			print("文件不存在，无需删除: ", path)
+			
+	if Engine.is_editor_hint():
+		EditorInterface.get_resource_filesystem().scan()
+
+# 确保目录存在
 func ensure_directory_exists(path: String) -> bool:
-	# 检查目录是否已经存在
 	if DirAccess.dir_exists_absolute(path):
-		print("目录已存在: ", path)
 		return true
 		
-	# 尝试递归创建目录
 	var error = DirAccess.make_dir_recursive_absolute(path)
 	if error == OK:
 		print("目录创建成功: ", path)
 		return true
 	else:
-		print("目录创建失败，错误代码: ", error)
+		printerr("目录创建失败，错误代码: ", error, " 路径: ", path)
 		return false
+
+# 获取所有数据ID
+func get_all_data_ids() -> Array:
+	return tmp_knd_data_dic.keys()
+
+# 根据类型获取数据
+func get_data_by_type(type: String) -> Array:
+	var result := []
+	for id in tmp_knd_data_dic:
+		if get_data_type(id) == type:
+			result.append(tmp_knd_data_dic[id])
+	return result
+
+# 根据名称查找数据
+func find_data_by_name(name: String, type: String = "") -> Array:
+	var result := []
+	for id in tmp_knd_data_dic:
+		var data = tmp_knd_data_dic[id]
+		if (type.is_empty() or get_data_type(id) == type) and data.has_method("get_name"):
+			if data.get_name() == name:
+				result.append(data)
+	return result
