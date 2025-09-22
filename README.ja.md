@@ -1,6 +1,6 @@
 # Konado（可娜多）：ビジュアルノベルフレームワーク
 
-[简体中文](README.md) | [繁體中文](README.zh-hant.md) | [English](README.en.md) | 日本語
+[简体中文](README.md) | [English](README.en.md) | 日本語
 
 ![star](https://gitcode.com/godothub/konado/star/badge.svg)
 ![License]( https://img.shields.io/badge/License-BSD_3--Clause-orange.svg)

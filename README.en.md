@@ -1,6 +1,6 @@
 # Konado: Visual Novel Framework
 
-[简体中文](README.md) | [繁體中文](README.zh-hant.md)  | English | [日本語](README.ja.md)
+[简体中文](README.md) | English | [日本語](README.ja.md)
 
 ![star](https://gitcode.com/godothub/konado/star/badge.svg)
 ![License]( https://img.shields.io/badge/License-BSD_3--Clause-orange.svg)
