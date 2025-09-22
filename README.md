@@ -1,23 +1,22 @@
 # Konado 可娜多：视觉小说框架
 
+简体中文 | [繁體中文](README.zh-hant.md) | [English](README.en.md) | [日本語](README.ja.md)
+
 ![star](https://gitcode.com/godothub/konado/star/badge.svg)
 ![License]( https://img.shields.io/badge/License-BSD_3--Clause-orange.svg)
 ![GitHub Last Commit](https://img.shields.io/github/last-commit/godothub/konado.svg)
+
+
 
 
 <p align="center">
   <img src="./mascot/banner/1.0/KonadoBanner-1.0.png" alt="看板娘可娜" width=596px>
 </p>
 
-<p align="center">
-<span style="font-size:12px;">看板娘可娜</span>
-<span style="font-size:12px;">画师: Marukles</span>
-</p>
-
 
 ## 简介
 
-Konado是一个视觉小说引擎框架，提供多种对话模板以及对话管理器，可以快速创建对话游戏，也可以嵌入各类游戏的对话场景。
+Konado 是一个视觉小说引擎框架，提供多种对话模板以及对话管理器，可以快速创建对话游戏，也可以嵌入各类游戏的对话场景。
 
 
 ## 快速开始
