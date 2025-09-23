@@ -54,7 +54,7 @@ var cur_shot :int :## 当前镜头
 # 初始化
 func _ready() -> void:
 	# 自动加载数据库
-	load_database()			
+	load_database()
 
 
 ## 获取指定类型的所有资源ID数组
@@ -90,9 +90,12 @@ func create_data_instance(type: String) -> KND_Data:
 	var script_path = KND_CLASS_DB[type]
 	var script: GDScript = load(script_path)
 	if script != null and script is GDScript:
-		return script.new(false)
+		var knd_data: KND_Data = script.new(false)
+		# 赋值对应类型
+		knd_data.type = type
+		return knd_data
 	else:
-		printerr("Script not found or is not GDScript: " + script_path)
+		printerr("未找到脚本或脚本不是GDScript: " + script_path)
 		return null
 
 ## 创建子资源
