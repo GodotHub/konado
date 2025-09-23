@@ -14,17 +14,14 @@
 
 [sub_resource type="Resource" id="Resource_d60v5"]
 script = ExtResource("9_n8pl2")
-bgms = Array[ExtResource("8_n1o2k")]([])
 metadata/_custom_type_script = "uid://cx11453q1ekqa"
 
 [sub_resource type="Resource" id="Resource_aaram"]
 script = ExtResource("10_vinkj")
-voices = Array[ExtResource("11_3ehyu")]([])
 metadata/_custom_type_script = "uid://uur73dv6qen8"
 
 [sub_resource type="Resource" id="Resource_fqug8"]
 script = ExtResource("12_tnle6")
-soundeffects = Array[ExtResource("13_3kbvq")]([])
 metadata/_custom_type_script = "uid://csvufy3iw3tni"
 
 [node name="KonadoSample" type="Control"]

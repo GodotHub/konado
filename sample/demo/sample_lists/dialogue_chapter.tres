@@ -8,7 +8,6 @@
 [sub_resource type="Resource" id="Resource_ewk0n"]
 script = ExtResource("3_8qc74")
 dialog_type = 1
-actor_snapshots = {}
 character_id = "hello"
 dialog_content = "hello"
 voice_id = ""
@@ -18,14 +17,9 @@ metadata/_custom_type_script = "uid://b43741pmwnb8p"
 script = ExtResource("1_ratu3")
 shot_id = "6666"
 dialogs = Array[ExtResource("3_8qc74")]([SubResource("Resource_ewk0n")])
-branchs = {}
-dep_characters = Array[String]([])
-last_shots = Array[String]([])
-next_shots = Array[String]([])
 metadata/_custom_type_script = "uid://4ob0goi0obyc"
 
 [resource]
 script = ExtResource("3_ewk0n")
-chapter_id = ""
 dialogue_shots = Array[ExtResource("1_ratu3")]([ExtResource("2_8qc74"), SubResource("Resource_62le8")])
 metadata/_custom_type_script = "uid://b0pjo5ejao4ld"
