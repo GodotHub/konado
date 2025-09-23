@@ -334,7 +334,11 @@ func load_database() -> void:
 	else:
 		project_name = parsed.get("pro_name", "")
 		project_description = parsed.get("pro_desc", "")
-		data_type_map = parsed.get("type_map", {})
+		
+		data_type_map.clear()
+		#data_type_map = parsed.get("type_map", {})
+		
+		## 获取主表
 		var tmp_dic = parsed.get("file_map", {})
 		for key in tmp_dic:
 			var key_int = key as int
@@ -384,19 +388,30 @@ func load_database() -> void:
 			invalidated_data_files.append(path)
 			continue
 
-		# 创建数据实例
+		# 创建数据实例，复制加载模式
 		var data = KND_Data.new(true)
 		data._source_data = json_data
 		data.update()
 		tmp_knd_data_dic[id] = data
 			
+			
+	var tmp_type_map: Dictionary = parsed.get("type_map", {})
+	for type in tmp_type_map:
+		for item in tmp_type_map[type]:
+			if not knd_data_file_dic.has(item as int):
+				tmp_type_map[type].erase(item)
+			
+	data_type_map = tmp_type_map
+		
 	# 清理无效文件
 	if not invalidated_data_files.is_empty():
 		_cleanup_invalid_files(invalidated_data_files)
-		# 重新保存配置，移除无效条目
-		save_database()
-	
+		
 	print("数据库加载完成，加载了 ", tmp_knd_data_dic.size(), " 个数据项")
+	
+	# 重新保存配置，移除无效条目
+	save_database()
+	
 	
 
 # 清理无效文件
