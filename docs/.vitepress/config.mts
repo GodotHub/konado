@@ -195,9 +195,9 @@ export default defineConfig({
             text: '开发',
             items: [
               { text: '版本规划', link: '/develop/roadmap' },
-              { text: '贡献代码', link: '/develop/code-contribute' },
-              { text: '贡献文档', link: '/develop/doc-contribute' },
-              { text: '文档翻译', link: '/develop/translate-contribute'},
+              { text: '代码贡献', link: '/develop/code-contribute' },
+              { text: '文档贡献', link: '/develop/doc-contribute' },
+              { text: '翻译贡献', link: '/develop/translate-contribute'},
               { text: '问题反馈', link: '/develop/feedback' }
             ]
           },
