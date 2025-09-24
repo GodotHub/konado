@@ -14,7 +14,7 @@ public partial class Konadotnet : EditorPlugin
 	/// </summary>
 	private readonly Dictionary<string, string> _autoloads = new Dictionary<string, string>()
 	{
-		{"KonadoAPI", "res://addons/konadotnet/api/KonadoAPI.cs"}
+		{"KonadoAPI", "res://addons/konadotnet/Runtime/API/KonadoAPI.cs"}
 		// {"DialogueManagerAPI", "res://addons/konadotnet/api/DialogueManagerAPI.cs"}
 	};
 
