@@ -16,7 +16,6 @@ func _build_data_tree():
 	shot_tree.clear()
 	# 创建根节点
 	current_data_lise = KND_Database.get_data_list("KND_Shot")
-	#
 	var root = shot_tree.create_item()
 	#root.set_text(0, current_button.text)
 	#root.set_icon(0, current_button.icon)  

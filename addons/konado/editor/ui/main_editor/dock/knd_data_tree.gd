@@ -20,15 +20,21 @@ func _build_data_tree():
 	data_tree.clear()
 	# 创建根节点
 	current_data_lise = KND_Database.get_data_list(current_type)
-	#
 	var root = data_tree.create_item()
 	#root.set_text(0, current_button.text)
 	#root.set_icon(0, current_button.icon)  
 	for i in current_data_lise.size():
 		var node_item = data_tree.create_item(null)
-		var id = current_data_lise[i]
+		var id: int = current_data_lise[i]
 		node_item.set_icon(0,KND_Database.get_data_property(id,"icon"))
-		node_item.set_text(0,KND_Database.get_data_property(id,"name"))  # 数据的名称绑定到item
+		# 数据的名称绑定到item
+		var node_item_name = KND_Database.get_data_property(id,"name")
+		if node_item_name:
+			node_item.set_text(0, node_item_name)
+		else:
+			node_item.set_text(0, "Error Data ID: " + str(id))
+			printerr("无法将数据的名称绑定到item，该数据可能已经被外部删除")
+			# TODO: 弹窗是否删除以上错误数据
 		node_item.set_metadata(0,id)
 
 ## 现在数据类型
