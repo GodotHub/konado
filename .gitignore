@@ -11,6 +11,7 @@ data.cfg
 # VS Code specific ignores
 .vscode/
 .VSCodeCounter
+*.tmp
 
 # Jetbrain IDE specific ignores
 .idea/
