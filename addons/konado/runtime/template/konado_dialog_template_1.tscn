@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://0sc04evetbux"]
 
-[ext_resource type="Script" uid="uid://co1jy8tti3d25" path="res://addons/konado/assets/template/knodo_dialog_template.gd" id="1_ofwfk"]
-[ext_resource type="PackedScene" uid="uid://dbfoi0nkkm0bx" path="res://addons/konado/template/background/background.tscn" id="2_ofwfk"]
-[ext_resource type="PackedScene" uid="uid://dcwk5so2ohcc2" path="res://addons/konado/template/character/character.tscn" id="3_6xqk1"]
-[ext_resource type="PackedScene" uid="uid://7b484a7p3s4w" path="res://addons/konado/template/dialogbox/​dialog_box.tscn" id="4_ofwfk"]
+[ext_resource type="Script" uid="uid://co1jy8tti3d25" path="res://addons/konado/runtime/assets/template/knodo_dialog_template.gd" id="1_ofwfk"]
+[ext_resource type="PackedScene" uid="uid://dbfoi0nkkm0bx" path="res://addons/konado/runtime/template/background/background.tscn" id="2_ofwfk"]
+[ext_resource type="PackedScene" uid="uid://dcwk5so2ohcc2" path="res://addons/konado/runtime/template/character/character.tscn" id="3_6xqk1"]
+[ext_resource type="PackedScene" uid="uid://7b484a7p3s4w" path="res://addons/konado/runtime/template/dialogbox/​dialog_box.tscn" id="4_ofwfk"]
 
 [node name="KnodoDialog_template_1" type="CanvasLayer"]
 script = ExtResource("1_ofwfk")
@@ -11,13 +11,16 @@ script = ExtResource("1_ofwfk")
 [node name="template_setting" type="Node" parent="."]
 
 [node name="Camera2D" type="Camera2D" parent="."]
+visible = false
 position = Vector2(960, 539)
 
 [node name="background" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="background1" parent="background" instance=ExtResource("2_ofwfk")]
 
 [node name="character" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="CanvasModulate" type="CanvasModulate" parent="character"]
 visible = false
@@ -31,5 +34,6 @@ offset_left = 298.0
 offset_right = 298.0
 
 [node name="​DialogBox" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="​DialogBox1" parent="​DialogBox" instance=ExtResource("4_ofwfk")]

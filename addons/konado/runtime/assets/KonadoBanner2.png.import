@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://et5r5kpfnap2"
-path="res://.godot/imported/圆角按钮.png-5e4bdeee97d237c827fd259b164d35ff.ctex"
+uid="uid://d1yhkro0quuae"
+path="res://.godot/imported/KonadoBanner2.png-94904739beb36def85317ba23ef82c0f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/konado/theme_system/圆角按钮.png"
-dest_files=["res://.godot/imported/圆角按钮.png-5e4bdeee97d237c827fd259b164d35ff.ctex"]
+source_file="res://addons/konado/runtime/assets/KonadoBanner2.png"
+dest_files=["res://.godot/imported/KonadoBanner2.png-94904739beb36def85317ba23ef82c0f.ctex"]
 
 [params]
 

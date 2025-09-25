@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cfau2duojvd33"
-path="res://.godot/imported/KonadoBanner.png-077aa94fb044d4dba7394d0d89e48cbf.ctex"
+uid="uid://cu3qd3p2n0tdr"
+path="res://.godot/imported/​DialogBox_1.png-082cbd389fe4e7bdcbf8314f95e33418.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/konado/assets/KonadoBanner.png"
-dest_files=["res://.godot/imported/KonadoBanner.png-077aa94fb044d4dba7394d0d89e48cbf.ctex"]
+source_file="res://addons/konado/runtime/assets/template/dialog_box/​DialogBox_1.png"
+dest_files=["res://.godot/imported/​DialogBox_1.png-082cbd389fe4e7bdcbf8314f95e33418.ctex"]
 
 [params]
 

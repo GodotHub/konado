@@ -1,8 +1,6 @@
-[gd_resource type="Theme" load_steps=86 format=3 uid="uid://cao2ht3baecs8"]
+[gd_resource type="Theme" load_steps=84 format=3 uid="uid://cao2ht3baecs8"]
 
-[ext_resource type="Texture2D" uid="uid://crovcslajuick" path="res://addons/konado/editor/theme/关闭按钮.png" id="1_lwt16"]
 [ext_resource type="Script" uid="uid://c23lxbcsbwnj" path="res://addons/konado/editor/theme/tab_stylebox.gd" id="2_h172q"]
-[ext_resource type="Texture2D" uid="uid://c160sij6d1xop" path="res://addons/konado/editor/theme/透明.png" id="3_gjoqa"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3wcps"]
 bg_color = Color(0.09, 0.09, 0.09, 1)
@@ -973,7 +971,7 @@ TabBar/constants/h_separation = 20
 TabBar/constants/icon_max_width = 0
 TabBar/constants/outline_size = 0
 TabBar/font_sizes/font_size = 20
-TabBar/icons/close = ExtResource("1_lwt16")
+TabBar/icons/close = null
 TabBar/styles/button_highlight = SubResource("StyleBoxFlat_0h4q3")
 TabBar/styles/button_pressed = SubResource("StyleBoxFlat_p3x4q")
 TabBar/styles/tab_disabled = SubResource("StyleBoxEmpty_1s0lv")
@@ -1004,7 +1002,7 @@ TransitionPoint/base_type = &"GraphNode"
 TransitionPoint/colors/resizer_color = Color(0, 0, 0, 1)
 TransitionPoint/constants/port_h_offset = 20
 TransitionPoint/constants/separation = 0
-TransitionPoint/icons/port = ExtResource("3_gjoqa")
+TransitionPoint/icons/port = null
 TransitionPoint/styles/panel = SubResource("StyleBoxEmpty_6rqbn")
 TransitionPoint/styles/panel_selected = SubResource("StyleBoxEmpty_uj5i3")
 TransitionPoint/styles/slot = SubResource("StyleBoxEmpty_ixkr8")
