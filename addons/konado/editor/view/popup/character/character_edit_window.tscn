@@ -1,0 +1,255 @@
+[gd_scene load_steps=5 format=3 uid="uid://dyxdkp8jarx78"]
+
+[ext_resource type="Script" uid="uid://ep7ruwnvd0fo" path="res://addons/konado/editor/view/popup/character/character_edit_window.gd" id="1_8u0bd"]
+[ext_resource type="Texture2D" uid="uid://q2w6piu3t1md" path="res://addons/konado/editor/assets/icon/icon_19.svg" id="2_bx3md"]
+[ext_resource type="Texture2D" uid="uid://dgyi8xxvrfl1" path="res://addons/konado/editor/assets/icon/icon_1.svg" id="3_j88t7"]
+[ext_resource type="Script" uid="uid://hyvls4c14vhu" path="res://addons/konado/editor/view/popup/character/status_setting.gd" id="4_bx3md"]
+
+[node name="character" type="Window" groups=["Window"]]
+auto_translate_mode = 1
+editor_description = "文本节点的高级编辑器"
+transparent_bg = true
+oversampling_override = 1.0
+title = "角色编辑"
+initial_position = 1
+size = Vector2i(1276, 732)
+transient = true
+exclusive = true
+transparent = true
+min_size = Vector2i(1100, 500)
+max_size = Vector2i(3840, 2160)
+script = ExtResource("1_8u0bd")
+
+[node name="character_card" type="Panel" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"WindowPanel"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="character_card"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HSplitContainer" type="HSplitContainer" parent="character_card/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="pic" type="MarginContainer" parent="character_card/VBoxContainer2/HSplitContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="BoxContainer" type="BoxContainer" parent="character_card/VBoxContainer2/HSplitContainer/pic"]
+layout_mode = 2
+vertical = true
+
+[node name="TextureRect" type="TextureRect" parent="character_card/VBoxContainer2/HSplitContainer/pic/BoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+texture = ExtResource("2_bx3md")
+stretch_mode = 5
+
+[node name="BoxContainer" type="BoxContainer" parent="character_card/VBoxContainer2/HSplitContainer/pic/BoxContainer"]
+layout_mode = 2
+
+[node name="add_status" type="Button" parent="character_card/VBoxContainer2/HSplitContainer/pic/BoxContainer/BoxContainer"]
+layout_mode = 2
+icon = ExtResource("3_j88t7")
+
+[node name="title_Label" type="OptionButton" parent="character_card/VBoxContainer2/HSplitContainer/pic/BoxContainer/BoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+item_count = 1
+popup/item_0/id = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="character_card/VBoxContainer2/HSplitContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 20
+
+[node name="ScrollContainer" type="ScrollContainer" parent="character_card/VBoxContainer2/HSplitContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="GridContainer" type="GridContainer" parent="character_card/VBoxContainer2/HSplitContainer/MarginContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 3.0
+theme_override_constants/h_separation = 6
+theme_override_constants/v_separation = 6
+columns = 2
+
+[node name="Label" type="Label" parent="character_card/VBoxContainer2/HSplitContainer/MarginContainer/ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+size_flags_vertical = 0
+text = "名字"
+
+[node name="name" type="LineEdit" parent="character_card/VBoxContainer2/HSplitContainer/MarginContainer/ScrollContainer/GridContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+
+[node name="Label2" type="Label" parent="character_card/VBoxContainer2/HSplitContainer/MarginContainer/ScrollContainer/GridContainer"]
+visible = false
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+size_flags_vertical = 0
+text = "性别"
+
+[node name="gender" type="OptionButton" parent="character_card/VBoxContainer2/HSplitContainer/MarginContainer/ScrollContainer/GridContainer"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+
+[node name="Label6" type="Label" parent="character_card/VBoxContainer2/HSplitContainer/MarginContainer/ScrollContainer/GridContainer"]
+visible = false
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+size_flags_vertical = 0
+text = "生日"
+
+[node name="birthday" type="LineEdit" parent="character_card/VBoxContainer2/HSplitContainer/MarginContainer/ScrollContainer/GridContainer"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+
+[node name="Label4" type="Label" parent="character_card/VBoxContainer2/HSplitContainer/MarginContainer/ScrollContainer/GridContainer"]
+visible = false
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+size_flags_vertical = 0
+text = "年龄"
+
+[node name="age" type="LineEdit" parent="character_card/VBoxContainer2/HSplitContainer/MarginContainer/ScrollContainer/GridContainer"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+
+[node name="Label5" type="Label" parent="character_card/VBoxContainer2/HSplitContainer/MarginContainer/ScrollContainer/GridContainer"]
+visible = false
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+size_flags_vertical = 0
+text = "种族"
+
+[node name="race" type="OptionButton" parent="character_card/VBoxContainer2/HSplitContainer/MarginContainer/ScrollContainer/GridContainer"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+
+[node name="Label3" type="Label" parent="character_card/VBoxContainer2/HSplitContainer/MarginContainer/ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+size_flags_vertical = 0
+text = "简介"
+
+[node name="tip" type="TextEdit" parent="character_card/VBoxContainer2/HSplitContainer/MarginContainer/ScrollContainer/GridContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="status_setting" type="Window" parent="."]
+oversampling_override = 1.0
+initial_position = 1
+size = Vector2i(845, 420)
+visible = false
+script = ExtResource("4_bx3md")
+
+[node name="Panel" type="Panel" parent="status_setting"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"WindowPanel"
+
+[node name="BoxContainer2" type="BoxContainer" parent="status_setting/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 134.0
+offset_top = 56.0
+offset_right = -134.0
+offset_bottom = -314.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="status_setting/Panel/BoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "状态"
+
+[node name="Label2" type="Label" parent="status_setting/Panel/BoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "图片"
+
+[node name="Label3" type="Label" parent="status_setting/Panel/BoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "头像"
+
+[node name="add_status" type="Button" parent="status_setting/Panel/BoxContainer2"]
+layout_mode = 2
+icon = ExtResource("3_j88t7")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="status_setting/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 65.0
+offset_top = 122.0
+offset_right = -65.0
+offset_bottom = -15.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BoxContainer" type="BoxContainer" parent="status_setting/Panel/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+vertical = true
+
+[connection signal="close_requested" from="." to="." method="_on_close_requested"]
+[connection signal="pressed" from="character_card/VBoxContainer2/HSplitContainer/pic/BoxContainer/BoxContainer/add_status" to="." method="_on_add_status_pressed"]
+[connection signal="item_selected" from="character_card/VBoxContainer2/HSplitContainer/MarginContainer/ScrollContainer/GridContainer/gender" to="." method="_on_gender_item_selected"]
+[connection signal="pressed" from="character_card/VBoxContainer2/HSplitContainer/MarginContainer/ScrollContainer/GridContainer/gender" to="." method="_on_gender_pressed"]
+[connection signal="item_selected" from="character_card/VBoxContainer2/HSplitContainer/MarginContainer/ScrollContainer/GridContainer/race" to="." method="_on_race_item_selected"]
+[connection signal="pressed" from="character_card/VBoxContainer2/HSplitContainer/MarginContainer/ScrollContainer/GridContainer/race" to="." method="_on_race_pressed"]

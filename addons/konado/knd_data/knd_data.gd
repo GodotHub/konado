@@ -22,8 +22,7 @@ var id: int
 @export var save_path: String = ""
 
 ## 数据类型
-var type: String = ""
-
+@export var type: String = ""
 
 ## 黑名单，不保存到文件中
 const black_list: Array[String] = ["_source_data",
