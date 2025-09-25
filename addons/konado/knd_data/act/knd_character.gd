@@ -1,5 +1,5 @@
 @tool
-extends KND_Act
+extends KND_Data
 class_name KND_Character
 
 ## 数据图标

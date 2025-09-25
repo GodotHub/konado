@@ -24,6 +24,12 @@ var id: int
 ## 数据类型
 @export var type: String = ""
 
+## 描述
+@export var tip: String = "描述"
+
+## 收藏
+@export var love: bool = false
+
 ## 黑名单，不保存到文件中
 const black_list: Array[String] = ["_source_data",
  "RefCounted",

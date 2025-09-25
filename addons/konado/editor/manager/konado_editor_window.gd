@@ -6,17 +6,16 @@ class_name KonadoEditorWindow
 const konado_editor = preload("uid://bommt7l6wmdsa")
 
 func _init() -> void:
+	KND_Database.load_database()
+	_open_editor_window()
+	# 禁用默认主题
+	pass
+
+func _open_editor_window() -> void:	
 	# 禁用默认主题
 	theme = load("uid://xb40j2mc624h")
 	title = "Konado Editor"
-	## TODO  
-	#var language = "automatic"
-	#if language == "automatic":
-		#var preferred_language = OS.get_locale_language()
-		#TranslationServer.set_locale(preferred_language)
-	#else:
-		#TranslationServer.set_locale("en")
-	#always_on_top=true
+
 	size = DisplayServer.window_get_size() * 0.7
 	initial_position = Window.WINDOW_INITIAL_POSITION_CENTER_MAIN_WINDOW_SCREEN
 	close_requested.connect(func(): 

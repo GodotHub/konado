@@ -15,7 +15,7 @@ extends Node
 
 
 var current_type      :String ="KND_Character"        ## 当前数据类型
-var current_data_lise :Array    ## 当前数据id列表
+var current_data_lise :Array   ## 当前数据id列表
 var selected_item     :TreeItem
 ## 选中的选项列表
 var selected_items :Array [TreeItem]=[]
@@ -53,9 +53,10 @@ func _build_data_tree():
 	current_data_lise = KND_Database.get_data_list(current_type)
 	#
 	var root = data_tree.create_item()
+	
 	for i in current_data_lise.size():
 		var node_item = data_tree.create_item(null)
-		var id = current_data_lise[i]
+		var id = current_data_lise[i] as int
 		node_item.set_icon(0,KND_Database.get_data_property(id,"icon"))
 		node_item.set_text(0,KND_Database.get_data_property(id,"name"))  # 数据的名称绑定到item
 		node_item.set_metadata(0,id)
@@ -82,6 +83,7 @@ func _on_add_folder_pressed() -> void:
 ## 添加数据
 func _on_add_pressed() -> void:
 	KND_Database.create_data(current_type)
+	_build_data_tree()
 
 ## 删除数据
 func _on_delete_pressed() -> void:
@@ -92,7 +94,7 @@ func _on_delete_pressed() -> void:
 	for id in delect_id:
 		KND_Database.delete_data(id)
 	selected_items.clear()
-
+	_build_data_tree()
 
 ## 双击item
 func _on_tree_item_activated() -> void:

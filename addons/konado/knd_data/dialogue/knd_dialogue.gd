@@ -1,8 +1,6 @@
 @tool
-extends KND_Data
+extends Resource
 class_name KND_Dialogue
-
-@export var name: String = "New Dialogue"
 
 ## 源对话文件行号
 var source_file_line: int = -1
