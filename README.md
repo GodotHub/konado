@@ -7,8 +7,6 @@
 ![GitHub Last Commit](https://img.shields.io/github/last-commit/godothub/konado.svg)
 
 
-
-
 <p align="center">
   <img src="./mascot/banner/1.0/KonadoBanner-1.0.png" alt="看板娘可娜" width=596px>
 </p>
