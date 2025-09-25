@@ -18,7 +18,7 @@ var konado_editor_instance: KonadoEditorWindow = null
 const DIALOGUE_DATA_SCRIPT := preload("res://addons/konado/scripts/dialogue/dialogue_shot.gd")
 const IMPORTER_SCRIPT := preload("res://addons/konado/importer/konado_importer.gd")
 const KDB_SCRIPT := preload("res://addons/konado/importer/kdb_importer.gd")
-const CSV_IMPORTER_SCRIPT := preload("res://addons/konado/editor/ks_csv_importer/ks_csv_importer.gd")
+#const CSV_IMPORTER_SCRIPT := preload("res://addons/konado/editor/ks_csv_importer/ks_csv_importer.gd")
 const SAVE_AND_LOAD := "res://addons/konado/scripts/save_and_load/SaL.gd"
 
 ## 数据库
@@ -61,7 +61,7 @@ func _enter_tree() -> void:
 	## TODO: 未来用字典遍历方式添加
 	import_plugin = IMPORTER_SCRIPT.new()
 	kdb_import_plugin = KDB_SCRIPT.new()
-	csv_import_plugin = CSV_IMPORTER_SCRIPT.new()
+	#csv_import_plugin = CSV_IMPORTER_SCRIPT.new()
 	
 	add_import_plugin(import_plugin)
 	add_import_plugin(kdb_import_plugin)

@@ -5,6 +5,9 @@ extends Node
 ## 当前镜头变更
 signal cur_shot_change
 
+## 刷新节点树（当新建、删除、重命名数据时发送）
+signal update_data_tree
+
 ## 项目资源表，未来考虑分页（现在应该写进去一部红楼梦没问题）
 @export var knd_data_file_dic: Dictionary[int, String] = {}
 
@@ -51,11 +54,10 @@ var cur_shot :int :## 当前镜头
 			cur_shot = value
 			cur_shot_change.emit()
 
-# 初始化
+## 初始化
 func _ready() -> void:
 	# 自动加载数据库
 	load_database()
-
 
 ## 获取指定类型的所有资源ID数组
 func get_data_list(type: String) -> Array:
@@ -153,6 +155,7 @@ func create_data(type: String) -> int:
 	if not data.id in data_type_map[type]:
 		data_type_map[type].append(data.id)
 		
+	update_data_tree.emit()
 	# 自动保存数据库配置
 	save_database()
 		
@@ -207,7 +210,7 @@ func delete_data(id: int) -> bool:
 		
 	# 从缓存表删除
 	tmp_knd_data_dic.erase(id)
-	
+	update_data_tree.emit()
 	# 更新配置文件
 	save_database()
 	
@@ -411,10 +414,8 @@ func load_database() -> void:
 	
 	# 重新保存配置，移除无效条目
 	save_database()
-	
-	
 
-# 清理无效文件
+## 清理无效文件
 func _cleanup_invalid_files(invalid_paths: Array) -> void:
 	var dir = DirAccess.open("res://")
 	if DirAccess.get_open_error() != OK:
@@ -438,7 +439,7 @@ func _cleanup_invalid_files(invalid_paths: Array) -> void:
 	if Engine.is_editor_hint():
 		EditorInterface.get_resource_filesystem().scan()
 
-# 确保目录存在
+## 确保目录存在
 func ensure_directory_exists(path: String) -> bool:
 	if DirAccess.dir_exists_absolute(path):
 		return true
@@ -451,11 +452,11 @@ func ensure_directory_exists(path: String) -> bool:
 		printerr("目录创建失败，错误代码: ", error, " 路径: ", path)
 		return false
 
-# 获取所有数据ID
+## 获取所有数据ID
 func get_all_data_ids() -> Array:
 	return tmp_knd_data_dic.keys()
 
-# 根据类型获取数据
+## 根据类型获取数据
 func get_data_by_type(type: String) -> Array:
 	var result := []
 	for id in tmp_knd_data_dic:
@@ -479,7 +480,7 @@ func set_project_description(description: String):
 func get_project_description() -> String:
 	return self.project_description
 	
-# 根据名称查找数据
+## 根据名称查找数据
 func find_data_by_name(name: String, type: String = "") -> Array:
 	var result := []
 	for id in tmp_knd_data_dic:
