@@ -1,5 +1,5 @@
 @tool
-extends KND_Act
+extends KND_Data
 class_name KND_Bgm
 
 var name :String = "背景音乐"

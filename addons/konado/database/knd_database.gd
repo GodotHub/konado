@@ -65,7 +65,7 @@ func get_data_list(type: String) -> Array:
 		return []
 	if not data_type_map.has(type):
 		return []
-	return data_type_map[type].duplicate()  # 返回副本避免外部修改
+	return data_type_map[type]  # 返回副本避免外部修改
 
 ## 判断是否有这个类型，保证创建数据时不会出错
 func _has_data_type(type: String) -> bool:
@@ -153,12 +153,10 @@ func create_data(type: String) -> int:
 		data_type_map[type] = []
 	
 	if not data.id in data_type_map[type]:
-		data_type_map[type].append(data.id)
+		data_type_map[type].append(int(data.id))
 		
-	update_data_tree.emit()
 	# 自动保存数据库配置
 	save_database()
-		
 	return data.id
 
 ## 删除数据，如果删除成功返回 true，失败则返回 false
@@ -210,10 +208,8 @@ func delete_data(id: int) -> bool:
 		
 	# 从缓存表删除
 	tmp_knd_data_dic.erase(id)
-	update_data_tree.emit()
 	# 更新配置文件
 	save_database()
-	
 	return true
 
 ## 获取数据的属性字典
@@ -293,8 +289,9 @@ func save_database() -> void:
 		
 	file.store_string(json_string)
 	file.close()
-	
 	print("数据库配置保存成功: ", PROJECT_CONFIG_PATH)
+	#update_data_tree.emit()
+
 
 ## 从本地加载数据库
 func load_database() -> void:

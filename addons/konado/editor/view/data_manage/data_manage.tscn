@@ -40,6 +40,7 @@ grow_vertical = 2
 [node name="character_edit" parent="editor" instance=ExtResource("1_wwbq1")]
 unique_name_in_owner = true
 size = Vector2i(1152, 648)
+visible = false
 
 [node name="background_edit" parent="editor" instance=ExtResource("13_0alns")]
 unique_name_in_owner = true
