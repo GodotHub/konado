@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://dga5qsts51yjl"]
 
 [ext_resource type="Script" uid="uid://b04pryoxytbhb" path="res://addons/konado/editor/layout/main_editor/ui_shot_edit.gd" id="2_n68jt"]
-[ext_resource type="PackedScene" uid="uid://bwskpda2vmn5x" path="res://addons/konado/scenes/new_dialog.tscn" id="3_mwx1u"]
+[ext_resource type="PackedScene" uid="uid://bwskpda2vmn5x" path="res://addons/konado/runtime/scenes/new_dialog.tscn" id="3_mwx1u"]
 [ext_resource type="PackedScene" uid="uid://x8t7cxfhviko" path="res://addons/konado/editor/view/ks_editor/ks_editor.tscn" id="4_2nmgn"]
 
 [node name="shot_editing" type="SplitContainer"]

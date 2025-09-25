@@ -1,7 +1,6 @@
-[gd_resource type="Theme" load_steps=85 format=3 uid="uid://xb40j2mc624h"]
+[gd_resource type="Theme" load_steps=84 format=3 uid="uid://xb40j2mc624h"]
 
-[ext_resource type="Texture2D" uid="uid://crovcslajuick" path="res://addons/konado/editor/theme/关闭按钮.png" id="1_b64en"]
-[ext_resource type="Texture2D" uid="uid://c160sij6d1xop" path="res://addons/konado/editor/theme/透明.png" id="3_2p40g"]
+[ext_resource type="Script" uid="uid://c23lxbcsbwnj" path="res://addons/konado/editor/theme/tab_stylebox.gd" id="1_lwdye"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b64en"]
 bg_color = Color(0.09, 0.09, 0.09, 1)
@@ -597,16 +596,16 @@ content_margin_top = 5.0
 content_margin_right = 12.0
 content_margin_bottom = 5.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_w3ct5"]
+[sub_resource type="StyleBox" id="StyleBox_fimmd"]
+resource_local_to_scene = false
+resource_name = ""
 content_margin_left = 45.0
-content_margin_right = 25.0
-texture_margin_left = 72.0
-texture_margin_right = 52.0
-expand_margin_right = 22.0
-axis_stretch_horizontal = 2
-axis_stretch_vertical = 1
-region_rect = Rect2(0, 0, 280, 58)
-modulate_color = Color(0.18, 0.18, 0.2, 0.6)
+content_margin_top = -1.0
+content_margin_right = 45.0
+content_margin_bottom = -1.0
+script = ExtResource("1_lwdye")
+bg_color = Color(0.12156863, 0.12156863, 0.12941177, 1)
+metadata/_custom_type_script = "uid://c23lxbcsbwnj"
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_how1i"]
 content_margin_left = 12.0
@@ -973,13 +972,13 @@ TabBar/constants/h_separation = 20
 TabBar/constants/icon_max_width = 0
 TabBar/constants/outline_size = 0
 TabBar/font_sizes/font_size = 20
-TabBar/icons/close = ExtResource("1_b64en")
+TabBar/icons/close = null
 TabBar/styles/button_highlight = SubResource("StyleBoxFlat_1x2qa")
 TabBar/styles/button_pressed = SubResource("StyleBoxFlat_jite5")
 TabBar/styles/tab_disabled = SubResource("StyleBoxEmpty_0225i")
 TabBar/styles/tab_focus = SubResource("StyleBoxEmpty_647hn")
 TabBar/styles/tab_hovered = SubResource("StyleBoxEmpty_tfm04")
-TabBar/styles/tab_selected = SubResource("StyleBoxTexture_w3ct5")
+TabBar/styles/tab_selected = SubResource("StyleBox_fimmd")
 TabBar/styles/tab_unselected = SubResource("StyleBoxEmpty_how1i")
 TabContainer/styles/panel = SubResource("StyleBoxEmpty_oub5t")
 TextEdit/colors/background_color = Color(0, 0, 0, 0)
@@ -1004,7 +1003,7 @@ TransitionPoint/base_type = &"GraphNode"
 TransitionPoint/colors/resizer_color = Color(0, 0, 0, 1)
 TransitionPoint/constants/port_h_offset = 20
 TransitionPoint/constants/separation = 0
-TransitionPoint/icons/port = ExtResource("3_2p40g")
+TransitionPoint/icons/port = null
 TransitionPoint/styles/panel = SubResource("StyleBoxEmpty_twq7w")
 TransitionPoint/styles/panel_selected = SubResource("StyleBoxEmpty_uj82p")
 TransitionPoint/styles/slot = SubResource("StyleBoxEmpty_kidfm")

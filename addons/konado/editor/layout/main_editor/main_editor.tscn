@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://bommt7l6wmdsa"]
 
 [ext_resource type="Texture2D" uid="uid://bb7nhjioefh8a" path="res://sample/demo/sample_arts/示例-咖啡馆-背景.png" id="1_csa6c"]
-[ext_resource type="Theme" uid="uid://cao2ht3baecs8" path="res://addons/konado/theme_system/dark_theme.tres" id="1_i4xdp"]
+[ext_resource type="Theme" uid="uid://xb40j2mc624h" path="res://addons/konado/editor/theme/konado_theme.tres" id="1_elb54"]
 [ext_resource type="Script" uid="uid://c2u6ino7v7ixx" path="res://addons/konado/editor/manager/ui_management.gd" id="1_nok4e"]
 [ext_resource type="PackedScene" uid="uid://c0d7dvfgwb76d" path="res://addons/konado/editor/view/data_manage/data_manage.tscn" id="3_nok4e"]
 [ext_resource type="Texture2D" uid="uid://6uvfpvvss883" path="res://addons/konado/editor/assets/icon/pin.svg" id="3_os5hq"]
@@ -13,6 +13,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_elb54")
 theme_type_variation = &"Background"
 
 [node name="TextureRect" type="TextureRect" parent="."]
@@ -95,7 +96,6 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(400, 60)
 layout_mode = 2
 size_flags_horizontal = 3
-theme = ExtResource("1_i4xdp")
 current_tab = 1
 tab_alignment = 1
 clip_tabs = false
@@ -129,6 +129,12 @@ text = "指定镜头"
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 
+[node name="document" type="Button" parent="BoxContainer/BoxContainer2/BoxContainer3"]
+layout_mode = 2
+tooltip_text = "文档"
+toggle_mode = true
+text = "文档"
+
 [node name="TopButton" type="Button" parent="BoxContainer/BoxContainer2/BoxContainer3"]
 layout_mode = 2
 tooltip_text = "窗口置顶"
@@ -148,6 +154,7 @@ tabs_visible = false
 
 [node name="data_manage" parent="BoxContainer/modules_container" instance=ExtResource("3_nok4e")]
 layout_mode = 2
+metadata/_tab_index = 0
 
 [node name="shot_editer" parent="BoxContainer/modules_container" instance=ExtResource("6_vy1oc")]
 visible = false
@@ -163,4 +170,5 @@ custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 
 [connection signal="tab_clicked" from="BoxContainer/BoxContainer2/modules_bar" to="ui_management" method="_on_modules_bar_tab_clicked"]
+[connection signal="toggled" from="BoxContainer/BoxContainer2/BoxContainer3/document" to="ui_management" method="_on_top_button_toggled"]
 [connection signal="toggled" from="BoxContainer/BoxContainer2/BoxContainer3/TopButton" to="ui_management" method="_on_top_button_toggled"]

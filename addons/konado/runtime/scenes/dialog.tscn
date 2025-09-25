@@ -8,7 +8,7 @@
 [ext_resource type="Script" uid="uid://cfbojxb1pdbrs" path="res://addons/konado/scripts/audio/audio_interface.gd" id="4_gd2ll"]
 [ext_resource type="Texture2D" uid="uid://bb7nhjioefh8a" path="res://sample/demo/sample_arts/示例-咖啡馆-背景.png" id="4_qodmk"]
 [ext_resource type="Script" uid="uid://cbf7mvlofpiix" path="res://addons/konado/scripts/items/item_interface.gd" id="4_utfb4"]
-[ext_resource type="PackedScene" uid="uid://dahbi42p77rwu" path="res://addons/konado/scenes/dialog_review.tscn" id="8_qodmk"]
+[ext_resource type="PackedScene" uid="uid://dahbi42p77rwu" path="res://addons/konado/runtime/scenes/dialog_review.tscn" id="8_qodmk"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_e5o0s"]
 
@@ -30,17 +30,17 @@ colors = PackedColorArray(0, 0, 0, 0.870588, 0.141176, 0.141176, 0.141176, 0.749
 gradient = SubResource("Gradient_qodmk")
 fill_to = Vector2(1, 1)
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xjghb"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ii7ok"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_uf3p3"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xsgfs"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h5wn0"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_k4b25"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bfne7"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fbd5v"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_f70o6"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3sqld"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_d61i7"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1xeec"]
 
 [sub_resource type="Gradient" id="Gradient_rm7mg"]
 offsets = PackedFloat32Array(0, 0.996764, 1)
@@ -57,50 +57,50 @@ fill_to = Vector2(0.7, 0.7)
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vnydh"]
 texture = SubResource("GradientTexture2D_sxvt2")
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1xeec"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_d61i7"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3sqld"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_f70o6"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_e1ahj"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hqqx5"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_utfb4"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xjghb"]
+bg_color = Color(1, 1, 1, 1)
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qodmk"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_une6u"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sxvt2"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ya35c"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_566op"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ub6cx"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bycqy"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_eac7y"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_utfb4"]
 bg_color = Color(0.792157, 0.792157, 0.792157, 1)
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_eac7y"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bycqy"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ya35c"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ub6cx"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_une6u"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_566op"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xjghb"]
-bg_color = Color(1, 1, 1, 1)
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sxvt2"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qodmk"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_utfb4"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_utfb4"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h6kpk"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jsjy8"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_m7kjq"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nhljo"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h6kpk"]
 bg_color = Color(1, 0.321569, 0.427451, 0.482353)
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nhljo"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_m7kjq"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jsjy8"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h6kpk"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_566op"]
 bg_color = Color(1, 1, 1, 1)
@@ -123,28 +123,28 @@ bg_color = Color(0.709804, 0.443137, 1, 0.662745)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bycqy"]
 bg_color = Color(1, 1, 1, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ya35c"]
-bg_color = Color(0.792157, 0.792157, 0.792157, 1)
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e1ahj"]
 bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ya35c"]
+bg_color = Color(0.792157, 0.792157, 0.792157, 1)
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_utfb4"]
 color = Color(1, 1, 1, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jsjy8"]
-bg_color = Color(0.792157, 0.792157, 0.792157, 1)
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hqqx5"]
 bg_color = Color(1, 1, 1, 1)
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wnbmn"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qodmk"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jsjy8"]
 bg_color = Color(0.792157, 0.792157, 0.792157, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wnbmn"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_une6u"]
 bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qodmk"]
+bg_color = Color(0.792157, 0.792157, 0.792157, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sxvt2"]
 bg_color = Color(1, 0.268112, 0.605305, 1)
@@ -189,9 +189,10 @@ color = Color(0, 0, 0, 1)
 [node name="CharaControl" type="Control" parent="DialogUI/ActingInterface/BackgroundLayer"]
 layout_mode = 1
 anchors_preset = 0
-offset_right = 1280.0
+offset_left = 76.333336
+offset_right = 1356.3334
 offset_bottom = 720.0
-scale = Vector2(0.0015625, 0.0015625)
+scale = Vector2(1.4791666, 1.4791666)
 
 [node name="EffectLayer" type="ColorRect" parent="DialogUI/ActingInterface"]
 layout_mode = 2
@@ -250,8 +251,8 @@ theme_override_constants/separation = 30
 custom_minimum_size = Vector2(0, 35)
 layout_mode = 2
 theme_override_font_sizes/normal_font_size = 25
-theme_override_styles/background = SubResource("StyleBoxEmpty_xjghb")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_uf3p3")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_ii7ok")
+theme_override_styles/background = SubResource("StyleBoxEmpty_xsgfs")
 bbcode_enabled = true
 fit_content = true
 
@@ -263,8 +264,8 @@ theme_override_constants/margin_right = 200
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_font_sizes/normal_font_size = 22
-theme_override_styles/background = SubResource("StyleBoxEmpty_h5wn0")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_bfne7")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_k4b25")
+theme_override_styles/background = SubResource("StyleBoxEmpty_fbd5v")
 bbcode_enabled = true
 fit_content = true
 autowrap_mode = 2
@@ -277,62 +278,62 @@ alignment = 1
 [node name="存档" type="Button" parent="DialogUI/DialogueInterface/DialogueBox/MarginContainer/DialogContent/ActionsContainer"]
 custom_minimum_size = Vector2(75, 35)
 layout_mode = 2
-theme_override_styles/focus = SubResource("StyleBoxEmpty_f70o6")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_d61i7")
-theme_override_styles/hover = SubResource("StyleBoxTexture_vnydh")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_1xeec")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_3sqld")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_1xeec")
+theme_override_styles/hover = SubResource("StyleBoxTexture_vnydh")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_d61i7")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_f70o6")
 text = "存档"
 
 [node name="读档" type="Button" parent="DialogUI/DialogueInterface/DialogueBox/MarginContainer/DialogContent/ActionsContainer"]
 custom_minimum_size = Vector2(75, 35)
 layout_mode = 2
-theme_override_styles/focus = SubResource("StyleBoxEmpty_f70o6")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_d61i7")
-theme_override_styles/hover = SubResource("StyleBoxTexture_vnydh")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_1xeec")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_3sqld")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_1xeec")
+theme_override_styles/hover = SubResource("StyleBoxTexture_vnydh")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_d61i7")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_f70o6")
 text = "读档"
 
 [node name="记录" type="Button" parent="DialogUI/DialogueInterface/DialogueBox/MarginContainer/DialogContent/ActionsContainer"]
 custom_minimum_size = Vector2(75, 35)
 layout_mode = 2
-theme_override_styles/focus = SubResource("StyleBoxEmpty_f70o6")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_d61i7")
-theme_override_styles/hover = SubResource("StyleBoxTexture_vnydh")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_1xeec")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_3sqld")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_1xeec")
+theme_override_styles/hover = SubResource("StyleBoxTexture_vnydh")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_d61i7")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_f70o6")
 text = "记录"
 
 [node name="退出" type="Button" parent="DialogUI/DialogueInterface/DialogueBox/MarginContainer/DialogContent/ActionsContainer"]
 custom_minimum_size = Vector2(75, 35)
 layout_mode = 2
-theme_override_styles/focus = SubResource("StyleBoxEmpty_f70o6")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_d61i7")
-theme_override_styles/hover = SubResource("StyleBoxTexture_vnydh")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_1xeec")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_3sqld")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_1xeec")
+theme_override_styles/hover = SubResource("StyleBoxTexture_vnydh")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_d61i7")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_f70o6")
 text = "退出"
 
 [node name="自动" type="Button" parent="DialogUI/DialogueInterface/DialogueBox/MarginContainer/DialogContent/ActionsContainer"]
 custom_minimum_size = Vector2(75, 35)
 layout_mode = 2
-theme_override_styles/focus = SubResource("StyleBoxEmpty_f70o6")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_d61i7")
-theme_override_styles/hover = SubResource("StyleBoxTexture_vnydh")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_1xeec")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_3sqld")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_1xeec")
+theme_override_styles/hover = SubResource("StyleBoxTexture_vnydh")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_d61i7")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_f70o6")
 toggle_mode = true
 text = "自动播放"
 
 [node name="回顾" type="Button" parent="DialogUI/DialogueInterface/DialogueBox/MarginContainer/DialogContent/ActionsContainer"]
 custom_minimum_size = Vector2(75, 35)
 layout_mode = 2
-theme_override_styles/focus = SubResource("StyleBoxEmpty_f70o6")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_d61i7")
-theme_override_styles/hover = SubResource("StyleBoxTexture_vnydh")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_1xeec")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_3sqld")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_1xeec")
+theme_override_styles/hover = SubResource("StyleBoxTexture_vnydh")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_d61i7")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_f70o6")
 toggle_mode = true
 text = "回顾"
 
@@ -382,23 +383,23 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_hqqx5")
 
 [node name="TriggerButton1" type="Button" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer1/FilePanel1"]
 custom_minimum_size = Vector2(300, 100)
-layout_mode = 2
+layout_mode = 0
 offset_right = 300.0
 offset_bottom = 100.0
-theme_override_styles/focus = SubResource("StyleBoxEmpty_utfb4")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_qodmk")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_sxvt2")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_566op")
-theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ub6cx")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_bycqy")
-theme_override_styles/hover = SubResource("StyleBoxFlat_utfb4")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eac7y")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_ya35c")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
 theme_override_styles/normal = SubResource("StyleBoxFlat_xjghb")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_ya35c")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eac7y")
+theme_override_styles/hover = SubResource("StyleBoxFlat_utfb4")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_bycqy")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ub6cx")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_566op")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_sxvt2")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_qodmk")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_utfb4")
 
 [node name="FileMargin1" type="MarginContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer1/FilePanel1"]
-layout_mode = 2
+layout_mode = 0
 offset_left = -2.0
 offset_top = 4.0
 offset_right = 298.0
@@ -439,23 +440,23 @@ theme_override_styles/panel = SubResource("StyleBoxTexture_utfb4")
 
 [node name="TriggerButton2" type="Button" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer2/FilePanel2"]
 custom_minimum_size = Vector2(300, 100)
-layout_mode = 2
+layout_mode = 0
 offset_right = 300.0
 offset_bottom = 100.0
-theme_override_styles/focus = SubResource("StyleBoxEmpty_utfb4")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_qodmk")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_sxvt2")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_h6kpk")
-theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ub6cx")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_m7kjq")
-theme_override_styles/hover = SubResource("StyleBoxFlat_h6kpk")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eac7y")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_jsjy8")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eac7y")
+theme_override_styles/hover = SubResource("StyleBoxFlat_h6kpk")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_m7kjq")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ub6cx")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_h6kpk")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_sxvt2")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_qodmk")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_utfb4")
 
 [node name="FileMargin2" type="MarginContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer2/FilePanel2"]
-layout_mode = 2
+layout_mode = 0
 offset_left = -2.0
 offset_top = 4.0
 offset_right = 298.0
@@ -494,23 +495,23 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_566op")
 
 [node name="TriggerButton3" type="Button" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer3/FilePanel3"]
 custom_minimum_size = Vector2(300, 100)
-layout_mode = 2
+layout_mode = 0
 offset_right = 300.0
 offset_bottom = 100.0
-theme_override_styles/focus = SubResource("StyleBoxEmpty_utfb4")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_qodmk")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_sxvt2")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_h6kpk")
-theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ub6cx")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_m7kjq")
-theme_override_styles/hover = SubResource("StyleBoxFlat_ub6cx")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eac7y")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_jsjy8")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eac7y")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ub6cx")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_m7kjq")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ub6cx")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_h6kpk")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_sxvt2")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_qodmk")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_utfb4")
 
 [node name="FileMargin3" type="MarginContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer3/FilePanel3"]
-layout_mode = 2
+layout_mode = 0
 offset_left = -2.0
 offset_top = 4.0
 offset_right = 298.0
@@ -551,23 +552,23 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_566op")
 
 [node name="TriggerButton4" type="Button" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer4/FilePanel4"]
 custom_minimum_size = Vector2(300, 100)
-layout_mode = 2
+layout_mode = 0
 offset_right = 300.0
 offset_bottom = 100.0
-theme_override_styles/focus = SubResource("StyleBoxEmpty_utfb4")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_qodmk")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_sxvt2")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_h6kpk")
-theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ub6cx")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_m7kjq")
-theme_override_styles/hover = SubResource("StyleBoxFlat_m7kjq")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eac7y")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_jsjy8")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eac7y")
+theme_override_styles/hover = SubResource("StyleBoxFlat_m7kjq")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_m7kjq")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ub6cx")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_h6kpk")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_sxvt2")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_qodmk")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_utfb4")
 
 [node name="FileMargin4" type="MarginContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer4/FilePanel4"]
-layout_mode = 2
+layout_mode = 0
 offset_left = -2.0
 offset_top = 4.0
 offset_right = 298.0
@@ -608,23 +609,23 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_566op")
 
 [node name="TriggerButton5" type="Button" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer5/FilePanel5"]
 custom_minimum_size = Vector2(300, 100)
-layout_mode = 2
+layout_mode = 0
 offset_right = 300.0
 offset_bottom = 100.0
-theme_override_styles/focus = SubResource("StyleBoxEmpty_utfb4")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_qodmk")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_sxvt2")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_h6kpk")
-theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ub6cx")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_m7kjq")
-theme_override_styles/hover = SubResource("StyleBoxFlat_wnbmn")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eac7y")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_jsjy8")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eac7y")
+theme_override_styles/hover = SubResource("StyleBoxFlat_wnbmn")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_m7kjq")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ub6cx")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_h6kpk")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_sxvt2")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_qodmk")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_utfb4")
 
 [node name="FileMargin5" type="MarginContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer/FileContainer5/FilePanel5"]
-layout_mode = 2
+layout_mode = 0
 offset_left = -2.0
 offset_top = 4.0
 offset_right = 298.0
@@ -670,23 +671,23 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_566op")
 
 [node name="TriggerButton6" type="Button" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer6/FilePanel6"]
 custom_minimum_size = Vector2(300, 100)
-layout_mode = 2
+layout_mode = 0
 offset_right = 300.0
 offset_bottom = 100.0
-theme_override_styles/focus = SubResource("StyleBoxEmpty_utfb4")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_qodmk")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_sxvt2")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_h6kpk")
-theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ub6cx")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_m7kjq")
-theme_override_styles/hover = SubResource("StyleBoxFlat_eac7y")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eac7y")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_jsjy8")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eac7y")
+theme_override_styles/hover = SubResource("StyleBoxFlat_eac7y")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_m7kjq")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ub6cx")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_h6kpk")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_sxvt2")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_qodmk")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_utfb4")
 
 [node name="FileMargin6" type="MarginContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer6/FilePanel6"]
-layout_mode = 2
+layout_mode = 0
 offset_left = -2.0
 offset_top = 4.0
 offset_right = 298.0
@@ -727,23 +728,23 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_566op")
 
 [node name="TriggerButton7" type="Button" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer7/FilePanel7"]
 custom_minimum_size = Vector2(300, 100)
-layout_mode = 2
+layout_mode = 0
 offset_right = 300.0
 offset_bottom = 100.0
-theme_override_styles/focus = SubResource("StyleBoxEmpty_utfb4")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_qodmk")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_sxvt2")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_h6kpk")
-theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ub6cx")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_m7kjq")
-theme_override_styles/hover = SubResource("StyleBoxFlat_nhljo")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eac7y")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_jsjy8")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eac7y")
+theme_override_styles/hover = SubResource("StyleBoxFlat_nhljo")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_m7kjq")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ub6cx")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_h6kpk")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_sxvt2")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_qodmk")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_utfb4")
 
 [node name="FileMargin7" type="MarginContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer7/FilePanel7"]
-layout_mode = 2
+layout_mode = 0
 offset_left = -2.0
 offset_top = 4.0
 offset_right = 298.0
@@ -784,23 +785,23 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_bycqy")
 
 [node name="TriggerButton8" type="Button" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer8/FilePanel8"]
 custom_minimum_size = Vector2(300, 100)
-layout_mode = 2
+layout_mode = 0
 offset_right = 300.0
 offset_bottom = 100.0
-theme_override_styles/focus = SubResource("StyleBoxEmpty_utfb4")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_qodmk")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_sxvt2")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_h6kpk")
-theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ub6cx")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_m7kjq")
-theme_override_styles/hover = SubResource("StyleBoxFlat_ya35c")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eac7y")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
 theme_override_styles/normal = SubResource("StyleBoxFlat_e1ahj")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eac7y")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ya35c")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_m7kjq")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ub6cx")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_h6kpk")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_sxvt2")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_qodmk")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_utfb4")
 
 [node name="FileMargin8" type="MarginContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer8/FilePanel8"]
-layout_mode = 2
+layout_mode = 0
 offset_left = -2.0
 offset_top = 4.0
 offset_right = 298.0
@@ -841,23 +842,23 @@ theme_override_styles/panel = SubResource("StyleBoxLine_utfb4")
 
 [node name="TriggerButton9" type="Button" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer9/FilePanel9"]
 custom_minimum_size = Vector2(300, 100)
-layout_mode = 2
+layout_mode = 0
 offset_right = 300.0
 offset_bottom = 100.0
-theme_override_styles/focus = SubResource("StyleBoxEmpty_utfb4")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_qodmk")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_sxvt2")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_h6kpk")
-theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ub6cx")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_m7kjq")
-theme_override_styles/hover = SubResource("StyleBoxFlat_jsjy8")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eac7y")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
 theme_override_styles/normal = SubResource("StyleBoxFlat_hqqx5")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eac7y")
+theme_override_styles/hover = SubResource("StyleBoxFlat_jsjy8")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_m7kjq")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ub6cx")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_h6kpk")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_sxvt2")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_qodmk")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_utfb4")
 
 [node name="FileMargin9" type="MarginContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer9/FilePanel9"]
-layout_mode = 2
+layout_mode = 0
 offset_left = -2.0
 offset_top = 4.0
 offset_right = 298.0
@@ -898,23 +899,23 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_wnbmn")
 
 [node name="TriggerButton10" type="Button" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer10/FilePanel10"]
 custom_minimum_size = Vector2(300, 100)
-layout_mode = 2
+layout_mode = 0
 offset_right = 300.0
 offset_bottom = 100.0
-theme_override_styles/focus = SubResource("StyleBoxEmpty_utfb4")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_qodmk")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_sxvt2")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_h6kpk")
-theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ub6cx")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_m7kjq")
-theme_override_styles/hover = SubResource("StyleBoxFlat_qodmk")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eac7y")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
 theme_override_styles/normal = SubResource("StyleBoxFlat_une6u")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_une6u")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_nhljo")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eac7y")
+theme_override_styles/hover = SubResource("StyleBoxFlat_qodmk")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_m7kjq")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ub6cx")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_h6kpk")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_sxvt2")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_qodmk")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_utfb4")
 
 [node name="FileMargin10" type="MarginContainer" parent="DialogUI/SaLUI/FilesContainer/FilesHContainer/FilesVContainer2/FileContainer10/FilePanel10"]
-layout_mode = 2
+layout_mode = 0
 offset_left = -2.0
 offset_top = 4.0
 offset_right = 298.0
@@ -952,7 +953,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="CloseButton" type="Button" parent="DialogUI/SaLUI/Title"]
-layout_mode = 2
+layout_mode = 0
 offset_left = 372.0
 offset_top = 21.0
 offset_right = 466.0

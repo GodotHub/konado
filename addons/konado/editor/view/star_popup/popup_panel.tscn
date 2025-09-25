@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://ien2ki4cp3ot"]
 
-[ext_resource type="Texture2D" uid="uid://d1yhkro0quuae" path="res://addons/konado/assets/KonadoBanner2.png" id="1_kb4ej"]
+[ext_resource type="Texture2D" uid="uid://d1yhkro0quuae" path="res://addons/konado/runtime/assets/KonadoBanner2.png" id="1_kb4ej"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jl0hc"]
 

@@ -12,7 +12,7 @@ transparent_bg = true
 oversampling_override = 1.0
 title = "角色编辑"
 initial_position = 1
-size = Vector2i(1276, 732)
+size = Vector2i(1100, 688)
 transient = true
 exclusive = true
 transparent = true
@@ -68,7 +68,10 @@ layout_mode = 2
 
 [node name="add_status" type="Button" parent="character_card/VBoxContainer2/HSplitContainer/pic/BoxContainer/BoxContainer"]
 layout_mode = 2
+text = "添加角色状态"
 icon = ExtResource("3_j88t7")
+alignment = 0
+icon_alignment = 2
 
 [node name="title_Label" type="OptionButton" parent="character_card/VBoxContainer2/HSplitContainer/pic/BoxContainer/BoxContainer"]
 unique_name_in_owner = true

@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://b5njwitmejk76"]
 
-[ext_resource type="Script" uid="uid://cqjotblvlkg3y" path="res://addons/konado/assets/template/ui_template/save_commponect/save_componect.gd" id="1_4ot8c"]
-[ext_resource type="Texture2D" uid="uid://cfau2duojvd33" path="res://addons/konado/assets/KonadoBanner.png" id="2_8xdhd"]
+[ext_resource type="Script" uid="uid://cqjotblvlkg3y" path="res://addons/konado/runtime/assets/template/ui_template/save_commponect/save_componect.gd" id="1_4ot8c"]
+[ext_resource type="Texture2D" uid="uid://cfau2duojvd33" path="res://addons/konado/runtime/assets/KonadoBanner.png" id="2_8xdhd"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kt3kp"]
 bg_color = Color(0.915066, 0.431991, 0.379989, 1)
@@ -54,7 +54,7 @@ offset_top = -184.0
 offset_right = 658.0
 offset_bottom = -119.0
 grow_vertical = 0
-text = "存档1"
+text = "存档"
 label_settings = SubResource("LabelSettings_kt3kp")
 vertical_alignment = 1
 
@@ -69,7 +69,7 @@ offset_top = -107.0
 offset_right = 675.0
 offset_bottom = -66.0
 grow_vertical = 0
-text = "存档时间 8 / 23 / 12：00 "
+text = "2025/8/25/12:02"
 vertical_alignment = 1
 
 [node name="game_time_label" type="Label" parent="."]
