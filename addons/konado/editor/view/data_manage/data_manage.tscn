@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://c0d7dvfgwb76d"]
+[gd_scene load_steps=17 format=3 uid="uid://c0d7dvfgwb76d"]
 
 [ext_resource type="Texture2D" uid="uid://cfau2duojvd33" path="res://addons/konado/runtime/assets/KonadoBanner.png" id="1_lfi02"]
 [ext_resource type="PackedScene" uid="uid://dyxdkp8jarx78" path="res://addons/konado/editor/view/popup/character/character_edit_window.tscn" id="1_wwbq1"]
@@ -12,7 +12,6 @@
 [ext_resource type="Texture2D" uid="uid://crrsfagp8citn" path="res://addons/konado/editor/assets/icon/audio.svg" id="10_md0xx"]
 [ext_resource type="Texture2D" uid="uid://cpweu1qd7a5or" path="res://addons/konado/editor/assets/icon/icon_18.svg" id="12_guuyf"]
 [ext_resource type="PackedScene" uid="uid://bkm04q4xmkal4" path="res://addons/konado/editor/view/popup/background/background_edit.tscn" id="13_0alns"]
-[ext_resource type="Script" uid="uid://ep7ruwnvd0fo" path="res://addons/konado/editor/view/popup/character/character_edit_window.gd" id="13_olvie"]
 [ext_resource type="Texture2D" uid="uid://b6gkbqbevljtl" path="res://addons/konado/editor/assets/icon/dialogue.svg" id="14_b3p2i"]
 [ext_resource type="PackedScene" uid="uid://6i2hxe6fxdt1" path="res://addons/konado/editor/view/popup/bgm/bgm_edit.tscn" id="14_m825n"]
 [ext_resource type="Texture2D" uid="uid://cd3005ulx3nv6" path="res://addons/konado/editor/assets/icon/icon_27.svg" id="15_5ob65"]
@@ -64,7 +63,6 @@ exclusive = true
 transparent = true
 min_size = Vector2i(1100, 500)
 max_size = Vector2i(3840, 2160)
-script = ExtResource("13_olvie")
 
 [node name="character_card" type="Panel" parent="editor/background_edit3"]
 anchors_preset = 15

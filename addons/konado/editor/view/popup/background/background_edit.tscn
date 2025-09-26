@@ -1,6 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://bkm04q4xmkal4"]
-
-[ext_resource type="Script" uid="uid://ep7ruwnvd0fo" path="res://addons/konado/editor/view/popup/character/character_edit_window.gd" id="1_bw2u6"]
+[gd_scene format=3 uid="uid://bkm04q4xmkal4"]
 
 [node name="background_edit" type="Window" groups=["Window"]]
 auto_translate_mode = 1
@@ -16,7 +14,6 @@ exclusive = true
 transparent = true
 min_size = Vector2i(1100, 500)
 max_size = Vector2i(3840, 2160)
-script = ExtResource("1_bw2u6")
 
 [node name="character_card" type="Panel" parent="."]
 anchors_preset = 15
