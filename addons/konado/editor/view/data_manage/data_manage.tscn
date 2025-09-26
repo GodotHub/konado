@@ -40,7 +40,6 @@ grow_vertical = 2
 [node name="character_edit" parent="editor" instance=ExtResource("1_wwbq1")]
 unique_name_in_owner = true
 size = Vector2i(1152, 648)
-visible = false
 
 [node name="background_edit" parent="editor" instance=ExtResource("13_0alns")]
 unique_name_in_owner = true
@@ -228,6 +227,7 @@ vertical = true
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_constants/icon_max_width = 32
 allow_reselect = true
 hide_root = true
 select_mode = 2
