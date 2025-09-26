@@ -23,7 +23,6 @@ config/icon="uid://b5olx2vwoscbr"
 
 [autoload]
 
-ComponentFactory="*res://editor/ui/ui_components/component_factory.gd"
 KS_SAVE_AND_LOAD="*res://addons/konado/scripts/save_and_load/SaL.gd"
 KND_Database="*res://addons/konado/database/knd_database.gd"
 KonadoAPI="*res://addons/konadotnet/Runtime/API/KonadoAPI.cs"
@@ -40,7 +39,7 @@ project/assembly_name="Konado"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/gut/plugin.cfg", "res://addons/konado/plugin.cfg", "res://addons/main_scene_switcher/plugin.cfg")
+enabled=PackedStringArray("res://addons/gut/plugin.cfg", "res://addons/konado/plugin.cfg", "res://addons/konadotnet/plugin.cfg", "res://addons/main_scene_switcher/plugin.cfg")
 
 [gui]
 
