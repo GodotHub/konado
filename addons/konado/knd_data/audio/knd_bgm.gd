@@ -2,8 +2,9 @@
 extends KND_Data
 class_name KND_Bgm
 
-var name :String = "背景音乐"
 const icon = preload("uid://crrsfagp8citn")
+
+var name :String = "背景音乐"
 
 ## 资源路径
 var path :String = ""

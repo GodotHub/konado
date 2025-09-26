@@ -47,6 +47,10 @@ const KND_CLASS_DB: Dictionary[String, String] = {
 	"KND_Actor_Change_State_Dialogue": "res://addons/konado/knd_data/dialogue/knd_actor_change_state_dialogue.gd"
 }
 
+var data_id_number: int = 0 ## id 计数
+
+var data_id_name_map: Dictionary = {} 
+
 ## TODO :
 var cur_shot :int :## 当前镜头
 	set(value):
@@ -54,10 +58,6 @@ var cur_shot :int :## 当前镜头
 			cur_shot = value
 			cur_shot_change.emit()
 
-## 初始化
-func _ready() -> void:
-	# 自动加载数据库
-	load_database()
 
 ## 获取指定类型的所有资源ID数组
 func get_data_list(type: String) -> Array:
@@ -83,6 +83,37 @@ func _has_data(id: int) -> bool:
 		printerr("KND_Database没有这个数据: " + str(id))
 		return false
 	return true
+	
+func _save_data_id_config() -> void:
+	## TODO: 需要优化
+	var config = ConfigFile.new()
+	
+	var err = config.load("res://data.cfg")
+	if err != OK:
+		config.save("res://data.cfg")
+	config.set_value("data", "id_number", data_id_number)
+	config.set_value("data", "data_id_map", data_id_name_map)
+	config.save("res://data.cfg")
+	
+func _load_data_id_config() -> void:
+	## TODO: 需要优化
+	var config = ConfigFile.new()
+	
+	var err = config.load("res://data.cfg")
+	if err != OK:
+		config.set_value("data", "id_number", 0)
+		config.set_value("data", "data_id_map", {})
+		config.save("res://data.cfg")
+
+	if config.get_value("data", "id_number") == null:
+		config.set_value("data", "id_number", 0)
+	if config.get_value("data", "data_id_map") == null:
+		config.set_value("data", "data_id_map", {})
+		
+	data_id_number = config.get_value("data", "id_number")
+	data_id_name_map = config.get_value("data", "data_id_map")
+	
+
 
 ## 创建数据实例，如果创建失败，返回null
 func create_data_instance(type: String) -> KND_Data:
@@ -92,7 +123,29 @@ func create_data_instance(type: String) -> KND_Data:
 	var script_path = KND_CLASS_DB[type]
 	var script: GDScript = load(script_path)
 	if script != null and script is GDScript:
-		var knd_data: KND_Data = script.new(false)
+		# 新建一个KND_Data实例
+		var knd_data: KND_Data = script.new()
+		# 生成唯一id
+		#_load_data_id_config()
+		knd_data.id = data_id_number
+		data_id_number += 1
+		knd_data.gen_source_data()
+		
+		## 如果有name字段，则重命名
+		if knd_data.get("name") != null:
+			var name_number: int = 1
+			var tmp_name: String = knd_data.get("name")
+			
+			for i in data_id_name_map.keys():
+				if data_id_name_map.find_key(knd_data.get("name")) != null:
+				#if knd_data.get("name") == data_id_name_map[i]:
+					knd_data.set("name", tmp_name + "_" + str(name_number))
+					name_number += 1
+			knd_data._source_data["name"] = knd_data.get("name")
+			data_id_name_map[knd_data.id] = knd_data.get("name")
+		knd_data.emit_changed()
+		knd_data.print_data()
+		
 		# 赋值对应类型
 		knd_data.type = type
 		return knd_data
@@ -201,13 +254,14 @@ func delete_data(id: int) -> bool:
 		return false
 		
 	print("文件删除成功: ", path)
-	
-	# 从id映射表删除
-	if KND_Data.data_id_map.has(id):
-		KND_Data.data_id_map.erase(id)
 		
 	# 从缓存表删除
 	tmp_knd_data_dic.erase(id)
+	
+	# 从id映射表删除
+	if data_id_name_map.has(id):
+		data_id_name_map.erase(id)
+		
 	# 更新配置文件
 	save_database()
 	return true
@@ -231,9 +285,9 @@ func get_data_property(id: int, property: String) -> Variant:
 	if not tmp_knd_data_dic.has(id):
 		return null
 	# 因为无法实例化子类，所以直接读取source_data
-	return tmp_knd_data_dic[id]._source_data.get(property)
+	return tmp_knd_data_dic[id].get(property)
 
-## 设置数据属性
+## 设置数据属性z
 func set_data(id: int, property: String, value: Variant) -> void:
 	if not tmp_knd_data_dic.has(id):
 		return
@@ -245,7 +299,22 @@ func rename_data(id: int, new_name: String) -> bool:
 		return false
 		
 	var data: KND_Data = tmp_knd_data_dic[id]
-	data.rename(new_name)
+	
+	if data.get("name") != null:
+		if data.get("name") == new_name:
+			return true
+		data.set("name", new_name)
+		var name_number: int = 1
+		var tmp_name: String = data.get("name")
+			
+		for i in data_id_name_map.keys():
+			if data_id_name_map.find_key(data.get("name")) != null:
+				data.set("name", tmp_name + "_" + str(name_number))
+				name_number += 1
+		data._source_data["name"] = data.get("name")
+		data_id_name_map[data.id] = data.get("name")
+	data.emit_changed()
+	data.print_data()
 	return true
 
 func add_sub_source_data(parent: int, id: int, data: Dictionary) -> void:
@@ -289,6 +358,9 @@ func save_database() -> void:
 		
 	file.store_string(json_string)
 	file.close()
+	
+	_save_data_id_config()
+	
 	print("数据库配置保存成功: ", PROJECT_CONFIG_PATH)
 	#update_data_tree.emit()
 
@@ -389,7 +461,7 @@ func load_database() -> void:
 			continue
 
 		# 创建数据实例，复制加载模式
-		var data = KND_Data.new(true)
+		var data = KND_Data.new()
 		data._source_data = json_data
 		data.update()
 		tmp_knd_data_dic[id] = data
@@ -402,6 +474,8 @@ func load_database() -> void:
 				tmp_type_map[type].erase(item)
 			
 	data_type_map = tmp_type_map
+	
+	_load_data_id_config()
 		
 	# 清理无效文件
 	if not invalidated_data_files.is_empty():
@@ -409,8 +483,12 @@ func load_database() -> void:
 		
 	print("数据库加载完成，加载了 ", tmp_knd_data_dic.size(), " 个数据项")
 	
+	
 	# 重新保存配置，移除无效条目
 	save_database()
+	
+
+	
 
 ## 清理无效文件
 func _cleanup_invalid_files(invalid_paths: Array) -> void:

@@ -3,9 +3,10 @@
 extends Resource
 class_name KND_Data
 
-static var id_number: int = 0 ## id 计数
-## 数据名称 集合
-static var data_id_map: Dictionary = {} 
+#static var id_number: int = 0 ## id 计数
+### 数据名称 集合
+#static var data_id_map: Dictionary = {} 
+
 ## 数据id，为-1的时候需要重新赋值
 var id: int
 
@@ -24,11 +25,12 @@ var id: int
 ## 数据类型
 @export var type: String = ""
 
-## 描述
-@export var tip: String = "描述"
-
 ## 收藏
 @export var love: bool = false
+
+
+## tip
+@export var tip: String = ""
 
 ## 黑名单，不保存到文件中
 const black_list: Array[String] = ["_source_data",
@@ -44,54 +46,54 @@ const black_list: Array[String] = ["_source_data",
  "knd_data.gd"]
 
 ## 如果是加载资源并实例化 load_mode 应为true，如果是新建资源 load_mode 应为false
-func _init(load_mode: bool = true) -> void:
-	# 判断是否是加载模式
-	if load_mode:
-		print("加载模式")
-		update()
-		emit_changed()
-		return
-	else:
-		_load_data_config()
-		id = id_number
-		id_number += 1
-		
-		gen_source_data()
-		
-		if get("name") != null:
-			rename(get("name")) # 重命名
-		emit_changed()
-		print_data()
-		_save_data_config()
+#func _init(load_mode: bool = true) -> void:
+	## 判断是否是加载模式
+	#if load_mode:
+		#print("加载模式")
+		#update()
+		#emit_changed()
+		#return
+	#else:
+		#_load_data_config()
+		#id = id_number
+		#id_number += 1
+		#
+		#gen_source_data()
+		#
+		#if get("name") != null:
+			#rename(get("name")) # 重命名
+		#emit_changed()
+		#print_data()
+		#_save_data_config()
+	#
+#func _save_data_config() -> void:
+	### TODO: 需要优化
+	#var config = ConfigFile.new()
+	#
+	#var err = config.load("res://data.cfg")
+	#if err != OK:
+		#config.save("res://data.cfg")
+	#config.set_value("data", "id_number", id_number)
+	#config.set_value("data", "data_id_map", data_id_map)
+	#config.save("res://data.cfg")
 	
-func _save_data_config() -> void:
-	## TODO: 需要优化
-	var config = ConfigFile.new()
-	
-	var err = config.load("res://data.cfg")
-	if err != OK:
-		config.save("res://data.cfg")
-	config.set_value("data", "id_number", id_number)
-	config.set_value("data", "data_id_map", data_id_map)
-	config.save("res://data.cfg")
-	
-func _load_data_config() -> void:
-	## TODO: 需要优化
-	var config = ConfigFile.new()
-	
-	var err = config.load("res://data.cfg")
-	if err != OK:
-		config.set_value("data", "id_number", 0)
-		config.set_value("data", "data_id_map", {})
-		config.save("res://data.cfg")
-
-	if config.get_value("data", "id_number") == null:
-		config.set_value("data", "id_number", 0)
-	if config.get_value("data", "data_id_map") == null:
-		config.set_value("data", "data_id_map", {})
-		
-	id_number = config.get_value("data", "id_number")
-	data_id_map = config.get_value("data", "data_id_map")
+#func _load_data_config() -> void:
+	### TODO: 需要优化
+	#var config = ConfigFile.new()
+	#
+	#var err = config.load("res://data.cfg")
+	#if err != OK:
+		#config.set_value("data", "id_number", 0)
+		#config.set_value("data", "data_id_map", {})
+		#config.save("res://data.cfg")
+#
+	#if config.get_value("data", "id_number") == null:
+		#config.set_value("data", "id_number", 0)
+	#if config.get_value("data", "data_id_map") == null:
+		#config.set_value("data", "data_id_map", {})
+		#
+	#id_number = config.get_value("data", "id_number")
+	#data_id_map = config.get_value("data", "data_id_map")
 	
 ## 获取源数据
 func get_source_data() -> Dictionary:
@@ -144,16 +146,16 @@ func update() -> void:
 		emit_changed()
 		
 ## 重命名，并且保证命名唯一化 new_name:名字 ，name_list:名字集合
-func rename(new_name: String) -> void:
-	var number = 1
-	for i in data_id_map.keys():
-		if get("name") == data_id_map[i]:
-			set("name", new_name + "_" + str(number))
-			number += 1
-	_source_data["name"] = get("name")
-	data_id_map[id] = get("name")
-	print("重命名 ", get("name"))
-
+#func rename(new_name: String) -> void:
+	#var number = 1
+	#for i in data_id_map.keys():
+		#if get("name") == data_id_map[i]:
+			#set("name", new_name + "_" + str(number))
+			#number += 1
+	#_source_data["name"] = get("name")
+	#data_id_map[id] = get("name")
+	#print("重命名 ", get("name"))
+	
 ## 打印数据
 func print_data() -> void:
 	print("数据 id %s %s" % [id, _source_data])
