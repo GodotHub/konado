@@ -13,12 +13,13 @@ extends Node
 @onready var character_edit: Window = %character_edit
 @onready var background_edit: Window = %background_edit
 
+const love_icon = preload("uid://cl6sx74x3kaow")
+const un_love_icon = preload("uid://dj3bvhjcwquy8")
 
 var current_type      :String ="KND_Character"        ## 当前数据类型
 var current_data_lise :Array   ## 当前数据id列表
 var selected_item     :TreeItem
-## 选中的选项列表
-var selected_items :Array [TreeItem]=[]
+var id_list:=[]
 
 func _ready() -> void:
 	## 树信号
@@ -27,6 +28,7 @@ func _ready() -> void:
 	data_tree.empty_clicked.connect(_on_data_tree_empty_clicked)
 	data_tree.multi_selected.connect(_on_tree_multi_selected)
 	data_tree.item_activated.connect(_on_tree_item_activated)
+	data_tree.button_clicked.connect(_on_tree_button_clicked)
 	
 	##添加类信号
 	#type_tab_bar.current_tab = 0
@@ -41,7 +43,7 @@ func _ready() -> void:
 ## 在空白处单击，取消选择
 func _on_data_tree_empty_clicked(click_position: Vector2, mouse_button_index: int) -> void:
 	if mouse_button_index==1:
-		selected_items.clear()
+		id_list.clear()
 	selected_item = null
 	data_tree.deselect_all()
 
@@ -53,29 +55,49 @@ func _build_data_tree():
 	current_data_lise = KND_Database.get_data_list(current_type)
 	#
 	var root = data_tree.create_item()
-	
+	if current_data_lise.size() == 0:
+		return
+	var node_item_root
 	for i in current_data_lise.size():
 		var node_item = data_tree.create_item(null)
-		var id = current_data_lise[i] as int
+		if i== 0:
+			node_item_root = node_item
+		var id = current_data_lise[i]
 		node_item.set_icon(0,KND_Database.get_data_property(id,"icon"))
 		node_item.set_text(0,KND_Database.get_data_property(id,"name"))  # 数据的名称绑定到item
+		var love = KND_Database.get_data_property(id,"love")
+		node_item.add_button(0,un_love_icon, id, false, "收藏")
+		if love:
+			node_item.set_button(0,0,love_icon) 
+			if  node_item_root:
+				node_item.move_before( node_item_root)
 		node_item.set_metadata(0,id)
+		
 
 ## 选择多数据
 func _on_tree_multi_selected(item: TreeItem, column: int, selected: bool) -> void:
 	if selected:
-		if !selected_items.has(item):
-			selected_items.append(item)
+		if not id_list.has(item.get_metadata(0)):
+			id_list.append(item.get_metadata(0)) 
 	else :
-		selected_items.erase(item)
-	print(selected_items)
-
+		id_list.erase(item.get_metadata(0)) 
+	print(id_list)
+	
 ## 现在数据类型
 func _on_tab_bar_select(tab: int) -> void:
 	current_type = type_tab_bar.get_tab_tooltip(tab)
 	print(current_type)
 	_build_data_tree()
-	
+
+## 点击收藏按钮
+func _on_tree_button_clicked(item: TreeItem, column: int, id: int, mouse_button_index: int):
+	match column:
+		0:  ## 收藏节点
+			var love = KND_Database.get_data_property(id ,"love")
+			KND_Database.set_data(id,"love",!love)
+			print(id, love)
+	_build_data_tree()  # 刷新 Tree
+
 ## TODO 添加文件夹
 func _on_add_folder_pressed() -> void:
 	pass
@@ -87,13 +109,10 @@ func _on_add_pressed() -> void:
 
 ## 删除数据
 func _on_delete_pressed() -> void:
-	var delect_id :=[]
-	for i in selected_items:
-		var id = i.get_metadata(0)
-		delect_id.append(id)
-	for id in delect_id:
+
+	for id in id_list:
 		KND_Database.delete_data(id)
-	selected_items.clear()
+	id_list.clear()
 	_build_data_tree()
 
 ## 双击item
