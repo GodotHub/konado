@@ -8,7 +8,13 @@
 - **Issue**：提交问题或建议，经过讨论后决定是否实现，并分配给开发者
 
 
-## 代码贡献流程  
+## 代码贡献流程
+
+在提交代码之前请确保在本地完成了 Git 的全局配置
+```
+git config --global user.name 你的Git用户名
+git config --global user.email 你的提交邮箱，必须和代码平台账户邮箱一致
+```
 
 1. **Fork 项目**：点击右上角 Fork 到自己的仓库  
 2. **创建分支**：`git checkout -b feature/your-feature`  

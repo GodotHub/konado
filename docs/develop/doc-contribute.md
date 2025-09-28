@@ -10,6 +10,12 @@
 
 文档可以直接向master分支`提交PR`，不必创建分支。
 
+在提交代码之前请确保在本地完成了 Git 的全局配置
+```
+git config --global user.name 你的Git用户名
+git config --global user.email 你的提交邮箱，必须和代码平台账户邮箱一致
+```
+
 1. **Fork 项目**：点击右上角 Fork 到自己的仓库  
 2. **克隆仓库**：`git clone https://gitcode.net/your_username/konado.git`  
 3. **编辑文档**：在 `docs` 目录下找到需要修改的文件，使用 Markdown 语法进行编辑（参考 [Markdown 语法](https://www.markdownguide.org/basic-syntax)）
