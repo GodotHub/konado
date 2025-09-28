@@ -26,14 +26,8 @@
 
 详细请编辑 [i18n.csv](https://gitcode.com/godothub/konado/blob/master/addons/konado/i18n/i18n.csv) 文件，并提交PR到项目中。
 
+详细请参考[代码贡献指南](./code-contribute.md)。
+
 ### 文档翻译
 
 文档的目录在`docs`下，使用markdown格式编写，请按照markdown语法进行翻译，并提交PR到项目中，详细请参考[文档贡献指南](./doc-contribute.md)。
-
-## 贡献流程  
-
-1. **Fork 项目**：点击右上角 Fork 到自己的仓库
-3. **提交更改**：`git commit -m "feat: 描述你的更改"`  
-4. **推送分支**：`git push origin master`  
-5. **提交 PR**：创建 Pull Request
-
