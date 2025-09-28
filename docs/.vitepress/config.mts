@@ -26,12 +26,12 @@ export default defineConfig({
   head: [
     [
       'link',
-      { rel: 'icon', href: 'https://godothub.atomgit.net/web/icon/konado_icon.png' }
+      { rel: 'icon', href: 'https://godothub.atomgit.net/web/icon/konado/kona/icon.png' }
     ]
   ],
   themeConfig: {
     outline: [2, 3],
-    logo: 'https://godothub.atomgit.net/web/icon/konado_icon.png',
+    logo: 'https://godothub.atomgit.net/web/icon/konado/kona/icon.png',
     search: {
       provider: 'local'
     },

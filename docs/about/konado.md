@@ -18,7 +18,7 @@ Konado Project 开发组是一个由社区驱动的开源项目团队，归属�
 Konado最初是月夜繁星工作室（StarryTeam）内部的实验性项目，随着功能不断完善与体系逐渐成熟，
 在2025年，Konado 正式开源，从工作室内部项目转变为社区开源项目。
 
-目前，Konado 项目由 Konado Project 社区开发者开发与维护，并由 [Godot Hub](https://godothub.com/) 开源社区孵化运营。
+目前，Konado 项目由 Konado Project 社区开发者开发与维护，并由 [Godot Hub](https://godothub.com) 开源社区孵化运营。
 
 
 ## 联系我们
