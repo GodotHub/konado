@@ -17,7 +17,7 @@ Kona的身影贯穿于Konado的全场景中，无论是启动界面、官网首�
 > 发布时间：2025-09-15  
 
 <p align="center">
-<img src="./kona-2.0.png" alt="Kona 2.0 主形象图" width="300"/>
+<img src="https://godothub.atomgit.net/web/icon/konado/kona/kona.png" alt="Kona 2.0 主形象图" width="300"/>
 </p>
 
 
@@ -32,7 +32,7 @@ Konado 2.0版本的Kona形象，在细节刻画上尤为用心，整体造型更
 > 发布时间：2023-07-22
 
 <p align="center">
-<img src="./kona-1.0.png" alt="Kona 1.0 主形象图" width="360"/>
+<img src="https://godothub.atomgit.net/web/icon/konado/kona/1.0/kona.png" alt="Kona 1.0 主形象图" width="360"/>
 </p>
 
 作为Konado的初代看板娘，Kona（可娜）的1.0形象以“青春活力”为核心，充满夏日清爽感：
