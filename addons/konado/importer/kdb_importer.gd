@@ -70,7 +70,7 @@ func _import(source_file, save_path, options, platform_variants, gen_files) -> E
 	if typeof(json_data) != TYPE_DICTIONARY:
 		printerr("Parsed data is not a Dictionary. Type: ", typeof(json_data))
 		return ERR_INVALID_DATA
-	var data = KND_Data.new(true)
+	var data = KND_Data.new()
 	data._source_data = json_data
 	data.update()
 
