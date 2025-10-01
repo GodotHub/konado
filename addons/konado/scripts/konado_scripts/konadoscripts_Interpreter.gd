@@ -1,22 +1,12 @@
-################################################################################
-# Project: Konado
-# File: konadoscripts_Interpreter.gd
-# Author: DSOE1024
-# Created: 2025-07-12
-# Last Modified: 2025-09-04
-# Description:
-#    Konado脚本解释器
-################################################################################
-
+## Konado脚本解释器
 @tool
 extends Node
 class_name KonadoScriptsInterpreter
 
-# Konado脚本解释器
-
 ## 是否初始化完成
 var is_init: bool = false
 
+# 源脚本路径
 var tmp_path = ""
 # 源脚本行，显示在VSCode中
 var tmp_original_line_number = 0
@@ -85,7 +75,7 @@ func init_insterpreter(flags: Dictionary[String, Variant]) -> bool:
 
 
 ## 全文解析模式
-func process_scripts_to_data(path: String) -> DialogueShot:
+func process_scripts_to_data(path: String) -> KND_Shot:
 	if not is_init:
 		_scripts_debug(path, 0, "解释器未初始化，无法解析脚本文件")
 		return
@@ -117,7 +107,7 @@ func process_scripts_to_data(path: String) -> DialogueShot:
 	
 	_scripts_info(path, 0, "开始解析脚本文件")
 
-	var diadata: DialogueShot = DialogueShot.new()
+	var diadata: KND_Shot = KND_Shot.new()
 
 	# 解析元数据
 	var metadata_result = _parse_metadata(lines, path)
@@ -125,7 +115,6 @@ func process_scripts_to_data(path: String) -> DialogueShot:
 	if not metadata_result:
 		_scripts_debug(path, 0, "元数据解析失败")
 		return diadata
-
 	diadata.shot_id = metadata_result[0]
 
 
@@ -156,8 +145,8 @@ func process_scripts_to_data(path: String) -> DialogueShot:
 		if line.is_empty():
 			#print("解析成功：忽略空行\n")
 			continue
-		if line.begins_with("#") and not line.begins_with("##"):
-			_scripts_debug(path, original_line_number, "注释行请用 ## 代替 #：%s" % line)
+		if line.begins_with("#") or line.begins_with("##"):
+			#_scripts_debug(path, original_line_number, "注释行请用 ## 代替 #：%s" % line)
 			continue
 
 		print("解析第%d行" % original_line_number)
@@ -169,7 +158,8 @@ func process_scripts_to_data(path: String) -> DialogueShot:
 			if dialog.dialog_type == Dialogue.Type.Branch:
 				diadata.branchs.set(dialog.branch_id, dialog)
 			else:
-				diadata.dialogs.append(dialog)
+				var dialogue_dic: Dictionary = dialog.serialize_to_dict()
+				diadata.dialogues_source_data.append(dialogue_dic)
 		else:
 			if allow_skip_error_line:
 				_scripts_warning(path, original_line_number, "解析失败：无法识别的语法，请检查语法是否正确或删除该行: %s" % line)
@@ -178,11 +168,14 @@ func process_scripts_to_data(path: String) -> DialogueShot:
 				_scripts_debug(path, original_line_number, "解析失败：无法识别的语法，请检查语法是否正确或删除该行: %s" % line)
 				break
 			print("\n")
-
-	diadata.dep_characters = dep_characters
+			
+	diadata.get_dialogues()
+	
+	## TODO: 依赖演员
+	#diadata.dep_characters = dep_characters
 
 	_scripts_info(path, 0, "文件：%s 章节ID：%s 对话数量：%d" % 
-		[path, diadata.shot_id, diadata.dialogs.size()])
+		[path, diadata.shot_id, diadata.dialogues.size()])
 
 	tmp_path = ""
 
@@ -191,8 +184,8 @@ func process_scripts_to_data(path: String) -> DialogueShot:
 
 	# 生成演员快照
 	var cur_actor_dic: Dictionary = {}
-	for dialogue in diadata.dialogs:
-		print("当前演员快照：", cur_actor_dic)
+	for dialogue in diadata.get_dialogues():
+		#print("当前演员快照：", cur_actor_dic)
 		if dialogue.dialog_type == Dialogue.Type.Display_Actor:
 				var actor: DialogueActor = dialogue.show_actor
 				var chara_dict := {
@@ -216,8 +209,6 @@ func process_scripts_to_data(path: String) -> DialogueShot:
 				cur_actor_dic[dialogue.target_move_chara]["y"] = dialogue.target_move_pos.y
 		dialogue.actor_snapshots = cur_actor_dic
 	
-
-
 	return diadata
 
 # 单行解析模式
@@ -229,9 +220,9 @@ func parse_line(line: String, line_number: int, path: String) -> Dialogue:
 	var dialog := Dialogue.new()
 	dialog.source_file_line = line_number
 	
-	if _parse_label(line, dialog):
-		print("解析成功：注释相关\n")
-		return dialog
+	#if _parse_label(line, dialog):
+		#print("解析成功：注释相关\n")
+		#return dialog
 	if _parse_background(line, dialog):
 		print("解析成功：背景切换\n")
 		return dialog
@@ -289,14 +280,14 @@ func _parse_metadata(lines: PackedStringArray, path: String) -> PackedStringArra
 	
 
 # 解析注释
-func _parse_label(line: String, dialog: Dialogue) -> bool:
-	if not line.begins_with("##"):
-		return false
-
-	dialog.dialog_type = Dialogue.Type.LABEL
-	dialog.label_notes = line.replace("##", "").strip_edges()
-
-	return true
+#func _parse_label(line: String, dialog: Dialogue) -> bool:
+	#if not line.begins_with("##"):
+		#return false
+#
+	#dialog.dialog_type = Dialogue.Type.LABEL
+	#dialog.label_notes = line.replace("##", "").strip_edges()
+#
+	#return true
 
 # 背景切换解析
 func _parse_background(line: String, dialog: Dialogue) -> bool:

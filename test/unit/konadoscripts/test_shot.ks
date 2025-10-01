@@ -1,5 +1,6 @@
 shot_id test_shot
 # 这是一个注释
+## 这也是一个注释
 actor show chara1 normal 0 100 200 1.0
 "npc" "Hello, world!" voice_001
 choice "Option 1" tag1 "Option 2" tag2

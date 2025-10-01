@@ -85,15 +85,15 @@ func test_parse_metadata_invalid():
 	assert_eq(result.size(), 0, "无效元数据应该返回空数组")
 
 
-func test_parse_label():
-	# 测试解析标签行
-	var line = "# 这是一个标签注释"
-	var dialog = Dialogue.new()
-
-	var result = interpreter._parse_label(line, dialog)
-	assert_true(result, "应该成功解析标签行")
-	assert_eq(dialog.dialog_type, Dialogue.Type.LABEL, "对话类型应该是 LABEL")
-	assert_eq(dialog.label_notes, " 这是一个标签注释", "标签内容应该匹配")
+#func test_parse_label():
+	## 测试解析标签行
+	#var line = "# 这是一个标签注释"
+	#var dialog = Dialogue.new()
+#
+	#var result = interpreter._parse_label(line, dialog)
+	#assert_true(result, "应该成功解析标签行")
+	#assert_eq(dialog.dialog_type, Dialogue.Type.LABEL, "对话类型应该是 LABEL")
+	#assert_eq(dialog.label_notes, " 这是一个标签注释", "标签内容应该匹配")
 
 
 func test_parse_background():
@@ -205,8 +205,8 @@ func test_process_complete_script():
 	interpreter.init_insterpreter({})
 
 	# 处理脚本
-	var result: DialogueShot = interpreter.process_scripts_to_data(temp_file)
+	var result: KND_Shot = interpreter.process_scripts_to_data(temp_file)
 	assert_not_null(result, "应该成功处理脚本")
 	assert_eq(result.shot_id, "test_shot", "shot_id 应该匹配")
-	assert_eq(result.dialogs.size(), 5, "应该有5个对话")
+	assert_eq(result.dialogues.size(), 4, "应该有4个对话")
 	assert_eq(result.branchs.size(), 2, "应该有两个分支")
