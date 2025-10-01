@@ -1,11 +1,8 @@
+## KND_Data是所有数据类的基类，所有数据类都应该继承自这个类
 @tool
 #@abstract
 extends Resource
 class_name KND_Data
-
-#static var id_number: int = 0 ## id 计数
-### 数据名称 集合
-#static var data_id_map: Dictionary = {} 
 
 ## 数据id，为-1的时候需要重新赋值
 var id: int
@@ -28,73 +25,25 @@ var id: int
 ## 收藏
 @export var love: bool = false
 
-
 ## tip
 @export var tip: String = ""
 
-## 黑名单，不保存到文件中
-const black_list: Array[String] = ["_source_data",
- "RefCounted",
- "Resource",
- "Resource",
- "resource_local_to_scene",
- "resource_path",
- "resource_name",
- "resource_scene_unique_id",
- "script",
- "Built-in script",
- "knd_data.gd"]
+## 属性字段黑名单，这些字段不会被保存到本地的KDB文件中
+const PROPERTY_BLACK_LIST: Array[String] = [
+	"_source_data",
+ 	"RefCounted",
+ 	"Resource",
+ 	"Resource",
+ 	"resource_local_to_scene",
+ 	"resource_path",
+ 	"resource_name",
+ 	"resource_scene_unique_id",
+ 	"script",
+ 	"Built-in script",
+ 	"knd_data.gd"
+	]
 
-## 如果是加载资源并实例化 load_mode 应为true，如果是新建资源 load_mode 应为false
-#func _init(load_mode: bool = true) -> void:
-	## 判断是否是加载模式
-	#if load_mode:
-		#print("加载模式")
-		#update()
-		#emit_changed()
-		#return
-	#else:
-		#_load_data_config()
-		#id = id_number
-		#id_number += 1
-		#
-		#gen_source_data()
-		#
-		#if get("name") != null:
-			#rename(get("name")) # 重命名
-		#emit_changed()
-		#print_data()
-		#_save_data_config()
-	#
-#func _save_data_config() -> void:
-	### TODO: 需要优化
-	#var config = ConfigFile.new()
-	#
-	#var err = config.load("res://data.cfg")
-	#if err != OK:
-		#config.save("res://data.cfg")
-	#config.set_value("data", "id_number", id_number)
-	#config.set_value("data", "data_id_map", data_id_map)
-	#config.save("res://data.cfg")
-	
-#func _load_data_config() -> void:
-	### TODO: 需要优化
-	#var config = ConfigFile.new()
-	#
-	#var err = config.load("res://data.cfg")
-	#if err != OK:
-		#config.set_value("data", "id_number", 0)
-		#config.set_value("data", "data_id_map", {})
-		#config.save("res://data.cfg")
-#
-	#if config.get_value("data", "id_number") == null:
-		#config.set_value("data", "id_number", 0)
-	#if config.get_value("data", "data_id_map") == null:
-		#config.set_value("data", "data_id_map", {})
-		#
-	#id_number = config.get_value("data", "id_number")
-	#data_id_map = config.get_value("data", "data_id_map")
-	
+
 ## 获取源数据
 func get_source_data() -> Dictionary:
 	gen_source_data()
@@ -106,7 +55,7 @@ func gen_source_data() -> void:
 	# 将属性写到data字典
 	for property in property_list:
 		var property_name: String = property["name"]
-		if property_name in black_list: # 添加其他需要排除的属性名
+		if property_name in PROPERTY_BLACK_LIST: # 添加其他需要排除的属性名
 			continue
 		# 屏蔽脚本
 		if property_name.ends_with(".gd"):
@@ -143,19 +92,8 @@ func update_sub_source_data(id: int, new: Dictionary) -> void:
 func update() -> void:
 	for property in _source_data:
 		set(property, _source_data[property])
-		emit_changed()
+	self.emit_changed()
 		
-## 重命名，并且保证命名唯一化 new_name:名字 ，name_list:名字集合
-#func rename(new_name: String) -> void:
-	#var number = 1
-	#for i in data_id_map.keys():
-		#if get("name") == data_id_map[i]:
-			#set("name", new_name + "_" + str(number))
-			#number += 1
-	#_source_data["name"] = get("name")
-	#data_id_map[id] = get("name")
-	#print("重命名 ", get("name"))
-	
 ## 打印数据
 func print_data() -> void:
 	print("数据 id %s %s" % [id, _source_data])
@@ -175,7 +113,7 @@ func save_data(path: String) -> bool:
 		print("文件打开失败，错误代码: ", error)
 		return false
 	
-	var json_string: String = JSON.stringify(_source_data, "\t")
+	var json_string: String = JSON.stringify(_source_data)
 	file.store_line(json_string)
 	file.close()
 	
