@@ -283,9 +283,19 @@ func get_data_type(id: int) -> String:
 ## 获取数据属性
 func get_data_property(id: int, property: String) -> Variant:
 	if not tmp_knd_data_dic.has(id):
+		printerr("无法获取数据属性 " + property)
 		return null
-	# 因为无法实例化子类，所以直接读取source_data
-	return tmp_knd_data_dic[id].get(property)
+	# 因为无法实例化子类，所以直接读取_source_data的值
+	# 因此请确保_source_data的值及时刷新
+	var source_data: Dictionary = tmp_knd_data_dic[id]._source_data
+	if source_data != null:
+		if source_data.has(property):
+			return source_data.get(property)
+		else:
+			printerr("无法获取不存在的数据属性 " + property)
+	else:
+		printerr("数据_source_data为null，请检查" + property)
+	return null
 
 ## 设置数据属性z
 func set_data(id: int, property: String, value: Variant) -> void:
@@ -564,3 +574,26 @@ func find_data_by_name(name: String, type: String = "") -> Array:
 			if data.get_name() == name:
 				result.append(data)
 	return result
+	
+	
+## 创建ks文件，返回文件路径
+func create_ks_file(knd_shot_id: int) -> String:
+	var file_path = ""
+	return file_path
+	
+## 删除ks文件，返回是否删除成功
+func delete_ks_file(knd_shot_id: int) -> bool:
+	return true
+	
+## 更新ks文件内容
+func update_ks_file_content(knd_shot_id: int, new_content: String) -> void:
+	pass
+	
+## 保存ks文件并编译成knd shot数据，如果编译成功返回Success，否则返回错误信息，用于编辑器报错提示
+func save_ks_file_to_shot() -> String:
+	return "Success"
+	
+## 获取ks文件内容
+func get_ks_file_content(knd_shot_id: int) -> String:
+	var content = ""
+	return content
