@@ -9,7 +9,7 @@ const icon =preload("uid://q2w6piu3t1md")
 @export var name: String = "新角色"
 
 ## 出演过的演员-镜头表 演员名：id
-@export var actor_id_map: Dictionary[String, Array]={}
+@export var actor_id_map: Dictionary[String, Array] = {}
 
-## 角色状态图集
-@export var character_status: Dictionary[String, String]
+## 角色状态
+@export var character_status: Dictionary = {}
