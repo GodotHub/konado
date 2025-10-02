@@ -1,94 +1,93 @@
-################################################################################
-# Project: Konado
-# File: konado_plugin.gd
-# Author: DSOE1024
-# Created: 2025-07-27
-# Last Modified: 2025-07-27
-# Description:
-#   Konado框架引擎插件入口文件，负责初始化插件和注册相关功能
-################################################################################
-
+# Konado框架引擎插件入口文件，负责初始化插件和注册相关功能
 @tool
 extends EditorPlugin
 
+## 插件版本信息
+const VERSION := "2.0"
+const CODENAME := "Mooncake"
 
-var konado_editor_instance: KonadoEditorWindow = null
-
-## 配置常量
+## 资源路径常量
 const DIALOGUE_DATA_SCRIPT := preload("res://addons/konado/scripts/dialogue/dialogue_shot.gd")
 const IMPORTER_SCRIPT := preload("res://addons/konado/importer/konado_importer.gd")
 const KDB_SCRIPT := preload("res://addons/konado/importer/kdb_importer.gd")
-#const CSV_IMPORTER_SCRIPT := preload("res://addons/konado/editor/ks_csv_importer/ks_csv_importer.gd")
 const SAVE_AND_LOAD := "res://addons/konado/scripts/save_and_load/SaL.gd"
-
-## 数据库
 const KND_DATABASE := "res://addons/konado/database/knd_database.gd"
 
-## 导入器插件
-var import_plugin: EditorImportPlugin
-var kdb_import_plugin: EditorImportPlugin
-var csv_import_plugin: EditorImportPlugin
-
-## 帮助文档按钮
-var help_doc_btn: Button = null
-## 打开Konado编辑器按钮
-var open_konado_editor_btn: Button = null
-
-
-# 翻译路径
-var translations_paths = PackedStringArray([
+## 翻译文件路径
+const TRANSLATION_PATHS: PackedStringArray = [
 	"res://addons/konado/i18n/i18n.zh.translation",
 	"res://addons/konado/i18n/i18n.zh_HK.translation",
 	"res://addons/konado/i18n/i18n.en.translation",
 	"res://addons/konado/i18n/i18n.ja.translation",
 	"res://addons/konado/i18n/i18n.ko.translation",
 	"res://addons/konado/i18n/i18n.de.translation"
-	])
-	
-	
-	
+]
+
+## 自动加载单例名称
+const AUTOLOAD_DATABASE := "KND_Database"
+
+## 插件实例变量
+var konado_editor_instance: KonadoEditorWindow = null
+var import_plugin: EditorImportPlugin
+var kdb_import_plugin: EditorImportPlugin
+var csv_import_plugin: EditorImportPlugin
+var open_konado_editor_btn: Button = null
 
 
 func _enter_tree() -> void:
-	# 添加自动加载单例
-	add_autoload_singleton("KS_SAVE_AND_LOAD",SAVE_AND_LOAD)
-	add_autoload_singleton("KND_Database", KND_DATABASE)
+	_setup_autoload_singletons()
+	_setup_import_plugins()
+	_setup_editor_interface()
+	_setup_internationalization()
 	
-	# 注册自定义资源类型
-	#add_custom_type("DialogueData", "Resource", DIALOGUE_DATA_SCRIPT, null)
+	_print_loading_message()
 
-	# 初始化导入插件
-	## TODO: 未来用字典遍历方式添加
+
+func _exit_tree() -> void:
+	_cleanup_import_plugins()
+	_cleanup_editor_interface()
+	_cleanup_autoload_singletons()
+	
+	print("Konado unloaded")
+
+
+## 设置自动加载单例
+func _setup_autoload_singletons() -> void:
+	add_autoload_singleton(AUTOLOAD_DATABASE, KND_DATABASE)
+
+
+## 设置导入插件
+func _setup_import_plugins() -> void:
 	import_plugin = IMPORTER_SCRIPT.new()
 	kdb_import_plugin = KDB_SCRIPT.new()
-	#csv_import_plugin = CSV_IMPORTER_SCRIPT.new()
+	# csv_import_plugin = CSV_IMPORTER_SCRIPT.new()  # 未来启用
 	
 	add_import_plugin(import_plugin)
 	add_import_plugin(kdb_import_plugin)
-	add_import_plugin(csv_import_plugin)
+	# add_import_plugin(csv_import_plugin)  # 未来启用
 
-	# 从version.txt读取字符串并打印
-	print(load_string("res://addons/konado/version.txt"))
 
-	help_doc_btn = _create_docs_btn()
-	open_konado_editor_btn = _create_editor_toolbar_btn()
-	open_konado_editor_btn.toggle_mode = true
-	add_control_to_container(EditorPlugin.CONTAINER_TOOLBAR, help_doc_btn)
-	add_control_to_container(EditorPlugin.CONTAINER_TOOLBAR, open_konado_editor_btn)
-	
-	# 设置翻译文件路径
-	ProjectSettings.set_setting("internationalization/locale/translations", translations_paths)
-	
-	# 设置区域过滤模式为1 (允许所有区域)
-	ProjectSettings.set_setting("internationalization/locale/locale_filter_mode", 1)
-	
-	# 保存项目设置更改
+## 设置编辑器界面
+func _setup_editor_interface() -> void:
+	open_konado_editor_btn = _create_editor_toolbar_button()
+	add_control_to_container(CONTAINER_TOOLBAR, open_konado_editor_btn)
+
+
+## 设置国际化
+func _setup_internationalization() -> void:
+	ProjectSettings.set_setting("internationalization/locale/translations", TRANSLATION_PATHS)
+	ProjectSettings.set_setting("internationalization/locale/locale_filter_mode", 1)  # 允许所有区域
 	ProjectSettings.save()
 
-	print("Konado loaded")
 
-func load_string(path: String) -> String:
-	return FileAccess.open(path, FileAccess.READ).get_as_text()
+## 创建编辑器工具栏按钮
+func _create_editor_toolbar_button() -> Button:
+	var button := Button.new()
+	button.text = "Konado 编辑器"
+	button.toggle_mode = true
+	button.pressed.connect(_on_konado_editor_button_pressed)
+	return button
+
 
 ## 打开Konado编辑器
 func open_konado_editor() -> void:
@@ -98,50 +97,42 @@ func open_konado_editor() -> void:
 		konado_editor_instance = KonadoEditorWindow.new()
 		get_editor_interface().get_base_control().add_child(konado_editor_instance)
 		konado_editor_instance.popup()
-	pass
 
-func _create_docs_btn() -> Button:
-	var btn = Button.new()
-	btn.text = "Konado 文档"
-	btn.pressed.connect(func(): 
-		# 跳转到Konado文档
-		var url = "https://godothub.com/konado/tutorial/install.html"
-		var error = OS.shell_open(url)
-		if error:
-			printerr("请手动打开 https://godothub.com/konado/tutorial/install.html 网页")
-	)
-	return btn
 
-func _create_editor_toolbar_btn() -> Button:
-	var btn = Button.new()
-	btn.text = "Konado 编辑器"
-	btn.pressed.connect(func():
-		open_konado_editor()
-	)
-	return btn
-
-func _exit_tree() -> void:
-	# 移除导入插件
+## 清理导入插件
+func _cleanup_import_plugins() -> void:
 	if import_plugin:
 		remove_import_plugin(import_plugin)
 		import_plugin = null
-		
+	
 	if kdb_import_plugin:
 		remove_import_plugin(kdb_import_plugin)
 		kdb_import_plugin = null
-
+	
 	if csv_import_plugin:
 		remove_import_plugin(csv_import_plugin)
 		csv_import_plugin = null
 
 
-	remove_control_from_container(EditorPlugin.CONTAINER_TOOLBAR, help_doc_btn)
-	remove_control_from_container(EditorPlugin.CONTAINER_TOOLBAR, open_konado_editor_btn)
+## 清理编辑器界面
+func _cleanup_editor_interface() -> void:
+	if open_konado_editor_btn:
+		remove_control_from_container(CONTAINER_TOOLBAR, open_konado_editor_btn)
+		open_konado_editor_btn.queue_free()
+		open_konado_editor_btn = null
 
-	# 清理自动加载和自定义类型
-	remove_autoload_singleton("KS_SAVE_AND_LOAD")
-	remove_autoload_singleton("KND_Database")
-	
 
-	
-	print("Konado unloaded")
+## 清理自动加载单例
+func _cleanup_autoload_singletons() -> void:
+	remove_autoload_singleton(AUTOLOAD_DATABASE)
+
+
+## 打印加载信息
+func _print_loading_message() -> void:
+	print("Konado %s %s" % [VERSION, CODENAME])
+	print("Konado loaded")
+
+
+## 编辑器按钮按下回调
+func _on_konado_editor_button_pressed() -> void:
+	open_konado_editor()
