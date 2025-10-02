@@ -38,13 +38,7 @@ const KND_CLASS_DB: Dictionary[String, String] = {
 	"KND_Bgm": "res://addons/konado/knd_data/audio/knd_bgm.gd",
 	"KND_Voice": "res://addons/konado/knd_data/audio/knd_voice.gd",
 ## 镜头
-	"KND_Shot": "res://addons/konado/knd_data/shot/knd_shot.gd",
-## 对话
-	"KND_Dialogue": "res://addons/konado/knd_data/dialogue/knd_dialogue.gd",
-## 具体的对话类型
-	"KND_Ordinary_Dialogue": "res://addons/konado/knd_data/dialogue/knd_ordinary_dialogue.gd",
-	"KND_DisplayActor_Dialogue": "res://addons/konado/knd_data/dialogue/knd_display_actor_dialogue.gd",
-	"KND_Actor_Change_State_Dialogue": "res://addons/konado/knd_data/dialogue/knd_actor_change_state_dialogue.gd"
+	"KND_Shot": "res://addons/konado/knd_data/shot/knd_shot.gd"
 }
 
 var data_id_number: int = 0 ## id 计数
@@ -285,19 +279,16 @@ func get_data_property(id: int, property: String) -> Variant:
 	if not tmp_knd_data_dic.has(id):
 		printerr("无法获取数据属性 " + property)
 		return null
-	# 因为无法实例化子类，所以直接读取_source_data的值
-	# 因此请确保_source_data的值及时刷新
-	var source_data: Dictionary = tmp_knd_data_dic[id]._source_data
-	if source_data != null:
-		if source_data.has(property):
-			return source_data.get(property)
-		else:
-			printerr("无法获取不存在的数据属性 " + property)
-	else:
-		printerr("数据_source_data为null，请检查" + property)
+	var script_path = KND_CLASS_DB[tmp_knd_data_dic[id].type]
+	var script: GDScript = load(script_path)
+	if script != null and script is GDScript:
+		var data = script.new()
+		data._source_data = tmp_knd_data_dic[id]._source_data
+		data.update()
+		return data.get(property)
 	return null
 
-## 设置数据属性z
+## 设置数据属性
 func set_data(id: int, property: String, value: Variant) -> void:
 	if not tmp_knd_data_dic.has(id):
 		return
