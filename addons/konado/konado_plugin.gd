@@ -10,7 +10,7 @@ const CODENAME := "Mooncake"
 const DIALOGUE_DATA_SCRIPT := preload("res://addons/konado/scripts/dialogue/dialogue_shot.gd")
 const IMPORTER_SCRIPT := preload("res://addons/konado/importer/konado_importer.gd")
 const KDB_SCRIPT := preload("res://addons/konado/importer/kdb_importer.gd")
-const SAVE_AND_LOAD := "res://addons/konado/scripts/save_and_load/SaL.gd"
+const KDIC_SCRIPT := preload("res://addons/konado/editor/components/ks_csv_importer/ks_csv_importer.gd")
 const KND_DATABASE := "res://addons/konado/database/knd_database.gd"
 
 ## 翻译文件路径
@@ -30,7 +30,7 @@ const AUTOLOAD_DATABASE := "KND_Database"
 var konado_editor_instance: KonadoEditorWindow = null
 var import_plugin: EditorImportPlugin
 var kdb_import_plugin: EditorImportPlugin
-var csv_import_plugin: EditorImportPlugin
+var kdic_import_plugin: EditorImportPlugin
 var open_konado_editor_btn: Button = null
 
 
@@ -60,13 +60,13 @@ func _setup_autoload_singletons() -> void:
 func _setup_import_plugins() -> void:
 	import_plugin = IMPORTER_SCRIPT.new()
 	kdb_import_plugin = KDB_SCRIPT.new()
-	# csv_import_plugin = CSV_IMPORTER_SCRIPT.new()  # 未来启用
+	kdic_import_plugin = KDIC_SCRIPT.new()
 	
 	add_import_plugin(import_plugin)
 	add_import_plugin(kdb_import_plugin)
-	# add_import_plugin(csv_import_plugin)  # 未来启用
-
-
+	add_import_plugin(kdic_import_plugin)
+	
+	
 ## 设置编辑器界面
 func _setup_editor_interface() -> void:
 	open_konado_editor_btn = _create_editor_toolbar_button()
@@ -108,11 +108,10 @@ func _cleanup_import_plugins() -> void:
 	if kdb_import_plugin:
 		remove_import_plugin(kdb_import_plugin)
 		kdb_import_plugin = null
-	
-	if csv_import_plugin:
-		remove_import_plugin(csv_import_plugin)
-		csv_import_plugin = null
-
+		
+	if kdic_import_plugin:
+		remove_import_plugin(kdic_import_plugin)
+		kdic_import_plugin = null
 
 ## 清理编辑器界面
 func _cleanup_editor_interface() -> void:

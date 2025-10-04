@@ -390,9 +390,12 @@ func _parse_audio(line: String, dialog: Dialogue) -> bool:
 	
 	var parts = line.split(" ", false)
 	if parts[0] == "play":
-		dialog.dialog_type = Dialogue.Type.Play_BGM if parts[1] == "bgm" else Dialogue.Type.Play_SoundEffect
+		if parts[1] == "bgm":
+			dialog.dialog_type = Dialogue.Type.Play_BGM 
+		elif parts[1] == "sfx":
+			dialog.dialog_type = Dialogue.Type.Play_SoundEffect
 		dialog["bgm_name" if parts[1] == "bgm" else "soundeffect_name"] = parts[2]
-	else:
+	elif parts[0] == "stop":
 		dialog.dialog_type = Dialogue.Type.Stop_BGM
 	
 	return true

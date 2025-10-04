@@ -118,6 +118,21 @@ func test_parse_actor_show():
 	assert_eq(dialog.dialog_type, Dialogue.Type.Display_Actor, "对话类型应该是 Display_Actor")
 	assert_not_null(dialog.show_actor, "show_actor 不应该为空")
 
+func test_parse_play_bgm() -> void:
+	var line = "play bgm bgm_1"
+	var dialog = Dialogue.new()
+	var result = interpreter._parse_audio(line, dialog)
+	assert_true(result, "应该成功解析播放BGM行")
+	assert_eq(dialog.dialog_type, Dialogue.Type.Play_BGM, "对话类型应该是 Play_BGM")
+	assert_not_null(dialog.bgm_name, "bgm_name 不应该为空")
+	
+func test_parse_play_sfx() -> void:
+	var line = "play sfx sfx_1"
+	var dialog = Dialogue.new()
+	var result = interpreter._parse_audio(line, dialog)
+	assert_true(result, "应该成功解析播放SFX行")
+	assert_eq(dialog.dialog_type, Dialogue.Type.Play_SoundEffect, "对话类型应该是 Play_SoundEffect")
+	assert_not_null(dialog.soundeffect_name, "soundeffect_name 不应该为空")
 
 func test_parse_dialog():
 	# 测试解析对话行

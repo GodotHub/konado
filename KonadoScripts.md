@@ -78,7 +78,7 @@ play bgm <BGM名称>
 
 #### 播放音效
 ```
-play sound <音效名称>
+play sfx <音效名称>
 ```
 
 #### 停止BGM
