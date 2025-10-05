@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://dbfoi0nkkm0bx"]
+[gd_scene load_steps=3 format=3 uid="uid://dbfoi0nkkm0bx"]
 
-[ext_resource type="Texture2D" uid="uid://clfrj5ldg3i3k" path="res://addons/konado/editor/ui/icon/icon_20.svg" id="1_gkmbu"]
+[ext_resource type="Script" uid="uid://bl3vp1uiqbgj" path="res://addons/konado/runtime/template/background/background.gd" id="1_o6big"]
+[ext_resource type="Texture2D" uid="uid://dtisopb13n3dw" path="res://addons/konado/runtime/template/background/bg.png" id="2_weti0"]
 
 [node name="background1" type="Control"]
 layout_mode = 3
@@ -9,6 +10,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_o6big")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 1
@@ -17,6 +19,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_gkmbu")
+scale = Vector2(0.9358512, 1.0146736)
+texture = ExtResource("2_weti0")
 expand_mode = 1
-stretch_mode = 5
+stretch_mode = 3

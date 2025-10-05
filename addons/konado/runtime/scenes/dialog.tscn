@@ -8,7 +8,7 @@
 [ext_resource type="Script" uid="uid://cfbojxb1pdbrs" path="res://addons/konado/scripts/audio/audio_interface.gd" id="4_gd2ll"]
 [ext_resource type="Texture2D" uid="uid://bb7nhjioefh8a" path="res://sample/demo/sample_arts/示例-咖啡馆-背景.png" id="4_qodmk"]
 [ext_resource type="Script" uid="uid://cbf7mvlofpiix" path="res://addons/konado/scripts/items/item_interface.gd" id="4_utfb4"]
-[ext_resource type="PackedScene" uid="uid://dahbi42p77rwu" path="res://addons/konado/runtime/scenes/dialog_review.tscn" id="8_qodmk"]
+[ext_resource type="PackedScene" uid="uid://dahbi42p77rwu" path="res://addons/konado/editor/view/ks_editor/dialog_review.tscn" id="8_qodmk"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_e5o0s"]
 
@@ -191,7 +191,7 @@ layout_mode = 1
 anchors_preset = 0
 offset_right = 1280.0
 offset_bottom = 720.0
-scale = Vector2(1.7992188, 1.7992188)
+scale = Vector2(1.6777778, 1.6777778)
 
 [node name="EffectLayer" type="ColorRect" parent="DialogUI/ActingInterface"]
 layout_mode = 2

@@ -1,4 +1,6 @@
-[gd_scene format=3 uid="uid://6i2hxe6fxdt1"]
+[gd_scene load_steps=2 format=3 uid="uid://6i2hxe6fxdt1"]
+
+[ext_resource type="Script" uid="uid://ep7ruwnvd0fo" path="res://addons/konado/editor/view/popup/character/character_edit_window.gd" id="1_ymi4o"]
 
 [node name="bgm_edit" type="Window" groups=["Window"]]
 auto_translate_mode = 1
@@ -8,7 +10,6 @@ oversampling_override = 1.0
 title = "背景编辑"
 initial_position = 1
 size = Vector2i(1276, 732)
-visible = false
 transient = true
 exclusive = true
 transparent = true
