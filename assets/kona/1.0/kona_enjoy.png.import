@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://um42oueoavmj"
-path="res://.godot/imported/KonadoBanner.png-1a3852569375beb0977f11f355d6485b.ctex"
+uid="uid://ci1i50rp0653s"
+path="res://.godot/imported/kona_enjoy.png-f34e16952c81ddd6f2d2f9b0e245b62f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/banner/1.0/KonadoBanner.png"
-dest_files=["res://.godot/imported/KonadoBanner.png-1a3852569375beb0977f11f355d6485b.ctex"]
+source_file="res://assets/kona/1.0/kona_enjoy.png"
+dest_files=["res://.godot/imported/kona_enjoy.png-f34e16952c81ddd6f2d2f9b0e245b62f.ctex"]
 
 [params]
 
