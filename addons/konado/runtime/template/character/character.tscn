@@ -1,30 +1,30 @@
-[gd_scene load_steps=2 format=3 uid="uid://dcwk5so2ohcc2"]
+[gd_scene load_steps=3 format=3 uid="uid://dcwk5so2ohcc2"]
 
-[ext_resource type="Texture2D" uid="uid://q2w6piu3t1md" path="res://addons/konado/editor/ui/icon/icon_19.svg" id="1_dbs1i"]
+[ext_resource type="Texture2D" uid="uid://cargjy7wp8wfn" path="res://addons/konado/runtime/template/character/kona.png" id="1_fuvv2"]
+[ext_resource type="Script" uid="uid://mksyuojdc6ns" path="res://addons/konado/runtime/template/character/character.gd" id="1_gnto7"]
 
 [node name="character1" type="Control"]
 layout_mode = 3
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
+anchors_preset = 15
+anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
-grow_vertical = 0
+grow_vertical = 2
+script = ExtResource("1_gnto7")
+character_position = 1
 
 [node name="TextureRect" type="TextureRect" parent="."]
-custom_minimum_size = Vector2(502.21, 800)
+unique_name_in_owner = true
 layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
+anchors_preset = 15
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -400.0
-offset_top = -800.0
-offset_right = 400.0
+offset_left = -320.0
+offset_right = -320.0
 grow_horizontal = 2
-grow_vertical = 0
-texture = ExtResource("1_dbs1i")
-expand_mode = 2
+grow_vertical = 2
+texture = ExtResource("1_fuvv2")
+expand_mode = 1
 stretch_mode = 5
+
+[connection signal="resized" from="." to="." method="_on_resized"]

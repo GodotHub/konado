@@ -156,19 +156,6 @@ auto_brace_completion_enabled = true
 auto_brace_completion_highlight_matching = true
 script = ExtResource("3_43nnm")
 
-[node name="MarginContainer" type="MarginContainer" parent="dock"]
-layout_mode = 2
-size_flags_horizontal = 8
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 10
-
-[node name="WordCount" type="Label" parent="dock/MarginContainer"]
-unique_name_in_owner = true
-modulate = Color(1, 1, 1, 0.443137)
-layout_mode = 2
-size_flags_horizontal = 8
-text = "统计"
-
 [node name="staff_window" type="Window" parent="." groups=["Window"]]
 unique_name_in_owner = true
 editor_description = "文本节点的高级编辑器"

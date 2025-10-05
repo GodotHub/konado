@@ -9,29 +9,29 @@ colors = PackedColorArray(0.435294, 0.435294, 0.588235, 1, 0.682353, 0.819608, 0
 gradient = SubResource("Gradient_maqkw")
 fill_to = Vector2(1, 1)
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6txxg"]
-
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vryc6"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_e7npw"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4gq6m"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qkyha"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6txxg"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fbptt"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bwxdg"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qkyha"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bnked"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4gq6m"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7keef"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_e7npw"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g80n3"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ow321"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7keef"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bnked"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bwxdg"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_c0l82"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ow321"]
 
 [node name="GameSettings" type="Control" node_paths=PackedStringArray("bgm_slider", "soundeffect_slider", "voice_slider", "display_options", "resolution_options", "vsync_options", "dialogspeed_slider", "c_lable", "c_options", "reset_btn")]
 layout_mode = 3
@@ -120,8 +120,8 @@ max_value = 0.0
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 10
-theme_override_styles/hover = SubResource("StyleBoxEmpty_6txxg")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_vryc6")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_6txxg")
 text = "重置所有设置（重启游戏生效）"
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="TextureRect/MarginContainer/HBoxContainer"]
@@ -142,10 +142,10 @@ text = "窗口设置"
 [node name="窗口设置" type="OptionButton" parent="TextureRect/MarginContainer/HBoxContainer/VBoxContainer2"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 26
-theme_override_styles/focus = SubResource("StyleBoxEmpty_e7npw")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_4gq6m")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_qkyha")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_fbptt")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_qkyha")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_4gq6m")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_e7npw")
 selected = 0
 item_count = 3
 popup/item_0/text = "窗口"
@@ -163,10 +163,10 @@ text = "分辨率"
 [node name="分辨率设置" type="OptionButton" parent="TextureRect/MarginContainer/HBoxContainer/VBoxContainer2"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 26
-theme_override_styles/focus = SubResource("StyleBoxEmpty_bwxdg")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_bnked")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_7keef")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_g80n3")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_7keef")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_bnked")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_bwxdg")
 selected = 0
 item_count = 6
 popup/item_0/text = "1280x720"
@@ -190,10 +190,10 @@ text = "垂直同步"
 [node name="垂直同步设置" type="OptionButton" parent="TextureRect/MarginContainer/HBoxContainer/VBoxContainer2"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 26
-theme_override_styles/focus = SubResource("StyleBoxEmpty_bwxdg")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_bnked")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_7keef")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_g80n3")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_7keef")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_bnked")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_bwxdg")
 selected = 0
 item_count = 2
 popup/item_0/text = "开"
@@ -249,10 +249,10 @@ text = "控制台"
 visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 26
-theme_override_styles/focus = SubResource("StyleBoxEmpty_bwxdg")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_bnked")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_7keef")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_g80n3")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_7keef")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_bnked")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_bwxdg")
 selected = 1
 item_count = 2
 popup/item_0/text = "开"
@@ -268,10 +268,10 @@ text = "掌机模式"
 [node name="掌机模式" type="OptionButton" parent="TextureRect/MarginContainer/HBoxContainer/VBoxContainer3"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 26
-theme_override_styles/focus = SubResource("StyleBoxEmpty_bwxdg")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_bnked")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_7keef")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_g80n3")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_7keef")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_bnked")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_bwxdg")
 selected = 0
 item_count = 2
 popup/item_0/text = "开"
@@ -289,8 +289,8 @@ text = "关于"
 visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 21
-theme_override_styles/hover = SubResource("StyleBoxEmpty_ow321")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_c0l82")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_ow321")
 text = "制作名单"
 alignment = 0
 
@@ -298,8 +298,8 @@ alignment = 0
 visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 21
-theme_override_styles/hover = SubResource("StyleBoxEmpty_ow321")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_c0l82")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_ow321")
 text = "致谢名单"
 alignment = 0
 
@@ -307,7 +307,7 @@ alignment = 0
 visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 21
-theme_override_styles/hover = SubResource("StyleBoxEmpty_ow321")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_c0l82")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_ow321")
 text = "用户许可条款"
 alignment = 0

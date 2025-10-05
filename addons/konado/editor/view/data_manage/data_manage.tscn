@@ -47,6 +47,7 @@ unique_name_in_owner = true
 [node name="bgm_edit" parent="editor" instance=ExtResource("14_m825n")]
 unique_name_in_owner = true
 size = Vector2i(1152, 648)
+visible = false
 
 [node name="background_edit3" type="Window" parent="editor" groups=["Window"]]
 unique_name_in_owner = true
@@ -103,33 +104,22 @@ custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Button" type="Button" parent="data_manage/project_inf"]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -64.0
-offset_top = 16.0
-offset_right = -12.0
-offset_bottom = 54.0
-grow_horizontal = 0
-text = "设置"
-
 [node name="BoxContainer2" type="BoxContainer" parent="data_manage/project_inf"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 29.0
-offset_top = 197.0
+offset_top = 30.0
 offset_right = -29.0
-offset_bottom = -158.0
+offset_bottom = -22.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 20
 vertical = true
 
 [node name="TextureRect" type="TextureRect" parent="data_manage/project_inf/BoxContainer2"]
+visible = false
 custom_minimum_size = Vector2(0, 300)
 layout_mode = 2
 texture = ExtResource("1_lfi02")
@@ -148,26 +138,15 @@ placeholder_text = "游戏简介"
 [node name="BoxContainer" type="BoxContainer" parent="data_manage/project_inf/BoxContainer2"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="data_manage/project_inf/BoxContainer2/BoxContainer"]
-modulate = Color(1, 1, 1, 0.407843)
+[node name="LinkButton" type="LinkButton" parent="data_manage/project_inf/BoxContainer2/BoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 3
-text = "版本号"
-
-[node name="Label2" type="Label" parent="data_manage/project_inf/BoxContainer2/BoxContainer"]
-modulate = Color(1, 1, 1, 0.407843)
-layout_mode = 2
-size_flags_horizontal = 3
-text = "2.0"
-
-[node name="LinkButton" type="LinkButton" parent="data_manage/project_inf"]
-layout_mode = 0
-offset_left = 36.0
-offset_top = 19.0
-offset_right = 183.0
-offset_bottom = 59.0
 text = "Konado"
 uri = "https://godothub.com/konado/"
+
+[node name="Button" type="Button" parent="data_manage/project_inf/BoxContainer2/BoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
+text = "设置"
 
 [node name="BoxContainer3" type="SplitContainer" parent="data_manage"]
 layout_mode = 2
