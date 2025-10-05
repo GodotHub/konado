@@ -6,7 +6,7 @@ hero:
   text: "Visual Novel Framework"
   tagline: "基于Godot Engine的视觉小说框架"
   image:
-    src: "https://godothub.atomgit.net/web/icon/konado.png"
+    src: "https://godothub.atomgit.net/web/icon/konado/kona/kona.png"
   actions:
     - theme: brand
       text: 快速开始
@@ -17,7 +17,7 @@ hero:
 
 features:
   - title: 自由分发
-    details: 采用了以宽松著称的MIT协议
+    details: 采用了以宽松著称的BSD协议
   - title: 强大平台
     details: 为世界上最流行的开源引擎打造
   - title: 值得信赖
