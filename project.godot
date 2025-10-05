@@ -23,9 +23,10 @@ config/icon="uid://b5olx2vwoscbr"
 
 [autoload]
 
-KS_SAVE_AND_LOAD="*res://addons/konado/scripts/save_and_load/SaL.gd"
 KND_Database="*res://addons/konado/database/knd_database.gd"
 KonadoAPI="*res://addons/konadotnet/Runtime/API/KonadoAPI.cs"
+KonadoMacros="*res://addons/konado/konado_macros.gd"
+KONADO_MACROS="*res://addons/konado/konado_macros.gd"
 
 [display]
 

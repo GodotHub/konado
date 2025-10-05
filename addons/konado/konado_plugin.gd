@@ -12,6 +12,7 @@ const IMPORTER_SCRIPT := preload("res://addons/konado/importer/konado_importer.g
 const KDB_SCRIPT := preload("res://addons/konado/importer/kdb_importer.gd")
 const KDIC_SCRIPT := preload("res://addons/konado/editor/components/ks_csv_importer/ks_csv_importer.gd")
 const KND_DATABASE := "res://addons/konado/database/knd_database.gd"
+const KONADO_MACROS := "res://addons/konado/konado_macros.gd"
 
 ## 翻译文件路径
 const TRANSLATION_PATHS: PackedStringArray = [
@@ -25,6 +26,7 @@ const TRANSLATION_PATHS: PackedStringArray = [
 
 ## 自动加载单例名称
 const AUTOLOAD_DATABASE := "KND_Database"
+const AUTOLOAD_KONADO_MACROS := "KonadoMacros"
 
 ## 插件实例变量
 var konado_editor_instance: KonadoEditorWindow = null
@@ -53,6 +55,7 @@ func _exit_tree() -> void:
 
 ## 设置自动加载单例
 func _setup_autoload_singletons() -> void:
+	add_autoload_singleton(AUTOLOAD_KONADO_MACROS, KONADO_MACROS)
 	add_autoload_singleton(AUTOLOAD_DATABASE, KND_DATABASE)
 
 
@@ -124,6 +127,7 @@ func _cleanup_editor_interface() -> void:
 ## 清理自动加载单例
 func _cleanup_autoload_singletons() -> void:
 	remove_autoload_singleton(AUTOLOAD_DATABASE)
+	remove_autoload_singleton(AUTOLOAD_KONADO_MACROS)
 
 
 ## 打印加载信息
