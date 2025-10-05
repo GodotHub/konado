@@ -35,10 +35,6 @@ func _get_option_visibility(path, option_name, options) -> bool:
 	return true
 
 func _import(source_file, save_path, options, platform_variants, gen_files) -> Error:
-	
-
-	print("Importing %s" % source_file)
-	
 	# 读取文件内容
 	var file = FileAccess.open(source_file, FileAccess.READ)
 	if file == null:
@@ -89,5 +85,4 @@ func _import(source_file, save_path, options, platform_variants, gen_files) -> E
 	if error != OK:
 		printerr("ResourceSaver error: ", error)
 		return error
-
 	return OK

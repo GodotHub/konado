@@ -138,7 +138,8 @@ func create_data_instance(type: String) -> KND_Data:
 			knd_data._source_data["name"] = knd_data.get("name")
 			data_id_name_map[knd_data.id] = knd_data.get("name")
 		knd_data.emit_changed()
-		knd_data.print_data()
+		if KonadoMacros.is_enabled("DEBUG"):
+			knd_data.print_data()
 		
 		# 赋值对应类型
 		knd_data.type = type
@@ -186,7 +187,8 @@ func create_data(type: String) -> int:
 		printerr("保存数据失败: " + save_path)
 		return -1
 	
-	print("创建数据成功，保存路径为: ", save_path)
+	if KonadoMacros.is_enabled("DEBUG"):
+		print("创建数据成功，保存路径为: ", save_path)
 	
 	## TODO: 不知道有没有用，还能不能立即触发导入
 	if Engine.is_editor_hint():
@@ -315,7 +317,8 @@ func rename_data(id: int, new_name: String) -> bool:
 		data._source_data["name"] = data.get("name")
 		data_id_name_map[data.id] = data.get("name")
 	data.emit_changed()
-	data.print_data()
+	if KonadoMacros.is_enabled("DEBUG"):
+		data.print_data()
 	return true
 
 func add_sub_source_data(parent: int, id: int, data: Dictionary) -> void:
@@ -362,7 +365,8 @@ func save_database() -> void:
 	
 	_save_data_id_config()
 	
-	print("数据库配置保存成功: ", PROJECT_CONFIG_PATH)
+	if KonadoMacros.is_enabled("DEBUG"):
+		print("数据库配置保存成功: ", PROJECT_CONFIG_PATH)
 	#update_data_tree.emit()
 
 

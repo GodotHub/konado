@@ -116,8 +116,8 @@ func save_data(path: String) -> bool:
 	var json_string: String = JSON.stringify(_source_data)
 	file.store_line(json_string)
 	file.close()
-	
-	print("保存数据 " + path)
+	if KonadoMacros.is_enabled("DEBUG"):
+		print("保存数据 " + path)
 	return true
 
 ## 从本地加载数据
@@ -141,7 +141,8 @@ func load_data(path: String) -> void:
 	if parse_result == OK:
 		_source_data = json.get_data()
 		update()
-		print("加载数据 " + path)
+		if KonadoMacros.is_enabled("DEBUG"):
+			print("加载数据 " + path)
 	else:
 		print("JSON 解析失败，错误: ", json.get_error_message(), " 在位置: ", json.get_error_line())
 	update()
