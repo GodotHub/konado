@@ -9,6 +9,9 @@ const icon = preload("uid://b62h640a6knig")
 
 @export var shot_id: String = ""
 
+## 源剧情文本
+@export var source_story: String = ""
+
 # TODO: 对话列表
 @export var dialogues: Array[Dialogue] = []
 
