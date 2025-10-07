@@ -7,7 +7,6 @@ const VERSION := "2.0"
 const CODENAME := "Mooncake"
 
 ## 资源路径常量
-const DIALOGUE_DATA_SCRIPT := preload("res://addons/konado/scripts/dialogue/dialogue_shot.gd")
 const IMPORTER_SCRIPT := preload("res://addons/konado/importer/konado_importer.gd")
 const KDB_SCRIPT := preload("res://addons/konado/importer/kdb_importer.gd")
 const KDIC_SCRIPT := preload("res://addons/konado/editor/components/ks_csv_importer/ks_csv_importer.gd")

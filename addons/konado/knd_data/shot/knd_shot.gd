@@ -20,14 +20,22 @@ const icon: Texture2D = preload("uid://b62h640a6knig")
 # tag字典
 @export var branchs: Dictionary = {}
 
+## 分支源数据
+@export var source_branchs: Dictionary[String, Dictionary] = {}
+
 ## key是演员名，value是角色id
 @export var actor_character_map: Dictionary[String, int] = {}
 
 ## 获取对话数据
 func get_dialogues() -> Array[Dialogue]:
 	dialogues.clear()
+	branchs.clear()
 	for data in dialogues_source_data:
 		var dialogue = Dialogue.new()
 		dialogue.from_json(str(data))
 		dialogues.append(dialogue)
+	for branch in source_branchs.keys():
+		var branch_dialogue: Dialogue = Dialogue.new()
+		branch_dialogue.deserialize_from_dict(source_branchs[branch])
+		branchs.set(branch, branch_dialogue)
 	return dialogues
