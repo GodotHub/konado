@@ -1,19 +1,7 @@
-################################################################################
-# Project: Konado
-# File: dialogue_manager.gd
-# Author: DSOE1024
-# Created: 2025-06-27
-# Last Modified: 2025-07-13
-# Description:
-#   对话管理器
-################################################################################
-
+## 对话管理器
 @tool
-
 extends Control
-class_name DialogueManager
-
-## 对话配置
+class_name KND_DialogueManager
 
 @export_group("对话配置")
 
@@ -57,10 +45,6 @@ var dialogueState: DialogState
 @onready var _acting_interface: ActingInterface = $DialogUI/ActingInterface
 ## 音频接口
 @onready var _audio_interface: DialogAudioInterface = $AudioInterface
-#存档UI界面接口
-@onready var _SaL_UI: SaL_UI = $DialogUI/SaLUI
-##回顾界面UI接口
-@onready var _review_UI := $"DialogUI/DialogReview"
 
 ## 对话的交互按钮，比如存档按钮，读档按钮，继续按钮
 ## 存档按钮
@@ -76,12 +60,10 @@ var dialogueState: DialogState
 @onready var _autoPlayButton: Button = $"DialogUI/DialogueInterface/DialogueBox/MarginContainer/DialogContent/ActionsContainer/自动"
 ## 选项容器（用于实现点击事件屏蔽）
 @onready var _choicesContainer: VBoxContainer = $DialogUI/DialogueInterface/ChoicesBox/ChoicesContainer
-## 回顾按钮
-@onready var _reviewButton : Button = $"DialogUI/DialogueInterface/DialogueBox/MarginContainer/DialogContent/ActionsContainer/回顾"
 
 
 ## 对话资源
-var dialog_data: DialogueShot = null
+var dialog_data: KND_Shot = null
 
 
 ## 对话资源ID
@@ -103,7 +85,7 @@ var can_continue = true
 ## 背景列表
 @export var background_list: BackgroundList
 ## 对话列表
-@export var dialogue_chapter: DialogueChapter
+@export var shots: Array[KND_Shot]
 ## BGM列表
 @export var bgm_list: DialogBGMList
 ## 配音资源列表
@@ -131,16 +113,13 @@ func _ready() -> void:
 	# 连接按钮信号
 	# Save
 	if not _saveButton.button_up.is_connected(_on_savebutton_press):
-			_saveButton.button_up.connect(_on_savebutton_press)
+		_saveButton.button_up.connect(_on_savebutton_press)
 	# Load
 	if not _loadButton.button_up.is_connected(_on_loadbutton_press):
 		_loadButton.button_up.connect(_on_loadbutton_press)
 	# Auto
 	if not _autoPlayButton.toggled.is_connected(start_autoplay):
 		_autoPlayButton.toggled.connect(start_autoplay)
-	# Review
-	if not _reviewButton.pressed.is_connected(_on_reviewbutton_press):
-		_reviewButton.pressed.connect(_on_reviewbutton_press)
 
 	# 为了适应Snowflake编辑器，在编辑器中不自动初始化对话，防止直接在编辑器场景自动播放
 	# 这个tool特性设计真的非常难蚌...
@@ -161,7 +140,7 @@ func _ready() -> void:
 					print("自动开始对话")
 					#await get_tree().create_timer(0.1).timeout
 					await get_tree().process_frame
-					if dialog_data.dialogs[0].dialog_type == Dialogue.Type.START:
+					if dialog_data.dialogues[0].dialog_type == Dialogue.Type.START:
 						start_dialogue()
 					else: 
 						print("第一句应该是START，请在脚本中修改")
@@ -191,16 +170,16 @@ func print_hello() -> bool:
 ## 初始化对话的方法
 func init_dialogue(callback: Callable = Callable()) -> void:
 	if not debug_mode:
-		if dialogue_chapter == null:
-			printerr("对话列表资源为空")
+		if shots == null:
+			printerr("对话镜头列表资源为空")
 			return
-		if dialogue_chapter.dialogue_shots.size() <= 0:
-			printerr("对话列表没有对话")
+		if shots.size() <= 0:
+			printerr("没有任何对话镜头")
 			return
 		# 如果对话数据为空，则默认为第一个对话数据
 		if dialog_data == null:
-			if not dialogue_chapter.dialogue_shots.size() <= 0:
-				dialog_data = dialogue_chapter.dialogue_shots[0]
+			dialog_data = shots[0]
+			dialog_data.get_dialogues()
 	
 		# 将角色表传给acting_interface
 		_acting_interface.chara_list = chara_list
@@ -219,19 +198,10 @@ func init_dialogue(callback: Callable = Callable()) -> void:
 		callback.call()
 
 ## 设置对话数据的方法
-func set_dialogue_data(dialogue_data: DialogueShot) -> void:
-	if dialogue_data == null:
-		printerr("对话数据为空")
-		return
-	self.dialog_data = dialogue_data
-
-func load_dialogue_data_from_path(path: String) -> void:
-	var dialogue_data = load(path)
-	if dialogue_data == null:
-		printerr("对话数据为空")
-		return
-	self.dialog_data = dialogue_data
-
+func set_dialogue_data(new_shot: KND_Shot) -> void:
+	self.dialog_data = new_shot
+	dialog_data.get_dialogues()
+	
 ## 设置角色表的方法
 func set_chara_list(chara_list: CharacterList) -> void:
 	if chara_list == null:
@@ -256,6 +226,7 @@ func set_bgm_list(bgm_list: DialogBGMList) -> void:
 
 ## 开始对话的方法
 func start_dialogue() -> void:
+	print(dialog_data.get_source_data())
 	# 显示
 	if !_dialog_interface:
 		_dialog_interface.show()
@@ -284,15 +255,15 @@ func _process(delta) -> void:
 				if dialog_data == null:
 					print_rich("[color=red]对话为空[/color]")
 					return
-				if dialog_data.dialogs.size() <= 0:
+				if dialog_data.dialogues.size() <= 0:
 					print_rich("[color=red]对话为空[/color]")
 					_dialogue_goto_state(DialogState.OFF)
 					return
 
 				# 对话类型
-				var dialog_type = dialog_data.dialogs[curline].dialog_type
+				var dialog_type = dialog_data.dialogues[curline].dialog_type
 				# 对话当前句
-				var dialog = dialog_data.dialogs[curline]
+				var dialog = dialog_data.dialogues[curline]
 
 				dialogue_line_start.emit(curline)
 
@@ -321,8 +292,7 @@ func _process(delta) -> void:
 						}
 						datas["name"] = chara_id
 						datas["content"] = content
-						_review_UI._dialog_set(curline,datas["name"],datas["content"])
-					
+		
 					var speed = dialogspeed
 					var playvoice
 					if voice_id:
@@ -432,12 +402,12 @@ func _process(delta) -> void:
 						if tag_dialogues[i].dialog_type == Dialogue.Type.Branch:
 							print_rich("[color=red]标签对话中不能包含标签对话[/color]")
 							continue
-						dialog_data.dialogs.insert(insert_position + i, tag_dialogues[i])
+						dialog_data.dialogues.insert(insert_position + i, tag_dialogues[i])
 					#await get_tree().create_timer(0.001).timeout
 					await get_tree().process_frame
 					
 					print("添加了 %d 个标签对话" % tag_dialogues.size())
-					print("当前对话总数: " + str(dialog_data.dialogs.size()))
+					print("当前对话总数: " + str(dialog_data.dialogues.size()))
 
 					#await get_tree().create_timer(0.01).timeout
 					_process_next()
@@ -492,9 +462,6 @@ func is_click_valid(event):
 ## 处理输入
 func _input(event):
 	if not can_continue:
-		return
-	if _check_opening() == false:
-		_audio_interface.stop_voice()
 		return
 
 	if not debug_mode:
@@ -555,7 +522,7 @@ func _process_next(s: Signal = Signal()) -> void:
 		DialogState.PAUSED:
 			print("对话播放完成，开始播放下一个")
 			# 如果列表中所有对话播放完成了
-			if curline + 1 >= dialog_data.dialogs.size():
+			if curline + 1 >= dialog_data.dialogues.size():
 				# 切换到对话关闭状态
 				_dialogue_goto_state(DialogState.OFF)
 			# 如果列表中还有对话没有播放
@@ -606,7 +573,7 @@ func _continue() -> void:
 			_audio_interface.stop_voice()
 			print("对话播放完成，开始播放下一个")
 			# 如果列表中所有对话播放完成了
-			if curline + 1 >= dialog_data.dialogs.size():
+			if curline + 1 >= dialog_data.dialogues.size():
 				# 切换到对话关闭状态
 				_dialogue_goto_state(DialogState.OFF)
 			# 如果列表中还有对话没有播放
@@ -763,9 +730,6 @@ func on_option_triggered(choice: DialogueChoice) -> void:
 	print("玩家选择按钮： " + str(choice.choice_text))
 	_jump_tag(choice.jump_tag)
 	
-	#为对话回顾提供的文本
-	_review_UI.find_choosen(str(choice.choice_text))
-	
 
 	
 ## 跳转到对话标签的方法
@@ -784,8 +748,8 @@ func _jump_tag(tag: String) -> void:
 	"""
 	if not target_dialogue.is_branch_loaded:
 		# _jump_cur_dialogue(target_dialogue)
-		dialog_data.dialogs.insert(curline + 1, target_dialogue)
-		print("插入标签，对话长度" + str(dialog_data.dialogs.size()))
+		dialog_data.dialogues.insert(curline + 1, target_dialogue)
+		print("插入标签，对话长度" + str(dialog_data.dialogues.size()))
 		target_dialogue.is_branch_loaded = true
 		_jump_curline(curline + 1)
 	# else:
@@ -794,7 +758,7 @@ func _jump_tag(tag: String) -> void:
 
 ## 跳转剧情的方法
 func _jump_shot(data_id: String) -> bool:
-	var jumpdata: DialogueShot
+	var jumpdata: KND_Shot
 	jumpdata = _get_dialog_data(data_id)
 	if jumpdata == null:
 		print("无法完成跳转，没有这个镜头")
@@ -805,16 +769,16 @@ func _jump_shot(data_id: String) -> bool:
 	return true
 
 ## 寻找指定剧情
-func _get_dialog_data(shot_id: String) -> DialogueShot:
+func _get_dialog_data(shot_id: String) -> KND_Shot:
 	print(shot_id)
-	var target_data: DialogueShot
-	for data in dialogue_chapter.dialogue_shots:
+	var target_data: KND_Shot
+	for data in shots:
 		if data.shot_id == shot_id:
 			target_data = data
 	return target_data
 	
 ## 切换剧情的方法
-func _switch_data(data: DialogueShot) -> bool:
+func _switch_data(data: KND_Shot) -> bool:
 	if not data and data.dialogs.size() > 0:
 		return false
 	stop_dialogue()
@@ -828,7 +792,6 @@ func _switch_data(data: DialogueShot) -> bool:
 	
 ## 按下存档按钮
 func _on_savebutton_press():
-	_SaL_UI.check_UI(1) # 打开UI，输入存档格式
 	pass
 
 func _get_file_data(slot_id: int):
@@ -838,69 +801,10 @@ func _get_file_data(slot_id: int):
 	# 停止语音
 	_audio_interface.stop_voice()
 	
-	#更新变量
-	KS_SAVE_AND_LOAD.chara_disc = _acting_interface.actor_dict
-	KS_SAVE_AND_LOAD.background_id = _acting_interface.background_id
-	KS_SAVE_AND_LOAD.chapter_id = dialog_data.chapter_id
-	KS_SAVE_AND_LOAD.bgm_id = _audio_interface.bgm_name
-	KS_SAVE_AND_LOAD.bgm_progress = str("%.2f"%_audio_interface.get_bgm_progress()) # 保留两位小数
-	KS_SAVE_AND_LOAD.voice_id = dialog.voice_id
-	KS_SAVE_AND_LOAD.sound_effect_id = se_id
-	KS_SAVE_AND_LOAD.curline = curline
-	
-	#触发函数
-	KS_SAVE_AND_LOAD._save_game(slot_id)
-
 ## 按下读档按钮
 func _on_loadbutton_press():
-	_SaL_UI.check_UI(2) # 打开UI，输入读档格式
 	pass
-
-## 按下回顾按钮
-func _on_reviewbutton_press():
-	_review_UI.change_visible()
-
-func _load_file_data(slot_id: int):
-	#用于获取变量
-	var dialog = dialog_data.dialogs[curline]
 	
-	if KS_SAVE_AND_LOAD._load_game(slot_id) == true: # 确认文件存在
-		#更新变量
-		_acting_interface.actor_dict = KS_SAVE_AND_LOAD.chara_disc
-		_acting_interface.background_id = KS_SAVE_AND_LOAD.background_id
-		dialog_data.chapter_id = KS_SAVE_AND_LOAD.chapter_id
-		_audio_interface.bgm_name = KS_SAVE_AND_LOAD.bgm_id
-		#音频进度在下列函数中直接调用，不在这里同步
-		dialog.voice_id = KS_SAVE_AND_LOAD.voice_id
-		se_id = KS_SAVE_AND_LOAD.sound_effect_id
-		curline = KS_SAVE_AND_LOAD.curline
-		
-		#跳转剧情，更新背景
-		jump_data_and_curline(dialog_data.chapter_id, curline, _audio_interface.bgm_name, _acting_interface.actor_dict)
-		_display_background(_acting_interface.background_id, ActingInterface.EffectsType.None)
-		
-		#同步音乐播放进度
-		_audio_interface.stop_bgm()
-		_audio_interface.bgm_player.seek(float(KS_SAVE_AND_LOAD.bgm_progress))
-		_audio_interface.bgm_player.play()
-		
-		# 停止并更新语音
-		_audio_interface.stop_voice()
-		_play_voice(dialog.voice_id)
-		
-		#播放音效（停止音效的方法包含在这个方法里了
-		_play_soundeffect(se_id)
-	else:
-		pass
-		print("文件不存在")
-
-#检测是否有任何窗口打开
-func _check_opening() -> bool:
-	if _SaL_UI.All_UI.visible == true:
-		return false
-	else:
-		return true
-
 ## 读取存档用的跳转
 func jump_data_and_curline(data_id: String, _curline: int, bgm_id: String, actor_dict: Dictionary = {}):
 	print("对话ID" + data_id + "   对话线" + str(_curline) + "   角色表：" + str(actor_dict))
@@ -930,7 +834,7 @@ func get_game_progress() -> Dictionary:
 ## 跳转到对话
 func _jump_curline(value: int) -> bool:
 	if value >= 0:
-		if not value >= dialog_data.dialogs.size():
+		if not value >= dialog_data.dialogues.size():
 			# 只在编辑器模式这样
 			if Engine.is_editor_hint():
 				_acting_interface.delete_all_character()
@@ -938,7 +842,7 @@ func _jump_curline(value: int) -> bool:
 				# 临时先这么写吧，以后再优化，目前不崩就行~
 
 				for i in value:
-					var dialog = dialog_data.dialogs[i]
+					var dialog = dialog_data.dialogues[i]
 					var dialog_type = dialog.dialog_type
 					# if dialog.dialog_type == Dialogue.Type.Display_Actor:
 					# 	_display_character(dialog.show_actor)
@@ -1026,14 +930,6 @@ func debug_get_dialogue_frame_info() -> String:
 	+"  章节ID：" + str(chapter_id)
 	return info
 	
-	
-## 调试获取章节列表
-func debug_get_dialog_data_list() -> Array[String]:
-	var data_array: Array[String]
-	for data in dialogue_chapter.dialogue_chapter:
-		data_array.append(data._dialog_data.chapter_id)
-	return data_array
-
 ## 调试加载外部剧情
 func debug_load_dialog_data(data) -> bool:
 	var error = await _switch_data(data)

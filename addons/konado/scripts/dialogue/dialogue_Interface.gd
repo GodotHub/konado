@@ -10,7 +10,7 @@ class_name DialogueInterface
 @onready var _name_lable: RichTextLabel = $DialogueBox/MarginContainer/DialogContent/VBoxContainer/Name
 ## 对话选项按钮容器
 @onready var _choice_container: Container = $ChoicesBox/ChoicesContainer
-@onready var _dialog_manager: DialogueManager = $"../.."
+@onready var _dialog_manager: KND_DialogueManager = $"../.."
 var writertween: Tween
 ## 完成打字的信号
 signal finish_typing
@@ -174,4 +174,3 @@ func display_options(choices: Array[DialogueChoice], choices_tex: Texture = null
 	#为对话回顾提供的数据
 	var curline : int = _dialog_manager.curline
 	var options:Array=choices
-	_review_UI._option_set(curline,choices)
