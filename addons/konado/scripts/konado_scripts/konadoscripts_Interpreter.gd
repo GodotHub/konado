@@ -103,48 +103,12 @@ func process_script(content: String) -> KND_Shot:
 	if not is_init:
 		_scripts_debug(tmp_path, 0, "解释器未初始化，无法解析脚本文件")
 		return
-	#if not path:
-		#_scripts_debug(path, 0, "路径为空，无法打开脚本文件")
-		#return null
-#
-	#if not FileAccess.file_exists(path):
-		#_scripts_debug(path, 0, "文件不存在，无法打开脚本文件")
-		#return null
-#
-	#if not path.ends_with(".ks"):
-		#if allow_custom_suffix:
-			#_scripts_warning(path, 0, "建议使用使用ks作为脚本文件后缀")
-		#else:
-			#_scripts_debug(path, 0, "编译器要求使用ks作为脚本文件后缀，如果需要使用自定义后缀，请开启allow_custom_suffix选项")
-			#return null
-#
-	#tmp_path = path
-
-	# 读取文件内容
-	#var file = FileAccess.open(path, FileAccess.READ)
-	#if not file:
-		#_scripts_debug(path, 0, "无法打开脚本文件")
-		#return null
-	#var lines = file.get_as_text().split("\n")
-	#file.close()
-	
+		
 	var lines: PackedStringArray = content.split("\n")
 	
 	_scripts_info(tmp_path, 0, "开始解析脚本文件")
 
 	var diadata: KND_Shot = KND_Shot.new()
-
-	# 解析元数据
-	var metadata_result = _parse_metadata(lines, tmp_path)
-	dialogue_metadata_regex = null
-	if not metadata_result:
-		_scripts_debug(tmp_path, 0, "元数据解析失败")
-		return diadata
-	diadata.shot_id = metadata_result[0]
-
-
-	_scripts_info(tmp_path, 1, "Shot id：%s" % [diadata.shot_id])
-
 	# 清空演员验证表
 	cur_tmp_actors = []
 
@@ -200,7 +164,7 @@ func process_script(content: String) -> KND_Shot:
 	#diadata.dep_characters = dep_characters
 
 	_scripts_info(tmp_path, 0, "文件：%s 章节ID：%s 对话数量：%d" % 
-		[tmp_path, diadata.shot_id, diadata.dialogues.size()])
+		[tmp_path, diadata.name, diadata.dialogues.size()])
 
 	tmp_path = ""
 
@@ -405,10 +369,8 @@ func _create_actor(parts: PackedStringArray) -> DialogueActor:
 	var y = parts[6].to_int()
 	if y < 0 || x < 0:
 		printerr("区块不能为负数")
-		return null
 	if y > x:
 		printerr("不能将演员显示在不存在的区块")
-		return null
 	actor.actor_position = Vector2(x, y)
 	actor.actor_scale = parts[8].to_float()
 	if parts.size() == 10:
