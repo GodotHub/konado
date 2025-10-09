@@ -734,15 +734,3 @@ func get_data_by_type(type: String) -> Array:
 			result.append(tmp_knd_data_dic[id])
 	database_mutex.unlock()
 	return result
-
-## 根据名称查找数据
-func find_data_by_name(name: String, type: String = "") -> Array:
-	database_mutex.lock()
-	var result := []
-	for id in tmp_knd_data_dic:
-		var data = tmp_knd_data_dic[id]
-		if (type.is_empty() or get_data_type(id) == type) and data.has_method("get_name"):
-			if data.get_name() == name:
-				result.append(data)
-	database_mutex.unlock()
-	return result
