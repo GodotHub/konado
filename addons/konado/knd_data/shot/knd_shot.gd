@@ -26,6 +26,27 @@ const icon: Texture2D = preload("uid://b62h640a6knig")
 ## key是演员名，value是角色id
 @export var actor_character_map: Dictionary[String, int] = {}
 
+## Konado Script 内容
+@export var ks_content: String = ""
+
+## 设置ks内容
+func set_ks_content(content: String, compile: bool = true) -> void:
+	ks_content = content
+	if compile:
+		var interpreter: KonadoScriptsInterpreter = KonadoScriptsInterpreter.new()
+		interpreter.init_insterpreter({
+			"allow_custom_suffix": true,
+			"allow_skip_error_line": true,
+			"enable_actor_validation": true
+			})
+		var tmp: KND_Shot = interpreter.process_script(ks_content)
+		self.dialogues_source_data = tmp.dialogues_source_data
+		self.source_branchs = tmp.source_branchs
+		self.get_dialogues()
+		
+func get_ks_content() -> String:
+	return ks_content
+
 ## 获取对话数据
 func get_dialogues() -> Array[Dialogue]:
 	dialogues.clear()

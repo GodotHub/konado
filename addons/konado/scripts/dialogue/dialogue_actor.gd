@@ -1,16 +1,24 @@
 extends Resource
 class_name DialogueActor
 
-# 创建和显示的角色ID
+## 创建和显示的角色ID
 @export var character_name: String
-# 角色图片ID
+## 角色图片ID
 @export var character_state: String
-# 创建角色的位置
+## 创建角色的位置，注意这里不是xy坐标，x代表屏幕份数，y代表演员在屏幕的区块位置
 @export var actor_position: Vector2
-# 角色图片缩放
+## 角色图片缩放
 @export var actor_scale: float
 ## 演员立绘水平镜像翻转
 @export var actor_mirror: bool
+
+## 获取屏幕平分的区块数量
+func get_screen_block_count() -> int:
+	return int(actor_position.x)
+	
+## 获取演员所在的区块，从左到右顺次从0开始数
+func get_actor_block() -> int:
+	return int(actor_position.y)
 
 # 序列化为字典
 func serialize_to_dict() -> Dictionary:

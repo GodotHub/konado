@@ -72,53 +72,78 @@ func init_insterpreter(flags: Dictionary[String, Variant]) -> bool:
 	print("解释器初始化完成" + " " + "flags: " + str(flags))
 	is_init = true
 	return true
-
-
-## 全文解析模式
-func process_scripts_to_data(path: String) -> KND_Shot:
-	if not is_init:
-		_scripts_debug(path, 0, "解释器未初始化，无法解析脚本文件")
-		return
+	
+## 从路径加载脚本
+func load_script(path: String) -> String:
+	var content = ""
 	if not path:
 		_scripts_debug(path, 0, "路径为空，无法打开脚本文件")
-		return null
 
 	if not FileAccess.file_exists(path):
 		_scripts_debug(path, 0, "文件不存在，无法打开脚本文件")
-		return null
 
 	if not path.ends_with(".ks"):
 		if allow_custom_suffix:
 			_scripts_warning(path, 0, "建议使用使用ks作为脚本文件后缀")
 		else:
 			_scripts_debug(path, 0, "编译器要求使用ks作为脚本文件后缀，如果需要使用自定义后缀，请开启allow_custom_suffix选项")
-			return null
-
 	tmp_path = path
-
-	# 读取文件内容
+	
 	var file = FileAccess.open(path, FileAccess.READ)
+	
 	if not file:
 		_scripts_debug(path, 0, "无法打开脚本文件")
-		return null
-	var lines = file.get_as_text().split("\n")
+	content = file.get_as_text()
 	file.close()
+	return content
 
+
+## 全文解析模式
+func process_script(content: String) -> KND_Shot:
+	if not is_init:
+		_scripts_debug(tmp_path, 0, "解释器未初始化，无法解析脚本文件")
+		return
+	#if not path:
+		#_scripts_debug(path, 0, "路径为空，无法打开脚本文件")
+		#return null
+#
+	#if not FileAccess.file_exists(path):
+		#_scripts_debug(path, 0, "文件不存在，无法打开脚本文件")
+		#return null
+#
+	#if not path.ends_with(".ks"):
+		#if allow_custom_suffix:
+			#_scripts_warning(path, 0, "建议使用使用ks作为脚本文件后缀")
+		#else:
+			#_scripts_debug(path, 0, "编译器要求使用ks作为脚本文件后缀，如果需要使用自定义后缀，请开启allow_custom_suffix选项")
+			#return null
+#
+	#tmp_path = path
+
+	# 读取文件内容
+	#var file = FileAccess.open(path, FileAccess.READ)
+	#if not file:
+		#_scripts_debug(path, 0, "无法打开脚本文件")
+		#return null
+	#var lines = file.get_as_text().split("\n")
+	#file.close()
 	
-	_scripts_info(path, 0, "开始解析脚本文件")
+	var lines: PackedStringArray = content.split("\n")
+	
+	_scripts_info(tmp_path, 0, "开始解析脚本文件")
 
 	var diadata: KND_Shot = KND_Shot.new()
 
 	# 解析元数据
-	var metadata_result = _parse_metadata(lines, path)
+	var metadata_result = _parse_metadata(lines, tmp_path)
 	dialogue_metadata_regex = null
 	if not metadata_result:
-		_scripts_debug(path, 0, "元数据解析失败")
+		_scripts_debug(tmp_path, 0, "元数据解析失败")
 		return diadata
 	diadata.shot_id = metadata_result[0]
 
 
-	_scripts_info(path, 1, "Shot id：%s" % [diadata.shot_id])
+	_scripts_info(tmp_path, 1, "Shot id：%s" % [diadata.shot_id])
 
 	# 清空演员验证表
 	cur_tmp_actors = []
@@ -152,7 +177,7 @@ func process_scripts_to_data(path: String) -> KND_Shot:
 		print("解析第%d行" % original_line_number)
 		print("第%d行内容：" % original_line_number, line)
 
-		var dialog: Dialogue = parse_line(line, original_line_number, path)
+		var dialog: Dialogue = parse_line(line, original_line_number, tmp_path)
 		if dialog:
 			# 如果是标签对话，则添加到标签对话字典中
 			if dialog.dialog_type == Dialogue.Type.Branch:
@@ -162,10 +187,10 @@ func process_scripts_to_data(path: String) -> KND_Shot:
 				diadata.dialogues_source_data.append(dialogue_dic)
 		else:
 			if allow_skip_error_line:
-				_scripts_warning(path, original_line_number, "解析失败：无法识别的语法，请检查语法是否正确或删除该行: %s" % line)
+				_scripts_warning(tmp_path, original_line_number, "解析失败：无法识别的语法，请检查语法是否正确或删除该行: %s" % line)
 				continue
 			else:
-				_scripts_debug(path, original_line_number, "解析失败：无法识别的语法，请检查语法是否正确或删除该行: %s" % line)
+				_scripts_debug(tmp_path, original_line_number, "解析失败：无法识别的语法，请检查语法是否正确或删除该行: %s" % line)
 				break
 			print("\n")
 			
@@ -174,13 +199,13 @@ func process_scripts_to_data(path: String) -> KND_Shot:
 	## TODO: 依赖演员
 	#diadata.dep_characters = dep_characters
 
-	_scripts_info(path, 0, "文件：%s 章节ID：%s 对话数量：%d" % 
-		[path, diadata.shot_id, diadata.dialogues.size()])
+	_scripts_info(tmp_path, 0, "文件：%s 章节ID：%s 对话数量：%d" % 
+		[tmp_path, diadata.shot_id, diadata.dialogues.size()])
 
 	tmp_path = ""
 
 	if not _check_tag_and_choice():
-		_scripts_debug(path, 0, "标签和选项解析失败")
+		_scripts_debug(tmp_path, 0, "标签和选项解析失败")
 
 	# 生成演员快照
 	var cur_actor_dic: Dictionary = {}
@@ -376,7 +401,15 @@ func _create_actor(parts: PackedStringArray) -> DialogueActor:
 	var actor = DialogueActor.new()
 	actor.character_name = parts[2]
 	actor.character_state = parts[3]
-	actor.actor_position = Vector2(parts[5].to_float(), parts[6].to_float())
+	var x = parts[5].to_int()
+	var y = parts[6].to_int()
+	if y < 0 || x < 0:
+		printerr("区块不能为负数")
+		return null
+	if y > x:
+		printerr("不能将演员显示在不存在的区块")
+		return null
+	actor.actor_position = Vector2(x, y)
 	actor.actor_scale = parts[8].to_float()
 	if parts.size() == 10:
 		if parts[9] == "mirror":
