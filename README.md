@@ -28,14 +28,16 @@ Konado 是一个视觉小说引擎框架，提供多种对话模板以及对话�
 
 ## 社区
 
-欢迎加入我们的社区，与其他Konado用户交流经验，分享创意。您可以通过以下方式加入我们的社区：
+欢迎加入我们的社区交流频道，与其他Konado用户交流经验，分享创意。您可以通过以下方式加入：
 
-- 加入我们的QQ频道群组：[点击加入](https://pd.qq.com/g/GodotHub999/text/707799746)
+- 加入我们的 QQ 频道讨论组：[点击加入](https://pd.qq.com/g/GodotHub999/text/707799746)
+
+- 加入我们的 Discord 群组频道：[点击加入](https://discord.com/channels/1378639076747513938/1425084240550166592)
 
 
 ## 参与开发
 
-详细贡献指南请参考 [CONTRIBUTING.md](./CONTRIBUTING.md)
+详细贡献指南请参考 [CONTRIBUTING.md](./CONTRIBUTING.md)。
 
 
 ## 行为准则
@@ -45,7 +47,7 @@ Konado 是一个视觉小说引擎框架，提供多种对话模板以及对话�
 
 ## 项目贡献者
 
-贡献者名单请查看 [CONTRIBUTORS.md](./CONTRIBUTORS.md)
+贡献者名单请查看 [AUTHORS.md](./AUTHORS)。
 
 
 ## 开源许可证
