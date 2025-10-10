@@ -7,24 +7,32 @@ const icon: Texture2D = preload("uid://b62h640a6knig")
 
 @export var name: String = "新镜头"
 
-@export var shot_id: String = ""
-
 ## 源剧情文本
 @export var source_story: String = ""
 
-# TODO: 对话列表
+## 对话，请调用get_dialogues函数获取
 @export var dialogues: Array[Dialogue] = []
 
 ## 对话源数据
 @export var dialogues_source_data: Array[Dictionary] = []
-# tag字典
+
+## 分支
 @export var branchs: Dictionary = {}
 
 ## 分支源数据
 @export var source_branchs: Dictionary[String, Dictionary] = {}
 
-## key是演员名，value是角色id
+## key是演员名，value是角色数据id
 @export var actor_character_map: Dictionary[String, int] = {}
+
+## key是背景名，value是背景数据id
+@export var background_map: Dictionary[String, int] = {}
+
+@export var bgm_map: Dictionary[String, int] = {}
+
+@export var sfx_map: Dictionary[String, int] = {}
+
+@export var voice_map: Dictionary[String, int] = {}
 
 ## Konado Script 内容
 @export var ks_content: String = ""
@@ -44,6 +52,7 @@ func set_ks_content(content: String, compile: bool = true) -> void:
 		self.source_branchs = tmp.source_branchs
 		self.get_dialogues()
 		
+## 获取ks内容
 func get_ks_content() -> String:
 	return ks_content
 
