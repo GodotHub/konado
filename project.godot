@@ -40,7 +40,7 @@ project/assembly_name="Konado"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/gut/plugin.cfg", "res://addons/konado/plugin.cfg", "res://addons/konadotnet/plugin.cfg", "res://addons/main_scene_switcher/plugin.cfg")
+enabled=PackedStringArray("res://addons/gut/plugin.cfg", "res://addons/konado/plugin.cfg", "res://addons/konadotnet/plugin.cfg")
 
 [gui]
 
