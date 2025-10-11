@@ -1,4 +1,6 @@
-## KND_Database数据库类，将在Konado启用时添加到自动加载
+## KND_Database数据库类，将在Konado插件启用时添加到自动加载，数据库会保存在项目的根目录，文件名为knd_project.kson，可以当作json数据进行处理
+## 理论上一切Konado的数据操作都应该使用该数据库进行操作，而不是手动去修改对应的资源实例
+## 使用数据库可以节约大量冗余的代码，可以直接操作需要的数据字段本身而不是对复杂的对象进行操作
 @tool
 extends Node
 
@@ -15,12 +17,17 @@ var tmp_knd_data_dic: Dictionary[int, KND_Data] = {}
 ## 数据类型列表 {data_type:[id]}
 var data_type_map: Dictionary = {}
 
-## 项目信息
+## 项目名称
 var project_name: String = ""
+
+## 项目描述
 var project_description: String = ""
 
-## 常量定义
+## 数据库路径
 const PROJECT_CONFIG_PATH: String = "res://knd_project.kson"
+
+## ID配置路径，用于保存ID计数
+const ID_CONFIG_PATH: String = "res://knd_data_id.cfg"
 
 ## 数据类型映射
 const KND_CLASS_DB: Dictionary[String, String] = {
@@ -49,6 +56,10 @@ var cur_shot: int:
 		if value != cur_shot:
 			cur_shot = value
 			cur_shot_change.emit()
+			
+			
+func _ready() -> void:
+	load_database()
 
 ## 线程安全的ID分配
 func _allocate_data_id() -> int:
@@ -86,6 +97,16 @@ func _execute_batch_operations() -> void:
 		elif operation.type == "rename":
 			_rename_data_internal(operation.id, operation.new_name, operation.callback)
 
+## 检查ID是否合法，将判断是否有这个数据
+func is_valid_id(id: int) -> bool:
+	if id < 0:
+		printerr("ID不可能为负数")
+		return false
+	if not tmp_knd_data_dic.has(id):
+		printerr("KND_Database没有这个数据: " + str(id))
+		return false
+	return true
+
 ## 获取指定类型的所有资源ID数组
 func get_data_list(type: String) -> Array:
 	database_mutex.lock()
@@ -106,27 +127,27 @@ func _has_data_type(type: String) -> bool:
 	return true
 
 ## 判断是否有这个data
-func _has_data(id: int) -> bool:
-	var exists = tmp_knd_data_dic.has(id)
-	if not exists:
-		printerr("KND_Database没有这个数据: " + str(id))
-	return exists
+#func _has_data(id: int) -> bool:
+	#var exists = is_valid_id(id)
+	#if not exists:
+		#printerr("KND_Database没有这个数据: " + str(id))
+	#return exists
 
-## 保存ID配置（异步优化）
+## 保存ID配置
 func _save_data_id_config() -> void:
 	file_operation_mutex.lock()
 	
 	var config = ConfigFile.new()
-	var err = config.load("res://data.cfg")
+	var err = config.load(ID_CONFIG_PATH)
 	if err != OK:
-		config.save("res://data.cfg")
+		config.save(ID_CONFIG_PATH)
 	
 	database_mutex.lock()
 	config.set_value("data", "id_number", data_id_number)
 	config.set_value("data", "data_id_map", data_id_name_map.duplicate())
 	database_mutex.unlock()
 	
-	config.save("res://data.cfg")
+	config.save(ID_CONFIG_PATH)
 	file_operation_mutex.unlock()
 
 ## 加载ID配置
@@ -134,11 +155,11 @@ func _load_data_id_config() -> void:
 	file_operation_mutex.lock()
 	
 	var config = ConfigFile.new()
-	var err = config.load("res://data.cfg")
+	var err = config.load(ID_CONFIG_PATH)
 	if err != OK:
 		config.set_value("data", "id_number", 0)
 		config.set_value("data", "data_id_map", {})
-		config.save("res://data.cfg")
+		config.save(ID_CONFIG_PATH)
 
 	var id_num = config.get_value("data", "id_number", 0)
 	var id_map = config.get_value("data", "data_id_map", {})
@@ -150,7 +171,7 @@ func _load_data_id_config() -> void:
 	
 	file_operation_mutex.unlock()
 
-## 创建数据实例（线程安全版本）
+## 创建数据实例，请注意返回的统一都是KND_Data实例而不是具体类型实例，请自行转换成对应数据类型实例
 func create_data_instance(type: String) -> KND_Data:
 	if not _has_data_type(type):
 		return null
@@ -186,18 +207,8 @@ func create_data_instance(type: String) -> KND_Data:
 		printerr("未找到脚本或脚本不是GDScript: " + script_path)
 		return null
 
-## 创建子资源
-func create_sub_data(type: String) -> Dictionary:
-	if not _has_data_type(type):
-		return {}
-	
-	var data: KND_Data = create_data_instance(type)
-	if data == null:
-		return {}
-	
-	return { "id": data.id, "data": data.get_source_data() }
 
-## 新建数据（支持异步回调）
+## 新建数据
 func create_data(type: String, callback: Callable = Callable()) -> int:
 	if not _has_data_type(type):
 		if callback:
@@ -291,7 +302,7 @@ func delete_data(id: int, callback: Callable = Callable()) -> bool:
 ## 内部删除实现
 func _delete_data_internal(id: int, callback: Callable = Callable()) -> bool:
 	database_mutex.lock()
-	var has_data = _has_data(id)
+	var has_data: bool = is_valid_id(id)
 	if not has_data:
 		database_mutex.unlock()
 		if callback:
@@ -355,7 +366,7 @@ func _delete_data_internal(id: int, callback: Callable = Callable()) -> bool:
 	
 	return success
 
-## 数据重命名（线程安全版本）
+## 数据重命名
 func rename_data(id: int, new_name: String, callback: Callable = Callable()) -> bool:
 	if is_saving:
 		operation_mutex.lock()
@@ -373,56 +384,63 @@ func rename_data(id: int, new_name: String, callback: Callable = Callable()) -> 
 ## 内部重命名实现
 func _rename_data_internal(id: int, new_name: String, callback: Callable = Callable()) -> bool:
 	database_mutex.lock()
-	if not tmp_knd_data_dic.has(id):
+	if not is_valid_id(id):
 		database_mutex.unlock()
 		if callback:
 			callback.call(false)
 		return false
 		
-	var data: KND_Data = tmp_knd_data_dic[id]
-	
-	if data.get("name") != null:
-		if data.get("name") == new_name:
-			database_mutex.unlock()
-			if callback:
-				callback.call(true)
-			return true
-			
-		data.set("name", new_name)
-		var unique_name = _generate_unique_name(new_name)
-		data.set("name", unique_name)
-		data._source_data["name"] = unique_name
-		data_id_name_map[data.id] = unique_name
-	
-	database_mutex.unlock()
-	
-	data.emit_changed()
-	
-	file_operation_mutex.lock()
-	var save_success = data.save_data(data.save_path)
-	file_operation_mutex.unlock()
-	
-	if not save_success:
-		printerr("改名保存失败")
-		if callback:
-			callback.call(false)
-		return false
+	var script_path = KND_CLASS_DB[tmp_knd_data_dic[id].type]
+	var script: GDScript = load(script_path)
+	if script != null and script is GDScript:
+		var data = script.new()
+		data._source_data = tmp_knd_data_dic[id]._source_data
+		data.update()
 		
-	if KonadoMacros.is_enabled("DEBUG"):
-		data.print_data()
+		if data.get("name") != null:
+			if data.get("name") == new_name:
+				database_mutex.unlock()
+				if callback:
+					callback.call(true)
+				return true
+			
+			data.set("name", new_name)
+			var unique_name = _generate_unique_name(new_name)
+			data.set("name", unique_name)
+			data._source_data["name"] = unique_name
+			data_id_name_map[data.id] = unique_name
 	
-	_queue_database_save()
+		database_mutex.unlock()
 	
+		data.emit_changed()
+	
+		file_operation_mutex.lock()
+		var save_success = data.save_data(data.save_path)
+		file_operation_mutex.unlock()
+	
+		if not save_success:
+			printerr("改名保存失败")
+			if callback:
+				callback.call(false)
+			return false
+		
+		if KonadoMacros.is_enabled("DEBUG"):
+			data.print_data()
+		
+		_queue_database_save()
+		
+		if callback:
+			callback.call(true)
+		return true
 	if callback:
-		callback.call(true)
-	
-	return true
+		callback.call(false)
+	return false
 
 ## 获取数据的属性字典
 func get_source_data(id: int) -> Dictionary:
 	database_mutex.lock()
 	var result = {}
-	if tmp_knd_data_dic.has(id):
+	if is_valid_id(id):
 		var knd_data: KND_Data = tmp_knd_data_dic[id]
 		result = knd_data.get_source_data()
 	database_mutex.unlock()
@@ -432,7 +450,7 @@ func get_source_data(id: int) -> Dictionary:
 func get_data_type(id: int) -> String:
 	database_mutex.lock()
 	var result = ""
-	if tmp_knd_data_dic.has(id):
+	if is_valid_id(id):
 		result = tmp_knd_data_dic[id].type
 	database_mutex.unlock()
 	return result
@@ -441,11 +459,7 @@ func get_data_type(id: int) -> String:
 func get_data_property(id: int, property: String) -> Variant:
 	database_mutex.lock()
 	var result = null
-	#if tmp_knd_data_dic.has(id):
-		#var knd_data = tmp_knd_data_dic[id]
-		#if knd_data.get(property) != null:
-			#result = knd_data.get(property)
-	if not tmp_knd_data_dic.has(id):
+	if not is_valid_id(id):
 		printerr("无法获取数据属性 " + property)
 	var script_path = KND_CLASS_DB[tmp_knd_data_dic[id].type]
 	var script: GDScript = load(script_path)
@@ -460,16 +474,17 @@ func get_data_property(id: int, property: String) -> Variant:
 ## 设置数据属性
 func set_data(id: int, property: String, value: Variant) -> void:
 	database_mutex.lock()
-	if tmp_knd_data_dic.has(id):
-		tmp_knd_data_dic[id].set(property, value)
-	database_mutex.unlock()
-
-## 添加子资源数据
-func add_sub_source_data(parent: int, id: int, data: Dictionary) -> void:
-	database_mutex.lock()
-	if tmp_knd_data_dic.has(parent):
-		var knd_data: KND_Data = tmp_knd_data_dic[parent]
-		knd_data.add_sub_source_data(id, data)
+	if is_valid_id(id):
+		var script_path = KND_CLASS_DB[tmp_knd_data_dic[id].type]
+		var script: GDScript = load(script_path)
+		if script != null and script is GDScript:
+			var data = script.new()
+			data._source_data = tmp_knd_data_dic[id]._source_data
+			data.update()
+		
+			data.set(property, value)
+			data.gen_source_data()
+			data.save_data(data.save_path)
 	database_mutex.unlock()
 
 ## 队列化数据库保存（避免频繁保存）
@@ -542,7 +557,7 @@ func _clean_type_map(type_map: Dictionary) -> Dictionary:
 		cleaned_map[type] = valid_ids
 	return cleaned_map
 
-## 从本地加载数据库（线程安全）
+## 从本地加载数据库
 func load_database() -> void:
 	file_operation_mutex.lock()
 	
@@ -647,9 +662,7 @@ func load_database() -> void:
 		new_tmp_knd_data_dic[id] = data
 			
 	var tmp_type_map: Dictionary = parsed.get("type_map", {})
-	print("11111")
-	print(tmp_type_map)
-	print("11111")
+	
 	for type in tmp_type_map:
 		var valid_items: Array[int] = []
 		for item in tmp_type_map[type]:
@@ -732,5 +745,12 @@ func get_data_by_type(type: String) -> Array:
 	for id in tmp_knd_data_dic:
 		if get_data_type(id) == type:
 			result.append(tmp_knd_data_dic[id])
+	database_mutex.unlock()
+	return result
+	
+## 根据类型获取数据的ID
+func get_data_ids_by_type(type: String) -> Array:
+	database_mutex.lock()
+	var result: Array = data_type_map[type]
 	database_mutex.unlock()
 	return result
