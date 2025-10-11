@@ -7,6 +7,7 @@
 /konado_data/
 knd_project.kson
 data.cfg
+knd_data_id.cfg
 
 # VS Code specific ignores
 .vscode/

@@ -16,8 +16,6 @@ var tmp_content_lines = []
 
 ## 对话内容正则表达式
 var dialogue_content_regex: RegEx
-## 元数据正则表达式
-var dialogue_metadata_regex: RegEx
 
 ## 演员验证表
 var cur_tmp_actors = []
@@ -65,9 +63,6 @@ func init_insterpreter(flags: Dictionary[String, Variant]) -> bool:
 	# 提前初始化正则表达式，避免重复编译
 	dialogue_content_regex = RegEx.new()
 	dialogue_content_regex.compile("^\"(.*?)\"\\s+\"(.*?)\"(?:\\s+(\\S+))?$")
-
-	dialogue_metadata_regex = RegEx.new()
-	dialogue_metadata_regex.compile("^(shot_id)\\s+(\\S+)")
 	
 	print("解释器初始化完成" + " " + "flags: " + str(flags))
 	is_init = true
@@ -99,29 +94,26 @@ func load_script(path: String) -> String:
 
 
 ## 全文解析模式
-func process_script(content: String) -> KND_Shot:
+func process_script(content: Array[String]) -> KND_Shot:
 	if not is_init:
 		_scripts_debug(tmp_path, 0, "解释器未初始化，无法解析脚本文件")
 		return
 		
-	var lines: PackedStringArray = content.split("\n")
-	
-	_scripts_info(tmp_path, 0, "开始解析脚本文件")
+	print(content)
+	var lines = content
+	_scripts_info(tmp_path, 0, "开始解析脚本文件，" + "源文件共" + str(lines.size()) + "行")
 
 	var diadata: KND_Shot = KND_Shot.new()
 	# 清空演员验证表
 	cur_tmp_actors = []
 
-	# 只保留内容行
-	var content_lines = lines.slice(1)
-
-	tmp_content_lines = content_lines
+	tmp_content_lines = lines
 
 	# 解析内容行
-	for i in content_lines.size():
+	for i in lines.size():
 		tmp_line_number = i
-		var line = content_lines[i]
-		var original_line_number =  i + 2
+		var line = lines[i]
+		var original_line_number =  i + 1
 
 		tmp_original_line_number = original_line_number
 
@@ -158,14 +150,11 @@ func process_script(content: String) -> KND_Shot:
 				break
 			print("\n")
 			
-	diadata.get_dialogues()
+	# 生成对话
+	diadata.gen_dialogues()
 	
-	## TODO: 依赖演员
-	#diadata.dep_characters = dep_characters
-
 	_scripts_info(tmp_path, 0, "文件：%s 章节ID：%s 对话数量：%d" % 
 		[tmp_path, diadata.name, diadata.dialogues.size()])
-
 	tmp_path = ""
 
 	if not _check_tag_and_choice():
@@ -173,7 +162,8 @@ func process_script(content: String) -> KND_Shot:
 
 	# 生成演员快照
 	var cur_actor_dic: Dictionary = {}
-	for dialogue in diadata.get_dialogues():
+	diadata.gen_dialogues()
+	for dialogue in diadata.dialogues:
 		#print("当前演员快照：", cur_actor_dic)
 		if dialogue.dialog_type == Dialogue.Type.Display_Actor:
 				var actor: DialogueActor = dialogue.show_actor
@@ -233,50 +223,14 @@ func parse_line(line: String, line_number: int, path: String) -> Dialogue:
 	if _parse_end(line, dialog): 
 		print("解析成功：结束相关\n")
 		return dialog
-	if _parse_start(line, dialog):
-		print("解析成功：开始相关\n")
-		return dialog
 	if _parse_branch(line, dialog):
 		print("解析成功：标签相关\n")
 		return dialog
+	printerr("解析失败")
 
 	dialog = null
 
 	return null
-
-# 解析元数据（前两行）
-func _parse_metadata(lines: PackedStringArray, path: String) -> PackedStringArray:
-	if lines.size() < 2:
-		_scripts_debug(path, 1, "文件不完整，至少需要shot id")
-		return []
-
-	var metadata: PackedStringArray = []
-
-	if lines[0]:
-		var result = dialogue_metadata_regex.search(lines[0])
-		if not result:
-			_scripts_debug(path, 1, "无效的元数据格式: %s" % lines[0])
-			return []
-		
-		var key = result.get_string(1)
-		var value = result.get_string(2)
-		
-		match key:
-			"shot_id":
-				metadata.append(value)
-	return metadata
-
-	
-
-# 解析注释
-#func _parse_label(line: String, dialog: Dialogue) -> bool:
-	#if not line.begins_with("##"):
-		#return false
-#
-	#dialog.dialog_type = Dialogue.Type.LABEL
-	#dialog.label_notes = line.replace("##", "").strip_edges()
-#
-	#return true
 
 # 背景切换解析
 func _parse_background(line: String, dialog: Dialogue) -> bool:
@@ -292,12 +246,7 @@ func _parse_background(line: String, dialog: Dialogue) -> bool:
 	
 	if parts.size() >= 3:
 		var effect = parts[2]
-		dialog.background_toggle_effects = {
-			"erase": ActingInterface.EffectsType.EraseEffect,
-			"blinds": ActingInterface.EffectsType.BlindsEffect,
-			"wave": ActingInterface.EffectsType.WaveEffect,
-			"fade": ActingInterface.EffectsType.FadeInAndOut
-		}.get(effect, ActingInterface.EffectsType.None)
+		dialog.background_toggle_effects = effect
 
 	return true
 
@@ -504,7 +453,7 @@ func _parse_jumpshot(line: String, dialog: Dialogue) -> bool:
 	dialog.jump_shot_id = parts[1]
 	return true
 
-# 对话解析（使用正则表达式优化）
+# 对话解析
 func _parse_dialog(line: String, dialog: Dialogue) -> bool:
 	if not line.begins_with("\""):
 		return false
@@ -536,17 +485,6 @@ func _check_tag_and_choice() -> bool:
 				return false
 		target_jump_tag = []
 	return true
-
-
-
-
-
-# 解析开始
-func _parse_start(line: String, dialog: Dialogue) -> bool:
-	if line.begins_with("start"):
-		dialog.dialog_type = Dialogue.Type.START
-		return true
-	return false
 	
 # 解析结束
 func _parse_end(line: String, dialog: Dialogue) -> bool:

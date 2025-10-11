@@ -66,7 +66,7 @@ var soundeffect_name: String
 # 对话背景图片
 var background_image_name: String
 # 背景切换特效
-var background_toggle_effects: ActingInterface.EffectsType
+var background_toggle_effects: String
 
 # 目标跳转的镜头
 var jump_shot_id: String
@@ -123,7 +123,7 @@ class Ordinary_Dialog_Template:
 	
 class Switch_Background_Template:
 	@export var background_image_name: String = ""
-	@export var background_toggle_effects: ActingInterface.EffectsType
+	@export var background_toggle_effects: String
 	static func get_property_infos():
 		var infos = {}
 		for info in (Switch_Background_Template as Script).get_script_property_list():

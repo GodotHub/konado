@@ -34,38 +34,41 @@ const icon: Texture2D = preload("uid://b62h640a6knig")
 
 @export var voice_map: Dictionary[String, int] = {}
 
+var _ks_content: Array[String] = []
 ## Konado Script 内容
-@export var ks_content: String = ""
+@export var ks_content: Array[String] = []:
+	get:
+		return _ks_content
+	set(value):
+		set_ks_content(value, true)
 
 ## 设置ks内容
-func set_ks_content(content: String, compile: bool = true) -> void:
-	ks_content = content
+func set_ks_content(content: Array[String], compile: bool = true) -> void:
+	_ks_content = content
 	if compile:
 		var interpreter: KonadoScriptsInterpreter = KonadoScriptsInterpreter.new()
 		interpreter.init_insterpreter({
 			"allow_custom_suffix": true,
 			"allow_skip_error_line": true,
 			"enable_actor_validation": true
-			})
-		var tmp: KND_Shot = interpreter.process_script(ks_content)
+		})
+		var tmp: KND_Shot = interpreter.process_script(_ks_content)
 		self.dialogues_source_data = tmp.dialogues_source_data
 		self.source_branchs = tmp.source_branchs
-		self.get_dialogues()
+		gen_dialogues()
 		
-## 获取ks内容
-func get_ks_content() -> String:
-	return ks_content
-
 ## 获取对话数据
-func get_dialogues() -> Array[Dialogue]:
+func gen_dialogues() -> void:
+	print("重建对话数据") # 调试用，完成后可以移除
 	dialogues.clear()
 	branchs.clear()
+	
 	for data in dialogues_source_data:
 		var dialogue = Dialogue.new()
 		dialogue.from_json(str(data))
 		dialogues.append(dialogue)
+		
 	for branch in source_branchs.keys():
 		var branch_dialogue: Dialogue = Dialogue.new()
 		branch_dialogue.deserialize_from_dict(source_branchs[branch])
 		branchs.set(branch, branch_dialogue)
-	return dialogues
