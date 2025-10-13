@@ -462,7 +462,7 @@ func _parse_dialog(line: String, dialog: Dialogue) -> bool:
 	if not result:
 		return false
 	
-	dialog.dialog_type = Dialogue.Type.Ordinary_Dialog
+	dialog.dialog_type = Dialogue.Type.Display_Text
 	dialog.character_id = result.get_string(1)
 	dialog.dialog_content = result.get_string(2)
 	if result.get_string(3):

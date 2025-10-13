@@ -7,8 +7,7 @@ var source_file_line: int = -1
 
 ## 对话类型
 enum Type {
-	START, ## 开始
-	Ordinary_Dialog, ## 普通对话
+	Display_Text, ## 显示文字
 	Display_Actor, ## 显示演员
 	Actor_Change_State, ## 演员切换状态
 	Move_Actor, ## 移动角色
@@ -22,7 +21,6 @@ enum Type {
 	JUMP_Tag, ## 跳转到行
 	JUMP_Shot, ## 跳转
 	THE_END, ## 剧终
-	LABEL ## 注释标签
 }
 
 @export var dialog_type: Type:
@@ -30,7 +28,7 @@ enum Type {
 		dialog_type = v
 		notify_property_list_changed()
 
-#  用于标记跳转点		
+# 用于标记跳转点
 var branch_id: String
 
 # 对话内容
@@ -71,9 +69,6 @@ var background_toggle_effects: String
 # 目标跳转的镜头
 var jump_shot_id: String
 
-## 注释
-var label_notes: String
-
 # 保存不同分支故事线的演员字典，默认故事线为"main"
 # 角色信息字典结构说明:
 # {
@@ -111,13 +106,13 @@ class TagDialogue_Template:
 			infos[info.name] = info
 		return infos
 
-class Ordinary_Dialog_Template:
+class Display_Text_Template:
 	@export var character_id: String = ""
 	@export_multiline var dialog_content: String = ""
 	@export var voice_id: String = ""
 	static func get_property_infos():
 		var infos = {}
-		for info in (Ordinary_Dialog_Template as Script).get_script_property_list():
+		for info in (Display_Text_Template as Script).get_script_property_list():
 			infos[info.name] = info
 		return infos
 	
@@ -192,8 +187,8 @@ func _get_property_list():
 		var tag_dialogue_template = TagDialogue_Template.get_property_infos()
 		list.append(tag_template["branch_id"])
 		list.append(tag_dialogue_template["branch_dialogue"])
-	if dialog_type == Type.Ordinary_Dialog:
-		var oridinary_dialog_template = Ordinary_Dialog_Template.get_property_infos()
+	if dialog_type == Type.Display_Text:
+		var oridinary_dialog_template = Display_Text_Template.get_property_infos()
 		list.append(oridinary_dialog_template["character_id"])
 		list.append(oridinary_dialog_template["dialog_content"])
 		list.append(oridinary_dialog_template["voice_id"])
@@ -229,9 +224,6 @@ func _get_property_list():
 	if dialog_type == Type.JUMP_Shot:
 		var jump_template = Jump_Template.get_property_infos()
 		list.append(jump_template["jump_shot_id"])
-	if dialog_type == Type.LABEL:
-		var label_template = Label_Template.get_property_infos()
-		list.append(label_template["label_notes"])
 	if dialog_type == Type.THE_END:
 		pass
 	return list
@@ -271,7 +263,7 @@ func serialize_to_dict() -> Dictionary:
 			dict["branch_dialogue"] = serialize_dialogue_array(branch_dialogue)
 			dict["is_branch_loaded"] = is_branch_loaded
 		
-		Type.Ordinary_Dialog:
+		Type.Display_Text:
 			dict["character_id"] = character_id
 			dict["dialog_content"] = dialog_content
 			dict["voice_id"] = voice_id
@@ -305,10 +297,6 @@ func serialize_to_dict() -> Dictionary:
 		
 		Type.JUMP_Shot:
 			dict["jump_shot_id"] = jump_shot_id
-		
-		Type.LABEL:
-			dict["label_notes"] = label_notes
-	
 	# 演员快照
 	dict["actor_snapshots"] = actor_snapshots.duplicate(true)
 	
@@ -338,7 +326,7 @@ func deserialize_from_dict(dict: Dictionary) -> bool:
 			if "is_branch_loaded" in dict:
 				is_branch_loaded = dict["is_branch_loaded"]
 		
-		Type.Ordinary_Dialog:
+		Type.Display_Text:
 			if "character_id" in dict:
 				character_id = dict["character_id"]
 			if "dialog_content" in dict:
@@ -391,10 +379,6 @@ func deserialize_from_dict(dict: Dictionary) -> bool:
 		Type.JUMP_Shot:
 			if "jump_shot_id" in dict:
 				jump_shot_id = dict["jump_shot_id"]
-		
-		Type.LABEL:
-			if "label_notes" in dict:
-				label_notes = dict["label_notes"]
 	
 	# 演员快照
 	if "actor_snapshots" in dict:
