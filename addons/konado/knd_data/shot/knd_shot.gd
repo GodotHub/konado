@@ -11,7 +11,7 @@ const icon: Texture2D = preload("uid://b62h640a6knig")
 @export var source_story: String = ""
 
 ## 对话，请调用get_dialogues函数获取
-@export var dialogues: Array[Dialogue] = []
+@export var commands: Array[KND_Command] = []
 
 ## 对话源数据
 @export var dialogues_source_data: Array[Dictionary] = []
@@ -60,13 +60,13 @@ func set_ks_content(content: Array[String], compile: bool = true) -> void:
 ## 获取对话数据
 func gen_dialogues() -> void:
 	print("重建对话数据") # 调试用，完成后可以移除
-	dialogues.clear()
+	commands.clear()
 	branchs.clear()
 	
 	for data in dialogues_source_data:
 		var dialogue = Dialogue.new()
 		dialogue.from_json(str(data))
-		dialogues.append(dialogue)
+		commands.append(dialogue)
 		
 	for branch in source_branchs.keys():
 		var branch_dialogue: Dialogue = Dialogue.new()
