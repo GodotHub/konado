@@ -1,33 +1,26 @@
-[gd_scene load_steps=11 format=3 uid="uid://bnkejyqbrogri"]
+[gd_scene load_steps=10 format=3 uid="uid://bnkejyqbrogri"]
 
 [ext_resource type="Script" uid="uid://dpo124xwpder5" path="res://addons/konado/runtime/manager/knd_dialogue_manager.gd" id="1_ibefa"]
 [ext_resource type="Script" uid="uid://dftovts451lt8" path="res://addons/konado/knd_data/shot/command/knd_command.gd" id="2_woqy4"]
-[ext_resource type="Script" uid="uid://ckk1r8g61jls3" path="res://addons/konado/knd_data/shot/command/knd_timer_command.gd" id="3_4p1ug"]
 [ext_resource type="Script" uid="uid://bktw5v4hqxfy0" path="res://addons/konado/knd_data/shot/knd_shot.gd" id="3_hfq0a"]
-[ext_resource type="Script" uid="uid://cmojtpai2iydn" path="res://addons/konado/knd_data/shot/command/knd_display_text_command.gd" id="4_ppsww"]
+[ext_resource type="Script" uid="uid://ckk1r8g61jls3" path="res://addons/konado/knd_data/shot/command/knd_timer_command.gd" id="3_ppsww"]
+[ext_resource type="Script" uid="uid://cmojtpai2iydn" path="res://addons/konado/knd_data/shot/command/knd_display_text_command.gd" id="4_1go5q"]
 [ext_resource type="PackedScene" uid="uid://bgpl5q55u0eby" path="res://addons/konado/runtime/template/dialogbox/dialog_box_1.tscn" id="5_4p1ug"]
 
-[sub_resource type="Resource" id="Resource_1go5q"]
-script = ExtResource("3_4p1ug")
-wait_seconds = 2.0
-wait_trigger = false
-metadata/_custom_type_script = "uid://ckk1r8g61jls3"
-
-[sub_resource type="Resource" id="Resource_hfq0a"]
-script = ExtResource("3_4p1ug")
-wait_seconds = 3.0
-wait_trigger = false
-metadata/_custom_type_script = "uid://ckk1r8g61jls3"
-
 [sub_resource type="Resource" id="Resource_5ehej"]
-script = ExtResource("4_ppsww")
-character_name = "11111"
-dialogue_text = "你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好"
+script = ExtResource("3_ppsww")
+wait_seconds = 1.0
+type = 17
+metadata/_custom_type_script = "uid://ckk1r8g61jls3"
+
+[sub_resource type="Resource" id="Resource_jrl2a"]
+script = ExtResource("4_1go5q")
+type = 2
 metadata/_custom_type_script = "uid://cmojtpai2iydn"
 
 [sub_resource type="Resource" id="Resource_ppsww"]
 script = ExtResource("3_hfq0a")
-commands = Array[ExtResource("2_woqy4")]([SubResource("Resource_1go5q"), SubResource("Resource_hfq0a"), SubResource("Resource_5ehej")])
+commands = Array[ExtResource("2_woqy4")]([SubResource("Resource_5ehej"), SubResource("Resource_jrl2a")])
 metadata/_custom_type_script = "uid://bktw5v4hqxfy0"
 
 [node name="DialogueManagerTest" type="Control" node_paths=PackedStringArray("dialogue_box")]
@@ -40,8 +33,6 @@ grow_vertical = 2
 script = ExtResource("1_ibefa")
 awaiting = true
 current_shot = SubResource("Resource_ppsww")
-current_command_index = 2
-current_command = SubResource("Resource_5ehej")
 dialogue_box = NodePath("​DialogBox1")
 state = 1
 

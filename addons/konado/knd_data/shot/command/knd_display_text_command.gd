@@ -8,6 +8,9 @@ class_name KND_DisplayTextCommand
 ## 对话文本内容
 @export var dialogue_text: String = ""
 
+func _init() -> void:
+	type = Type.DISPLAY_TEXT
+
 func execute(dialogue_manager: KND_DialogueManager, callback: Callable) -> void:
 	var dialogue_box = dialogue_manager.dialogue_box
 	dialogue_box.character_name = character_name
@@ -25,4 +28,7 @@ func deserialize_type_specific_data(data: Dictionary) -> void:
 	return
 	
 func serialize_to_dict() -> Dictionary:
-	return {}
+	var data = {}
+	data["character_name"] = character_name
+	data["dialogue_text"] = dialogue_text
+	return data
