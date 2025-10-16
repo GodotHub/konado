@@ -6,17 +6,8 @@
 [ext_resource type="Script" uid="uid://c2anqfrl1qe27" path="res://addons/konado/editor/view/ks_editor/ks_editor.gd" id="1_qu5wb"]
 [ext_resource type="Script" uid="uid://byqad5mu76fj5" path="res://addons/konado/editor/view/ks_editor/code_edit.gd" id="3_43nnm"]
 [ext_resource type="Script" uid="uid://brfpi4t4c2ui3" path="res://addons/konado/editor/view/ks_editor/staff_window.gd" id="5_bxnau"]
+[ext_resource type="Texture2D" uid="uid://dgyi8xxvrfl1" path="res://addons/konado/editor/assets/icon/icon_1.svg" id="5_kqyxv"]
 [ext_resource type="Theme" uid="uid://cao2ht3baecs8" path="res://addons/konado/editor/theme/dark_theme.tres" id="7_c7hxt"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_px02i"]
-content_margin_left = 8.0
-content_margin_right = 8.0
-content_margin_bottom = 4.0
-bg_color = Color(0.25826, 0.457502, 0.704714, 1)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ggagf"]
 bg_color = Color(0.0846, 0.0873, 0.09, 1)
@@ -36,18 +27,6 @@ script = ExtResource("1_bxnau")
 
 [node name="shot_data_edit" type="Node" parent="."]
 script = ExtResource("1_fqhf8")
-
-[node name="CharacterLabel" type="Label" parent="shot_data_edit"]
-unique_name_in_owner = true
-visible = false
-offset_left = 728.0
-offset_top = 109.0
-offset_right = 814.0
-offset_bottom = 147.0
-theme_override_styles/normal = SubResource("StyleBoxFlat_px02i")
-text = "角色 A"
-horizontal_alignment = 1
-vertical_alignment = 1
 
 [node name="ks_editor" type="Node" parent="."]
 script = ExtResource("1_qu5wb")
@@ -86,6 +65,8 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/guide_color = Color(0, 0, 0, 0)
 theme_override_colors/relationship_line_color = Color(0, 0, 0, 0)
+allow_reselect = true
+hide_folding = true
 hide_root = true
 
 [node name="editor" type="MarginContainer" parent="dock/VBoxContainer2"]
@@ -122,7 +103,7 @@ text = "本镜头演员"
 [node name="add_act" type="Button" parent="dock/VBoxContainer2/editor/BoxContainer/BoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "＋"
+icon = ExtResource("5_kqyxv")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="dock/VBoxContainer2/editor/BoxContainer/BoxContainer"]
 layout_mode = 2
@@ -147,7 +128,7 @@ highlight_current_line = true
 gutters_draw_line_numbers = true
 gutters_zero_pad_line_numbers = true
 gutters_draw_fold_gutter = true
-delimiter_strings = Array[String](["\" \"", "' '", "\" \""])
+delimiter_strings = Array[String](["\" \""])
 code_completion_enabled = true
 code_completion_prefixes = Array[String]([" ", "\""])
 indent_use_spaces = true
@@ -205,7 +186,7 @@ vertical_alignment = 1
 
 [node name="add_act" type="Button" parent="staff_window/Panel/BoxContainer"]
 layout_mode = 2
-text = "十"
+icon = ExtResource("5_kqyxv")
 metadata/_edit_use_anchors_ = true
 
 [node name="ScrollContainer" type="ScrollContainer" parent="staff_window/Panel"]

@@ -20,6 +20,8 @@ func _ready():
 	# 设置触发补全的前缀（空格和引号）
 	code_completion_prefixes = [" ", "\""]
 	
+	clear_string_delimiters()
+	
 	# 添加字符串分隔符（双引号）
 	add_string_delimiter("\"", "\"", false)
 

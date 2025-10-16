@@ -1,4 +1,4 @@
-extends DataEditWindow
+extends KndDataEditWindow
 
 func load_data() -> void:
 	pass
