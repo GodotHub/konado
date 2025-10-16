@@ -21,7 +21,6 @@ func _ready():
 	code_completion_prefixes = [" ", "\""]
 	
 	clear_string_delimiters()
-	
 	# 添加字符串分隔符（双引号）
 	add_string_delimiter("\"", "\"", false)
 

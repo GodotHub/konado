@@ -14,11 +14,11 @@
 
 ## Introduction
 
-Konado is a visual novel engine framework that provides various dialogue templates and a dialogue manager. It allows for quick creation of dialogue-based games and can also be integrated into dialogue scenes of various other game types.
+Konado is a visual novel engine framework that provides various dialogue templates and a dialogue manager, enabling quick creation of dialogue-based games or integration of dialogue scenes into various types of games.
 
 ## Quick Start
 
-Please refer to the [Quick Start](https://godothub.com/konado/tutorial/install.html) guide to learn how to get started with Konado quickly.
+Please refer to the [Quick Start](https://godothub.com/konado/tutorial/install.html) documentation to learn how to quickly start using Konado.
 
 ## Documentation
 
@@ -26,22 +26,24 @@ Welcome to our project website: https://godothub.com/konado for more detailed do
 
 ## Community
 
-Join our community to exchange experiences and share ideas with other Konado users. You can join our community through the following method:
+Welcome to join our community channels to exchange experiences and share ideas with other Konado users. You can join through the following methods:
 
-- Join our QQ Channel group: [Click to Join](https://pd.qq.com/g/GodotHub999/text/707799746)
+- Join our QQ Channel Discussion Group: [Click to Join](https://pd.qq.com/g/GodotHub999/text/707799746)
 
-## Development
+- Join our Discord Group Channel: [Click to Join](https://discord.com/channels/1378639076747513938/1425084240550166592)
 
-Please refer to the detailed contribution guide in [CONTRIBUTING.md](./CONTRIBUTING.md).
+## Development Participation
+
+Please refer to [CONTRIBUTING.md](./CONTRIBUTING.md) for the detailed contribution guide.
 
 ## Code of Conduct
 
 This project adheres to the [Code of Conduct](./CODE_OF_CONDUCT.md).
 
-## Contributors
+## Project Contributors
 
-For the list of contributors, please see [CONTRIBUTORS.md](./CONTRIBUTORS.md).
+For the list of contributors, please see [AUTHORS.md](./AUTHORS).
 
-## Open Source License
+## License
 
 The Konado project is licensed under the BSD 3-Clause License. For specific terms, please see the [LICENSE](./LICENSE) file.

@@ -1,7 +1,3 @@
-shot_id 镜头1
-
-start
-
 ## 场景设置
 background 咖啡厅背景 blinds
 ## play bgm cafe_jazz

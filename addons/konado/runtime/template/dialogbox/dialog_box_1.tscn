@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://bgpl5q55u0eby"]
 
-[ext_resource type="Theme" uid="uid://bb865dga7c5sp" path="res://addons/konado/theme_system/game_theme.tres" id="1_p8jbk"]
+[ext_resource type="Theme" uid="uid://bb865dga7c5sp" path="res://addons/konado/editor/theme/game_theme.tres" id="1_p8jbk"]
 [ext_resource type="Script" uid="uid://di4l2xhmfedcd" path="res://addons/konado/runtime/template/dialogbox/dialog_box_temp.gd" id="2_btu1b"]
 [ext_resource type="Texture2D" uid="uid://mxrma0a1bgu" path="res://addons/konado/editor/template/dialogue_box/dialoguebox1.png" id="4_jpssq"]
 [ext_resource type="Texture2D" uid="uid://cikw85v0iyjij" path="res://addons/konado/editor/template/progress/love_progress_under.svg" id="5_eopxg"]
@@ -23,6 +23,7 @@ character_name = "角色  "
 name_size = 42
 name_color = Color(1, 1, 1, 1)
 dialogue_text = "对话"
+typing_interval = null
 dialogue_bg = ExtResource("4_jpssq")
 
 [node name="dialogue_box_bg" type="NinePatchRect" parent="."]

@@ -6,7 +6,7 @@ Konado是一款基于Godot Engine的视觉小说引擎框架，由开源社区�
 
 ## Konado Project
 
-Konado Project 开发组是一个由社区驱动的开源项目团队，归属于Godot Hub开源社区。我们致力于 Konado 项目的开发、维护与持续发展。欢迎所有对 Konado 项目感兴趣的开发者加入我们，共同推动开源项目的完善与创新，为开源社区贡献力量。
+Konado Project 开发组是一个由社区驱动的开源项目团队，归属于[Godot Hub](https://godothub.com)社区。我们致力于 Konado 项目的开发、维护与持续发展。欢迎所有对 Konado 项目感兴趣的开发者加入我们，共同推动开源项目的完善与创新，为开源社区贡献力量。
 
 ## 我们的目标
 

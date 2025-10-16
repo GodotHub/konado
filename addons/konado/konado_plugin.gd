@@ -6,11 +6,12 @@ extends EditorPlugin
 const VERSION := "2.0"
 const CODENAME := "Mooncake"
 
-## 资源路径常量
-const DIALOGUE_DATA_SCRIPT := preload("res://addons/konado/scripts/dialogue/dialogue_shot.gd")
-const IMPORTER_SCRIPT := preload("res://addons/konado/importer/konado_importer.gd")
-const KDB_SCRIPT := preload("res://addons/konado/importer/kdb_importer.gd")
-const KDIC_SCRIPT := preload("res://addons/konado/editor/components/ks_csv_importer/ks_csv_importer.gd")
+## 自定义EditorImportPlugin脚本
+const KS_IMPORTER_SCRIPT := preload("res://addons/konado/importer/konado_importer.gd")
+const KDB_IMPORTER_SCRIPT := preload("res://addons/konado/importer/kdb_importer.gd")
+const KDIC_IMPORTER_SCRIPT := preload("res://addons/konado/editor/components/ks_csv_importer/ks_csv_importer.gd")
+
+## 全局自动加载脚本
 const KND_DATABASE := "res://addons/konado/database/knd_database.gd"
 const KONADO_MACROS := "res://addons/konado/konado_macros.gd"
 
@@ -61,9 +62,9 @@ func _setup_autoload_singletons() -> void:
 
 ## 设置导入插件
 func _setup_import_plugins() -> void:
-	import_plugin = IMPORTER_SCRIPT.new()
-	kdb_import_plugin = KDB_SCRIPT.new()
-	kdic_import_plugin = KDIC_SCRIPT.new()
+	import_plugin = KS_IMPORTER_SCRIPT.new()
+	kdb_import_plugin = KDB_IMPORTER_SCRIPT.new()
+	kdic_import_plugin = KDIC_IMPORTER_SCRIPT.new()
 	
 	add_import_plugin(import_plugin)
 	add_import_plugin(kdb_import_plugin)

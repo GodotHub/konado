@@ -1,4 +1,4 @@
-## KND_Data是所有数据类的基类，所有数据类都应该继承自这个类
+## KND_Data是所有数据类的基类，所有数据类都应该继承自这个类，比如KND_Shot就是继承该类
 @tool
 #@abstract
 extends Resource
@@ -10,16 +10,13 @@ var id: int
 ## 源数据字典
 @export var _source_data: Dictionary = {}
 
-## 子资源
-@export var sub_source_data: Dictionary[int, Dictionary] = {}
-
 ## 依赖管理，保存id
 @export var data_deps: Array[int] = []
 
-## 保存路径
+## 保存路径，该路径不能为空，否则无法持久化保存
 @export var save_path: String = ""
 
-## 数据类型
+## 数据类型，必须是KND_Database中的有效类型
 @export var type: String = ""
 
 ## 收藏
@@ -39,10 +36,9 @@ const PROPERTY_BLACK_LIST: Array[String] = [
  	"resource_name",
  	"resource_scene_unique_id",
  	"script",
- 	"Built-in script",
- 	"knd_data.gd"
+ 	"Built-in script"
 	]
-
+	
 
 ## 获取源数据
 func get_source_data() -> Dictionary:
@@ -61,34 +57,9 @@ func gen_source_data() -> void:
 		if property_name.ends_with(".gd"):
 			continue
 		_source_data[property_name] = get(property_name)
-	
-func add_sub_source_data(id: int, data: Dictionary) -> void:
-	if sub_source_data.has(id):
-		printerr("无法添加子资源")
-		return
-	
-	sub_source_data[id] = data
-	print("添加子资源" + str(id) + str(data))
-	
-	# 需要再次保存到本地
-	gen_source_data()
-	save_data(save_path)
-	
-func load_sub_source_data(id: int) -> Dictionary:
-	if not sub_source_data.has(id):
-		printerr("没有这个子资源")
-		return {}
-	return sub_source_data[id]
-	
-func update_sub_source_data(id: int, new: Dictionary) -> void:
-	if not sub_source_data.has(id):
-		printerr("无法修改子资源")
-		return
-	sub_source_data[id] = new
-	gen_source_data()
-	save_data(save_path)
-
-## 从字典更新数据到属性
+		
+		
+## 从源数据更新数据到属性
 func update() -> void:
 	for property in _source_data:
 		set(property, _source_data[property])

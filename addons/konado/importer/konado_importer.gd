@@ -52,7 +52,7 @@ func _import(source_file, save_path, options, platform_variants, gen_files) -> E
 		"enable_actor_validation": options["enable_actor_validation"]
 	})
 	
-	var diadata: KND_Shot = interpreter.process_scripts_to_data(source_file)
+	var diadata: KND_Shot = interpreter.process_script(interpreter.load_script(source_file).split("\n"))
 	if diadata == null:
 		printerr("Failed to process scripts")
 		return FAILED
