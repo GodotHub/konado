@@ -1,7 +1,6 @@
-[gd_resource type="Theme" load_steps=86 format=3 uid="uid://dy4cs3bqk267w"]
+[gd_resource type="Theme" load_steps=85 format=3 uid="uid://dy4cs3bqk267w"]
 
 [ext_resource type="Texture2D" uid="uid://crovcslajuick" path="res://addons/konado/editor/theme/关闭按钮.png" id="1_6teqf"]
-[ext_resource type="Texture2D" path="res://addons/konado/editor/ui/theme/圆角按钮.png" id="2_vsff0"]
 [ext_resource type="Texture2D" uid="uid://c160sij6d1xop" path="res://addons/konado/editor/theme/透明.png" id="3_6tw67"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6teqf"]
@@ -601,7 +600,6 @@ content_margin_bottom = 5.0
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_osl65"]
 content_margin_left = 45.0
 content_margin_right = 25.0
-texture = ExtResource("2_vsff0")
 texture_margin_left = 72.0
 texture_margin_right = 52.0
 expand_margin_right = 22.0

@@ -21,7 +21,7 @@ func _on_illustration_import_pressed() -> void:
 	file_dialog.file_mode = FileDialog.FILE_MODE_OPEN_FILE
 	file_dialog.access = FileDialog.ACCESS_RESOURCES
 	file_dialog.filters = ["*.png ; PNG图片", "*.jpg ; JPG图片", "*.jpeg ; JPEG图片", "*.webp ; WebP图片", "*.svg ; SVG图片"]
-	file_dialog.use_native_dialog = true 
+	#file_dialog.use_native_dialog = true 
 
 	# 连接文件选择的信号
 	file_dialog.file_selected.connect(_on_illustration_file_selected)
