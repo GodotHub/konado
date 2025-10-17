@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bnkejyqbrogri"]
+[gd_scene load_steps=11 format=3 uid="uid://bnkejyqbrogri"]
 
 [ext_resource type="Script" uid="uid://dpo124xwpder5" path="res://addons/konado/runtime/manager/knd_dialogue_manager.gd" id="1_ibefa"]
 [ext_resource type="Script" uid="uid://dftovts451lt8" path="res://addons/konado/knd_data/shot/command/knd_command.gd" id="2_woqy4"]
@@ -6,11 +6,13 @@
 [ext_resource type="Script" uid="uid://ckk1r8g61jls3" path="res://addons/konado/knd_data/shot/command/knd_timer_command.gd" id="3_ppsww"]
 [ext_resource type="Script" uid="uid://cmojtpai2iydn" path="res://addons/konado/knd_data/shot/command/knd_display_text_command.gd" id="4_1go5q"]
 [ext_resource type="PackedScene" uid="uid://bgpl5q55u0eby" path="res://addons/konado/runtime/template/dialogbox/dialog_box_1.tscn" id="5_4p1ug"]
+[ext_resource type="Script" uid="uid://dgja8omdr4sqg" path="res://addons/konado/knd_data/shot/test_shot_script.gd" id="7_1go5q"]
 
 [sub_resource type="Resource" id="Resource_5ehej"]
 script = ExtResource("3_ppsww")
 wait_seconds = 1.0
 type = 17
+wait_trigger = false
 metadata/_custom_type_script = "uid://ckk1r8g61jls3"
 
 [sub_resource type="Resource" id="Resource_jrl2a"]
@@ -24,6 +26,7 @@ commands = Array[ExtResource("2_woqy4")]([SubResource("Resource_5ehej"), SubReso
 metadata/_custom_type_script = "uid://bktw5v4hqxfy0"
 
 [node name="DialogueManagerTest" type="Control" node_paths=PackedStringArray("dialogue_box")]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -33,19 +36,23 @@ grow_vertical = 2
 script = ExtResource("1_ibefa")
 awaiting = true
 current_shot = SubResource("Resource_ppsww")
+current_command_index = 1
+current_command = SubResource("Resource_jrl2a")
 dialogue_box = NodePath("​DialogBox1")
-state = 1
 
 [node name="​DialogBox1" parent="." instance=ExtResource("5_4p1ug")]
 layout_mode = 1
-character_name = "11111"
-dialogue_text = "你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好"
+character_name = ""
+dialogue_text = ""
 typing_interval = 0.05
 
 [node name="dialogue_label" parent="​DialogBox1" index="1"]
-text = "你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好"
+text = ""
 
 [node name="character_name_label" parent="​DialogBox1/dialogue_label" index="1"]
-text = "11111"
+text = ""
+
+[node name="Node" type="Node" parent="."]
+script = ExtResource("7_1go5q")
 
 [editable path="​DialogBox1"]
