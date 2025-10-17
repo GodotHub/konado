@@ -6,7 +6,7 @@ extends Window
 const STAFF_COMPONENT = preload("uid://bybbh76d07hoo")       ## 角色演员对照组件
 @onready var staff_container: BoxContainer = %StaffContainer ## 角色演员表容器
 
-@export var char_arctor_list:CharacterList  ## 角色表
+#@export var char_arctor_list:CharacterList  ## 角色表
 
 ## 添加演员标签
 func _on_add_act_pressed() -> void:

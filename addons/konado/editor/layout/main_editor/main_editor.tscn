@@ -149,15 +149,15 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
-current_tab = 0
+current_tab = 1
 tabs_visible = false
 
 [node name="data_manage" parent="BoxContainer/modules_container" instance=ExtResource("3_nok4e")]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
 [node name="shot_editer" parent="BoxContainer/modules_container" instance=ExtResource("6_vy1oc")]
-visible = false
 layout_mode = 2
 
 [node name="system_configuration" type="Panel" parent="BoxContainer/modules_container"]

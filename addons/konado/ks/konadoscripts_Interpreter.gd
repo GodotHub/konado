@@ -114,9 +114,8 @@ func process_script(content: Array[String]) -> KND_Shot:
 		tmp_line_number = i
 		var line = lines[i]
 		var original_line_number =  i + 1
-
 		tmp_original_line_number = original_line_number
-
+		
 		# 不处理缩进的行
 		if line.begins_with("    ") or line.begins_with("\t"):
 			#print("解析成功：忽略标签内缩进行\n")
@@ -154,7 +153,7 @@ func process_script(content: Array[String]) -> KND_Shot:
 	diadata.gen_dialogues()
 	
 	_scripts_info(tmp_path, 0, "文件：%s 章节ID：%s 对话数量：%d" % 
-		[tmp_path, diadata.name, diadata.dialogues.size()])
+		[tmp_path, diadata.name, diadata.commands.size()])
 	tmp_path = ""
 
 	if not _check_tag_and_choice():
@@ -163,7 +162,7 @@ func process_script(content: Array[String]) -> KND_Shot:
 	# 生成演员快照
 	var cur_actor_dic: Dictionary = {}
 	diadata.gen_dialogues()
-	for dialogue in diadata.dialogues:
+	for dialogue in diadata.commands:
 		#print("当前演员快照：", cur_actor_dic)
 		if dialogue.dialog_type == Dialogue.Type.Display_Actor:
 				var actor: DialogueActor = dialogue.show_actor
@@ -492,17 +491,16 @@ func _parse_end(line: String, dialog: Dialogue) -> bool:
 		dialog.dialog_type = Dialogue.Type.THE_END
 		return true
 	return false
-
-
+	
 # 错误报告
 func _scripts_debug(path: String, line: int, error_info: String):
 	push_error("错误：%s [行：%d] %s " % [path, line, error_info])
-
-
+	
 # 警告提示
 func _scripts_warning(path: String, line: int, warning_info: String):
 	push_warning("警告：%s [行：%d] %s " % [path, line, warning_info])
-
+	
 # 信息提示
 func _scripts_info(path: String, line: int, info_info: String):
 	print("信息：%s [行：%d] %s " % [path, line, info_info])
+	
