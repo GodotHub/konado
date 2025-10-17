@@ -23,6 +23,6 @@ func _ready() -> void:
 	# 实例 角色
 	for i in characters:
 		var character = character_component.instantiate()
-		character.id = i
+		#character.id = i
 		add_child(character)
 	
