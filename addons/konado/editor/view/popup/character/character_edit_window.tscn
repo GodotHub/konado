@@ -12,6 +12,7 @@ oversampling_override = 1.0
 title = "角色编辑"
 initial_position = 1
 size = Vector2i(1100, 700)
+visible = false
 transient = true
 exclusive = true
 transparent = true
@@ -117,7 +118,7 @@ anchors_preset = 10
 anchor_right = 1.0
 offset_left = 70.0
 offset_top = 23.0
-offset_right = -70.0
+offset_right = -87.0
 offset_bottom = 67.0
 grow_horizontal = 2
 size_flags_horizontal = 3
@@ -135,7 +136,6 @@ layout_mode = 2
 size_flags_horizontal = 10
 tooltip_text = "添加状态"
 icon = ExtResource("3_0pty6")
-expand_icon = true
 
 [node name="ScrollContainer" type="ScrollContainer" parent="character_card/VBoxContainer2/Panel"]
 layout_mode = 1

@@ -12,8 +12,12 @@ var ks_statement: Dictionary = {}
 
 func _ready() -> void:
 	# ks_statement = load_csv()
+<<<<<<< HEAD
 	var kscsv := KsCsvDict.new()
 	kscsv = ResourceLoader.load("res://addons/konado/editor/view/ks_editor/ks_dict.kdic") 
+=======
+	var kscsv: KsCsvDict = ResourceLoader.load("res://addons/konado/editor/view/ks_editor/ks_dict.kdic")
+>>>>>>> 0aa01c246cce6a89ebaf1502b8350e1c83d40e53
 	print(kscsv.csv_data)
 	## 直接从资源加载
 	ks_statement =kscsv.csv_data
@@ -95,16 +99,17 @@ func create_tree_from_dict():
 			# 设置备注为tooltip
 			if label_data["按钮备注"] != "":
 				button_item.set_tooltip_text(0, label_data["按钮备注"])
-			
+			const FOLDER = preload("uid://ccl62lwgduiyn")
 			# 如果有图标路径，加载并设置图标
 			if label_data["按钮图标"] != "":
-				var icon = load(label_data["按钮图标"])
+				var icon = FOLDER
 				if icon:
 					button_item.set_icon(0, icon)
 			
+			
 			# 存储所有数据到元数据
 			button_item.set_metadata(0, (label_data["插入语句"]))
-			print(";;dksd;;", label_data["插入语句"])
+			print("插入语句", label_data["插入语句"])
 			button_item.set_selectable(0, true)
 	
 	# 恢复为单列显示
@@ -113,7 +118,7 @@ func create_tree_from_dict():
 	# 连接信号（确保只连接一次）
 	if not statement_tree.item_selected.is_connected(_on_Tree_item_selected):
 		statement_tree.item_selected.connect(_on_Tree_item_selected)
-		
+
 func _on_Tree_item_selected():
 	var selected_item = statement_tree.get_selected()
 	if selected_item.get_parent() != statement_tree.get_root():
@@ -121,7 +126,7 @@ func _on_Tree_item_selected():
 		on_button_pressed(str(statement))
 		# 清除选择以便可以再次选择同一项
 		statement_tree.deselect_all()
-		
+
 func on_button_pressed(ks_statement: String) -> void:
 	if not ks_statement:
 		push_warning("未指定语句")

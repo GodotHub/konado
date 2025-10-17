@@ -53,7 +53,7 @@ func _build_data_tree():
 	data_tree.clear()
 	# 创建根节点
 	current_data_lise = KND_Database.get_data_list(current_type)
-	#
+	print(current_data_lise)
 	var root = data_tree.create_item()
 	if current_data_lise.size() == 0:
 		return
