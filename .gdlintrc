@@ -14,7 +14,7 @@ class-definitions-order:
 - onreadyprvvars
 - others
 class-load-variable-name: (([A-Z][a-z0-9]*)+|_?[a-z][a-z0-9]*(_[a-z0-9]+)*)
-class-name: ([A-Z][a-z0-9]*)+
+class-name: ([A-Z][A-Za-z0-9]*)(_[A-Z][A-Za-z0-9]*)*
 class-variable-name: _?[a-z][a-z0-9]*(_[a-z0-9]+)*
 comparison-with-itself: null
 constant-name: _?[A-Z][A-Z0-9]*(_[A-Z0-9]+)*
@@ -22,7 +22,9 @@ disable: [
   trailing-whitespace,
   unnecessary-pass,
   max-returns,
-  class-definitions-order
+  class-definitions-order,
+  unused-argument,
+  duplicated-load
 ]
 duplicated-load: null
 enum-element-name: '[A-Z][A-Z0-9]*(_[A-Z0-9]+)*'
@@ -44,6 +46,5 @@ mixed-tabs-and-spaces: null
 no-elif-return: null
 no-else-return: null
 signal-name: '[a-z][a-z0-9]*(_[a-z0-9]+)*'
-sub-class-name: _?([A-Z][a-z0-9]*)+
+sub-class-name: ([A-Z][A-Za-z0-9]*)(_[A-Z][A-Za-z0-9]*)*
 tab-characters: 1
-unused-argument: null
