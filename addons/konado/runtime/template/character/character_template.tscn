@@ -1,9 +1,9 @@
 [gd_scene load_steps=3 format=3 uid="uid://dcwk5so2ohcc2"]
 
 [ext_resource type="Texture2D" uid="uid://cargjy7wp8wfn" path="res://addons/konado/runtime/template/character/kona.png" id="1_fuvv2"]
-[ext_resource type="Script" uid="uid://mksyuojdc6ns" path="res://addons/konado/runtime/template/character/character.gd" id="1_gnto7"]
+[ext_resource type="Script" uid="uid://mksyuojdc6ns" path="res://addons/konado/runtime/template/character/konado_dialogue_character.gd" id="1_gnto7"]
 
-[node name="character1" type="Control"]
+[node name="character" type="Control" node_paths=PackedStringArray("texture_rect")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,6 +11,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_gnto7")
+texture_rect = NodePath("TextureRect")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 unique_name_in_owner = true
@@ -18,9 +19,11 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 320.0
+offset_right = 319.99976
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(0.875, 0.875)
+scale = Vector2(0.795, 0.795)
 pivot_offset = Vector2(960, 1080)
 texture = ExtResource("1_fuvv2")
 expand_mode = 1

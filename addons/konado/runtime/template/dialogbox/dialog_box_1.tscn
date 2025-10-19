@@ -114,15 +114,6 @@ grow_horizontal = 0
 grow_vertical = 2
 text = "确认按钮"
 
-[node name="PopupMenu" type="PopupMenu" parent="."]
-oversampling_override = 1.0
-visible = true
-item_count = 2
-item_0/text = "111"
-item_0/id = 0
-item_1/text = "222"
-item_1/id = 1
-
 [connection signal="gui_input" from="dialogue_label" to="." method="_gui_input"]
 [connection signal="gui_input" from="dialogue_label/character_name_label" to="." method="_on_character_name_label_gui_input"]
 [connection signal="pressed" from="dialogue_label/Button" to="." method="_on_button_pressed"]
