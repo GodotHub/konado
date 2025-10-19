@@ -58,46 +58,12 @@ jobs:
           mkdir -v -p build/linux
           EXPORT_DIR="$(readlink -f build)"
           cd $PROJECT_PATH
-          godot --headless --verbose --export-release "Linux/X11" "$EXPORT_DIR/linux/$EXPORT_NAME.x86_64"
+          godot --headless --verbose --export-release "Linux" "$EXPORT_DIR/linux/$EXPORT_NAME.x86_64"
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: linux
           path: build/linux
-
-  export-web:
-    name: Web Export
-    runs-on: ubuntu-24.04  # Use 24.04 with godot 4
-    container:
-      image: barichello/godot-ci:mono-4.5.1
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          lfs: true
-      - name: Setup
-        run: |
-          mkdir -v -p ~/.local/share/godot/export_templates/
-          mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable.mono ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable.mono
-      - name: Web Build
-        run: |
-          mkdir -v -p build/web
-          EXPORT_DIR="$(readlink -f build)"
-          cd $PROJECT_PATH
-          godot --headless --verbose --export-release "Web" "$EXPORT_DIR/web/index.html"
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: web
-          path: build/web
-      - name: Install rsync 📚
-        run: |
-          apt-get update && apt-get install -y rsync
-      - name: Deploy to GitHub Pages 🚀
-        uses: JamesIves/github-pages-deploy-action@releases/v4
-        with:
-          branch: gh-pages # The branch the action should deploy to.
-          folder: build/web # The folder the action should deploy.
 
   export-mac:
     name: Mac Export

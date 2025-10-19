@@ -40,7 +40,7 @@ project/assembly_name="Konado"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/gut/plugin.cfg", "res://addons/konado/plugin.cfg")
+enabled=PackedStringArray("res://addons/konado/plugin.cfg")
 
 [gui]
 
@@ -50,3 +50,7 @@ theme/custom="uid://cao2ht3baecs8"
 
 locale/translations=PackedStringArray("res://addons/konado/i18n/i18n.zh.translation", "res://addons/konado/i18n/i18n.zh_HK.translation", "res://addons/konado/i18n/i18n.en.translation", "res://addons/konado/i18n/i18n.ja.translation", "res://addons/konado/i18n/i18n.ko.translation", "res://addons/konado/i18n/i18n.de.translation")
 locale/locale_filter_mode=1
+
+[rendering]
+
+textures/vram_compression/import_etc2_astc=true
