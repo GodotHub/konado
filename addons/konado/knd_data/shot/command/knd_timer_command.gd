@@ -11,7 +11,7 @@ func _init() -> void:
 	wait_seconds = 1.0
 	wait_trigger = false
 
-func execute(dialogue_manager: KND_DialogueManager, callback: Callable) -> void:
+func execute(dialogue_manager: KonadoDialogueManager, callback: Callable) -> void:
 	var timer =  dialogue_manager.get_tree().create_timer(wait_seconds, false)
 	if timer:
 		await timer.timeout

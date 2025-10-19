@@ -7,5 +7,5 @@ class_name KND_Display_Background
 func _init() -> void:
 	self.type = Type.DISPLAY_BACKGROUND
 
-func execute(dialogue_manager: KND_DialogueManager, callback: Callable) -> void:
+func execute(dialogue_manager: KonadoDialogueManager, callback: Callable) -> void:
 	pass

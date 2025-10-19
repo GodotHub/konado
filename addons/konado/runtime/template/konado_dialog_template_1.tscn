@@ -2,10 +2,10 @@
 
 [ext_resource type="Script" uid="uid://co1jy8tti3d25" path="res://addons/konado/template/knodo_dialog_template.gd" id="1_ofwfk"]
 [ext_resource type="PackedScene" uid="uid://dbfoi0nkkm0bx" path="res://addons/konado/runtime/template/background/background.tscn" id="2_ofwfk"]
-[ext_resource type="PackedScene" uid="uid://dcwk5so2ohcc2" path="res://addons/konado/runtime/template/character/character.tscn" id="3_6xqk1"]
+[ext_resource type="PackedScene" uid="uid://dcwk5so2ohcc2" path="res://addons/konado/runtime/template/character/character_template.tscn" id="3_6xqk1"]
 [ext_resource type="PackedScene" uid="uid://bgpl5q55u0eby" path="res://addons/konado/runtime/template/dialogbox/dialog_box_1.tscn" id="4_st1jh"]
 
-[node name="KnodoDialog_template_1" type="CanvasLayer"]
+[node name="KonodoDialogue_Template_1" type="CanvasLayer"]
 script = ExtResource("1_ofwfk")
 knd_dialogue = null
 
@@ -36,3 +36,7 @@ name_size = 30
 dialogue_margins = 165
 dialogue_color = Color(0.7057291, 0.36389157, 0.36389157, 1)
 dialogue_hight_max = 375
+
+[connection signal="resized" from="@Control@61998" to="@Control@61998" method="_on_resized"]
+[connection signal="resized" from="@Control@61999" to="@Control@61999" method="_on_resized"]
+[connection signal="resized" from="@Control@62000" to="@Control@62000" method="_on_resized"]

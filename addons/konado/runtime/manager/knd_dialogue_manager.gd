@@ -1,9 +1,13 @@
 ### 对话管理器
 @tool
 extends Control
-class_name KND_DialogueManager
+class_name KonadoDialogueManager
 
+## 当前对话执行完成的回调
 signal current_command_executed(success: bool)
+
+## 对话角色模板
+const CHARACTER_TEMPLATE: PackedScene = preload("uid://dcwk5so2ohcc2")
 
 ## 是否自动开始对话
 @export var auto_start: bool = true
@@ -25,6 +29,8 @@ signal current_command_executed(success: bool)
 
 ## 对话框
 @export var dialogue_box: KND_DialogueBox
+
+
 
 ## 对话状态
 enum State {
@@ -126,3 +132,27 @@ func execution_completed(success: bool) -> void:
 	if current_command.wait_trigger == false:
 		start_dialogue()
 	pass
+
+
+## 显示角色
+## name: 角色名称
+## division: 分区数
+## pos: 角色位置，[0, division]
+## callback: 回调
+func process_display_character(name: String, texture: Texture, division: int, pos: int, scale: float, callback: Callable) -> void:
+	print("显示角色 " + name + " " + str(pos))
+	## 从模板中克隆一个角色
+	var character = CHARACTER_TEMPLATE.instantiate() as KonadoDialogueCharacter
+	character.visible = false
+	character.use_tween = false
+	character.set_character_texture(texture)
+	character.set_texture_scale(scale)
+	character.division = division
+	character.character_position = pos
+	add_child(character)
+	# 必须先设置位置，否则位置会不对
+	character._on_resized()
+	character.visible = true
+
+	if callback:
+		callback.call(true)
