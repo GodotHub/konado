@@ -1,10 +1,11 @@
-name: gdscript gdlint check
+name: GDS Check
 
 on:
   push:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
+  workflow_dispatch:
 
 jobs:
   static-checks:
