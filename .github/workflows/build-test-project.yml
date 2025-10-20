@@ -4,6 +4,7 @@ on:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
+  workflow_dispatch:
 
 env:
   GODOT_VERSION: 4.5.1
