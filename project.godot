@@ -14,8 +14,8 @@ general/accessibility_support=2
 
 [application]
 
-config/name="Konado Editor"
-config/description="Konado Editor，Konado编辑器"
+config/name="Konado Demo"
+config/description="Konado Demo"
 config/version="2.0"
 run/main_scene="uid://bommt7l6wmdsa"
 config/features=PackedStringArray("4.5", "C#", "Forward Plus")

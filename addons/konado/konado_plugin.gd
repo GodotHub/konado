@@ -38,6 +38,17 @@ var open_konado_editor_btn: Button = null
 var filesystem_dock: FileSystemDock
 var ks_tooltip_plugin: EditorResourceTooltipPlugin
 
+var ks_editor: Control
+
+func _get_plugin_name() -> String:
+	return "Konado"
+	
+func _get_plugin_icon() -> Texture2D:
+	return null
+	
+func _has_main_screen() -> bool:
+	return true
+
 func _enter_tree() -> void:
 	_setup_autoload_singletons()
 	_setup_import_plugins()
@@ -50,8 +61,23 @@ func _enter_tree() -> void:
 	ks_tooltip_plugin = preload("res://addons/konado/ks/ks_tooltip_plugin.gd").new()
 	filesystem_dock.add_resource_tooltip_plugin(ks_tooltip_plugin)
 	
-	#filesystem_dock
 
+	ks_editor = load("res://addons/konado/editor/view/ks_editor/ks_editor.tscn").instantiate()
+	EditorInterface.get_editor_main_screen().add_child(ks_editor)
+	ks_editor.hide()
+	
+# 控制显示
+func _make_visible(visible:bool) -> void:
+	if not ks_editor:
+		return
+
+	if ks_editor.get_parent() is Window:
+		if visible:
+			get_editor_interface().set_main_screen_editor("Script")
+			ks_editor.show()
+			ks_editor.get_parent().grab_focus()
+	else:
+		ks_editor.visible = visible
 
 func _exit_tree() -> void:
 	_cleanup_import_plugins()
@@ -61,14 +87,22 @@ func _exit_tree() -> void:
 	if filesystem_dock:
 		filesystem_dock.remove_resource_tooltip_plugin(ks_tooltip_plugin)
 		ks_tooltip_plugin = null
+		
+	if ks_editor:
+		remove_control_from_bottom_panel(ks_editor)
 	
 	print("Konado unloaded")
 
-func _on_files_selected(files: PackedStringArray):
-	for file in files:
-		if file.get_extension() == "ks":
-			print("Selected .ks file: ", file)
-
+## 用于处理ks文件
+func _handles(object: Object) -> bool:
+	if object is Resource and object.resource_path.get_extension() == "ks":
+		print(object.resource_path)
+		return true
+	return false
+	
+	
+	
+	
 ## 设置自动加载单例
 func _setup_autoload_singletons() -> void:
 	add_autoload_singleton(AUTOLOAD_KONADO_MACROS, KONADO_MACROS)

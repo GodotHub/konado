@@ -23,7 +23,8 @@ const CHARACTER_TEMPLATE: PackedScene = preload("uid://dcwk5so2ohcc2")
 
 @export_group("镜头数据")
 
-@export var shots: Dictionary[String, KND_Shot]
+## 预设镜头
+@export var preset_shots: Dictionary[String, KND_Shot]
 
 
 ## 当前镜头
