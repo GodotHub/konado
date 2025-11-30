@@ -1,4 +1,3 @@
-@tool
 extends Node
 class_name DialogueInterface
 # 对话UI控制脚本

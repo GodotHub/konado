@@ -9,7 +9,8 @@ enum Modiles{DATA,SHOT,SYSTEM}   ## 模块
 @onready var modules_bar: TabBar = %modules_bar
 
 func _ready() -> void:
-	KND_Database.cur_shot_change.connect(edit_shot)
+	pass
+	#KND_Database.cur_shot_change.connect(edit_shot)
  
 ## TODO 切换到镜头编辑器
 ## BUG 切换后，标签显示还是原来的

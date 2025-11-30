@@ -10,15 +10,17 @@ extends KndDataEditWindow
 const STATUS_COMPONENT = preload("uid://bbos35lnhvbn2")
 
 func load_data() -> void:
-	if data != -1:
-		name_edit.text = KND_Database.get_data_property(data,"name")
-		tip_edit.text = KND_Database.get_data_property(data,"tip")
+	pass
+	#if data != -1:
+		#name_edit.text = KND_Database.get_data_property(data,"name")
+		#tip_edit.text = KND_Database.get_data_property(data,"tip")
 
 func save_data() -> void:
-	if data != -1:
-		KND_Database.rename_data(data, name_edit.text)
-		print(KND_Database.get_data_property(data,"name"))
-		KND_Database.set_data(data,"tip",tip_edit.text )
+	pass
+	#if data != -1:
+		#KND_Database.rename_data(data, name_edit.text)
+		#print(KND_Database.get_data_property(data,"name"))
+		#KND_Database.set_data(data,"tip",tip_edit.text )
 
 ## 添加状态
 func _on_add_status_pressed() -> void:

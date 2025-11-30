@@ -74,7 +74,7 @@ clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-size_flags_stretch_ratio = 6.0
+size_flags_stretch_ratio = 5.4
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 20
@@ -91,28 +91,9 @@ layout_mode = 2
 layout_mode = 2
 text = "镜头"
 
-[node name="shot_id" type="OptionButton" parent="dock/VBoxContainer2/editor/BoxContainer/BoxContainer"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(400, 0)
-layout_mode = 2
-
 [node name="Label2" type="Label" parent="dock/VBoxContainer2/editor/BoxContainer/BoxContainer"]
 layout_mode = 2
 text = "本镜头演员"
-
-[node name="add_act" type="Button" parent="dock/VBoxContainer2/editor/BoxContainer/BoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-icon = ExtResource("5_kqyxv")
-
-[node name="ScrollContainer" type="ScrollContainer" parent="dock/VBoxContainer2/editor/BoxContainer/BoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="charactr_label" type="BoxContainer" parent="dock/VBoxContainer2/editor/BoxContainer/BoxContainer/ScrollContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="CodeEdit" type="CodeEdit" parent="dock/VBoxContainer2/editor/BoxContainer"]
 unique_name_in_owner = true
@@ -208,9 +189,6 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 vertical = true
 
-[connection signal="item_selected" from="dock/VBoxContainer2/editor/BoxContainer/BoxContainer/shot_id" to="edit_control" method="_on_shot_id_item_selected"]
-[connection signal="pressed" from="dock/VBoxContainer2/editor/BoxContainer/BoxContainer/shot_id" to="edit_control" method="_on_shot_id_pressed"]
-[connection signal="pressed" from="dock/VBoxContainer2/editor/BoxContainer/BoxContainer/add_act" to="edit_control" method="_on_add_act_pressed"]
 [connection signal="text_changed" from="dock/VBoxContainer2/editor/BoxContainer/CodeEdit" to="staff_window" method="_on_text_edit_text_changed"]
 [connection signal="close_requested" from="staff_window" to="staff_window" method="_on_close_requested"]
 [connection signal="pressed" from="staff_window/Panel/BoxContainer/add_act" to="staff_window" method="_on_add_act_pressed"]

@@ -19,8 +19,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 320.0
-offset_right = 319.99976
+offset_left = -640.0
+offset_right = -640.00024
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.795, 0.795)
@@ -28,5 +28,9 @@ pivot_offset = Vector2(960, 1080)
 texture = ExtResource("1_fuvv2")
 expand_mode = 1
 stretch_mode = 5
+
+[node name="Node2D" type="Node2D" parent="TextureRect"]
+position = Vector2(557.48425, -278.4905)
+scale = Vector2(1.2578616, 1.2578616)
 
 [connection signal="resized" from="." to="." method="_on_resized"]

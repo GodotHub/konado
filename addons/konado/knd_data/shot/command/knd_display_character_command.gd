@@ -13,8 +13,8 @@ class_name KND_DisplayCharacterCommand
 
 
 func _init() -> void:
-    type = Type.DISPLAY_CHARACTER
-    wait_trigger = false
+	type = Type.DISPLAY_CHARACTER
+	wait_trigger = false
 
 func execute(dialogue_manager: KonadoDialogueManager, callback: Callable) -> void:
-    dialogue_manager.process_display_character(character_name, character_texture, division, pos, scale, callback)
+	dialogue_manager.process_display_character(character_name, character_texture, division, pos, scale, callback)
