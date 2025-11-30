@@ -12,7 +12,6 @@ const KDB_IMPORTER_SCRIPT := preload("res://addons/konado/importer/kdb_importer.
 const KDIC_IMPORTER_SCRIPT := preload("res://addons/konado/editor/components/ks_csv_importer/ks_csv_importer.gd")
 
 ## 全局自动加载脚本
-const KND_DATABASE := "res://addons/konado/database/knd_database.gd"
 const KONADO_MACROS := "res://addons/konado/konado_macros.gd"
 
 ## 翻译文件路径
@@ -36,6 +35,9 @@ var kdb_import_plugin: EditorImportPlugin
 var kdic_import_plugin: EditorImportPlugin
 var open_konado_editor_btn: Button = null
 
+# 文件系统dock
+var filesystem_dock: FileSystemDock
+var ks_tooltip_plugin: EditorResourceTooltipPlugin
 
 func _enter_tree() -> void:
 	_setup_autoload_singletons()
@@ -44,6 +46,12 @@ func _enter_tree() -> void:
 	_setup_internationalization()
 	
 	_print_loading_message()
+	
+	filesystem_dock = get_editor_interface().get_file_system_dock()
+	ks_tooltip_plugin = preload("res://addons/konado/ks/ks_tooltip_plugin.gd").new()
+	filesystem_dock.add_resource_tooltip_plugin(ks_tooltip_plugin)
+	
+	#filesystem_dock
 
 
 func _exit_tree() -> void:
@@ -51,13 +59,20 @@ func _exit_tree() -> void:
 	_cleanup_editor_interface()
 	_cleanup_autoload_singletons()
 	
+	if filesystem_dock:
+		filesystem_dock.remove_resource_tooltip_plugin(ks_tooltip_plugin)
+		ks_tooltip_plugin = null
+	
 	print("Konado unloaded")
 
+func _on_files_selected(files: PackedStringArray):
+	for file in files:
+		if file.get_extension() == "ks":
+			print("Selected .ks file: ", file)
 
 ## 设置自动加载单例
 func _setup_autoload_singletons() -> void:
 	add_autoload_singleton(AUTOLOAD_KONADO_MACROS, KONADO_MACROS)
-	add_autoload_singleton(AUTOLOAD_DATABASE, KND_DATABASE)
 
 
 ## 设置导入插件
