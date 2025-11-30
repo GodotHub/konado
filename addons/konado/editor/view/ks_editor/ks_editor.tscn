@@ -1,13 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://x8t7cxfhviko"]
+[gd_scene load_steps=7 format=3 uid="uid://x8t7cxfhviko"]
 
 [ext_resource type="Script" uid="uid://ctvwjllbiqhh1" path="res://addons/konado/editor/view/ks_editor/edit_control.gd" id="1_bxnau"]
 [ext_resource type="PackedScene" uid="uid://djq23ftlfwkn1" path="res://addons/konado/editor/components/dock/dock_bar.tscn" id="1_cfuhs"]
 [ext_resource type="Script" uid="uid://uw6s0ovn0vi1" path="res://addons/konado/editor/view/ks_editor/shot_data_edit.gd" id="1_fqhf8"]
 [ext_resource type="Script" uid="uid://c2anqfrl1qe27" path="res://addons/konado/editor/view/ks_editor/ks_editor.gd" id="1_qu5wb"]
 [ext_resource type="Script" uid="uid://byqad5mu76fj5" path="res://addons/konado/editor/view/ks_editor/code_edit.gd" id="3_43nnm"]
-[ext_resource type="Script" uid="uid://brfpi4t4c2ui3" path="res://addons/konado/editor/view/ks_editor/staff_window.gd" id="5_bxnau"]
-[ext_resource type="Texture2D" uid="uid://dgyi8xxvrfl1" path="res://addons/konado/editor/assets/icon/icon_1.svg" id="5_kqyxv"]
-[ext_resource type="Theme" uid="uid://cao2ht3baecs8" path="res://addons/konado/editor/theme/dark_theme.tres" id="7_c7hxt"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ggagf"]
 bg_color = Color(0.0846, 0.0873, 0.09, 1)
@@ -20,6 +17,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme_type_variation = &"WindowPanel"
 
 [node name="edit_control" type="Node" parent="."]
@@ -74,28 +73,22 @@ clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-size_flags_stretch_ratio = 5.4
+size_flags_stretch_ratio = 6.0
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 10
 
-[node name="BoxContainer" type="BoxContainer" parent="dock/VBoxContainer2/editor"]
+[node name="HBoxContainer" type="HBoxContainer" parent="dock/VBoxContainer2/editor"]
 layout_mode = 2
+
+[node name="BoxContainer" type="BoxContainer" parent="dock/VBoxContainer2/editor/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.4
 vertical = true
 
-[node name="BoxContainer" type="BoxContainer" parent="dock/VBoxContainer2/editor/BoxContainer"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="dock/VBoxContainer2/editor/BoxContainer/BoxContainer"]
-layout_mode = 2
-text = "镜头"
-
-[node name="Label2" type="Label" parent="dock/VBoxContainer2/editor/BoxContainer/BoxContainer"]
-layout_mode = 2
-text = "本镜头演员"
-
-[node name="CodeEdit" type="CodeEdit" parent="dock/VBoxContainer2/editor/BoxContainer"]
+[node name="CodeEdit" type="CodeEdit" parent="dock/VBoxContainer2/editor/HBoxContainer/BoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
@@ -118,77 +111,41 @@ auto_brace_completion_enabled = true
 auto_brace_completion_highlight_matching = true
 script = ExtResource("3_43nnm")
 
-[node name="staff_window" type="Window" parent="." groups=["Window"]]
-unique_name_in_owner = true
-editor_description = "文本节点的高级编辑器"
-oversampling_override = 1.0
-title = "演员表"
-initial_position = 1
-size = Vector2i(835, 500)
-visible = false
-transient = true
-exclusive = true
-min_size = Vector2i(800, 500)
-max_size = Vector2i(3840, 2160)
-script = ExtResource("5_bxnau")
+[node name="Panel" type="Panel" parent="dock/VBoxContainer2/editor/HBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 3
 
-[node name="Panel" type="Panel" parent="staff_window"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("7_c7hxt")
-theme_type_variation = &"WindowPanel"
-
-[node name="BoxContainer" type="BoxContainer" parent="staff_window/Panel"]
+[node name="BoxContainer" type="BoxContainer" parent="dock/VBoxContainer2/editor/HBoxContainer/Panel"]
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_left = 148.0
-offset_top = 56.0
-offset_right = -146.0
-offset_bottom = 100.0
+offset_bottom = 49.0
 grow_horizontal = 2
+size_flags_horizontal = 3
 
-[node name="CharacterLabel" type="Label" parent="staff_window/Panel/BoxContainer"]
+[node name="Label" type="Label" parent="dock/VBoxContainer2/editor/HBoxContainer/Panel/BoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+text = "剧本文本"
+
+[node name="Button" type="Button" parent="dock/VBoxContainer2/editor/HBoxContainer/Panel/BoxContainer"]
+layout_mode = 2
+text = "一键粘贴"
+
+[node name="Control" type="Control" parent="dock/VBoxContainer2/editor/HBoxContainer/Panel/BoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "演员名"
-horizontal_alignment = 1
-vertical_alignment = 1
 
-[node name="CharacterLabel2" type="Label" parent="staff_window/Panel/BoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "角色 "
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="add_act" type="Button" parent="staff_window/Panel/BoxContainer"]
-layout_mode = 2
-icon = ExtResource("5_kqyxv")
-metadata/_edit_use_anchors_ = true
-
-[node name="ScrollContainer" type="ScrollContainer" parent="staff_window/Panel"]
+[node name="CodeEdit" type="CodeEdit" parent="dock/VBoxContainer2/editor/HBoxContainer/Panel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 131.0
-offset_top = 110.0
-offset_right = -131.0
-offset_bottom = -46.0
+offset_left = 10.0
+offset_top = 49.0
+offset_right = -10.0
+offset_bottom = -17.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="StaffContainer" type="BoxContainer" parent="staff_window/Panel/ScrollContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-vertical = true
-
-[connection signal="text_changed" from="dock/VBoxContainer2/editor/BoxContainer/CodeEdit" to="staff_window" method="_on_text_edit_text_changed"]
-[connection signal="close_requested" from="staff_window" to="staff_window" method="_on_close_requested"]
-[connection signal="pressed" from="staff_window/Panel/BoxContainer/add_act" to="staff_window" method="_on_add_act_pressed"]
