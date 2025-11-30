@@ -6,7 +6,6 @@ class_name KonadoEditorWindow
 const konado_editor = preload("uid://bommt7l6wmdsa")
 
 func _init() -> void:
-	KND_Database.load_database()
 	_open_editor_window()
 	# 禁用默认主题
 	pass
@@ -25,4 +24,3 @@ func _open_editor_window() -> void:
 
 	var editor = konado_editor.instantiate() as Control
 	self.add_child(editor)
-	KND_Database.load_database()

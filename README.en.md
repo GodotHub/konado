@@ -1,14 +1,17 @@
 # Konado: Visual Novel Framework
 
-[简体中文](README.md) | English | [日本語](README.ja.md)
+[简体中文](README.md) | English
 
-![star](https://gitcode.com/godothub/konado/star/badge.svg)
 ![License]( https://img.shields.io/badge/License-BSD_3--Clause-orange.svg)
 ![GitHub Last Commit](https://img.shields.io/github/last-commit/godothub/konado.svg)
+![GitHub forks](https://img.shields.io/github/forks/godothub/konado?style=flat-square)
+
+![GitHub Stars](https://img.shields.io/github/stars/godothub/konado?style=social)
+![star](https://gitcode.com/godothub/konado/star/badge.svg)
 
 
 <p align="center">
-  <img src="./mascot/banner/1.0/KonadoBanner-1.0.png" alt="Mascot Kona" width=596px>
+  <img src="./assets/kona/kona.png" alt="看板娘可娜" width=116px>
 </p>
 
 

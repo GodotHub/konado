@@ -1,9 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://bommt7l6wmdsa"]
+[gd_scene load_steps=6 format=3 uid="uid://bommt7l6wmdsa"]
 
 [ext_resource type="Texture2D" uid="uid://bb7nhjioefh8a" path="res://sample/demo/sample_arts/示例-咖啡馆-背景.png" id="1_csa6c"]
 [ext_resource type="Theme" uid="uid://xb40j2mc624h" path="res://addons/konado/editor/theme/konado_theme.tres" id="1_elb54"]
 [ext_resource type="Script" uid="uid://c2u6ino7v7ixx" path="res://addons/konado/editor/manager/ui_management.gd" id="1_nok4e"]
-[ext_resource type="PackedScene" uid="uid://c0d7dvfgwb76d" path="res://addons/konado/editor/view/data_manage/data_manage.tscn" id="3_nok4e"]
 [ext_resource type="Texture2D" uid="uid://6uvfpvvss883" path="res://addons/konado/editor/assets/icon/pin.svg" id="3_os5hq"]
 [ext_resource type="PackedScene" uid="uid://dga5qsts51yjl" path="res://addons/konado/editor/layout/shot_editer/shot_editing.tscn" id="6_vy1oc"]
 
@@ -91,19 +90,6 @@ switch_on_hover = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="modules_bar" type="TabBar" parent="BoxContainer/BoxContainer2"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(400, 60)
-layout_mode = 2
-size_flags_horizontal = 3
-current_tab = 1
-tab_alignment = 1
-clip_tabs = false
-tab_count = 3
-tab_0/title = "数据管理"
-tab_1/title = "镜头编辑"
-tab_2/title = "游戏系统"
-
 [node name="Control" type="Control" parent="BoxContainer/BoxContainer2"]
 visible = false
 layout_mode = 2
@@ -149,26 +135,21 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
-current_tab = 1
+current_tab = 0
 tabs_visible = false
-
-[node name="data_manage" parent="BoxContainer/modules_container" instance=ExtResource("3_nok4e")]
-visible = false
-layout_mode = 2
-metadata/_tab_index = 0
 
 [node name="shot_editer" parent="BoxContainer/modules_container" instance=ExtResource("6_vy1oc")]
 layout_mode = 2
+metadata/_tab_index = 0
 
 [node name="system_configuration" type="Panel" parent="BoxContainer/modules_container"]
 visible = false
 layout_mode = 2
-metadata/_tab_index = 2
+metadata/_tab_index = 1
 
 [node name="info_bar" type="BoxContainer" parent="BoxContainer"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 
-[connection signal="tab_clicked" from="BoxContainer/BoxContainer2/modules_bar" to="ui_management" method="_on_modules_bar_tab_clicked"]
 [connection signal="toggled" from="BoxContainer/BoxContainer2/BoxContainer3/document" to="ui_management" method="_on_top_button_toggled"]
 [connection signal="toggled" from="BoxContainer/BoxContainer2/BoxContainer3/TopButton" to="ui_management" method="_on_top_button_toggled"]

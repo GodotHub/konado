@@ -23,10 +23,9 @@ config/icon="uid://b5olx2vwoscbr"
 
 [autoload]
 
-KND_Database="*res://addons/konado/database/knd_database.gd"
-KonadoAPI="*res://addons/konadotnet/Runtime/API/KonadoAPI.cs"
-KonadoMacros="*res://addons/konado/konado_macros.gd"
 KONADO_MACROS="*res://addons/konado/konado_macros.gd"
+PhantomCameraManager="*res://addons/phantom_camera/scripts/managers/phantom_camera_manager.gd"
+KonadoMacros="*res://addons/konado/konado_macros.gd"
 
 [display]
 

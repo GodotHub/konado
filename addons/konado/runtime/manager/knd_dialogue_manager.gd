@@ -1,7 +1,7 @@
-### 对话管理器
-@tool
 extends Control
 class_name KonadoDialogueManager
+
+## Konado对话管理器，用于播放指定的KND_Shot镜头数据，并执行镜头中的指令
 
 ## 当前对话执行完成的回调
 signal current_command_executed(success: bool)
@@ -9,6 +9,9 @@ signal current_command_executed(success: bool)
 ## 对话角色模板
 const CHARACTER_TEMPLATE: PackedScene = preload("uid://dcwk5so2ohcc2")
 
+@onready var character_parent_node: Node = $"../character"
+
+@export_group("对话配置")
 ## 是否自动开始对话
 @export var auto_start: bool = true
 
@@ -18,9 +21,15 @@ const CHARACTER_TEMPLATE: PackedScene = preload("uid://dcwk5so2ohcc2")
 ## 是否等待
 @export var awaiting: bool = false
 
+@export_group("镜头数据")
+
+@export var shots: Dictionary[String, KND_Shot]
+
+
 ## 当前镜头
 @export var current_shot: KND_Shot = null
 
+@export_group("信息")
 ## 当前指令索引下标
 @export var current_command_index: int = 0
 
@@ -30,6 +39,8 @@ const CHARACTER_TEMPLATE: PackedScene = preload("uid://dcwk5so2ohcc2")
 ## 对话框
 @export var dialogue_box: KND_DialogueBox
 
+## 当前角色字典，key为角色ID，value为角色实例
+@export var current_characters_map: Dictionary[String, KonadoDialogueCharacter] = {}
 
 
 ## 对话状态
@@ -46,10 +57,15 @@ enum State {
 @export var state: State = State.STOP
 
 ## 有个坑，必须重新加载tools脚本
-@export_tool_button("初始化对话", "Callable")
+#@export_tool_button("初始化对话", "Callable")
 var init_action = self.init_dialogue
 
 func _ready() -> void:
+	if current_shot == null:
+		return
+	if current_shot.commands.size() <= 0:
+		printerr("对话指令为空")
+		return
 	init_dialogue()
 	if auto_start:
 		start_dialogue()
@@ -73,6 +89,7 @@ func _process(delta: float) -> void:
 			return
 			
 			
+## 初始化对话，重置所有变量
 func init_dialogue() -> void:
 	current_command = null
 	state = State.STOP
@@ -88,6 +105,7 @@ func stop_dialogue() -> void:
 	switch_state(State.STOP)
 	awaiting = false
 	
+## 重播，从当前指令开始重播
 func replay() -> void:
 	if current_command:
 		current_command.execute(self, execution_completed)
@@ -133,6 +151,7 @@ func execution_completed(success: bool) -> void:
 		start_dialogue()
 	pass
 
+#region 角色相关
 
 ## 显示角色
 ## name: 角色名称
@@ -149,10 +168,48 @@ func process_display_character(name: String, texture: Texture, division: int, po
 	character.set_texture_scale(scale)
 	character.division = division
 	character.character_position = pos
-	add_child(character)
+	character_parent_node.add_child(character)
 	# 必须先设置位置，否则位置会不对
 	character._on_resized()
 	character.visible = true
 
 	if callback:
 		callback.call(true)
+
+## 隐藏角色
+func process_exit_character(name: String, callback: Callable) -> void:
+	print("隐藏角色 " + name)
+	var character = get_node("KonadoDialogueCharacter") as KonadoDialogueCharacter
+	if character:
+		character.visible = false
+		if callback:
+			callback.call(true)
+	pass
+
+
+## 移动角色
+func process_move_character(name: String, division: int, pos: int, callback: Callable) -> void:
+	print("移动角色 " + name + " " + str(pos))
+	var character = get_node("KonadoDialogueCharacter") as KonadoDialogueCharacter
+	if character:
+		character.character_position = pos
+		character.division = division
+		if callback:
+			callback.call(true)
+	pass
+	
+#endregion
+
+#region 对话框相关
+
+## 显示对话框
+func process_show_dialogue_box(callback: Callable, anim: bool = false) -> void:
+	print("显示对话框")
+	pass
+	
+## 隐藏对话框
+func process_hide_dialogue_box(callback: Callable, anim: bool = false) -> void:
+	print("隐藏对话框")
+	pass
+	
+#endregion

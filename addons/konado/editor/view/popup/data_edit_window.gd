@@ -32,5 +32,5 @@ func save_data() -> void;
 ## 弹窗关闭 
 func _on_close_requested() -> void:
 	save_data()
-	KND_Database.update_data_tree.emit()
+	#KND_Database.update_data_tree.emit()
 	hide()

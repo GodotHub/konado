@@ -14,7 +14,7 @@ signal typing_completed
 
 ## 角色对象
 @export_group("名字")
-@export var character_name : String="" :
+@export var character_name : String = "" :
 	set(value):
 		character_name = value
 		update_dialogue()

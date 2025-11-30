@@ -3,7 +3,7 @@
 extends Resource
 class_name KND_Data
 
-## 数据类型，必须是KND_Database中的有效类型
+## 数据类型
 @export var type: String = ""
 
 ## 收藏

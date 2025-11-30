@@ -149,8 +149,6 @@ func process_script(content: Array[String]) -> KND_Shot:
 				break
 			print("\n")
 			
-	# 生成对话
-	diadata.gen_dialogues()
 	
 	_scripts_info(tmp_path, 0, "文件：%s 章节ID：%s 对话数量：%d" % 
 		[tmp_path, diadata.name, diadata.commands.size()])
@@ -161,7 +159,6 @@ func process_script(content: Array[String]) -> KND_Shot:
 
 	# 生成演员快照
 	var cur_actor_dic: Dictionary = {}
-	diadata.gen_dialogues()
 	for dialogue in diadata.commands:
 		#print("当前演员快照：", cur_actor_dic)
 		if dialogue.dialog_type == Dialogue.Type.Display_Actor:

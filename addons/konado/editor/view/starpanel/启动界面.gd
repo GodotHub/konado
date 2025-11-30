@@ -63,5 +63,3 @@ func _close_requested():
 		dialog.queue_free()  # 释放对话框
 	popup_mask.hide()
 	
-func konado_creat():
-	KonadoProjectBuilder.new()

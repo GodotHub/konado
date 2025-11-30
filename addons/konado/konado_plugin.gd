@@ -8,7 +8,6 @@ const CODENAME := "Mooncake"
 
 ## 自定义EditorImportPlugin脚本
 const KS_IMPORTER_SCRIPT := preload("res://addons/konado/importer/konado_importer.gd")
-const KDB_IMPORTER_SCRIPT := preload("res://addons/konado/importer/kdb_importer.gd")
 const KDIC_IMPORTER_SCRIPT := preload("res://addons/konado/editor/components/ks_csv_importer/ks_csv_importer.gd")
 
 ## 全局自动加载脚本
@@ -78,7 +77,6 @@ func _setup_autoload_singletons() -> void:
 ## 设置导入插件
 func _setup_import_plugins() -> void:
 	import_plugin = KS_IMPORTER_SCRIPT.new()
-	kdb_import_plugin = KDB_IMPORTER_SCRIPT.new()
 	kdic_import_plugin = KDIC_IMPORTER_SCRIPT.new()
 	
 	add_import_plugin(import_plugin)
