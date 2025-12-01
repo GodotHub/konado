@@ -11,6 +11,8 @@ const CHARACTER_TEMPLATE: PackedScene = preload("uid://dcwk5so2ohcc2")
 
 @onready var character_parent_node: Node = $"../character"
 
+@onready var dialogue_box: KND_DialogueBox = $"../​DialogBox/​DialogBox2"
+
 @export_group("对话配置")
 ## 是否自动开始对话
 @export var auto_start: bool = true
@@ -35,10 +37,8 @@ const CHARACTER_TEMPLATE: PackedScene = preload("uid://dcwk5so2ohcc2")
 @export var current_command_index: int = 0
 
 ## 当前指令
-@export var current_command: KND_Command = null
+@export var current_command: KND_Command
 
-## 对话框
-@export var dialogue_box: KND_DialogueBox
 
 ## 当前角色字典，key为角色ID，value为角色实例
 @export var current_characters_map: Dictionary[String, KonadoDialogueCharacter] = {}
@@ -206,11 +206,43 @@ func process_move_character(name: String, division: int, pos: int, callback: Cal
 ## 显示对话框
 func process_show_dialogue_box(callback: Callable, anim: bool = false) -> void:
 	print("显示对话框")
-	pass
+	
+	if anim:
+		# 初始状态
+		dialogue_box.modulate = Color(1, 1, 1, 0)  # 完全透明
+		dialogue_box.show()
+		
+		# 创建动画补间
+		var tween = create_tween()
+		# 淡入 + 缩放
+		tween.tween_property(dialogue_box, "modulate", Color(1, 1, 1, 1), 2.3)
+		# 动画完成后调用回调
+		tween.finished.connect(func():
+			callback.call(true)
+		)
+	else:
+		dialogue_box.show()
+		callback.call(true)
 	
 ## 隐藏对话框
 func process_hide_dialogue_box(callback: Callable, anim: bool = false) -> void:
 	print("隐藏对话框")
-	pass
+	
+	if anim:
+		# 创建动画补间
+		var tween = create_tween()
+		# 淡出 + 缩放缩小
+		tween.tween_property(dialogue_box, "modulate", Color(1, 1, 1, 0), 0.2)
+	
+		# 动画完成后隐藏并调用回调
+		tween.finished.connect(func():
+			dialogue_box.hide()
+			# 重置状态（避免下次显示时状态不对）
+			dialogue_box.modulate = Color(1, 1, 1, 1)
+			callback.call(true)
+		)
+	else:
+		dialogue_box.hide()
+		callback.call(true)
 	
 #endregion

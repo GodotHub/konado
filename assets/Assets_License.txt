@@ -1,4 +1,5 @@
-项目看板娘 Kona 以及 sample 下的示例素材立绘使用 CC-NC-SA 4.0 许可证。
+The project mascot Kona and the sample character illustrations under the sample directory are licensed under the CC-NC-SA 4.0 license.
+
 
 Attribution-NonCommercial-ShareAlike 4.0 International
 

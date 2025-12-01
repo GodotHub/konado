@@ -1,7 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://bwskpda2vmn5x"]
+[gd_scene load_steps=4 format=3 uid="uid://ssvxh78qqtqp"]
 
 [ext_resource type="Script" uid="uid://cfbojxb1pdbrs" path="res://addons/konado/scripts/audio/audio_interface.gd" id="1_ytwdp"]
-[ext_resource type="PackedScene" uid="uid://0sc04evetbux" path="res://addons/konado/runtime/template/konado_dialog_template_1.tscn" id="2_5shdr"]
+[ext_resource type="PackedScene" uid="uid://0sc04evetbux" path="res://addons/konado/runtime/template/konado_dialog_template.tscn" id="2_5shdr"]
 [ext_resource type="PackedScene" uid="uid://t5hwv7sqfex4" path="res://addons/konado/template/game_ui_template.tscn" id="3_5shdr"]
 
 [node name="new_dialog" type="Node"]

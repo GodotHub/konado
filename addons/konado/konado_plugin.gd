@@ -32,13 +32,12 @@ var konado_editor_instance: KonadoEditorWindow = null
 var import_plugin: EditorImportPlugin
 var kdb_import_plugin: EditorImportPlugin
 var kdic_import_plugin: EditorImportPlugin
-var open_konado_editor_btn: Button = null
 
 # 文件系统dock
 var filesystem_dock: FileSystemDock
 var ks_tooltip_plugin: EditorResourceTooltipPlugin
 
-var ks_editor: Control
+var ks_editor: KsEditorWindow
 
 func _get_plugin_name() -> String:
 	return "Konado"
@@ -52,7 +51,6 @@ func _has_main_screen() -> bool:
 func _enter_tree() -> void:
 	_setup_autoload_singletons()
 	_setup_import_plugins()
-	_setup_editor_interface()
 	_setup_internationalization()
 	
 	_print_loading_message()
@@ -62,7 +60,7 @@ func _enter_tree() -> void:
 	filesystem_dock.add_resource_tooltip_plugin(ks_tooltip_plugin)
 	
 
-	ks_editor = load("res://addons/konado/editor/view/ks_editor/ks_editor.tscn").instantiate()
+	ks_editor = load("res://addons/konado/editor/view/ks_editor/ks_editor.tscn").instantiate() as KsEditorWindow
 	EditorInterface.get_editor_main_screen().add_child(ks_editor)
 	ks_editor.hide()
 	
@@ -81,7 +79,6 @@ func _make_visible(visible:bool) -> void:
 
 func _exit_tree() -> void:
 	_cleanup_import_plugins()
-	_cleanup_editor_interface()
 	_cleanup_autoload_singletons()
 	
 	if filesystem_dock:
@@ -96,7 +93,7 @@ func _exit_tree() -> void:
 ## 用于处理ks文件
 func _handles(object: Object) -> bool:
 	if object is Resource and object.resource_path.get_extension() == "ks":
-		print(object.resource_path)
+		ks_editor.edit(object.resource_path)
 		return true
 	return false
 	
@@ -118,12 +115,6 @@ func _setup_import_plugins() -> void:
 	add_import_plugin(kdic_import_plugin)
 	
 	
-## 设置编辑器界面
-func _setup_editor_interface() -> void:
-	open_konado_editor_btn = _create_editor_toolbar_button()
-	add_control_to_container(CONTAINER_TOOLBAR, open_konado_editor_btn)
-
-
 ## 设置国际化
 func _setup_internationalization() -> void:
 	ProjectSettings.set_setting("internationalization/locale/translations", TRANSLATION_PATHS)
@@ -131,13 +122,7 @@ func _setup_internationalization() -> void:
 	ProjectSettings.save()
 
 
-## 创建编辑器工具栏按钮
-func _create_editor_toolbar_button() -> Button:
-	var button := Button.new()
-	button.text = "Konado 编辑器"
-	button.toggle_mode = true
-	button.pressed.connect(_on_konado_editor_button_pressed)
-	return button
+
 
 
 ## 打开Konado编辑器
@@ -164,12 +149,7 @@ func _cleanup_import_plugins() -> void:
 		remove_import_plugin(kdic_import_plugin)
 		kdic_import_plugin = null
 
-## 清理编辑器界面
-func _cleanup_editor_interface() -> void:
-	if open_konado_editor_btn:
-		remove_control_from_container(CONTAINER_TOOLBAR, open_konado_editor_btn)
-		open_konado_editor_btn.queue_free()
-		open_konado_editor_btn = null
+
 
 
 ## 清理自动加载单例

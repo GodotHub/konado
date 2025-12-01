@@ -17,7 +17,7 @@ general/accessibility_support=2
 config/name="Konado Demo"
 config/description="Konado Demo"
 config/version="2.0"
-run/main_scene="uid://bommt7l6wmdsa"
+run/main_scene="uid://0sc04evetbux"
 config/features=PackedStringArray("4.5", "C#", "Forward Plus")
 config/icon="uid://b5olx2vwoscbr"
 

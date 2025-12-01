@@ -19,42 +19,6 @@ func _ready() -> void:
 	ks_statement =kscsv.csv_data
 	create_tree_from_dict()
 
-## TODO：已经在ks_csv_importer中实现，这里不再需要，未来考虑删除
-# func load_csv() -> Dictionary:
-# 	var file = FileAccess.open(ks_statement_path, FileAccess.READ)
-# 	var data: Dictionary = {}
-# 	# 首先读取标题行
-# 	var headers = file.get_csv_line()
-# 	if headers.size() == 0:
-# 		file.close()
-# 		return data
-# 	# 读取数据行
-# 	while not file.eof_reached():
-# 		var line = file.get_csv_line()
-# 		if line.size() > 0 and line[0] != "": # 跳过空行和空键的行
-# 			var key = line[0]
-# 			var entry: Dictionary = {
-# 				"按钮名称": line[1] if line.size() > 1 else "",
-# 				"按钮图标": line[2] if line.size() > 2 else "",
-# 				"插入语句": line[3] if line.size() > 3 else "",
-# 				"按钮备注": line[4] if line.size() > 4 else ""
-# 			}
-# 			# 如果键已存在，创建或添加到嵌套字典中
-# 			if data.has(key):
-# 				if typeof(data[key]) == TYPE_DICTIONARY:
-# 					# 如果已经是一个字典，转换为数组
-# 					var existing_entry = data[key]
-# 					data[key] = [existing_entry, entry]
-# 				elif typeof(data[key]) == TYPE_ARRAY:
-# 					# 如果已经是数组，添加新条目
-# 					data[key].append(entry)
-# 			else:
-# 				# 键不存在，直接添加
-# 				data[key] = entry
-# 	file.close()
-# 	print(data)
-# 	return data
-
 func create_tree_from_dict():
 	# 清除现有树项（如果有）
 	statement_tree.clear()
@@ -124,6 +88,8 @@ func _on_Tree_item_selected():
 		statement_tree.deselect_all()
 
 func on_button_pressed(ks_statement: String) -> void:
+	if not code_edit.editable:
+		return
 	if not ks_statement:
 		push_warning("未指定语句")
 		return

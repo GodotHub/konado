@@ -101,7 +101,7 @@ choice "进入森林" forest_path "留在村庄" village_stay
 ### 6. 分支标签
 ```
 branch <分支标签名称>
-    缩进的内容行
+	缩进的内容行
 ```
 - 分支内容必须缩进（4个空格或制表符）
 - 分支内可包含其他语法元素
@@ -110,8 +110,8 @@ branch <分支标签名称>
 示例：
 ```
 branch forest_path
-    "导游" "我们决定进入森林探索..."
-    background forest_interior
+	"导游" "我们决定进入森林探索..."
+	background forest_interior
 ```
 
 ### 7. 镜头跳转
@@ -157,4 +157,3 @@ end
 - `allow_custom_suffix`: 是否允许自定义文件后缀（默认为false）
 - `allow_skip_error_line`: 是否允许跳过错误行（默认为false）
 - `enable_actor_validation`: 是否启用角色验证（默认为true）
-
