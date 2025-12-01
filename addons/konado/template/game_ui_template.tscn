@@ -1,6 +1,5 @@
-[gd_scene load_steps=12 format=3 uid="uid://t5hwv7sqfex4"]
+[gd_scene load_steps=11 format=3 uid="uid://t5hwv7sqfex4"]
 
-[ext_resource type="Script" uid="uid://bruaou4gwjdwl" path="res://addons/konado/template/ui_template/ui_template.gd" id="1_8pelu"]
 [ext_resource type="PackedScene" uid="uid://b5njwitmejk76" path="res://addons/konado/template/ui_template/save_commponect/save_componect.tscn" id="1_jj3o7"]
 [ext_resource type="Theme" uid="uid://bb865dga7c5sp" path="res://addons/konado/editor/theme/game_theme.tres" id="3_or8n0"]
 
@@ -32,49 +31,9 @@ texture = SubResource("GradientTexture2D_m86f6")
 
 [node name="game_ui" type="CanvasLayer"]
 layer = 50
-script = ExtResource("1_8pelu")
-
-[node name="setting" type="Control" parent="."]
-unique_name_in_owner = true
-visible = false
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Panel" type="Panel" parent="setting"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_type_variation = &"Background"
-
-[node name="setting2" type="Control" parent="."]
-unique_name_in_owner = true
-visible = false
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Panel" type="Panel" parent="setting2"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_type_variation = &"Background"
 
 [node name="save_load" type="Control" parent="."]
 unique_name_in_owner = true
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -125,6 +84,23 @@ game_time = "3h2min "
 layout_mode = 2
 save_name = "存档2"
 auto_save = true
+
+[node name="save_componect3" parent="save_load/Panel/ScrollContainer/MarginContainer/BoxContainer" instance=ExtResource("1_jj3o7")]
+layout_mode = 2
+save_name = "存档2"
+auto_save = true
+
+[node name="save_componect4" parent="save_load/Panel/ScrollContainer/MarginContainer/BoxContainer" instance=ExtResource("1_jj3o7")]
+layout_mode = 2
+save_name = "存档1"
+save_time = "2025/8/25/12:20  "
+game_time = "3h2min "
+
+[node name="save_componect5" parent="save_load/Panel/ScrollContainer/MarginContainer/BoxContainer" instance=ExtResource("1_jj3o7")]
+layout_mode = 2
+save_name = "存档1"
+save_time = "2025/8/25/12:20  "
+game_time = "3h2min "
 
 [node name="Label" type="Label" parent="save_load/Panel"]
 layout_mode = 1

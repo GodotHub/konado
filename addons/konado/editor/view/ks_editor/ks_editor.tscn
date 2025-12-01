@@ -1,17 +1,16 @@
-[gd_scene load_steps=7 format=3 uid="uid://x8t7cxfhviko"]
+[gd_scene load_steps=6 format=3 uid="uid://x8t7cxfhviko"]
 
-[ext_resource type="Script" uid="uid://ctvwjllbiqhh1" path="res://addons/konado/editor/view/ks_editor/edit_control.gd" id="1_bxnau"]
 [ext_resource type="PackedScene" uid="uid://djq23ftlfwkn1" path="res://addons/konado/editor/components/dock/dock_bar.tscn" id="1_cfuhs"]
-[ext_resource type="Script" uid="uid://uw6s0ovn0vi1" path="res://addons/konado/editor/view/ks_editor/shot_data_edit.gd" id="1_fqhf8"]
 [ext_resource type="Script" uid="uid://c2anqfrl1qe27" path="res://addons/konado/editor/view/ks_editor/ks_editor.gd" id="1_qu5wb"]
-[ext_resource type="Script" uid="uid://byqad5mu76fj5" path="res://addons/konado/editor/view/ks_editor/code_edit.gd" id="3_43nnm"]
+[ext_resource type="Script" uid="uid://d1vqgmq6wa33e" path="res://addons/konado/editor/view/ks_editor/ks_editor_window.gd" id="1_s2ona"]
+[ext_resource type="Script" uid="uid://byqad5mu76fj5" path="res://addons/konado/editor/view/ks_editor/konado_code_edit.gd" id="3_43nnm"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ggagf"]
 bg_color = Color(0.0846, 0.0873, 0.09, 1)
 corner_radius_top_right = 15
 corner_radius_bottom_right = 15
 
-[node name="shot_edit_dock" type="Panel"]
+[node name="KsEditorWindow" type="Panel"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -20,14 +19,9 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_type_variation = &"WindowPanel"
+script = ExtResource("1_s2ona")
 
-[node name="edit_control" type="Node" parent="."]
-script = ExtResource("1_bxnau")
-
-[node name="shot_data_edit" type="Node" parent="."]
-script = ExtResource("1_fqhf8")
-
-[node name="ks_editor" type="Node" parent="."]
+[node name="ks_editor_bar" type="Node" parent="."]
 script = ExtResource("1_qu5wb")
 
 [node name="dock" parent="." instance=ExtResource("1_cfuhs")]
@@ -35,12 +29,37 @@ layout_mode = 1
 dock_name = "镜头编辑"
 
 [node name="BoxContainer" type="BoxContainer" parent="dock"]
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 
-[node name="Button" type="Button" parent="dock/BoxContainer"]
+[node name="New" type="Button" parent="dock/BoxContainer"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "新建"
+language = "en"
+
+[node name="Open" type="Button" parent="dock/BoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
 text = "打开"
 language = "en"
+
+[node name="Save" type="Button" parent="dock/BoxContainer"]
+layout_mode = 2
+tooltip_text = "没有打开的文件"
+theme_override_font_sizes/font_size = 20
+disabled = true
+text = "保存"
+
+[node name="Close" type="Button" parent="dock/BoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "关闭当前文件"
+
+[node name="FilePath" type="Label" parent="dock/BoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "未打开文件"
 
 [node name="VBoxContainer2" type="SplitContainer" parent="dock"]
 layout_mode = 2
@@ -92,7 +111,11 @@ vertical = true
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
+tooltip_text = "请先打开一个文件"
+mouse_filter = 2
+text = "请先打开一个文件"
 placeholder_text = "输入文本"
+editable = false
 deselect_on_focus_loss_enabled = false
 wrap_mode = 1
 scroll_smooth = true
@@ -131,6 +154,7 @@ size_flags_vertical = 0
 text = "剧本文本"
 
 [node name="Button" type="Button" parent="dock/VBoxContainer2/editor/HBoxContainer/Panel/BoxContainer"]
+visible = false
 layout_mode = 2
 text = "一键粘贴"
 
@@ -149,3 +173,5 @@ offset_right = -10.0
 offset_bottom = -17.0
 grow_horizontal = 2
 grow_vertical = 2
+placeholder_text = "临时粘贴你的剧本到这里..."
+wrap_mode = 1

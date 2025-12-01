@@ -2,6 +2,7 @@ name: "godot-ci export"
 on:
   push:
     branches: [ "master" ]
+    tags: [ "v*" ]  # 新增：当推送以 v 开头的 tag 时触发
   pull_request:
     branches: [ "master" ]
   workflow_dispatch:
@@ -14,7 +15,7 @@ env:
 jobs:
   export-windows:
     name: Windows Export
-    runs-on: ubuntu-24.04  # Use 24.04 with godot 4
+    runs-on: ubuntu-24.04
     container:
       image: barichello/godot-ci:mono-4.5.1
     steps:
@@ -42,7 +43,7 @@ jobs:
 
   export-linux:
     name: Linux Export
-    runs-on: ubuntu-24.04  # Use 24.04 with godot 4
+    runs-on: ubuntu-24.04
     container:
       image: barichello/godot-ci:mono-4.5.1
     steps:
@@ -68,7 +69,7 @@ jobs:
 
   export-mac:
     name: Mac Export
-    runs-on: ubuntu-24.04  # Use 24.04 with godot 4
+    runs-on: ubuntu-24.04
     container:
       image: barichello/godot-ci:mono-4.5.1
     steps:

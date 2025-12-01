@@ -1,17 +1,18 @@
 @tool
 extends CodeEdit
+class_name KonadoCodeEdit
 
-# 已知的角色列表（可以从项目配置中加载）
-var known_characters := ["alice", "bob", "eve", "narrator"]
-# 已知的背景列表
-var known_backgrounds := ["forest_bg", "village_bg", "castle_bg", "cave_bg"]
-# 已知的状态列表
-var known_states := ["happy", "sad", "angry", "neutral", "surprised"]
-# 已知的音频列表
-var known_bgms := ["main_theme", "battle_theme", "peaceful"]
-var known_sounds := ["click", "door_open", "footsteps"]
-# 已知的镜头ID列表
-var known_shot_ids := ["opening_scene", "forest_path", "village_stay"]
+## 已知的角色列表
+#var known_characters := ["alice", "bob", "eve", "narrator"]
+## 已知的背景列表
+#var known_backgrounds := ["forest_bg", "village_bg", "castle_bg", "cave_bg"]
+## 已知的状态列表
+#var known_states := ["happy", "sad", "angry", "neutral", "surprised"]
+## 已知的音频列表
+#var known_bgms := ["main_theme", "battle_theme", "peaceful"]
+#var known_sounds := ["click", "door_open", "footsteps"]
+## 已知的镜头ID列表
+#var known_shot_ids := ["opening_scene", "forest_path", "village_stay"]
 
 func _ready():
 	print(self.get_path())
@@ -34,7 +35,6 @@ func _on_text_changed():
 	self.request_code_completion()
 
 func _request_code_completion(_force: bool):
-	print("Code completion requested")
 	var current_line = get_caret_line()
 	var current_column = get_caret_column()
 	var line_text = get_line(current_line)
@@ -70,15 +70,15 @@ func _request_code_completion(_force: bool):
 func _get_completion_candidates(line: int, line_text: String, current_word: String) -> Array:
 	var candidates := []
 	
-	# 第一行应该是shot_id
-	if line == 0 and line_text.strip_edges().is_empty():
-		candidates.append({
-			"kind": CodeCompletionKind.KIND_CONSTANT,
-			"display_text": "shot_id",
-			"insert_text": "shot_id ",
-			"color": Color(0.8, 0.5, 1.0)
-		})
-		return candidates
+	## 第一行应该是shot_id
+	#if line == 0 and line_text.strip_edges().is_empty():
+		#candidates.append({
+			#"kind": CodeCompletionKind.KIND_CONSTANT,
+			#"display_text": "shot_id",
+			#"insert_text": "shot_id ",
+			#"color": Color(0.8, 0.5, 1.0)
+		#})
+		#return candidates
 	
 	# 分析当前行已输入的内容
 	var tokens = line_text.strip_edges().split(" ", false)
@@ -92,23 +92,25 @@ func _get_completion_candidates(line: int, line_text: String, current_word: Stri
 		"shot_id":
 			if tokens.size() == 1:
 				# 补全已知的镜头ID
-				for shot_id in known_shot_ids:
-					candidates.append({
-						"kind": CodeCompletionKind.KIND_CONSTANT,
-						"display_text": shot_id,
-						"insert_text": shot_id,
-						"color": Color(0.6, 0.8, 1.0)
-					})
+				#for shot_id in known_shot_ids:
+					#candidates.append({
+						#"kind": CodeCompletionKind.KIND_CONSTANT,
+						#"display_text": shot_id,
+						#"insert_text": shot_id,
+						#"color": Color(0.6, 0.8, 1.0)
+					#})
+				pass
 		"background":
 			if tokens.size() == 1:
 				# 补全背景名称
-				for bg in known_backgrounds:
-					candidates.append({
-						"kind": CodeCompletionKind.KIND_CONSTANT,
-						"display_text": bg,
-						"insert_text": bg + " ",
-						"color": Color(0.8, 0.8, 0.6)
-					})
+				#for bg in known_backgrounds:
+					#candidates.append({
+						#"kind": CodeCompletionKind.KIND_CONSTANT,
+						#"display_text": bg,
+						#"insert_text": bg + " ",
+						#"color": Color(0.8, 0.8, 0.6)
+					#})
+				pass
 			elif tokens.size() == 2:
 				# 补全效果类型
 				var effects = ["erase", "blinds", "wave", "fade"]
@@ -135,22 +137,24 @@ func _get_completion_candidates(line: int, line_text: String, current_word: Stri
 					"show", "change", "exit", "move":
 						if tokens.size() == 2:
 							# 补全角色名称
-							for char_name in known_characters:
-								candidates.append({
-									"kind": CodeCompletionKind.KIND_VARIABLE,
-									"display_text": char_name,
-									"insert_text": char_name + " ",
-									"color": Color(0.7, 0.8, 0.9)
-								})
+							#for char_name in known_characters:
+								#candidates.append({
+									#"kind": CodeCompletionKind.KIND_VARIABLE,
+									#"display_text": char_name,
+									#"insert_text": char_name + " ",
+									#"color": Color(0.7, 0.8, 0.9)
+								#})
+							pass
 						elif tokens.size() == 3 and tokens[1] == "show":
 							# 补全角色状态
-							for state in known_states:
-								candidates.append({
-									"kind": CodeCompletionKind.KIND_CONSTANT,
-									"display_text": state,
-									"insert_text": state + " ",
-									"color": Color(0.8, 0.9, 0.7)
-								})
+							#for state in known_states:
+								#candidates.append({
+									#"kind": CodeCompletionKind.KIND_CONSTANT,
+									#"display_text": state,
+									#"insert_text": state + " ",
+									#"color": Color(0.8, 0.9, 0.7)
+								#})
+							pass
 						elif tokens.size() == 4 and tokens[1] == "show" and tokens[3] == "at":
 							# 补全坐标和scale关键字
 							candidates.append({
@@ -174,22 +178,24 @@ func _get_completion_candidates(line: int, line_text: String, current_word: Stri
 				match tokens[1]:
 					"bgm":
 						# 补全BGM名称
-						for bgm in known_bgms:
-							candidates.append({
-								"kind": CodeCompletionKind.KIND_CONSTANT,
-								"display_text": bgm,
-								"insert_text": bgm,
-								"color": Color(0.9, 0.8, 0.6)
-							})
+						#for bgm in known_bgms:
+							#candidates.append({
+								#"kind": CodeCompletionKind.KIND_CONSTANT,
+								#"display_text": bgm,
+								#"insert_text": bgm,
+								#"color": Color(0.9, 0.8, 0.6)
+							#})
+						pass
 					"sound":
 						# 补全音效名称
-						for sound in known_sounds:
-							candidates.append({
-								"kind": CodeCompletionKind.KIND_CONSTANT,
-								"display_text": sound,
-								"insert_text": sound,
-								"color": Color(0.8, 0.6, 0.9)
-							})
+						#for sound in known_sounds:
+							#candidates.append({
+								#"kind": CodeCompletionKind.KIND_CONSTANT,
+								#"display_text": sound,
+								#"insert_text": sound,
+								#"color": Color(0.8, 0.6, 0.9)
+							#})
+						pass
 		"stop":
 			if tokens.size() == 1:
 				candidates.append({
@@ -218,13 +224,14 @@ func _get_completion_candidates(line: int, line_text: String, current_word: Stri
 		"jump":
 			if tokens.size() == 1:
 				# 补全跳转目标（这里需要从文件中提取已知shot_id）
-				for shot_id in known_shot_ids:
-					candidates.append({
-						"kind": CodeCompletionKind.KIND_CONSTANT,
-						"display_text": shot_id,
-						"insert_text": shot_id,
-						"color": Color(0.6, 0.8, 1.0)
-					})
+				#for shot_id in known_shot_ids:
+					#candidates.append({
+						#"kind": CodeCompletionKind.KIND_CONSTANT,
+						#"display_text": shot_id,
+						#"insert_text": shot_id,
+						#"color": Color(0.6, 0.8, 1.0)
+					#})
+				pass
 		_:
 			# 检查是否以引号开头（对话行）
 			if line_text.begins_with("\"") and not line_text.ends_with("\""):
@@ -233,14 +240,15 @@ func _get_completion_candidates(line: int, line_text: String, current_word: Stri
 				
 				if second_quote_pos == -1:
 					# 第一个引号后没有第二个引号，补全角色ID
-					for char_name in known_characters:
-						if char_name.begins_with(current_word):
-							candidates.append({
-								"kind": CodeCompletionKind.KIND_VARIABLE,
-								"display_text": char_name,
-								"insert_text": char_name + "\" \"",
-								"color": Color(0.7, 0.8, 0.9)
-							})
+					#for char_name in known_characters:
+						#if char_name.begins_with(current_word):
+							#candidates.append({
+								#"kind": CodeCompletionKind.KIND_VARIABLE,
+								#"display_text": char_name,
+								#"insert_text": char_name + "\" \"",
+								#"color": Color(0.7, 0.8, 0.9)
+							#})
+					pass
 				else:
 					# 已有角色ID，补全语音ID（可选）
 					pass
