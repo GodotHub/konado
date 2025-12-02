@@ -1,6 +1,6 @@
 [gd_scene load_steps=17 format=3 uid="uid://c0d7dvfgwb76d"]
 
-[ext_resource type="Texture2D" uid="uid://cfau2duojvd33" path="res://addons/konado/runtime/assets/KonadoBanner.png" id="1_lfi02"]
+[ext_resource type="Texture2D" uid="uid://cfau2duojvd33" path="res://addons/konado/neo/runtime/assets/KonadoBanner.png" id="1_lfi02"]
 [ext_resource type="PackedScene" uid="uid://dyxdkp8jarx78" path="res://addons/konado/editor/view/popup/character/character_edit_window.tscn" id="1_wwbq1"]
 [ext_resource type="Script" uid="uid://c4283hxr0yl63" path="res://addons/konado/editor/view/data_manage/knd_data_tree.gd" id="2_f24y4"]
 [ext_resource type="Texture2D" uid="uid://dgyi8xxvrfl1" path="res://addons/konado/editor/assets/icon/icon_1.svg" id="3_7vuv8"]

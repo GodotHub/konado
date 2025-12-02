@@ -11,7 +11,7 @@ class_name KND_DisplayTextCommand
 func _init() -> void:
 	type = Type.DISPLAY_TEXT
 
-func execute(dialogue_manager: KonadoDialogueManager, callback: Callable) -> void:
+func execute(dialogue_manager: NeoKonadoDialogueManager, callback: Callable) -> void:
 	var dialogue_box = dialogue_manager.dialogue_box
 	dialogue_box.character_name = character_name
 	dialogue_box.typing_completed.connect(func(): 

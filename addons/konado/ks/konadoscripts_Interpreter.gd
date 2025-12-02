@@ -16,6 +16,8 @@ var tmp_content_lines = []
 
 ## 对话内容正则表达式
 var dialogue_content_regex: RegEx
+## 元数据正则表达式
+var dialogue_metadata_regex: RegEx
 
 ## 演员验证表
 var cur_tmp_actors = []
@@ -63,59 +65,77 @@ func init_insterpreter(flags: Dictionary[String, Variant]) -> bool:
 	# 提前初始化正则表达式，避免重复编译
 	dialogue_content_regex = RegEx.new()
 	dialogue_content_regex.compile("^\"(.*?)\"\\s+\"(.*?)\"(?:\\s+(\\S+))?$")
+
+	dialogue_metadata_regex = RegEx.new()
+	dialogue_metadata_regex.compile("^(shot_id)\\s+(\\S+)")
 	
 	print("解释器初始化完成" + " " + "flags: " + str(flags))
 	is_init = true
 	return true
-	
-## 从路径加载脚本
-func load_script(path: String) -> String:
-	var content = ""
+
+
+## 全文解析模式
+func process_scripts_to_data(path: String) -> KND_Shot:
+	if not is_init:
+		_scripts_debug(path, 0, "解释器未初始化，无法解析脚本文件")
+		return
 	if not path:
 		_scripts_debug(path, 0, "路径为空，无法打开脚本文件")
+		return null
 
 	if not FileAccess.file_exists(path):
 		_scripts_debug(path, 0, "文件不存在，无法打开脚本文件")
+		return null
 
 	if not path.ends_with(".ks"):
 		if allow_custom_suffix:
 			_scripts_warning(path, 0, "建议使用使用ks作为脚本文件后缀")
 		else:
 			_scripts_debug(path, 0, "编译器要求使用ks作为脚本文件后缀，如果需要使用自定义后缀，请开启allow_custom_suffix选项")
+			return null
+
 	tmp_path = path
-	
+
+	# 读取文件内容
 	var file = FileAccess.open(path, FileAccess.READ)
-	
 	if not file:
 		_scripts_debug(path, 0, "无法打开脚本文件")
-	content = file.get_as_text()
+		return null
+	var lines = file.get_as_text().split("\n")
 	file.close()
-	return content
 
-
-## 全文解析模式
-func process_script(content: Array[String]) -> KND_Shot:
-	if not is_init:
-		_scripts_debug(tmp_path, 0, "解释器未初始化，无法解析脚本文件")
-		return
-		
-	print(content)
-	var lines = content
-	_scripts_info(tmp_path, 0, "开始解析脚本文件，" + "源文件共" + str(lines.size()) + "行")
+	
+	_scripts_info(path, 0, "开始解析脚本文件")
 
 	var diadata: KND_Shot = KND_Shot.new()
+
+	# 解析元数据
+	var metadata_result = _parse_metadata(lines, path)
+	dialogue_metadata_regex = null
+	if not metadata_result:
+		_scripts_debug(path, 0, "元数据解析失败")
+		return diadata
+	diadata.shot_id = metadata_result[0]
+
+
+	_scripts_info(path, 1, "Shot id：%s" % [diadata.shot_id])
+
 	# 清空演员验证表
 	cur_tmp_actors = []
 
-	tmp_content_lines = lines
+	# 只保留内容行
+	var content_lines = lines.slice(1)
+
+	tmp_content_lines = content_lines
 
 	# 解析内容行
-	for i in lines.size():
+	for i in content_lines.size():
 		tmp_line_number = i
-		var line = lines[i]
-		var original_line_number =  i + 1
+		var line = content_lines[i]
+		var original_line_number =  i + 2
+
 		tmp_original_line_number = original_line_number
-		
+
 		# 不处理缩进的行
 		if line.begins_with("    ") or line.begins_with("\t"):
 			#print("解析成功：忽略标签内缩进行\n")
@@ -132,7 +152,7 @@ func process_script(content: Array[String]) -> KND_Shot:
 		print("解析第%d行" % original_line_number)
 		print("第%d行内容：" % original_line_number, line)
 
-		var dialog: Dialogue = parse_line(line, original_line_number, tmp_path)
+		var dialog: Dialogue = parse_line(line, original_line_number, path)
 		if dialog:
 			# 如果是标签对话，则添加到标签对话字典中
 			if dialog.dialog_type == Dialogue.Type.Branch:
@@ -142,24 +162,29 @@ func process_script(content: Array[String]) -> KND_Shot:
 				diadata.dialogues_source_data.append(dialogue_dic)
 		else:
 			if allow_skip_error_line:
-				_scripts_warning(tmp_path, original_line_number, "解析失败：无法识别的语法，请检查语法是否正确或删除该行: %s" % line)
+				_scripts_warning(path, original_line_number, "解析失败：无法识别的语法，请检查语法是否正确或删除该行: %s" % line)
 				continue
 			else:
-				_scripts_debug(tmp_path, original_line_number, "解析失败：无法识别的语法，请检查语法是否正确或删除该行: %s" % line)
+				_scripts_debug(path, original_line_number, "解析失败：无法识别的语法，请检查语法是否正确或删除该行: %s" % line)
 				break
 			print("\n")
 			
+	diadata.get_dialogues()
 	
-	_scripts_info(tmp_path, 0, "文件：%s 章节ID：%s 对话数量：%d" % 
-		[tmp_path, diadata.name, diadata.commands.size()])
+	## TODO: 依赖演员
+	#diadata.dep_characters = dep_characters
+
+	_scripts_info(path, 0, "文件：%s 章节ID：%s 对话数量：%d" % 
+		[path, diadata.shot_id, diadata.dialogues.size()])
+
 	tmp_path = ""
 
 	if not _check_tag_and_choice():
-		_scripts_debug(tmp_path, 0, "标签和选项解析失败")
+		_scripts_debug(path, 0, "标签和选项解析失败")
 
 	# 生成演员快照
 	var cur_actor_dic: Dictionary = {}
-	for dialogue in diadata.commands:
+	for dialogue in diadata.get_dialogues():
 		#print("当前演员快照：", cur_actor_dic)
 		if dialogue.dialog_type == Dialogue.Type.Display_Actor:
 				var actor: DialogueActor = dialogue.show_actor
@@ -219,14 +244,50 @@ func parse_line(line: String, line_number: int, path: String) -> Dialogue:
 	if _parse_end(line, dialog): 
 		print("解析成功：结束相关\n")
 		return dialog
+	if _parse_start(line, dialog):
+		print("解析成功：开始相关\n")
+		return dialog
 	if _parse_branch(line, dialog):
 		print("解析成功：标签相关\n")
 		return dialog
-	printerr("解析失败")
 
 	dialog = null
 
 	return null
+
+# 解析元数据（前两行）
+func _parse_metadata(lines: PackedStringArray, path: String) -> PackedStringArray:
+	if lines.size() < 2:
+		_scripts_debug(path, 1, "文件不完整，至少需要shot id")
+		return []
+
+	var metadata: PackedStringArray = []
+
+	if lines[0]:
+		var result = dialogue_metadata_regex.search(lines[0])
+		if not result:
+			_scripts_debug(path, 1, "无效的元数据格式: %s" % lines[0])
+			return []
+		
+		var key = result.get_string(1)
+		var value = result.get_string(2)
+		
+		match key:
+			"shot_id":
+				metadata.append(value)
+	return metadata
+
+	
+
+# 解析注释
+#func _parse_label(line: String, dialog: Dialogue) -> bool:
+	#if not line.begins_with("##"):
+		#return false
+#
+	#dialog.dialog_type = Dialogue.Type.LABEL
+	#dialog.label_notes = line.replace("##", "").strip_edges()
+#
+	#return true
 
 # 背景切换解析
 func _parse_background(line: String, dialog: Dialogue) -> bool:
@@ -242,7 +303,12 @@ func _parse_background(line: String, dialog: Dialogue) -> bool:
 	
 	if parts.size() >= 3:
 		var effect = parts[2]
-		dialog.background_toggle_effects = effect
+		dialog.background_toggle_effects = {
+			"erase": ActingInterface.EffectsType.EraseEffect,
+			"blinds": ActingInterface.EffectsType.BlindsEffect,
+			"wave": ActingInterface.EffectsType.WaveEffect,
+			"fade": ActingInterface.EffectsType.FadeInAndOut
+		}.get(effect, ActingInterface.EffectsType.None)
 
 	return true
 
@@ -310,13 +376,7 @@ func _create_actor(parts: PackedStringArray) -> DialogueActor:
 	var actor = DialogueActor.new()
 	actor.character_name = parts[2]
 	actor.character_state = parts[3]
-	var x = parts[5].to_int()
-	var y = parts[6].to_int()
-	if y < 0 || x < 0:
-		printerr("区块不能为负数")
-	if y > x:
-		printerr("不能将演员显示在不存在的区块")
-	actor.actor_position = Vector2(x, y)
+	actor.actor_position = Vector2(parts[5].to_float(), parts[6].to_float())
 	actor.actor_scale = parts[8].to_float()
 	if parts.size() == 10:
 		if parts[9] == "mirror":
@@ -350,48 +410,46 @@ func _parse_choice(line: String, dialog: Dialogue) -> bool:
 	
 	# 移除开头的"choice"关键字
 	var content = line.substr(6).strip_edges()
-	var in_quotes = false
-	var current_text = ""
+	
+	# 使用正则表达式来正确解析带引号的字符串
+	var regex = RegEx.new()
+	regex.compile('"([^"\\\\]*(?:\\\\.[^"\\\\]*)*)"|(\\S+)')
+	
+	var matches = regex.search_all(content)
 	var parts = []
 	
-	# 手动解析字符串，正确处理引号内的内容
-	for i in range(content.length()):
-		var c = content[i]
-		
-		if c == "\"":
-			if in_quotes and i > 0 and content[i-1] != "\\":  # 忽略转义的引号
-				in_quotes = false
-				if current_text != "":
-					parts.append(current_text)
-					current_text = ""
-			else:
-				in_quotes = true
-		elif c == " " and not in_quotes:
-			if current_text != "":
-				parts.append(current_text)
-				current_text = ""
-		else:
-			current_text += c
+	for match in matches:
+		if match.get_string(1) != "":  # 带引号的部分
+			# 恢复转义的引号
+			var text = match.get_string(1).replace('\\"', '"')
+			parts.append(text)
+		elif match.get_string(2) != "":  # 无引号的部分
+			parts.append(match.get_string(2))
 	
-	# 添加最后一个部分
-	if current_text != "":
-		parts.append(current_text)
+	# 验证parts数量
+	if parts.size() % 2 != 0:
+		_scripts_debug(tmp_path, tmp_original_line_number, "选项格式错误: 每个选项必须包含文本和跳转标签")
+		return false
 	
 	# 创建选项对象
 	for i in range(0, parts.size(), 2):
-		if i + 1 < parts.size():
-			var choice = DialogueChoice.new()
-			choice.choice_text = parts[i].replace("\\\"", "\"")  # 恢复转义的引号
-			choice.jump_tag = parts[i + 1]
-			dialog.choices.append(choice)
+		var choice = DialogueChoice.new()
+		choice.choice_text = parts[i]
+		choice.jump_tag = parts[i + 1]
+		dialog.choices.append(choice)
 	
 	# 记录日志
 	var choices_strs = ""
 	for choice in dialog.choices:
-		choices_strs += "\"" + choice.choice_text + "\" "
+		choices_strs += "\"" + choice.choice_text + "\" -> " + choice.jump_tag + "  "
 	
-	cur_tmp_option_lines[tmp_original_line_number] = line
-	_scripts_info(tmp_path, tmp_line_number + 1, "选项解析完成" + " " + "选项数量" + str(dialog.choices.size()) +  "  选项： " + choices_strs)
+	# 记录跳转标签用于后续验证
+	var jump_tags = []
+	for choice in dialog.choices:
+		jump_tags.append(choice.jump_tag)
+	cur_tmp_option_lines[tmp_original_line_number] = jump_tags
+	
+	_scripts_info(tmp_path, tmp_line_number + 1, "选项解析完成 选项数量: " + str(dialog.choices.size()) + "  选项: " + choices_strs)
 	return true
 
 # 分支解析
@@ -449,7 +507,7 @@ func _parse_jumpshot(line: String, dialog: Dialogue) -> bool:
 	dialog.jump_shot_id = parts[1]
 	return true
 
-# 对话解析
+# 对话解析（使用正则表达式优化）
 func _parse_dialog(line: String, dialog: Dialogue) -> bool:
 	if not line.begins_with("\""):
 		return false
@@ -458,7 +516,7 @@ func _parse_dialog(line: String, dialog: Dialogue) -> bool:
 	if not result:
 		return false
 	
-	dialog.dialog_type = Dialogue.Type.Display_Text
+	dialog.dialog_type = Dialogue.Type.Ordinary_Dialog
 	dialog.character_id = result.get_string(1)
 	dialog.dialog_content = result.get_string(2)
 	if result.get_string(3):
@@ -467,20 +525,26 @@ func _parse_dialog(line: String, dialog: Dialogue) -> bool:
 	return true
 
 # 检查tag和choice
+# 检查tag和choice
 func _check_tag_and_choice() -> bool:
-	var target_jump_tag = []
-
-	for line in cur_tmp_option_lines:
-		var choices = cur_tmp_option_lines[line].split(" ", false)
-		for i in range(1, choices.size()):
-			if i % 2 == 1 and i + 1 < choices.size():
-				target_jump_tag.append(choices[i + 1])
-		for tar in target_jump_tag:
-			if not tmp_tags.has(tar):
-				_scripts_debug(tmp_path, line, "跳转标签" + tar + "不存在")
+	for line_num in cur_tmp_option_lines:
+		var jump_tags = cur_tmp_option_lines[line_num] as Array
+		for tag in jump_tags:
+			if not tmp_tags.has(tag):
+				_scripts_debug(tmp_path, line_num, "跳转标签 '" + tag + "' 不存在")
 				return false
-		target_jump_tag = []
 	return true
+
+
+
+
+
+# 解析开始
+func _parse_start(line: String, dialog: Dialogue) -> bool:
+	if line.begins_with("start"):
+		dialog.dialog_type = Dialogue.Type.START
+		return true
+	return false
 	
 # 解析结束
 func _parse_end(line: String, dialog: Dialogue) -> bool:
@@ -488,16 +552,17 @@ func _parse_end(line: String, dialog: Dialogue) -> bool:
 		dialog.dialog_type = Dialogue.Type.THE_END
 		return true
 	return false
-	
+
+
 # 错误报告
 func _scripts_debug(path: String, line: int, error_info: String):
 	push_error("错误：%s [行：%d] %s " % [path, line, error_info])
-	
+
+
 # 警告提示
 func _scripts_warning(path: String, line: int, warning_info: String):
 	push_warning("警告：%s [行：%d] %s " % [path, line, warning_info])
-	
+
 # 信息提示
 func _scripts_info(path: String, line: int, info_info: String):
 	print("信息：%s [行：%d] %s " % [path, line, info_info])
-	

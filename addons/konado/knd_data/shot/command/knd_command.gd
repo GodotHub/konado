@@ -45,7 +45,7 @@ enum Type {
 @export var background_snapshots: Dictionary = {}
 
 ## 执行，执行完毕会调用callback并传入执行结果，true或者是false
-func execute(dialogue_manager: KonadoDialogueManager, callback: Callable) -> void:
+func execute(dialogue_manager: NeoKonadoDialogueManager, callback: Callable) -> void:
 	push_error("子类必须实现 execute()")
 	if callback:
 		callback.call(false)

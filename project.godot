@@ -15,16 +15,15 @@ general/accessibility_support=2
 [application]
 
 config/name="Konado Demo"
-config/description="Konado Demo"
+config/description="Konado is an open-source framework for creating visual novels with the Godot Engine."
 config/version="2.0"
-run/main_scene="uid://0sc04evetbux"
+run/main_scene="uid://bcl2e6o0kb5dm"
 config/features=PackedStringArray("4.5", "C#", "Forward Plus")
 config/icon="uid://b5olx2vwoscbr"
 
 [autoload]
 
 KONADO_MACROS="*res://addons/konado/konado_macros.gd"
-PhantomCameraManager="*res://addons/phantom_camera/scripts/managers/phantom_camera_manager.gd"
 KonadoMacros="*res://addons/konado/konado_macros.gd"
 
 [display]
@@ -41,13 +40,18 @@ project/assembly_name="Konado"
 
 enabled=PackedStringArray("res://addons/konado/plugin.cfg")
 
+[file_customization]
+
+folder_colors={
+"res://addons/konado/neo/runtime/": "orange"
+}
+
 [gui]
 
 theme/custom="uid://cao2ht3baecs8"
 
 [internationalization]
 
-locale/translations=PackedStringArray("res://addons/konado/i18n/i18n.zh.translation", "res://addons/konado/i18n/i18n.zh_HK.translation", "res://addons/konado/i18n/i18n.en.translation", "res://addons/konado/i18n/i18n.ja.translation", "res://addons/konado/i18n/i18n.ko.translation", "res://addons/konado/i18n/i18n.de.translation")
 locale/locale_filter_mode=1
 
 [rendering]
