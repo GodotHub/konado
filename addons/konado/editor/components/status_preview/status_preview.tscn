@@ -1,8 +1,8 @@
 [gd_scene load_steps=11 format=3 uid="uid://dat20107ths0o"]
 
 [ext_resource type="Script" uid="uid://dmq1y6pm3r00x" path="res://addons/konado/editor/view/popup/character/status_edit_window.tres.gd" id="1_t188g"]
-[ext_resource type="Texture2D" uid="uid://cargjy7wp8wfn" path="res://addons/konado/runtime/template/character/kona.png" id="2_fleut"]
-[ext_resource type="Script" uid="uid://b6apvrtdlihiu" path="res://addons/konado/editor/view/popup/character/portrait_picture.gd" id="3_5ujc1"]
+[ext_resource type="Texture2D" uid="uid://cargjy7wp8wfn" path="res://addons/konado/neo/runtime/template/character/kona.png" id="2_fleut"]
+[ext_resource type="Script" path="res://addons/konado/editor/view/popup/character/portrait_picture.gd" id="3_5ujc1"]
 [ext_resource type="Texture2D" uid="uid://dgyi8xxvrfl1" path="res://addons/konado/editor/assets/icon/icon_1.svg" id="4_coxhr"]
 [ext_resource type="Script" uid="uid://ds5cxn6488dw1" path="res://addons/konado/editor/components/resize_component/resize_component.gd" id="5_fehp0"]
 [ext_resource type="Script" uid="uid://duknahqaw4iqs" path="res://addons/konado/editor/components/resize_component/repos.gd" id="6_d4mlh"]

@@ -8,6 +8,6 @@ func _init() -> void:
 	type = Type.HIDE_DIALOGUE_BOX
 	wait_trigger = false
 
-func execute(dialogue_manager: KonadoDialogueManager, callback: Callable) -> void:
+func execute(dialogue_manager: NeoKonadoDialogueManager, callback: Callable) -> void:
 	dialogue_manager.process_hide_dialogue_box(callback, true)
 	pass

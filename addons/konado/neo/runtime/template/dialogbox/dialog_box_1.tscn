@@ -1,0 +1,119 @@
+[gd_scene load_steps=7 format=3 uid="uid://bgpl5q55u0eby"]
+
+[ext_resource type="Theme" uid="uid://bb865dga7c5sp" path="res://addons/konado/editor/theme/game_theme.tres" id="1_p8jbk"]
+[ext_resource type="Script" uid="uid://di4l2xhmfedcd" path="res://addons/konado/neo/runtime/template/dialogbox/dialog_box_temp.gd" id="2_btu1b"]
+[ext_resource type="Texture2D" uid="uid://mxrma0a1bgu" path="res://addons/konado/editor/template/dialogue_box/dialoguebox1.png" id="4_jpssq"]
+[ext_resource type="Texture2D" uid="uid://cikw85v0iyjij" path="res://addons/konado/editor/template/progress/love_progress_under.svg" id="5_eopxg"]
+[ext_resource type="Texture2D" uid="uid://m3yl5jmfhhep" path="res://addons/konado/editor/template/progress/love_progress.svg" id="6_517pm"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_bewkk"]
+font_size = 42
+
+[node name="​DialogBox1" type="Control"]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_p8jbk")
+script = ExtResource("2_btu1b")
+character_name = "角色  "
+name_size = 42
+name_color = Color(1, 1, 1, 1)
+dialogue_text = "对话"
+dialogue_bg = ExtResource("4_jpssq")
+
+[node name="dialogue_box_bg" type="NinePatchRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 77.0
+offset_top = -435.0
+offset_right = -77.0
+offset_bottom = -115.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("4_jpssq")
+patch_margin_left = 77
+patch_margin_top = 89
+patch_margin_right = 379
+patch_margin_bottom = 51
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="dialogue_label" type="RichTextLabel" parent="."]
+unique_name_in_owner = true
+clip_contents = false
+custom_minimum_size = Vector2(0, 120)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 137.0
+offset_top = -220.0
+offset_right = -233.0
+offset_bottom = -100.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+text = "对话"
+
+[node name="character_name_label" type="Label" parent="dialogue_label"]
+unique_name_in_owner = true
+layout_mode = 1
+offset_left = -4.0
+offset_top = -101.0
+offset_right = 143.0
+offset_bottom = -34.0
+text = "角色  "
+label_settings = SubResource("LabelSettings_bewkk")
+
+[node name="ProgressBar" type="TextureProgressBar" parent="dialogue_label/character_name_label"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 89.0
+offset_top = -30.0
+offset_right = 526.0
+offset_bottom = 30.0
+grow_horizontal = 0
+grow_vertical = 2
+max_value = 12.0
+value = 7.0
+texture_under = ExtResource("5_eopxg")
+texture_over = ExtResource("5_eopxg")
+texture_progress = ExtResource("6_517pm")
+tint_over = Color(0.92347443, 0.82186884, 0.48020518, 1)
+tint_progress = Color(0.68326306, 0.28966337, 0.5552192, 1)
+
+[node name="Button" type="Button" parent="dialogue_label"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 3.0
+offset_top = 2.0
+offset_right = 123.0
+offset_bottom = 70.0
+grow_horizontal = 0
+grow_vertical = 2
+text = "确认按钮"
+
+[connection signal="gui_input" from="dialogue_label" to="." method="_gui_input"]
+[connection signal="gui_input" from="dialogue_label/character_name_label" to="." method="_on_character_name_label_gui_input"]
+[connection signal="pressed" from="dialogue_label/Button" to="." method="_on_button_pressed"]

@@ -31,7 +31,7 @@ func _ready():
 	#code_completion_requested.connect(_on_code_completion_requested)
 
 func _on_text_changed():
-	print("Text changed")
+	# print("Text changed")
 	self.request_code_completion()
 
 func _request_code_completion(_force: bool):

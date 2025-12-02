@@ -15,12 +15,12 @@ const KONADO_MACROS := "res://addons/konado/konado_macros.gd"
 
 ## 翻译文件路径
 const TRANSLATION_PATHS: PackedStringArray = [
-	"res://addons/konado/i18n/i18n.zh.translation",
-	"res://addons/konado/i18n/i18n.zh_HK.translation",
-	"res://addons/konado/i18n/i18n.en.translation",
-	"res://addons/konado/i18n/i18n.ja.translation",
-	"res://addons/konado/i18n/i18n.ko.translation",
-	"res://addons/konado/i18n/i18n.de.translation"
+	#"res://addons/konado/i18n/i18n.zh.translation",
+	#"res://addons/konado/i18n/i18n.zh_HK.translation",
+	#"res://addons/konado/i18n/i18n.en.translation",
+	#"res://addons/konado/i18n/i18n.ja.translation",
+	#"res://addons/konado/i18n/i18n.ko.translation",
+	#"res://addons/konado/i18n/i18n.de.translation"
 ]
 
 ## 自动加载单例名称
@@ -51,7 +51,7 @@ func _has_main_screen() -> bool:
 func _enter_tree() -> void:
 	_setup_autoload_singletons()
 	_setup_import_plugins()
-	_setup_internationalization()
+	#_setup_internationalization()
 	
 	_print_loading_message()
 	
