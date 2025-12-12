@@ -2,7 +2,7 @@ name: "godot-ci export"
 on:
   push:
     branches: [ "master" ]
-    tags: [ "v*" ]  # 新增：当推送以 v 开头的 tag 时触发
+    tags: [ "v*" ]
   pull_request:
     branches: [ "master" ]
   workflow_dispatch:
@@ -66,29 +66,3 @@ jobs:
         with:
           name: linux
           path: build/linux
-
-  export-mac:
-    name: Mac Export
-    runs-on: ubuntu-24.04
-    container:
-      image: barichello/godot-ci:mono-4.5.1
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          lfs: true
-      - name: Setup
-        run: |
-          mkdir -v -p ~/.local/share/godot/export_templates/
-          mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable.mono ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable.mono
-      - name: Mac Build
-        run: |
-          mkdir -v -p build/mac
-          EXPORT_DIR="$(readlink -f build)"
-          cd $PROJECT_PATH
-          godot --headless --verbose --export-release "macOS" "$EXPORT_DIR/mac/$EXPORT_NAME.zip"
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: mac
-          path: build/mac
