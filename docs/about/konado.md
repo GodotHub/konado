@@ -21,3 +21,7 @@ QQ频道交流群组：https://pd.qq.com/g/GodotHub999/text/707799746
 如有问题反馈或功能建议，欢迎前往Konado的项目[仓库提交 Issue](https://gitcode.com/godothub/konado/issues)
 
 如果是其他问题，欢迎发送邮件至：konadoproject@163.com
+
+<a href="https://godothub.com">
+<img src="https://godothub.com/licon/godothub.png" alt="godothub" style="width: 65%;" />
+</a>

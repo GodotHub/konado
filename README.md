@@ -11,7 +11,7 @@
 
 
 <p align="center">
-  <img src="./assets/kona/kona.png" alt="看板娘可娜" width=116px>
+  <img src="./assets/banner/2.0/konado-2.0-banner.png" alt="看板娘可娜">
 </p>
 
 
