@@ -38,6 +38,11 @@ Konado 是一个视觉小说引擎框架，提供多种对话模板以及对话�
 - 加入我们的 Discord 群组频道：[点击加入](https://discord.com/channels/1378639076747513938/1425084240550166592)
 
 
+<a href="https://godothub.com">
+<img src="https://godothub.com/licon/godothub.png" alt="godothub" style="width: 65%;" />
+</a>
+
+
 ## 参与开发
 
 详细贡献指南请参考 [CONTRIBUTING.md](./CONTRIBUTING.md)。
