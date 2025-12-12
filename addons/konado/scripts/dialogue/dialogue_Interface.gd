@@ -17,8 +17,6 @@ signal finish_typing
 ## 完成创建选项的信号
 signal finish_display_options
 
-@onready var _review_UI := $"../DialogReview"
-
 func _ready() -> void:
 	# 如果在编辑器模式下
 	

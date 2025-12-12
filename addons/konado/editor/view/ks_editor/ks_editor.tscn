@@ -69,6 +69,12 @@ theme_override_colors/font_color = Color(0.4857033, 0.4857036, 0.48570347, 1)
 theme_override_font_sizes/font_size = 24
 text = "未打开文件"
 
+[node name="DocsLinkButton" type="LinkButton" parent="dock/MarginContainer/BoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "在线文档"
+uri = "https://godothub.com/konado/"
+
 [node name="VBoxContainer2" type="SplitContainer" parent="dock"]
 layout_mode = 2
 size_flags_horizontal = 3

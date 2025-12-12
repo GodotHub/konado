@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://gdio1ni17h82"
-path="res://.godot/imported/kona_autumn_1.png-6c0077d3e47b17c7df2c9e685f6af903.ctex"
+uid="uid://bkrpa0r41e1n7"
+path="res://.godot/imported/konado-2.0-banner.png-0d009ab3ba437d0e1fab30cd1147fd1e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sample/demo/sample_arts/kona_autumn_1.png"
-dest_files=["res://.godot/imported/kona_autumn_1.png-6c0077d3e47b17c7df2c9e685f6af903.ctex"]
+source_file="res://assets/banner/2.0/konado-2.0-banner.png"
+dest_files=["res://.godot/imported/konado-2.0-banner.png-0d009ab3ba437d0e1fab30cd1147fd1e.ctex"]
 
 [params]
 

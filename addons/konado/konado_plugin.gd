@@ -3,8 +3,8 @@
 extends EditorPlugin
 
 ## 插件版本信息
-const VERSION := "2.0"
-const CODENAME := "Mooncake"
+const VERSION := "2.1"
+const CODENAME := "Lebkuchen"
 
 ## 自定义EditorImportPlugin脚本
 const KS_IMPORTER_SCRIPT := preload("res://addons/konado/importer/konado_importer.gd")
@@ -24,7 +24,6 @@ const TRANSLATION_PATHS: PackedStringArray = [
 ]
 
 ## 自动加载单例名称
-const AUTOLOAD_DATABASE := "KND_Database"
 const AUTOLOAD_KONADO_MACROS := "KonadoMacros"
 
 ## 插件实例变量
@@ -98,8 +97,6 @@ func _handles(object: Object) -> bool:
 	return false
 	
 	
-	
-	
 ## 设置自动加载单例
 func _setup_autoload_singletons() -> void:
 	add_autoload_singleton(AUTOLOAD_KONADO_MACROS, KONADO_MACROS)
@@ -154,7 +151,6 @@ func _cleanup_import_plugins() -> void:
 
 ## 清理自动加载单例
 func _cleanup_autoload_singletons() -> void:
-	remove_autoload_singleton(AUTOLOAD_DATABASE)
 	remove_autoload_singleton(AUTOLOAD_KONADO_MACROS)
 
 
