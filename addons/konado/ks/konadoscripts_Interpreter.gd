@@ -171,8 +171,6 @@ func process_scripts_to_data(path: String) -> KND_Shot:
 			
 	diadata.get_dialogues()
 	
-	## TODO: 依赖演员
-	#diadata.dep_characters = dep_characters
 
 	_scripts_info(path, 0, "文件：%s 章节ID：%s 对话数量：%d" % 
 		[path, diadata.shot_id, diadata.dialogues.size()])
@@ -243,9 +241,6 @@ func parse_line(line: String, line_number: int, path: String) -> Dialogue:
 		return dialog
 	if _parse_end(line, dialog): 
 		print("解析成功：结束相关\n")
-		return dialog
-	if _parse_start(line, dialog):
-		print("解析成功：开始相关\n")
 		return dialog
 	if _parse_branch(line, dialog):
 		print("解析成功：标签相关\n")
@@ -535,16 +530,6 @@ func _check_tag_and_choice() -> bool:
 				return false
 	return true
 
-
-
-
-
-# 解析开始
-func _parse_start(line: String, dialog: Dialogue) -> bool:
-	if line.begins_with("start"):
-		dialog.dialog_type = Dialogue.Type.START
-		return true
-	return false
 	
 # 解析结束
 func _parse_end(line: String, dialog: Dialogue) -> bool:

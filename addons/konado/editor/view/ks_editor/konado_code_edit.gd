@@ -15,7 +15,7 @@ class_name KonadoCodeEdit
 #var known_shot_ids := ["opening_scene", "forest_path", "village_stay"]
 
 func _ready():
-	print(self.get_path())
+	#print(self.get_path())
 	# 启用代码补全
 	self.code_completion_enabled = true
 	# 设置触发补全的前缀（空格和引号）
