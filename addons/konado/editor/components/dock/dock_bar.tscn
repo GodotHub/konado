@@ -1,6 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://djq23ftlfwkn1"]
-
-[ext_resource type="Script" uid="uid://dljnr7medkybu" path="res://addons/konado/editor/components/dock/dock_bar.gd" id="1_pg537"]
+[gd_scene format=3 uid="uid://djq23ftlfwkn1"]
 
 [node name="dock" type="BoxContainer"]
 anchors_preset = 15
@@ -9,7 +7,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 vertical = true
-script = ExtResource("1_pg537")
 
 [node name="HSeparator" type="HSeparator" parent="."]
 layout_mode = 2

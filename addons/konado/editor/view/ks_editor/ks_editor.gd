@@ -13,8 +13,7 @@ var ks_statement: Dictionary = {}
 func _ready() -> void:
 	# ks_statement = load_csv()
 	var kscsv := KsCsvDict.new()
-	kscsv = ResourceLoader.load("res://addons/konado/editor/view/ks_editor/ks_dict.kdic") 
-	print(kscsv.csv_data)
+	kscsv = ResourceLoader.load("res://addons/konado/editor/view/ks_editor/ks_dict.kdic")
 	## 直接从资源加载
 	ks_statement =kscsv.csv_data
 	create_tree_from_dict()
@@ -69,7 +68,7 @@ func create_tree_from_dict():
 			
 			# 存储所有数据到元数据
 			button_item.set_metadata(0, (label_data["插入语句"]))
-			print("插入语句", label_data["插入语句"])
+			#print("插入语句", label_data["插入语句"])
 			button_item.set_selectable(0, true)
 	
 	# 恢复为单列显示
@@ -103,9 +102,9 @@ func on_button_pressed(ks_statement: String) -> void:
 		code_edit.text = code_edit.text + "\n"
 		code_edit.insert_line_at(total_lines, ks_statement)
 		code_edit.set_caret_line(total_lines + 1) # 将光标移动到新行
-		print("插入语句: ", ks_statement, "在行: ", current_line + 1)
+		#print("插入语句: ", ks_statement, "在行: ", current_line + 1)
 	else: # 如果当前行是空的
 		code_edit.set_line(current_line, ks_statement)
 		code_edit.set_caret_line(current_line)
 	code_edit.grab_focus()
-	print("插入语句: ", ks_statement)
+	#print("插入语句: ", ks_statement)
