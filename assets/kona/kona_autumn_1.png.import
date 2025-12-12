@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://vg7i2lka8sn8"
-path="res://.godot/imported/kona_autumn_0.png-19f9b6619abdea83034c406e5440710a.ctex"
+uid="uid://gdio1ni17h82"
+path="res://.godot/imported/kona_autumn_1.png-d3a0c72c16813158e0fa97cd5cd48fbb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sample/demo/sample_arts/kona_autumn_0.png"
-dest_files=["res://.godot/imported/kona_autumn_0.png-19f9b6619abdea83034c406e5440710a.ctex"]
+source_file="res://assets/kona/kona_autumn_1.png"
+dest_files=["res://.godot/imported/kona_autumn_1.png-d3a0c72c16813158e0fa97cd5cd48fbb.ctex"]
 
 [params]
 
