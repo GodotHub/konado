@@ -1,4 +1,3 @@
-@tool
 extends Control
 class_name ActingInterface
 ## 表演管理器
@@ -106,7 +105,6 @@ func change_background_image(tex: Texture, name: String, effects_type: EffectsTy
 		print_rich("[color=cyan]切换背景为: [/color]"+str(name))
 		# 无效果
 		if effects_type == EffectsType.None:
-			#var mat = ShaderMaterial.new()
 			var mat = _background.material
 			mat.shader = none_effect_shader
 			_background.material = mat

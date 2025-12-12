@@ -1,6 +1,6 @@
 [gd_scene load_steps=19 format=3 uid="uid://bcl2e6o0kb5dm"]
 
-[ext_resource type="PackedScene" uid="uid://bj8ynu8013j4j" path="res://addons/konado/scenes/dialog.tscn" id="1_57pxw"]
+[ext_resource type="PackedScene" uid="uid://bj8ynu8013j4j" path="res://addons/konado/scenes/konado_dialogue.tscn" id="1_57pxw"]
 [ext_resource type="Script" uid="uid://5dxx84u6uyy0" path="res://addons/konado/scripts/character/character.gd" id="2_gl4m8"]
 [ext_resource type="Script" uid="uid://bl7m0mtuh2jqi" path="res://addons/konado/scripts/character/character_list.gd" id="3_7wx48"]
 [ext_resource type="Script" uid="uid://di66ghc1qq8e5" path="res://addons/konado/scripts/background/background.gd" id="4_prjid"]

@@ -3,11 +3,11 @@ extends Panel
 class_name KsEditorWindow
 
 @onready var code_editor: CodeEdit = %CodeEdit
-@onready var new_button: Button = $dock/BoxContainer/New
-@onready var open_button: Button = $dock/BoxContainer/Open
-@onready var save_button: Button = $dock/BoxContainer/Save
-@onready var file_label: Label = $dock/BoxContainer/FilePath
-@onready var close_button: Button = $dock/BoxContainer/Close
+@onready var new_button: Button = $dock/MarginContainer/BoxContainer/New
+@onready var open_button: Button = $dock/MarginContainer/BoxContainer/Open
+@onready var save_button: Button = $dock/MarginContainer/BoxContainer/Save
+@onready var file_label: Label = $dock/MarginContainer/BoxContainer/FilePath
+@onready var close_button: Button = $dock/MarginContainer/BoxContainer/Close
 
 var current_file_path: String = ""
 var is_modified: bool = false
@@ -21,13 +21,13 @@ func _ready() -> void:
 	new_button.pressed.connect(_on_new_button_pressed)
 	open_button.pressed.connect(_on_open_button_pressed)
 	save_button.pressed.connect(_on_save_button_pressed)
+	close_button.pressed.connect(close_file)
 	if code_editor:
 		code_editor.text_changed.connect(_on_text_changed)
 		
-	close_button.pressed.connect(close_file)
 	
 	# 初始化时如果没有打开文件，禁止编辑
-	update_editor_state()
+	call_deferred("update_editor_state")
 
 func edit(path: String) -> void:
 	current_file_path = path
@@ -54,8 +54,8 @@ func edit(path: String) -> void:
 		code_editor.text = ""
 		last_saved_content = ""
 		is_modified = false
-		# 文件打开失败，保持不可编辑状态
-		update_editor_state()
+	# 文件打开失败，保持不可编辑状态
+	update_editor_state()
 
 func _on_text_changed() -> void:
 	# 只有在有打开文件时才处理文本变化
@@ -107,6 +107,8 @@ func _on_new_button_pressed() -> void:
 		dialog.popup_centered(Vector2i(400, 150))
 	else:
 		create_new_file()
+		
+	call_deferred("update_editor_state")
 
 func create_new_file() -> void:
 	# 使用编辑器文件对话框创建新文件
@@ -201,6 +203,8 @@ func _on_open_button_pressed() -> void:
 		dialog.popup_centered(Vector2i(400, 150))
 	else:
 		show_open_dialog()
+		
+	call_deferred("update_editor_state")
 
 func show_open_dialog() -> void:
 	# 使用编辑器文件对话框打开文件
@@ -266,7 +270,7 @@ func update_save_button() -> void:
 		save_button.tooltip_text = "保存更改"
 		save_button.add_theme_color_override("font_color", Color(1, 0.5, 0.5))
 	else:
-		save_button.tooltip_text = "已保存"
+		save_button.tooltip_text = "无更改"
 		save_button.remove_theme_color_override("font_color")
 
 func get_current_content() -> String:
@@ -290,6 +294,10 @@ func update_editor_state() -> void:
 		save_button.disabled = true
 		save_button.tooltip_text = "没有打开的文件"
 		
+		# 禁用关闭按钮
+		close_button.disabled = true
+		close_button.tooltip_text = "没有打开的文件"
+		
 		# 移除保存按钮的颜色覆盖
 		save_button.remove_theme_color_override("font_color")
 	else:
@@ -297,6 +305,11 @@ func update_editor_state() -> void:
 		code_editor.editable = true
 		code_editor.mouse_filter = Control.MOUSE_FILTER_STOP
 		code_editor.tooltip_text = ""
+		
+		print(current_file_path)
+		print(close_button.disabled)
+		close_button.disabled = false
+		close_button.tooltip_text = ""
 		
 		# 更新保存按钮状态
 		update_save_button()
@@ -342,5 +355,4 @@ func reset_editor_state() -> void:
 	last_saved_content = ""
 	is_modified = false
 	
-	# 更新编辑器状态
-	update_editor_state()
+	call_deferred("update_editor_state")

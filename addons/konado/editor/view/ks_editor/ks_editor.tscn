@@ -26,39 +26,47 @@ script = ExtResource("1_qu5wb")
 
 [node name="dock" parent="." instance=ExtResource("1_cfuhs")]
 layout_mode = 1
-dock_name = "镜头编辑"
 
-[node name="BoxContainer" type="BoxContainer" parent="dock"]
+[node name="MarginContainer" type="MarginContainer" parent="dock"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 20
+
+[node name="BoxContainer" type="BoxContainer" parent="dock/MarginContainer"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 
-[node name="New" type="Button" parent="dock/BoxContainer"]
+[node name="New" type="Button" parent="dock/MarginContainer/BoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 24
 text = "新建"
 language = "en"
 
-[node name="Open" type="Button" parent="dock/BoxContainer"]
+[node name="Open" type="Button" parent="dock/MarginContainer/BoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 24
 text = "打开"
 language = "en"
 
-[node name="Save" type="Button" parent="dock/BoxContainer"]
+[node name="Save" type="Button" parent="dock/MarginContainer/BoxContainer"]
 layout_mode = 2
 tooltip_text = "没有打开的文件"
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 24
 disabled = true
 text = "保存"
 
-[node name="Close" type="Button" parent="dock/BoxContainer"]
+[node name="Close" type="Button" parent="dock/MarginContainer/BoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 20
+tooltip_text = "没有打开的文件"
+theme_override_font_sizes/font_size = 24
+disabled = true
 text = "关闭当前文件"
 
-[node name="FilePath" type="Label" parent="dock/BoxContainer"]
+[node name="FilePath" type="Label" parent="dock/MarginContainer/BoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 22
+size_flags_horizontal = 10
+theme_override_colors/font_color = Color(0.4857033, 0.4857036, 0.48570347, 1)
+theme_override_font_sizes/font_size = 24
 text = "未打开文件"
 
 [node name="VBoxContainer2" type="SplitContainer" parent="dock"]
