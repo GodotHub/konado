@@ -58,7 +58,7 @@ texture = SubResource("GradientTexture2D_sxvt2")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_f70o6"]
 
-[node name="DialogManager" type="Control"]
+[node name="KonadoDialogue" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -98,9 +98,10 @@ color = Color(0, 0, 0, 1)
 [node name="CharaControl" type="Control" parent="DialogUI/ActingInterface/BackgroundLayer"]
 layout_mode = 1
 anchors_preset = 0
-offset_right = 1280.0
+offset_left = 14.111111
+offset_right = 1294.1111
 offset_bottom = 720.0
-scale = Vector2(1.1742188, 1.1742188)
+scale = Vector2(1.2763889, 1.2763889)
 
 [node name="EffectLayer" type="ColorRect" parent="DialogUI/ActingInterface"]
 layout_mode = 2
