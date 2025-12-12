@@ -8,7 +8,7 @@
 
 ## 本地编辑
 
-文档可以直接向master分支`提交PR`，不必创建分支。
+文档可以直接向 `master` 分支`提交PR`，不必创建特性分支。
 
 在提交代码之前请确保在本地完成了 Git 的全局配置
 ```
@@ -24,20 +24,56 @@ git config --global user.email 你的提交邮箱，必须和代码平台账户�
 
 提交后，在自己fork的仓库页面、点击`Pull Request`按钮，创建 PR。
 
-## 预览本地文档
+## 本地预览Konado文档
+Konado 文档基于 [VitePress](https://vitepress.dev/) 构建，为确保文档修改内容符合预期，建议先在本地预览验证后再提交代码。
 
-Konado的文档使用 [VitePress](https://vitepress.dev/) 构建，可以本地预览文档后再提交。
+### 前置准备：安装 Node.js
+VitePress 依赖 Node.js 环境运行，需先安装符合版本要求的 Node.js：
+1. **版本要求**：推荐安装 Node.js 18.x 及以上版本（LTS 长期支持版最佳，兼容性更优）。
+2. **下载安装**：
+   - 访问 Node.js 官方下载地址：[https://nodejs.org/](https://nodejs.org/)
+   - 根据操作系统（Windows/macOS/Linux）选择对应安装包，按向导完成安装（Windows 建议勾选“Add to PATH”选项）。
+3. **验证安装**：
+   打开终端（Windows 为命令提示符/PowerShell，macOS/Linux 为终端），执行以下命令验证 Node.js 和 npm（Node.js 自带包管理器）是否安装成功：
+   ```shell
+   # 查看 Node.js 版本
+   node -v
+   # 查看 npm 版本
+   npm -v
+   ```
+   若输出清晰的版本号（如 `v20.10.0`、`10.2.3`），说明安装成功。
 
-1. **安装依赖**：`npm install`  
-2. **启动服务**：`npm run docs:dev`  
-3. **访问文档**：浏览器访问 `http://localhost:5173/konado/`，即可预览文档，具体的IP和端口可以在命令行输出中查看。
+> 可选优化：若 npm 下载依赖速度较慢，可配置国内镜像提升速度：
+> ```shell
+> npm config set registry https://registry.npmmirror.com
+> ```
 
-    ```shell
-    vitepress v1.6.4
+### 安装项目依赖
+进入 Konado 项目的根目录，执行以下命令安装文档预览所需依赖：
+```shell
+npm install
+```
+等待命令执行完成，终端无报错即表示依赖安装成功。
 
-    ➜  Local:   http://localhost:5173/konado/
-    ➜  Network: use --host to expose
-    ➜  press h to show help
-    ```
+### 启动本地预览服务
+依赖安装完成后，执行以下命令启动 VitePress 开发服务：
+```shell
+npm run docs:dev
+```
 
-修改后，浏览器会自动刷新，查看修改后的内容。
+### 访问预览文档
+命令执行成功后，终端会输出类似以下的信息：
+```shell
+vitepress v1.6.4
+
+➜  Local:   http://localhost:5173/konado/
+➜  Network: use --host to expose
+➜  press h to show help
+```
+打开浏览器，访问输出信息中的 `Local` 地址（默认：`http://localhost:5173/konado/`），即可查看本地文档。
+
+### 补充说明
+1. 实时刷新：修改文档内容后，无需重启服务，浏览器会自动刷新页面，实时展示修改后的效果；
+2. 端口异常：若 `localhost:5173` 端口被占用，VitePress 会自动切换到可用端口（如 5174），请以终端实际输出的地址为准；
+3. 局域网访问：如需在局域网内其他设备（如手机、另一台电脑）预览文档，可执行 `npm run docs:dev -- --host` 命令，终端会输出网络可访问的 IP 地址；
+4. 停止服务器：在终端中按下 `Ctrl + C` 即可停止本地预览服务。

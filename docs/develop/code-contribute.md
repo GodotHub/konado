@@ -19,7 +19,7 @@ git config --global user.name
 git config --global user.email
 ```
 
-如果需要修改，可以使用以下命令：
+如果需要修改，可以使用以下命令，其中 "Your Name" 和 "your.email@example.com" 分别替换为你的用户名和邮箱：
 
 ```shell
 git config --global user.name "Your Name"
