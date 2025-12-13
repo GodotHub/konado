@@ -3,8 +3,20 @@ on:
   push:
     branches: [ "master" ]
     tags: [ "v*" ]
+    paths:
+      - 'addons/**'
+      - 'assets/**'
+      - 'sample/**'
+      - 'export_presets.cfg'
+      - 'project.godot'
   pull_request:
     branches: [ "master" ]
+    paths:
+      - 'addons/**'
+      - 'assets/**'
+      - 'sample/**'
+      - 'export_presets.cfg'
+      - 'project.godot'
   workflow_dispatch:
 
 env:
