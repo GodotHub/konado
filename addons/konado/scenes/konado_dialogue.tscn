@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://dpo124xwpder5" path="res://addons/konado/scripts/dialogue/knd_dialogue_manager.gd" id="1_buo3n"]
 [ext_resource type="Script" uid="uid://cyoedi0x84dxy" path="res://addons/konado/scripts/act/acting_Interface.gd" id="2_pq6sw"]
 [ext_resource type="Script" uid="uid://b0kbsxqyedoml" path="res://addons/konado/scripts/dialogue/dialogue_Interface.gd" id="3_gl7il"]
-[ext_resource type="Shader" uid="uid://dxr17ie00ux36" path="res://addons/konado/shader/Transition/BlindsEffect.gdshader" id="3_utfb4"]
+[ext_resource type="Shader" uid="uid://dxr17ie00ux36" path="res://addons/konado/shader/bg_trans_effects/blinds_effect.gdshader" id="3_utfb4"]
 [ext_resource type="Script" uid="uid://cfbojxb1pdbrs" path="res://addons/konado/scripts/audio/audio_interface.gd" id="4_gd2ll"]
 [ext_resource type="Texture2D" uid="uid://bb7nhjioefh8a" path="res://sample/demo/sample_arts/示例-咖啡馆-背景.png" id="4_qodmk"]
 
@@ -13,9 +13,9 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_h66lv"]
 shader = ExtResource("3_utfb4")
-shader_parameter/resolution = Vector2(1920, 1080)
-shader_parameter/switch_progress = 1.5
-shader_parameter/target_switch_texture = ExtResource("4_qodmk")
+shader_parameter/progress = 0.0
+shader_parameter/column_count = 16
+shader_parameter/reverse = false
 shader_parameter/current_texture = ExtResource("4_qodmk")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_25pr6"]
@@ -27,13 +27,13 @@ colors = PackedColorArray(0, 0, 0, 0.870588, 0.141176, 0.141176, 0.141176, 0.749
 gradient = SubResource("Gradient_qodmk")
 fill_to = Vector2(1, 1)
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4a45d"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mhqpb"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_566op"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_m5nin"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_utfb4"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_r5ho2"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qodmk"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_w8bt0"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3sqld"]
 
@@ -160,8 +160,8 @@ theme_override_constants/separation = 30
 custom_minimum_size = Vector2(0, 35)
 layout_mode = 2
 theme_override_font_sizes/normal_font_size = 25
-theme_override_styles/normal = SubResource("StyleBoxEmpty_4a45d")
-theme_override_styles/background = SubResource("StyleBoxEmpty_566op")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_mhqpb")
+theme_override_styles/background = SubResource("StyleBoxEmpty_m5nin")
 bbcode_enabled = true
 fit_content = true
 
@@ -173,8 +173,8 @@ theme_override_constants/margin_right = 200
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_font_sizes/normal_font_size = 22
-theme_override_styles/normal = SubResource("StyleBoxEmpty_utfb4")
-theme_override_styles/background = SubResource("StyleBoxEmpty_qodmk")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_r5ho2")
+theme_override_styles/background = SubResource("StyleBoxEmpty_w8bt0")
 bbcode_enabled = true
 fit_content = true
 autowrap_mode = 2

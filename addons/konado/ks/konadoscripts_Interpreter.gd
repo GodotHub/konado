@@ -299,11 +299,12 @@ func _parse_background(line: String, dialog: Dialogue) -> bool:
 	if parts.size() >= 3:
 		var effect = parts[2]
 		dialog.background_toggle_effects = {
-			"erase": ActingInterface.EffectsType.EraseEffect,
-			"blinds": ActingInterface.EffectsType.BlindsEffect,
-			"wave": ActingInterface.EffectsType.WaveEffect,
-			"fade": ActingInterface.EffectsType.FadeInAndOut
-		}.get(effect, ActingInterface.EffectsType.None)
+			"none": ActingInterface.BackgroundTransitionEffectsType.NONE_EFFECT,
+			"erase": ActingInterface.BackgroundTransitionEffectsType.EraseEffect,
+			"blinds": ActingInterface.BackgroundTransitionEffectsType.BlindsEffect,
+			"wave": ActingInterface.BackgroundTransitionEffectsType.WaveEffect,
+			"fade": ActingInterface.BackgroundTransitionEffectsType.ALPHA_FADE_EFFECT
+		}.get(effect, ActingInterface.BackgroundTransitionEffectsType.NONE_EFFECT)
 
 	return true
 
