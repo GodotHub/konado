@@ -1,6 +1,7 @@
-# Konado框架引擎插件入口文件，负责初始化插件和注册相关功能
 @tool
 extends EditorPlugin
+class_name KonadoEditorPlugin
+# Konado框架引擎插件入口文件，负责初始化插件和注册相关功能
 
 ## 插件版本信息
 const VERSION := "2.1"
@@ -28,8 +29,7 @@ const AUTOLOAD_KONADO_MACROS := "KonadoMacros"
 
 ## 插件实例变量
 var konado_editor_instance: KonadoEditorWindow = null
-var import_plugin: EditorImportPlugin
-var kdb_import_plugin: EditorImportPlugin
+var ks_import_plugin: EditorImportPlugin
 var kdic_import_plugin: EditorImportPlugin
 
 # 文件系统dock
@@ -104,11 +104,10 @@ func _setup_autoload_singletons() -> void:
 
 ## 设置导入插件
 func _setup_import_plugins() -> void:
-	import_plugin = KS_IMPORTER_SCRIPT.new()
+	ks_import_plugin = KS_IMPORTER_SCRIPT.new()
 	kdic_import_plugin = KDIC_IMPORTER_SCRIPT.new()
 	
-	add_import_plugin(import_plugin)
-	add_import_plugin(kdb_import_plugin)
+	add_import_plugin(ks_import_plugin)
 	add_import_plugin(kdic_import_plugin)
 	
 	
@@ -134,13 +133,9 @@ func open_konado_editor() -> void:
 
 ## 清理导入插件
 func _cleanup_import_plugins() -> void:
-	if import_plugin:
-		remove_import_plugin(import_plugin)
-		import_plugin = null
-	
-	if kdb_import_plugin:
-		remove_import_plugin(kdb_import_plugin)
-		kdb_import_plugin = null
+	if ks_import_plugin:
+		remove_import_plugin(ks_import_plugin)
+		ks_import_plugin = null
 		
 	if kdic_import_plugin:
 		remove_import_plugin(kdic_import_plugin)
