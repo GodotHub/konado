@@ -2,51 +2,56 @@
 
 [简体中文](README.md) | English
 
-![License]( https://img.shields.io/badge/License-BSD_3--Clause-orange.svg)
-![GitHub Last Commit](https://img.shields.io/github/last-commit/godothub/konado.svg)
-![GitHub forks](https://img.shields.io/github/forks/godothub/konado?style=flat-square)
 
-![GitHub Stars](https://img.shields.io/github/stars/godothub/konado?style=social)
-![star](https://gitcode.com/godothub/konado/star/badge.svg)
+<div align="center">
+  <img src="https://img.shields.io/badge/License-BSD_3--Clause-orange.svg?style=flat-square&logo=opensourceinitiative&logoSize=14" alt="License" height="20">
+  <img src="https://img.shields.io/github/last-commit/godothub/konado.svg?style=flat-square&logo=github&logoSize=14" alt="Last Commit" height="20">
+  <img src="https://img.shields.io/github/forks/godothub/konado?style=flat-square&logo=github&color=blueviolet&logoSize=14" alt="Forks" height="20">
+  <img src="https://img.shields.io/github/stars/godothub/konado?style=flat-square&logo=github&color=ffcb2b&logoSize=14" alt="Stars" height="20">
+  <img src="https://gitcode.com/godothub/konado/star/badge.svg?style=flat-square&logoSize=14" alt="GitCode Star" height="20">
+</div>
 
+<br>
 
-<p align="center">
-  <img src="./assets/kona/kona.png" alt="看板娘可娜" width=116px>
-</p>
+<div align="center" style="border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);">
+<img src="./assets/banner/2.0/konado-2.0-banner.png" alt="Konado Mascot" width="100%" max-width="800px">
+</div>
 
+## Overview
 
-## Introduction
-
-Konado is a visual novel engine framework that provides various dialogue templates and a dialogue manager, enabling quick creation of dialogue-based games or integration of dialogue scenes into various types of games.
+Konado is a lightweight visual novel engine framework that provides a rich set of dialogue templates and a robust dialogue manager. Designed for flexibility, it enables developers to quickly create dialogue-driven games or seamlessly integrate dialogue systems into existing game projects.
 
 ## Quick Start
 
-Please refer to the [Quick Start](https://godothub.com/konado/tutorial/install.html) documentation to learn how to quickly start using Konado.
+Get up and running with Konado in minutes by following our [Quick Start Guide](https://godothub.com/konado/tutorial/install.html).
 
 ## Documentation
 
-Welcome to our project website: https://godothub.com/konado for more detailed documentation and tutorials.
+For comprehensive guides, API references, and advanced tutorials, visit our official project website: https://godothub.com/konado.
 
 ## Community
 
-Welcome to join our community channels to exchange experiences and share ideas with other Konado users. You can join through the following methods:
+Join our community to connect with other Konado users, share ideas, and get support. You can participate through:
 
-- Join our QQ Channel Discussion Group: [Click to Join](https://pd.qq.com/g/GodotHub999/text/707799746)
+- QQ Channel Discussion Group: [Join Now](https://pd.qq.com/g/GodotHub999/text/707799746)
+- Discord Server Channel: [Join Now](https://discord.com/channels/1378639076747513938/1425084240550166592)
 
-- Join our Discord Group Channel: [Click to Join](https://discord.com/channels/1378639076747513938/1425084240550166592)
+<a href="https://godothub.com">
+<img src="https://godothub.com/licon/godothub.png" alt="godothub" style="width: 65%;" />
+</a>
 
-## Development Participation
+## Contributing
 
-Please refer to [CONTRIBUTING.md](./CONTRIBUTING.md) for the detailed contribution guide.
+Interested in contributing to Konado? Check out our [CONTRIBUTING.md](./CONTRIBUTING.md) for detailed guidelines on how to get involved.
 
 ## Code of Conduct
 
-This project adheres to the [Code of Conduct](./CODE_OF_CONDUCT.md).
+This project adheres to our [Code of Conduct](./CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code.
 
-## Project Contributors
+## Contributors
 
-For the list of contributors, please see [AUTHORS.md](./AUTHORS).
+A complete list of contributors can be found in [AUTHORS.md](./AUTHORS).
 
-## License
+## Open Source License
 
-The Konado project is licensed under the BSD 3-Clause License. For specific terms, please see the [LICENSE](./LICENSE) file.
+Konado is distributed under the BSD 3-Clause License. See the [LICENSE](./LICENSE) file for full terms and conditions.
