@@ -2,18 +2,21 @@
 
 简体中文 | [English](README.en.md)
 
-![License]( https://img.shields.io/badge/License-BSD_3--Clause-orange.svg)
-![GitHub Last Commit](https://img.shields.io/github/last-commit/godothub/konado.svg)
-![GitHub forks](https://img.shields.io/github/forks/godothub/konado?style=flat-square)
 
-![GitHub Stars](https://img.shields.io/github/stars/godothub/konado?style=social)
-![star](https://gitcode.com/godothub/konado/star/badge.svg)
+<div align="center">
+  <img src="https://img.shields.io/badge/License-BSD_3--Clause-orange.svg?style=flat-square&logo=opensourceinitiative&logoSize=14" alt="License" height="20">
+  <img src="https://img.shields.io/github/last-commit/godothub/konado.svg?style=flat-square&logo=github&logoSize=14" alt="Last Commit" height="20">
+  <img src="https://img.shields.io/github/forks/godothub/konado?style=flat-square&logo=github&color=blueviolet&logoSize=14" alt="Forks" height="20">
+  <img src="https://img.shields.io/github/stars/godothub/konado?style=flat-square&logo=github&color=ffcb2b&logoSize=14" alt="Stars" height="20">
+  <img src="https://gitcode.com/godothub/konado/star/badge.svg?style=flat-square&logoSize=14" alt="GitCode Star" height="20">
+</div>
 
+<br>
 
-<p align="center">
-  <img src="./assets/banner/2.0/konado-2.0-banner.png" alt="看板娘可娜">
-</p>
+<div align="center" style="border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);">
+<img src="./assets/banner/2.0/konado-2.0-banner.png" alt="看板娘可娜" width="100%" max-width="800px">
 
+</div>
 
 ## 简介
 
