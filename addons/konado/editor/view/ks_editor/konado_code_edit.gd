@@ -71,14 +71,14 @@ func _get_completion_candidates(line: int, line_text: String, current_word: Stri
 	var candidates := []
 	
 	## 第一行应该是shot_id
-	#if line == 0 and line_text.strip_edges().is_empty():
-		#candidates.append({
-			#"kind": CodeCompletionKind.KIND_CONSTANT,
-			#"display_text": "shot_id",
-			#"insert_text": "shot_id ",
-			#"color": Color(0.8, 0.5, 1.0)
-		#})
-		#return candidates
+	if line == 0 and line_text.strip_edges().is_empty():
+		candidates.append({
+			"kind": CodeCompletionKind.KIND_CONSTANT,
+			"display_text": "shot_id",
+			"insert_text": "shot_id your_shot_name",
+			"color": Color(0.8, 0.5, 1.0)
+		})
+		return candidates
 	
 	# 分析当前行已输入的内容
 	var tokens = line_text.strip_edges().split(" ", false)
@@ -113,7 +113,7 @@ func _get_completion_candidates(line: int, line_text: String, current_word: Stri
 				pass
 			elif tokens.size() == 2:
 				# 补全效果类型
-				var effects = ["erase", "blinds", "wave", "fade"]
+				var effects = ["erase", "blinds", "wave", "fade", "none"]
 				for effect in effects:
 					candidates.append({
 						"kind": CodeCompletionKind.KIND_CONSTANT,

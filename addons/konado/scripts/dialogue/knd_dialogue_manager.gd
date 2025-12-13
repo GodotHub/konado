@@ -594,7 +594,7 @@ func _display_dialogue(chara_id: String, content: String, speed: float) -> void:
 	_dialog_interface.set_content(content, speed)
 
 ## 显示背景的方法
-func _display_background(bg_name: String, effect: ActingInterface.EffectsType) -> void:
+func _display_background(bg_name: String, effect: ActingInterface.BackgroundTransitionEffectsType) -> void:
 	if bg_name == null:
 		return
 	var bg_list = background_list.background_list

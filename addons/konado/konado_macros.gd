@@ -1,6 +1,6 @@
-## Konado 宏定义脚本，可以通过修改macros.cfg文件来设置宏
 @tool
 extends Node
+## Konado 宏定义脚本，可以通过修改macros.cfg文件来设置宏
 
 # 宏定义字典
 var _macros: Dictionary[String, bool] = {}
@@ -23,9 +23,8 @@ func _load_macros() -> void:
 	
 	# 调试相关宏
 	_macros["DEBUG"] = config.get_value("debug", "debug_enabled", false)
-	print(_macros)
 	
-# 设置默认宏值
+## 设置默认宏值
 func _set_default_macros() -> void:
 	_macros = {
 		"DEBUG": false
