@@ -1,22 +1,15 @@
-[gd_scene load_steps=24 format=3 uid="uid://bj8ynu8013j4j"]
+[gd_scene load_steps=22 format=3 uid="uid://bj8ynu8013j4j"]
 
 [ext_resource type="Script" uid="uid://dpo124xwpder5" path="res://addons/konado/scripts/dialogue/knd_dialogue_manager.gd" id="1_buo3n"]
 [ext_resource type="Script" uid="uid://cyoedi0x84dxy" path="res://addons/konado/scripts/act/acting_Interface.gd" id="2_pq6sw"]
 [ext_resource type="Script" uid="uid://b0kbsxqyedoml" path="res://addons/konado/scripts/dialogue/dialogue_Interface.gd" id="3_gl7il"]
-[ext_resource type="Shader" uid="uid://dxr17ie00ux36" path="res://addons/konado/shader/bg_trans_effects/blinds_effect.gdshader" id="3_utfb4"]
 [ext_resource type="Script" uid="uid://cfbojxb1pdbrs" path="res://addons/konado/scripts/audio/audio_interface.gd" id="4_gd2ll"]
-[ext_resource type="Texture2D" uid="uid://bb7nhjioefh8a" path="res://sample/demo/sample_arts/示例-咖啡馆-背景.png" id="4_qodmk"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_e5o0s"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_b1osp"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_h66lv"]
-shader = ExtResource("3_utfb4")
-shader_parameter/progress = 0.0
-shader_parameter/column_count = 16
-shader_parameter/reverse = false
-shader_parameter/current_texture = ExtResource("4_qodmk")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_25pr6"]
 

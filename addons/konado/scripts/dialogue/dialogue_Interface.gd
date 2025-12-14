@@ -18,8 +18,6 @@ signal finish_typing
 signal finish_display_options
 
 func _ready() -> void:
-	# 如果在编辑器模式下
-	
 	_name_lable.add_theme_stylebox_override("normal", StyleBoxEmpty.new())
 	_name_lable.add_theme_stylebox_override("background", StyleBoxEmpty.new())
 	_content_lable.add_theme_stylebox_override("normal", StyleBoxEmpty.new())
@@ -32,7 +30,6 @@ func init_dialog_box() -> void:
 	_content_lable.text = ""
 	distroy_options()
 
-		
 
 ## 修改对话框背景的方法
 func change_dialog_box(tex: Texture):
