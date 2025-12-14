@@ -120,7 +120,7 @@ jobs:
         body: ${{ steps.version.outputs.release_desc }}
         draft: false
         prerelease: true
-        generate_release_notes: true
+        generate_release_notes: false
         files: |
           build/plugins/${{ steps.version.outputs.plugin_zip }}
           build/linux/${{ env.EXPORT_NAME }}-linux.x86_64
