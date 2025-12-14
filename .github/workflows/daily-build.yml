@@ -4,11 +4,6 @@ on:
   schedule:
     - cron: '0 0 * * *'
   workflow_dispatch:  # 允许手动触发
-    inputs:
-      version_suffix:
-        description: '版本后缀（可选）'
-        required: false
-        default: ''
 
 env:
   GODOT_VERSION: 4.5.1  # godot-ci 镜像标签使用主版本号
@@ -17,7 +12,7 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-24.04  # 推荐使用 24.04 适配 Godot 4
+    runs-on: ubuntu-24.04
     container:
       image: barichello/godot-ci:4.5.1  # 使用 godot-ci 容器
     permissions:
@@ -27,9 +22,9 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
       with:
-        lfs: true  # 拉取 LFS 资源（Godot 项目常用）
+        lfs: true
 
-    - name: Setup Godot 导出模板
+    - name: Setup Godot Export Templates
       run: |
         # 创建必要目录并移动导出模板（godot-ci 标准步骤）
         mkdir -v -p ~/.local/share/godot/export_templates/
@@ -58,16 +53,11 @@ jobs:
         BUILD_DATE=$(date -u '+%Y%m%d')
         COMMIT_SHA_SHORT=$(git rev-parse --short HEAD)
         
-        if [[ "${{ github.event_name }}" == "workflow_dispatch" && -n "${{ github.event.inputs.version_suffix }}" ]]; then
-          SUFFIX="-${{ github.event.inputs.version_suffix }}"
-        else
-          SUFFIX=""
-        fi
-        
         BUILD_VERSION="${{ steps.get_version.outputs.base_version }}-daily.$BUILD_DATE.$COMMIT_SHA_SHORT$SUFFIX"
         echo "build_version=$BUILD_VERSION" >> $GITHUB_OUTPUT
         echo "tag_name=v$BUILD_VERSION" >> $GITHUB_OUTPUT
         echo "release_name=Konado Daily Build $BUILD_VERSION" >> $GITHUB_OUTPUT
+        echo "release_desc=**This is a daily build of Konado, built on $BUILD_DATE. Please don't use this version for production.**" >> $GITHUB_OUTPUT
         # 定义插件包名称（包含版本号）
         echo "plugin_zip=konado-${BUILD_VERSION}.zip" >> $GITHUB_OUTPUT
 
@@ -127,6 +117,7 @@ jobs:
       with:
         tag_name: ${{ steps.version.outputs.tag_name }}
         name: ${{ steps.version.outputs.release_name }}
+        body: ${{ steps.version.outputs.release_desc }}
         draft: false
         prerelease: true
         generate_release_notes: true
