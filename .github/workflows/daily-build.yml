@@ -53,7 +53,7 @@ jobs:
       run: |
         # 解决 Git 仓库所有权检查错误
         git config --global --add safe.directory /__w/konado/konado
-        
+
         BUILD_DATE=$(date -u '+%Y%m%d')
         COMMIT_SHA_SHORT=$(git rev-parse --short HEAD)
         
@@ -86,13 +86,6 @@ jobs:
         platform="Windows Desktop"
         runnable=true
         export_path="build/windows/${{ env.EXPORT_NAME }}-windows.exe"
-        
-        [preset.2]
-        name="macOS"
-        platform="macOS"
-        runnable=true
-        export_path="build/mac/${{ env.EXPORT_NAME }}-macos.zip"
-        EOF
 
     - name: Build for Linux
       run: |
@@ -107,14 +100,6 @@ jobs:
         EXPORT_DIR="$(readlink -f build)"
         cd ${{ env.PROJECT_PATH }}
         godot --headless --verbose --export-release "Windows Desktop" "$EXPORT_DIR/windows/${{ env.EXPORT_NAME }}-windows.exe"
-
-    - name: Build for macOS
-      run: |
-        mkdir -v -p build/mac
-        EXPORT_DIR="$(readlink -f build)"
-        cd ${{ env.PROJECT_PATH }}
-        godot --headless --verbose --export-release "macOS" "$EXPORT_DIR/mac/${{ env.EXPORT_NAME }}-macos.zip"
-
     - name: Create Plugin Zip
       run: |
         # 创建插件输出目录
@@ -135,5 +120,4 @@ jobs:
         files: |
           build/linux/${{ env.EXPORT_NAME }}-linux.x86_64
           build/windows/${{ env.EXPORT_NAME }}-windows.exe
-          build/mac/${{ env.EXPORT_NAME }}-macos.zip
           build/plugins/${{ steps.version.outputs.plugin_zip }}
