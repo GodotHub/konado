@@ -77,21 +77,17 @@ jobs:
         rm -f ${{ env.PROJECT_PATH }}/export_presets.cfg
         cat > ${{ env.PROJECT_PATH }}/export_presets.cfg << EOF
         [preset.0]
-        name="Linux"
+        name="Linux/X11"
         platform="Linux/X11"
         runnable=true
         export_path="build/linux/${{ env.EXPORT_NAME }}-linux.x86_64"
-
-        [preset.0.options]
         binary_format/embed_pck=true
-
+        
         [preset.1]
         name="Windows Desktop"
         platform="Windows Desktop"
         runnable=true
         export_path="build/windows/${{ env.EXPORT_NAME }}-windows.exe"
-        
-        [preset.1.options]
         binary_format/embed_pck=trueEOF
 
     - name: Build for Linux
@@ -99,7 +95,7 @@ jobs:
         mkdir -v -p build/linux
         EXPORT_DIR="$(readlink -f build)"
         cd ${{ env.PROJECT_PATH }}
-        godot --headless --verbose --export-release "Linux" "$EXPORT_DIR/linux/${{ env.EXPORT_NAME }}-linux.x86_64"
+        godot --headless --verbose --export-release "Linux/X11" "$EXPORT_DIR/linux/${{ env.EXPORT_NAME }}-linux.x86_64"
 
     - name: Build for Windows
       run: |
