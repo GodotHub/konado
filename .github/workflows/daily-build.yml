@@ -72,7 +72,7 @@ jobs:
 
     - name: Create export presets
       run: |
-        # 生成导出配置文件（适配 godot-ci 目录结构，修复未闭合的 EOF）
+        # 生成导出配置文件
         rm -f ${{ env.PROJECT_PATH }}/export_presets.cfg
         cat > ${{ env.PROJECT_PATH }}/export_presets.cfg << EOF
         [preset.0]
@@ -85,8 +85,7 @@ jobs:
         name="Windows Desktop"
         platform="Windows Desktop"
         runnable=true
-        export_path="build/windows/${{ env.EXPORT_NAME }}-windows.exe"
-EOF  # 修复：补充闭合 EOF
+        export_path="build/windows/${{ env.EXPORT_NAME }}-windows.exe"EOF
 
     - name: Build for Linux
       run: |
