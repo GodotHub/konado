@@ -1,7 +1,6 @@
-## 对话管理器
-@tool
 extends Control
 class_name KND_DialogueManager
+## Konado对话管理器
 
 @export_group("对话配置")
 
@@ -602,10 +601,12 @@ func _display_background(bg_name: String, effect: ActingInterface.BackgroundTran
 	for bg in bg_list:
 		if bg.background_name == bg_name:
 			bg_tex = bg.background_image
-			_acting_interface.change_background_image(bg_tex, bg_name, effect)
-		else:
-			print("背景图片没有找到")
-		
+			
+	if bg_tex == null:
+		printerr("背景图片没有找到")
+		return
+	_acting_interface.change_background_image(bg_tex, bg_name, effect)
+	
 
 ## 演员状态切换的方法
 func _actor_change_state(chara_id: String, state_id: String):

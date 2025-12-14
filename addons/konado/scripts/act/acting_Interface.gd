@@ -10,14 +10,15 @@ enum BackgroundTransitionEffectsType {
 	WaveEffect, ## 波浪效果
 	ALPHA_FADE_EFFECT ## ALPHA淡入淡出
 	}
+	
 ## 当前背景
 var current_texture: Texture = Texture.new()
 ## 特效路径
-@onready var none_effect_shader: Shader = preload("res://addons/konado/shader/bg_trans_effects/none_effect.gdshader")
-@onready var erase_effect_shader: Shader = preload("res://addons/konado/shader/bg_trans_effects/erase_effect.gdshader")
-@onready var blinds_effect_shader: Shader = preload("res://addons/konado/shader/bg_trans_effects/blinds_effect.gdshader")
-@onready var wave_effect_shader: Shader = preload("res://addons/konado/shader/bg_trans_effects/wave_effect.gdshader")
-@onready var alpha_fade_effect_shader: Shader = preload("res://addons/konado/shader/bg_trans_effects/alpha_fade_effect.gdshader")
+var none_effect_shader: Shader = preload("res://addons/konado/shader/bg_trans_effects/none_effect.gdshader")
+var erase_effect_shader: Shader = preload("res://addons/konado/shader/bg_trans_effects/erase_effect.gdshader")
+var blinds_effect_shader: Shader = preload("res://addons/konado/shader/bg_trans_effects/blinds_effect.gdshader")
+var wave_effect_shader: Shader = preload("res://addons/konado/shader/bg_trans_effects/wave_effect.gdshader")
+var alpha_fade_effect_shader: Shader = preload("res://addons/konado/shader/bg_trans_effects/alpha_fade_effect.gdshader")
 ## 演员字典
 var actor_dict = {}
 ## 角色列表
@@ -44,6 +45,8 @@ var effect_tween: Tween
 #存档用背景id
 var background_id : String
 
+var TRANSITION_CONFIGS: Dictionary = {}
+
 ## 默认分辨率，用于计算位置，建议保持为1280x720
 @export var reference_resolution: Vector2 = Vector2(1280, 720)
 
@@ -55,6 +58,7 @@ var background_id : String
 
 
 func _ready() -> void:
+	init_transtion_config()
 	for child in _chara_controler.get_children():
 		child.queue_free()
 	
@@ -98,104 +102,102 @@ func get_chara_node(actor_id: String) -> Node:
 			return chara_node
 	return null
 			
-# 显示背景图片的方法，有切换特效
-func change_background_image(tex: Texture, name: String, effects_type: BackgroundTransitionEffectsType = BackgroundTransitionEffectsType.NONE_EFFECT) -> void:
-	if tex:
-		background_id = name
-		print_rich("[color=cyan]切换背景为: [/color]"+str(name) +" " + "效果" + str(effects_type))
-		# 无效果
-		if effects_type == BackgroundTransitionEffectsType.NONE_EFFECT:
-			var mat = _background.material
-			mat.shader = none_effect_shader
-			_background.material = mat
-			# 需要先初始化值
-			mat.set_shader_parameter("target_texture", tex)
-			current_texture = tex
-		# 消除过渡效果
-		elif effects_type == BackgroundTransitionEffectsType.EraseEffect:
-			#var mat = ShaderMaterial.new()
-			var mat = _background.material
-			mat.shader = erase_effect_shader
-			_background.material = mat
-			# 需要先初始化值
-			mat.set_shader_parameter("progress", 0.0)
-			mat.set_shader_parameter("current_texture", current_texture)
-			mat.set_shader_parameter("target_texture", tex)
-			if effect_tween:
-				effect_tween.kill()
-			var effect_tween = get_tree().create_tween()
-			effect_tween.tween_property(mat, "shader_parameter/progress", 1.0, 1.0).set_trans(Tween.TRANS_LINEAR)
-			#effect_tween.tween_property(mat, "")
-			effect_tween.play()
-			effect_tween.finished.connect(func():
-				print("背景过渡动画完成")
-				current_texture = tex
-				mat.set_shader_parameter("current_texture", current_texture)
-				effect_tween.kill())
-		# 百叶窗过渡效果
-		elif effects_type == BackgroundTransitionEffectsType.BlindsEffect:
-			#var mat = ShaderMaterial.new()
-			var mat = _background.material
-			mat.shader = blinds_effect_shader
-			_background.material = mat
-			# 需要先初始化值
-			mat.set_shader_parameter("progress", 0.0)
-			mat.set_shader_parameter("current_texture", current_texture)
-			mat.set_shader_parameter("target_texture", tex)
-			if effect_tween:
-				effect_tween.kill()
-			var effect_tween = get_tree().create_tween()
-			effect_tween.tween_property(mat, "shader_parameter/progress", 1.0, 1.2).set_trans(Tween.TRANS_LINEAR)			
-			effect_tween.play()
-			effect_tween.finished.connect(func():
-				print("背景过渡动画完成")
-				current_texture = tex
-				mat.set_shader_parameter("current_texture", current_texture)
-				effect_tween.kill())
-		# 波浪过渡效果
-		elif effects_type == BackgroundTransitionEffectsType.WaveEffect:
-			#var mat = ShaderMaterial.new()
-			var mat = _background.material
-			mat.shader = wave_effect_shader
-			_background.material = mat
-			# 需要先初始化值
-			mat.set_shader_parameter("progress", 0.0)
-			mat.set_shader_parameter("current_texture", current_texture)
-			mat.set_shader_parameter("target_texture", tex)
-			if effect_tween:
-				effect_tween.kill()
-			var effect_tween = get_tree().create_tween()
-			effect_tween.tween_property(mat, "shader_parameter/progress", 1.8, 1.0).set_trans(Tween.TRANS_LINEAR)			
-			#effect_tween.tween_property(mat, "")
-			effect_tween.play()
-			effect_tween.finished.connect(func():
-				print("背景过渡动画完成")
-				current_texture = tex
-				mat.set_shader_parameter("current_texture", current_texture)
-				effect_tween.kill())
-		# 淡入淡出
-		elif effects_type == BackgroundTransitionEffectsType.ALPHA_FADE_EFFECT:
-			var mat = _background.material
-			mat.shader = alpha_fade_effect_shader
-			_background.material = mat
-			# 需要先初始化值
-			mat.set_shader_parameter("progress", 0.0)
-			mat.set_shader_parameter("current_texture", current_texture)
-			mat.set_shader_parameter("target_texture", tex)
-			if effect_tween:
-				effect_tween.kill()
-			var effect_tween = get_tree().create_tween()
-			effect_tween.tween_property(mat, "shader_parameter/progress", 1.0, 1.0).set_trans(Tween.TRANS_LINEAR)
-			effect_tween.play()
-			effect_tween.finished.connect(func():
-				print("背景过渡动画完成")
-				current_texture = tex
-				mat.set_shader_parameter("current_texture", current_texture)
-				effect_tween.kill())
-		background_change_finished.emit()
-	else:
+## 初始化背景切换配置
+func init_transtion_config() -> void:
+	TRANSITION_CONFIGS = {
+		BackgroundTransitionEffectsType.NONE_EFFECT: {
+			"shader": none_effect_shader,
+			"duration": 0.0,
+			"progress_target": 0.0,
+			"tween_trans": Tween.TRANS_LINEAR
+		},
+		BackgroundTransitionEffectsType.EraseEffect: {
+			"shader": erase_effect_shader,
+			"duration": 1.0,
+			"progress_target": 1.0,
+			"tween_trans": Tween.TRANS_LINEAR
+		},
+		BackgroundTransitionEffectsType.BlindsEffect: {
+			"shader": blinds_effect_shader,
+			"duration": 1.0,
+			"progress_target": 1.0,
+			"tween_trans": Tween.TRANS_LINEAR
+		},
+		BackgroundTransitionEffectsType.WaveEffect: {
+			"shader": wave_effect_shader,
+			"duration": 1.0,
+			"progress_target": 1.8,
+			"tween_trans": Tween.TRANS_LINEAR
+		},
+		BackgroundTransitionEffectsType.ALPHA_FADE_EFFECT: {
+			"shader": alpha_fade_effect_shader,
+			"duration": 1.0,
+			"progress_target": 1.0,
+			"tween_trans": Tween.TRANS_LINEAR
+		}
+	}
+
+## 显示背景图片的方法
+func change_background_image(tex: Texture, name: String, effects_type: BackgroundTransitionEffectsType) -> void:
+	if not tex:
 		print_rich("[color=red]切换背景失败，空Texture，请检查资源图片[/color]")
 		background_change_finished.emit()
+		return
+
+	# 基础状态更新
+	background_id = name
+	print_rich("[color=cyan]切换背景为: [/color]"+str(name) +" " + "效果" + str(effects_type))
+	
+	# 获取当前效果配置
+	var config = TRANSITION_CONFIGS.get(effects_type, TRANSITION_CONFIGS[BackgroundTransitionEffectsType.NONE_EFFECT])
+	
+	# 停止之前的过渡动画
+	if effect_tween and not effect_tween.is_valid():
+		effect_tween.kill()
+		effect_tween = null
+
+	# 无效果处理
+	if effects_type == BackgroundTransitionEffectsType.NONE_EFFECT:
+		_background.material.set_shader(none_effect_shader)
+		_background.material.set_shader_parameter("target_texture", tex)
+		current_texture = tex
+		background_change_finished.emit()
+		return
+	else:
+		_background.material.set("shader", config.shader)
+		print(_background.material.get_shader())
+		_background.material.set_shader_parameter("progress", 0.0)
+		_background.material.set_shader_parameter("current_texture", current_texture)
+		_background.material.set_shader_parameter("target_texture", tex)
+
+		# 创建并配置过渡动画
+		effect_tween = get_tree().create_tween()
+		effect_tween.tween_property(
+			_background.material, 
+			"shader_parameter/progress", 
+			config.progress_target, 
+			config.duration
+		)
+		effect_tween.set_ease(config.tween_trans)
+		
+		# 动画完成回调
+		effect_tween.finished.connect(_on_transition_finished.bind(_background.material, tex))
+		effect_tween.play()
+
+
+## 过渡动画完成统一处理函数
+func _on_transition_finished(mat: ShaderMaterial, target_tex: Texture) -> void:
+	print("背景过渡动画完成")
+	current_texture = target_tex
+	mat.set_shader_parameter("current_texture", current_texture)
+	
+	# 清理tween（避免内存泄漏）
+	if effect_tween and effect_tween.is_valid():
+		effect_tween.kill()
+	effect_tween = null
+	
+	background_change_finished.emit()
+	
 	
 # 新建角色图片的方法
 func create_new_character(chara_id: String, pos: Vector2, state: String, tex: Texture, _scale: float, mirror: bool) -> void:
