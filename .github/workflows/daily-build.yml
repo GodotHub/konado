@@ -7,12 +7,12 @@ on:
     inputs:
       version_suffix:
         description: '版本后缀（可选）'
-        required: true
+        required: false
         default: ''
 
 env:
   GODOT_VERSION: 4.5.1  # godot-ci 镜像标签使用主版本号
-  EXPORT_NAME: "YourGameName"  # 与 godot-ci 示例保持变量名一致
+  EXPORT_NAME: "konado-demo"  # 与 godot-ci 示例保持变量名一致
   PROJECT_PATH: "."  # 项目根目录（根据实际情况调整）
 
 jobs:
@@ -44,6 +44,7 @@ jobs:
         if grep -q '^config/version=' ${{ env.PROJECT_PATH }}/project.godot; then
           BASE_VERSION=$(grep '^config/version=' ${{ env.PROJECT_PATH }}/project.godot | cut -d'=' -f2 | tr -d '" ')
           echo "base_version=$BASE_VERSION" >> $GITHUB_OUTPUT
+          echo "the base version is $BASE_VERSION"
         else
           echo "base_version=1.0.0" >> $GITHUB_OUTPUT
         fi
@@ -66,7 +67,7 @@ jobs:
         BUILD_VERSION="${{ steps.get_version.outputs.base_version }}-daily.$BUILD_DATE.$COMMIT_SHA_SHORT$SUFFIX"
         echo "build_version=$BUILD_VERSION" >> $GITHUB_OUTPUT
         echo "tag_name=v$BUILD_VERSION" >> $GITHUB_OUTPUT
-        echo "release_name=Daily Build $BUILD_VERSION" >> $GITHUB_OUTPUT
+        echo "release_name=Konado Daily Build $BUILD_VERSION" >> $GITHUB_OUTPUT
         # 定义插件包名称（包含版本号）
         echo "plugin_zip=konado-${BUILD_VERSION}.zip" >> $GITHUB_OUTPUT
 
@@ -81,11 +82,18 @@ jobs:
         runnable=true
         export_path="build/linux/${{ env.EXPORT_NAME }}-linux.x86_64"
         
+        [preset.0.options]
+        binary_format/embed_pck=true
+        
         [preset.1]
         name="Windows Desktop"
         platform="Windows Desktop"
         runnable=true
-        export_path="build/windows/${{ env.EXPORT_NAME }}-windows.exe"EOF
+        export_path="build/windows/${{ env.EXPORT_NAME }}-windows.exe"
+        
+                
+        [preset.1.options]
+        binary_format/embed_pck=trueEOF
 
     - name: Build for Linux
       run: |
