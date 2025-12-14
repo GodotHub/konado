@@ -18,12 +18,11 @@ config/name="Konado Demo"
 config/description="Konado is an open-source framework for creating visual novels with the Godot Engine."
 config/version="2.0"
 run/main_scene="uid://bcl2e6o0kb5dm"
-config/features=PackedStringArray("4.5", "C#", "Forward Plus")
+config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="uid://b5olx2vwoscbr"
 
 [autoload]
 
-KONADO_MACROS="*res://addons/konado/konado_macros.gd"
 KonadoMacros="*res://addons/konado/konado_macros.gd"
 
 [display]
