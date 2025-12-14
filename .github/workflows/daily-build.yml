@@ -81,6 +81,8 @@ jobs:
         platform="Linux/X11"
         runnable=true
         export_path="build/linux/${{ env.EXPORT_NAME }}-linux.x86_64"
+        
+        [preset.0.options]
         binary_format/embed_pck=true
         
         [preset.1]
@@ -88,7 +90,10 @@ jobs:
         platform="Windows Desktop"
         runnable=true
         export_path="build/windows/${{ env.EXPORT_NAME }}-windows.exe"
-        binary_format/embed_pck=trueEOF
+        
+        [preset.1.options]
+        binary_format/embed_pck=true
+        EOF
 
     - name: Build for Linux
       run: |
