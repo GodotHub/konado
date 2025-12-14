@@ -51,6 +51,9 @@ jobs:
     - name: Generate build version
       id: version
       run: |
+        # 解决 Git 仓库所有权检查错误
+        git config --global --add safe.directory /__w/konado/konado
+        
         BUILD_DATE=$(date -u '+%Y%m%d')
         COMMIT_SHA_SHORT=$(git rev-parse --short HEAD)
         
