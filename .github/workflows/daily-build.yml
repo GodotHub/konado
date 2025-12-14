@@ -1,0 +1,136 @@
+name: Daily Build
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:  # 允许手动触发
+    inputs:
+      version_suffix:
+        description: '版本后缀（可选）'
+        required: false
+        default: ''
+
+env:
+  GODOT_VERSION: 4.5.1  # godot-ci 镜像标签使用主版本号
+  EXPORT_NAME: "konado-demo"  # 与 godot-ci 示例保持变量名一致
+  PROJECT_PATH: "."  # 项目根目录（根据实际情况调整）
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04  # 推荐使用 24.04 适配 Godot 4
+    container:
+      image: barichello/godot-ci:4.5.1  # 使用 godot-ci 容器
+    permissions:
+      contents: write
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        lfs: true  # 拉取 LFS 资源（Godot 项目常用）
+
+    - name: Setup Godot 导出模板
+      run: |
+        # 创建必要目录并移动导出模板（godot-ci 标准步骤）
+        mkdir -v -p ~/.local/share/godot/export_templates/
+        mkdir -v -p ~/.config/
+        mv /root/.config/godot ~/.config/godot
+        mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+
+    - name: Extract project version
+      id: get_version
+      run: |
+        # 从 project.godot 提取版本号
+        if grep -q '^config/version=' ${{ env.PROJECT_PATH }}/project.godot; then
+          BASE_VERSION=$(grep '^config/version=' ${{ env.PROJECT_PATH }}/project.godot | cut -d'=' -f2 | tr -d '" ')
+          echo "base_version=$BASE_VERSION" >> $GITHUB_OUTPUT
+          echo "the base version is $BASE_VERSION"
+        else
+          echo "base_version=1.0.0" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Generate build version
+      id: version
+      run: |
+        # 解决 Git 仓库所有权检查错误
+        git config --global --add safe.directory /__w/konado/konado
+
+        BUILD_DATE=$(date -u '+%Y%m%d')
+        COMMIT_SHA_SHORT=$(git rev-parse --short HEAD)
+        
+        if [[ "${{ github.event_name }}" == "workflow_dispatch" && -n "${{ github.event.inputs.version_suffix }}" ]]; then
+          SUFFIX="-${{ github.event.inputs.version_suffix }}"
+        else
+          SUFFIX=""
+        fi
+        
+        BUILD_VERSION="${{ steps.get_version.outputs.base_version }}-daily.$BUILD_DATE.$COMMIT_SHA_SHORT$SUFFIX"
+        echo "build_version=$BUILD_VERSION" >> $GITHUB_OUTPUT
+        echo "tag_name=v$BUILD_VERSION" >> $GITHUB_OUTPUT
+        echo "release_name=Konado Daily Build $BUILD_VERSION" >> $GITHUB_OUTPUT
+        # 定义插件包名称（包含版本号）
+        echo "plugin_zip=konado-${BUILD_VERSION}.zip" >> $GITHUB_OUTPUT
+
+    - name: Create export presets
+      run: |
+        # 生成导出配置文件
+        rm -f ${{ env.PROJECT_PATH }}/export_presets.cfg
+        cat > ${{ env.PROJECT_PATH }}/export_presets.cfg << EOF
+        [preset.0]
+        name="Linux/X11"
+        platform="Linux/X11"
+        runnable=true
+        export_path="build/linux/${{ env.EXPORT_NAME }}-linux.x86_64"
+        
+        [preset.0.options]
+        binary_format/embed_pck=true
+        
+        [preset.1]
+        name="Windows Desktop"
+        platform="Windows Desktop"
+        runnable=true
+        export_path="build/windows/${{ env.EXPORT_NAME }}-windows.exe"
+        
+        [preset.1.options]
+        binary_format/embed_pck=true
+        EOF
+
+    - name: Build for Linux
+      run: |
+        mkdir -v -p build/linux
+        EXPORT_DIR="$(readlink -f build)"
+        cd ${{ env.PROJECT_PATH }}
+        godot --headless --verbose --export-release "Linux/X11" "$EXPORT_DIR/linux/${{ env.EXPORT_NAME }}-linux.x86_64"
+
+    - name: Build for Windows
+      run: |
+        mkdir -v -p build/windows
+        EXPORT_DIR="$(readlink -f build)"
+        cd ${{ env.PROJECT_PATH }}
+        godot --headless --verbose --export-release "Windows Desktop" "$EXPORT_DIR/windows/${{ env.EXPORT_NAME }}-windows.exe"
+
+    - name: Create Plugin Zip
+      run: |
+        # 创建插件输出目录
+        mkdir -v -p build/plugins
+        # 核心修复：进入 addons 目录后压缩 konado，确保 zip 内仅含 konado 目录
+        cd addons || exit 1  # 进入 addons 目录（失败则退出）
+        zip -r "../build/plugins/${{ steps.version.outputs.plugin_zip }}" konado
+        # 返回根目录，验证压缩结果
+        cd - || exit 1
+        ls -l build/plugins
+        # 可选：验证 zip 内目录结构（调试用）
+        unzip -l build/plugins/${{ steps.version.outputs.plugin_zip }}
+
+    - name: Create Release
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: ${{ steps.version.outputs.tag_name }}
+        name: ${{ steps.version.outputs.release_name }}
+        draft: false
+        prerelease: true
+        generate_release_notes: true
+        files: |
+          build/plugins/${{ steps.version.outputs.plugin_zip }}
+          build/linux/${{ env.EXPORT_NAME }}-linux.x86_64
+          build/windows/${{ env.EXPORT_NAME }}-windows.exe
