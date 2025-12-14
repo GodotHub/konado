@@ -1,14 +1,20 @@
 ---
-name: Bug report
-about: Create a report to help us improve
-title: "[Bug]"
+name: "Bug Report"
+about: "Create a report to help us improve"
+title: "[Bug] "
 labels: ["bug"]
 assignees: ''
 
 ---
 
-**描述Bug**
+## Describe the Bug
+A clear and concise description of what the bug is (e.g., functional abnormalities, crashes, display errors, etc.).
 
-**复现步骤**
+## Steps to Reproduce
+1. Open [XX feature/page]
+2. Perform [XX action] (e.g., click a button, enter content, etc.)
+3. Observe [XX abnormal result]
+(Please provide stable, reproducible steps to help locate the issue)
 
-**截图**
+## Screenshots
+If applicable, add screenshots, screen recordings, or log information here (you can paste images directly).
