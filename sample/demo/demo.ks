@@ -5,7 +5,7 @@ background bg1 none
 "Kona" "Hello! Welcome to our cafe."
 "Kona" "What would you like today?"
 
-background bg2 fade
+background bg2 vortex
 
 background bg1 blinds
 

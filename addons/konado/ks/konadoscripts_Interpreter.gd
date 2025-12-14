@@ -303,7 +303,8 @@ func _parse_background(line: String, dialog: Dialogue) -> bool:
 			"erase": ActingInterface.BackgroundTransitionEffectsType.EraseEffect,
 			"blinds": ActingInterface.BackgroundTransitionEffectsType.BlindsEffect,
 			"wave": ActingInterface.BackgroundTransitionEffectsType.WaveEffect,
-			"fade": ActingInterface.BackgroundTransitionEffectsType.ALPHA_FADE_EFFECT
+			"fade": ActingInterface.BackgroundTransitionEffectsType.ALPHA_FADE_EFFECT,
+			"vortex": ActingInterface.BackgroundTransitionEffectsType.VORTEX_SWAP_EFFECT
 		}.get(effect, ActingInterface.BackgroundTransitionEffectsType.NONE_EFFECT)
 
 	return true

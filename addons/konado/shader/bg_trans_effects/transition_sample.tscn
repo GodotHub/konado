@@ -1,17 +1,18 @@
 [gd_scene load_steps=6 format=3 uid="uid://di0hxh74j4qhe"]
 
-[ext_resource type="Shader" uid="uid://c7jt4c4bu3bi2" path="res://addons/konado/shader/bg_trans_effects/wave_effect.gdshader" id="1_higwh"]
+[ext_resource type="Shader" uid="uid://bbvft8um88wm6" path="res://addons/konado/shader/bg_trans_effects/vortex_swap_effect.gdshader" id="1_xs3t0"]
 [ext_resource type="Texture2D" uid="uid://bkrpa0r41e1n7" path="res://assets/banner/2.0/konado-2.0-banner.png" id="2_40i07"]
 [ext_resource type="Texture2D" uid="uid://bb7nhjioefh8a" path="res://sample/demo/sample_arts/示例-咖啡馆-背景.png" id="2_wxeb4"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_40i07"]
-shader = ExtResource("1_higwh")
-shader_parameter/progress = 0.53600002546
-shader_parameter/target_texture = ExtResource("2_40i07")
+shader = ExtResource("1_xs3t0")
+shader_parameter/progress = 0.54400002584
 shader_parameter/current_texture = ExtResource("2_wxeb4")
-shader_parameter/chunk_count = 16
-shader_parameter/edge_smooth_width = 0.02
-shader_parameter/chunk_smooth = 1.0
+shader_parameter/target_texture = ExtResource("2_40i07")
+shader_parameter/radius_strength = 2.0
+shader_parameter/angle_strength = 1.0
+shader_parameter/angle_frequency = 8.0
+shader_parameter/distort_center = Vector2(0.5, 0.5)
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_40i07"]
 

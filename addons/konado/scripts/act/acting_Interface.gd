@@ -8,7 +8,8 @@ enum BackgroundTransitionEffectsType {
 	EraseEffect, ## 擦除效果
 	BlindsEffect, ## 百叶窗效果
 	WaveEffect, ## 波浪效果
-	ALPHA_FADE_EFFECT ## ALPHA淡入淡出
+	ALPHA_FADE_EFFECT, ## ALPHA淡入淡出
+	VORTEX_SWAP_EFFECT ## 极坐标漩涡效果
 	}
 	
 ## 当前背景
@@ -19,6 +20,7 @@ var erase_effect_shader: Shader = preload("res://addons/konado/shader/bg_trans_e
 var blinds_effect_shader: Shader = preload("res://addons/konado/shader/bg_trans_effects/blinds_effect.gdshader")
 var wave_effect_shader: Shader = preload("res://addons/konado/shader/bg_trans_effects/wave_effect.gdshader")
 var alpha_fade_effect_shader: Shader = preload("res://addons/konado/shader/bg_trans_effects/alpha_fade_effect.gdshader")
+var vortex_swap_effect_shader: Shader = preload("res://addons/konado/shader/bg_trans_effects/vortex_swap_effect.gdshader")
 ## 演员字典
 var actor_dict = {}
 ## 角色列表
@@ -131,6 +133,12 @@ func init_transtion_config() -> void:
 		},
 		BackgroundTransitionEffectsType.ALPHA_FADE_EFFECT: {
 			"shader": alpha_fade_effect_shader,
+			"duration": 1.0,
+			"progress_target": 1.0,
+			"tween_trans": Tween.TRANS_LINEAR
+		},
+		BackgroundTransitionEffectsType.VORTEX_SWAP_EFFECT: {
+			"shader": vortex_swap_effect_shader,
 			"duration": 1.0,
 			"progress_target": 1.0,
 			"tween_trans": Tween.TRANS_LINEAR
