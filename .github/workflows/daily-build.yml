@@ -72,7 +72,7 @@ jobs:
 
     - name: Create export presets
       run: |
-        # 生成导出配置文件（适配 godot-ci 目录结构）
+        # 生成导出配置文件（适配 godot-ci 目录结构，修复未闭合的 EOF）
         rm -f ${{ env.PROJECT_PATH }}/export_presets.cfg
         cat > ${{ env.PROJECT_PATH }}/export_presets.cfg << EOF
         [preset.0]
@@ -86,6 +86,7 @@ jobs:
         platform="Windows Desktop"
         runnable=true
         export_path="build/windows/${{ env.EXPORT_NAME }}-windows.exe"
+EOF  # 修复：补充闭合 EOF
 
     - name: Build for Linux
       run: |
@@ -100,14 +101,19 @@ jobs:
         EXPORT_DIR="$(readlink -f build)"
         cd ${{ env.PROJECT_PATH }}
         godot --headless --verbose --export-release "Windows Desktop" "$EXPORT_DIR/windows/${{ env.EXPORT_NAME }}-windows.exe"
+
     - name: Create Plugin Zip
       run: |
         # 创建插件输出目录
         mkdir -v -p build/plugins
-        # 压缩 addons/konado 目录（保留目录结构，符合 Godot 插件规范）
-        zip -r "build/plugins/${{ steps.version.outputs.plugin_zip }}" addons/konado
-        # 验证压缩结果
+        # 核心修复：进入 addons 目录后压缩 konado，确保 zip 内仅含 konado 目录
+        cd addons || exit 1  # 进入 addons 目录（失败则退出）
+        zip -r "../build/plugins/${{ steps.version.outputs.plugin_zip }}" konado
+        # 返回根目录，验证压缩结果
+        cd - || exit 1
         ls -l build/plugins
+        # 可选：验证 zip 内目录结构（调试用）
+        unzip -l build/plugins/${{ steps.version.outputs.plugin_zip }}
 
     - name: Create Release
       uses: softprops/action-gh-release@v1
@@ -118,6 +124,6 @@ jobs:
         prerelease: true
         generate_release_notes: true
         files: |
+          build/plugins/${{ steps.version.outputs.plugin_zip }}
           build/linux/${{ env.EXPORT_NAME }}-linux.x86_64
           build/windows/${{ env.EXPORT_NAME }}-windows.exe
-          build/plugins/${{ steps.version.outputs.plugin_zip }}
