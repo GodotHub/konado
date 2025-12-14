@@ -4,11 +4,6 @@ on:
   schedule:
     - cron: '0 0 * * *'
   workflow_dispatch:  # 允许手动触发
-    inputs:
-      version_suffix:
-        description: '版本后缀（可选）'
-        required: false
-        default: ''
 
 env:
   GODOT_VERSION: 4.5.1  # godot-ci 镜像标签使用主版本号
@@ -58,18 +53,14 @@ jobs:
         BUILD_DATE=$(date -u '+%Y%m%d')
         COMMIT_SHA_SHORT=$(git rev-parse --short HEAD)
         
-        if [[ "${{ github.event_name }}" == "workflow_dispatch" && -n "${{ github.event.inputs.version_suffix }}" ]]; then
-          SUFFIX="-${{ github.event.inputs.version_suffix }}"
-        else
-          SUFFIX=""
-        fi
-        
         BUILD_VERSION="${{ steps.get_version.outputs.base_version }}-daily.$BUILD_DATE.$COMMIT_SHA_SHORT$SUFFIX"
         echo "build_version=$BUILD_VERSION" >> $GITHUB_OUTPUT
         echo "tag_name=v$BUILD_VERSION" >> $GITHUB_OUTPUT
         echo "release_name=Konado Daily Build $BUILD_VERSION" >> $GITHUB_OUTPUT
         # 定义插件包名称（包含版本号）
         echo "plugin_zip=konado-${BUILD_VERSION}.zip" >> $GITHUB_OUTPUT
+        # release note body
+        echo "release_note=## Konado Daily Build $BUILD_VERSION, this is a daily build, please do not use it in production environment." >> $GITHUB_OUTPUT
 
     - name: Create export presets
       run: |
@@ -127,6 +118,7 @@ jobs:
       with:
         tag_name: ${{ steps.version.outputs.tag_name }}
         name: ${{ steps.version.outputs.release_name }}
+        body: ${{ steps.version.outputs.release_note }}
         draft: false
         prerelease: true
         generate_release_notes: true
