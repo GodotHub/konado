@@ -20,10 +20,11 @@ background [图片资源名] <效果类型>
 
 | 效果 | 描述 |
 |------|------|
-| `fade` | 淡入淡出（默认） |
-| `erase` | 从左到右擦除 |
-| `blinds` | 百叶窗效果 | 
+| `fade` | 淡入淡出 |
+| `erase` | 擦除 |
+| `blinds` | 百叶窗 | 
 | `wave` | 波浪 |
+| `vortex` | 旋涡 |
 | `none` | 立即切换 |
 
 如果不指定效果类型，默认使用`none`（立即切换）
@@ -39,5 +40,8 @@ background battle_field none
 
 # 回忆场景（擦除效果）
 background memory_flash erase
+
+# 梦幻场景（漩涡效果）
+background dream vortex
 ```
 
