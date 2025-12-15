@@ -56,7 +56,7 @@ jobs:
     container:
       image: barichello/godot-ci:4.5.1
     permissions:
-      contents: write
+      contents: write  # 需该权限删除Tag/Release
 
     steps:
     - name: Checkout repository
@@ -155,3 +155,57 @@ jobs:
           build/plugins/${{ steps.version.outputs.plugin_zip }}
           build/linux/${{ env.EXPORT_NAME }}-linux.x86_64
           build/windows/${{ env.EXPORT_NAME }}-windows.exe
+
+    # 清理旧的每日构建
+    - name: Install GitHub CLI
+      run: |
+        # 确保安装GitHub CLI（用于操作Release/Tag）
+        type -p gh >/dev/null || (sudo apt update && sudo apt install -y gh)
+
+    - name: Authenticate GitHub CLI
+      run: |
+        # 使用Action Token认证GH CLI
+        echo "${{ github.token }}" | gh auth login --with-token
+
+    - name: Cleanup Old Daily Builds (Keep Last 10)
+      run: |
+        set -euo pipefail
+        # 保留的每日构建数量
+        KEEP_COUNT=10
+        
+        # 获取仓库中所有包含-daily.的Tag（仅匹配每日构建），按版本号降序排列
+        echo "Fetching all daily build tags..."
+        TAGS=$(gh api --method GET /repos/${{ github.repository }}/tags \
+          --jq '.[] | select(.name | contains("-daily.")) | .name' \
+          | sort -rV)
+        
+        # 转换为数组
+        readarray -t TAG_ARRAY <<< "$TAGS"
+        TOTAL_TAGS=${#TAG_ARRAY[@]}
+        
+        echo "Total daily build tags found: $TOTAL_TAGS"
+        if [ $TOTAL_TAGS -le $KEEP_COUNT ]; then
+          echo "No old tags to delete (keeping all $TOTAL_TAGS tags)"
+          exit 0
+        fi
+        
+        # 计算要删除的Tag（跳过前10个最新的）
+        TAGS_TO_DELETE=("${TAG_ARRAY[@]:$KEEP_COUNT}")
+        echo "Tags to delete (${#TAGS_TO_DELETE[@]}): ${TAGS_TO_DELETE[*]}"
+        
+        # 逐个删除Release和Tag
+        for TAG in "${TAGS_TO_DELETE[@]}"; do
+          echo "Processing tag: $TAG"
+          
+          # 删除对应的Release（如果存在）
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo "Deleting release for tag: $TAG"
+            gh release delete "$TAG" -y
+          else
+            echo "No release found for tag: $TAG, skipping"
+          fi
+          
+          # 删除Tag本身
+          echo "Deleting tag: $TAG"
+          gh api --method DELETE /repos/${{ github.repository }}/git/refs/tags/$TAG || echo "Tag $TAG may not exist, skipping"
+        done
