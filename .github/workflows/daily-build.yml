@@ -158,16 +158,19 @@ jobs:
 
     # 清理旧的每日构建
     - name: Install GitHub CLI
+      shell: bash -e {0}
       run: |
         # 确保安装GitHub CLI（用于操作Release/Tag）
         type -p gh >/dev/null || (apt update && apt install -y gh)
 
     - name: Authenticate GitHub CLI
+      shell: bash -e {0}
       run: |
         # 使用Action Token认证GH CLI
         echo "${{ github.token }}" | gh auth login --with-token
 
-    - name: Cleanup Old Daily Builds (Keep Last 10)
+    - name: Cleanup Old Daily Builds
+      shell: bash -e {0}
       run: |
         set -euo pipefail
         # 保留的每日构建数量
