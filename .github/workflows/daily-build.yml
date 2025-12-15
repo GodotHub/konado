@@ -1,20 +1,60 @@
-name: Daily Build
+name: Konado Daily Build
 
 on:
   schedule:
-    - cron: '0 0 * * *'
-  workflow_dispatch:  # 允许手动触发
+    - cron: '0 0 * * *'  # 每日UTC 0点触发
+  workflow_dispatch:  # 手动触发
 
 env:
-  GODOT_VERSION: 4.5.1  # godot-ci 镜像标签使用主版本号
-  EXPORT_NAME: "konado-demo"  # 与 godot-ci 示例保持变量名一致
-  PROJECT_PATH: "."  # 项目根目录（根据实际情况调整）
+  GODOT_VERSION: 4.5.1
+  EXPORT_NAME: "konado-demo"
+  PROJECT_PATH: "."
 
 jobs:
+  check_new_commits:
+    runs-on: ubuntu-24.04
+    outputs:
+      has_new_commits: ${{ steps.check.outputs.has_new_commits }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+          fetch-depth: 0  # 拉取完整历史（定时触发需查Tag/Commit）
+
+      - name: Check for new commits since last tag (or force manual build)
+        id: check
+        run: |
+          # 核心：判断触发类型，手动触发直接强制构建
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            echo "Manual trigger detected: force build regardless of new commits"
+            echo "has_new_commits=true" >> $GITHUB_OUTPUT
+            exit 0  # 跳过后续检查，直接退出
+          fi
+
+          # 定时触发：执行原有提交检查逻辑
+          # 获取上一个Tag（无Tag则取初始提交）
+          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || git rev-list --max-parents=0 HEAD)
+          echo "Last tag/commit: $LAST_TAG"
+
+          # 检查上一个Tag之后是否有新Commit
+          NEW_COMMITS=$(git log --pretty=format:"%h" $LAST_TAG..HEAD)
+          
+          if [ -n "$NEW_COMMITS" ]; then
+            echo "Found new commits since last tag: $LAST_TAG (scheduled trigger)"
+            echo "has_new_commits=true" >> $GITHUB_OUTPUT
+          else
+            echo "No new commits since last tag: $LAST_TAG, aborting scheduled build"
+            echo "has_new_commits=false" >> $GITHUB_OUTPUT
+          fi
+
+  # 构建Job：依赖检查结果
   build:
+    needs: check_new_commits
+    if: needs.check_new_commits.outputs.has_new_commits == 'true'
     runs-on: ubuntu-24.04
     container:
-      image: barichello/godot-ci:4.5.1  # 使用 godot-ci 容器
+      image: barichello/godot-ci:4.5.1
     permissions:
       contents: write
 
@@ -26,7 +66,6 @@ jobs:
 
     - name: Setup Godot Export Templates
       run: |
-        # 创建必要目录并移动导出模板（godot-ci 标准步骤）
         mkdir -v -p ~/.local/share/godot/export_templates/
         mkdir -v -p ~/.config/
         mv /root/.config/godot ~/.config/godot
@@ -35,7 +74,6 @@ jobs:
     - name: Extract project version
       id: get_version
       run: |
-        # 从 project.godot 提取版本号
         if grep -q '^config/version=' ${{ env.PROJECT_PATH }}/project.godot; then
           BASE_VERSION=$(grep '^config/version=' ${{ env.PROJECT_PATH }}/project.godot | cut -d'=' -f2 | tr -d '" ')
           echo "base_version=$BASE_VERSION" >> $GITHUB_OUTPUT
@@ -47,23 +85,20 @@ jobs:
     - name: Generate build version
       id: version
       run: |
-        # 解决 Git 仓库所有权检查错误
         git config --global --add safe.directory /__w/konado/konado
 
         BUILD_DATE=$(date -u '+%Y%m%d')
         COMMIT_SHA_SHORT=$(git rev-parse --short HEAD)
         
-        BUILD_VERSION="${{ steps.get_version.outputs.base_version }}-daily.$BUILD_DATE.$COMMIT_SHA_SHORT$SUFFIX"
+        BUILD_VERSION="${{ steps.get_version.outputs.base_version }}-daily.$BUILD_DATE.$COMMIT_SHA_SHORT"
         echo "build_version=$BUILD_VERSION" >> $GITHUB_OUTPUT
         echo "tag_name=v$BUILD_VERSION" >> $GITHUB_OUTPUT
         echo "release_name=Konado Daily Build $BUILD_VERSION" >> $GITHUB_OUTPUT
         echo "release_desc=**This is a daily build of Konado, built on $BUILD_DATE. Please don't use this version for production.**" >> $GITHUB_OUTPUT
-        # 定义插件包名称（包含版本号）
         echo "plugin_zip=konado-${BUILD_VERSION}.zip" >> $GITHUB_OUTPUT
 
     - name: Create export presets
       run: |
-        # 生成导出配置文件
         rm -f ${{ env.PROJECT_PATH }}/export_presets.cfg
         cat > ${{ env.PROJECT_PATH }}/export_presets.cfg << EOF
         [preset.0]
@@ -101,16 +136,11 @@ jobs:
 
     - name: Create Plugin Zip
       run: |
-        # 创建插件输出目录
         mkdir -v -p build/plugins
-        # 核心修复：进入 addons 目录后压缩 konado，确保 zip 内仅含 konado 目录
-        cd addons || exit 1  # 进入 addons 目录（失败则退出）
+        cd addons || exit 1
         zip -r "../build/plugins/${{ steps.version.outputs.plugin_zip }}" konado
-        # 返回根目录，验证压缩结果
         cd - || exit 1
         ls -l build/plugins
-        # 可选：验证 zip 内目录结构（调试用）
-        unzip -l build/plugins/${{ steps.version.outputs.plugin_zip }}
 
     - name: Create Release
       uses: softprops/action-gh-release@v1
