@@ -7,7 +7,7 @@ background bg1 none
 
 background bg2 vortex
 
-background bg1 blinds
+background bg1 windmill
 
 background bg2 wave
 
