@@ -1,15 +1,11 @@
-[gd_scene load_steps=25 format=3 uid="uid://0sc04evetbux"]
+[gd_scene load_steps=17 format=3 uid="uid://0sc04evetbux"]
 
 [ext_resource type="PackedScene" uid="uid://dbfoi0nkkm0bx" path="res://addons/konado/neo/runtime/template/background/background.tscn" id="1_w8ut8"]
 [ext_resource type="PackedScene" uid="uid://bgpl5q55u0eby" path="res://addons/konado/neo/runtime/template/dialogbox/dialog_box_1.tscn" id="2_jjgc8"]
 [ext_resource type="PackedScene" uid="uid://b5njwitmejk76" path="res://addons/konado/template/ui_template/save_commponect/save_componect.tscn" id="3_ju4x8"]
 [ext_resource type="Theme" uid="uid://bb865dga7c5sp" path="res://addons/konado/editor/theme/game_theme.tres" id="4_wtlve"]
-[ext_resource type="Script" uid="uid://dpo124xwpder5" path="res://addons/konado/neo/runtime/manager/neo_knd_dialogue_manager.gd" id="5_dmo3m"]
-[ext_resource type="Script" uid="uid://dftovts451lt8" path="res://addons/konado/knd_data/shot/command/knd_command.gd" id="6_eoewf"]
-[ext_resource type="Script" uid="uid://cpi8ftr4aggm7" path="res://addons/konado/knd_data/shot/command/knd_hide_dialogue_box_command.gd" id="7_g6rd5"]
-[ext_resource type="Script" uid="uid://ckk1r8g61jls3" path="res://addons/konado/knd_data/shot/command/knd_timer_command.gd" id="8_nyvk8"]
-[ext_resource type="Script" uid="uid://c1ap43a4bbivs" path="res://addons/konado/knd_data/shot/command/knd_display_dialogue_box_command.gd" id="9_eb46b"]
-[ext_resource type="Script" uid="uid://cmojtpai2iydn" path="res://addons/konado/knd_data/shot/command/knd_display_text_command.gd" id="10_a6wdt"]
+[ext_resource type="Script" uid="uid://dpo124xwpder5" path="res://addons/konado/scripts/dialogue/knd_dialogue_manager.gd" id="5_dmo3m"]
+[ext_resource type="Script" uid="uid://b43741pmwnb8p" path="res://addons/konado/scripts/dialogue/dialogue.gd" id="7_wkmvg"]
 [ext_resource type="Script" uid="uid://bktw5v4hqxfy0" path="res://addons/konado/knd_data/shot/knd_shot.gd" id="11_17ueb"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_1186w"]
@@ -38,34 +34,8 @@ texture = SubResource("GradientTexture2D_m86f6")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1186w"]
 
-[sub_resource type="Resource" id="Resource_1186w"]
-script = ExtResource("7_g6rd5")
-type = 1
-wait_trigger = false
-metadata/_custom_type_script = "uid://cpi8ftr4aggm7"
-
-[sub_resource type="Resource" id="Resource_rkyp2"]
-script = ExtResource("8_nyvk8")
-wait_seconds = 2.0
-type = 17
-wait_trigger = false
-metadata/_custom_type_script = "uid://ckk1r8g61jls3"
-
-[sub_resource type="Resource" id="Resource_v8vx5"]
-script = ExtResource("9_eb46b")
-wait_trigger = false
-metadata/_custom_type_script = "uid://c1ap43a4bbivs"
-
-[sub_resource type="Resource" id="Resource_ppjkd"]
-script = ExtResource("10_a6wdt")
-character_name = "测试"
-dialogue_text = "测试"
-type = 2
-metadata/_custom_type_script = "uid://cmojtpai2iydn"
-
-[sub_resource type="Resource" id="Resource_o7frm"]
+[sub_resource type="Resource" id="Resource_e54me"]
 script = ExtResource("11_17ueb")
-commands = Array[ExtResource("6_eoewf")]([SubResource("Resource_1186w"), SubResource("Resource_rkyp2"), SubResource("Resource_v8vx5"), SubResource("Resource_ppjkd")])
 metadata/_custom_type_script = "uid://bktw5v4hqxfy0"
 
 [node name="KonodoDialogue_Template_1" type="CanvasLayer"]
@@ -322,5 +292,5 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("5_dmo3m")
-current_shot = SubResource("Resource_o7frm")
+shots = Array[ExtResource("11_17ueb")]([SubResource("Resource_e54me")])
 metadata/_custom_type_script = "uid://dpo124xwpder5"
