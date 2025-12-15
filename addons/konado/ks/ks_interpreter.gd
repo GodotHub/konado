@@ -1,16 +1,17 @@
-## Konado脚本解释器
 @tool
-extends Node
+extends RefCounted
 class_name KonadoScriptsInterpreter
+
+## Konado脚本解释器
 
 ## 是否初始化完成
 var is_init: bool = false
 
-# 源脚本路径
+## 源文件脚本路径
 var tmp_path = ""
-# 源脚本行，显示在VSCode中
+## 源文件脚本行，显示在编辑器中
 var tmp_original_line_number = 0
-# 当前脚本行，经过处理后的行
+## 当前脚本行，经过处理后的行
 var tmp_line_number = 0
 var tmp_content_lines = []
 
@@ -42,24 +43,24 @@ var enable_actor_validation: bool = true
 
 # ====================================================== #
 
+
 ## 初始化解释器
-func init_insterpreter(flags: Dictionary[String, Variant]) -> bool:
+func _init(flags: Dictionary[String, Variant]) -> void:
 	is_init = false
 	if flags.has("allow_custom_suffix"):
-		# 验证类型是否正确
 		if flags["allow_custom_suffix"] is not bool:
 			_scripts_debug(tmp_path, tmp_original_line_number, "allow_custom_suffix选项类型错误，应为bool类型")
-			return false
+			return
 		allow_custom_suffix = flags["allow_custom_suffix"] as bool
 	if flags.has("allow_skip_error_line"):
 		if flags["allow_skip_error_line"] is not bool:
 			_scripts_debug(tmp_path, tmp_original_line_number, "allow_skip_error_line选项类型错误，应为bool类型")
-			return false
+			return
 		allow_skip_error_line = flags["allow_skip_error_line"] as bool
 	if flags.has("enable_actor_validation"):
 		if flags["enable_actor_validation"] is not bool:
 			_scripts_debug(tmp_path, tmp_original_line_number, "enable_actor_validation选项类型错误，应为bool类型")
-			return false
+			return
 		enable_actor_validation = flags["enable_actor_validation"] as bool
 		
 	# 提前初始化正则表达式，避免重复编译
@@ -69,11 +70,9 @@ func init_insterpreter(flags: Dictionary[String, Variant]) -> bool:
 	dialogue_metadata_regex = RegEx.new()
 	dialogue_metadata_regex.compile("^(shot_id)\\s+(\\S+)")
 	
-	print("解释器初始化完成" + " " + "flags: " + str(flags))
 	is_init = true
-	return true
-
-
+	print("解释器初始化完成" + " " + "flags: " + str(flags))
+	
 ## 全文解析模式
 func process_scripts_to_data(path: String) -> KND_Shot:
 	if not is_init:

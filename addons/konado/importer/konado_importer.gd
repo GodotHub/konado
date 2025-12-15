@@ -44,13 +44,12 @@ func _get_option_visibility(path, option_name, options) -> bool:
 	return true
 
 func _import(source_file, save_path, options, platform_variants, gen_files) -> Error:
-	var interpreter = KonadoScriptsInterpreter.new()
-
-	interpreter.init_insterpreter({
+	var interpreter = KonadoScriptsInterpreter.new({
 		"allow_custom_suffix": true,
 		"allow_skip_error_line": options["allow_skip_error_line"],
 		"enable_actor_validation": options["enable_actor_validation"]
 	})
+
 	
 	var diadata: KND_Shot = interpreter.process_scripts_to_data(source_file)
 	if diadata == null:
