@@ -18,6 +18,6 @@ If you are interested in the Konado project, feel free to join our QQ Channel gr
 
 QQ Channel Group: https://pd.qq.com/g/GodotHub999/text/707799746
 
-For issue reports or feature suggestions, please submit an issue in the Konado project [repository](https://gitcode.com/godothub/konado/issues).
+For issue reports or feature suggestions, please submit an issue in the Konado project [repository](https://github.com/godothub/konado/issues).
 
 For other inquiries, please email us at: konadoproject@163.com

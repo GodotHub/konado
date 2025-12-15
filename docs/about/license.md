@@ -4,7 +4,7 @@
 
 `Konado` 是一个开源项目，我们希望 `Konado` 能够被更多的人使用，因此我们选择了 `BSD 3-Clause` 许可证。
 
-Konado 遵循 `BSD 3-Clause` 许可证，详细请参考代码仓库 [LICENSE](https://gitcode.com/godothub/konado) 声明。
+Konado 遵循 `BSD 3-Clause` 许可证，详细请参考代码仓库 [LICENSE](https://atomgit.com/godothub/konado) 声明。
 
 ## 声明信息
 

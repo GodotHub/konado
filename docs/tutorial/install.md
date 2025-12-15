@@ -16,7 +16,7 @@
 #### 稳定版（推荐）
 请前往 [Konado 最新版本页面](https://github.com/GodotHub/konado/releases/latest) 下载最新稳定版的插件 ZIP 压缩包。稳定版经过充分验证，稳定性和可靠性更有保障，是生产环境的首选。
 
-为提升中国大陆地区用户的下载体验，推荐使用此优化链接获取资源：[Release链接](https://gitcode.com/godothub/konado/releases)，该链接可有效改善下载速度。
+为提升中国大陆地区用户的下载体验，推荐使用此优化链接获取资源：[Release链接](https://atomgit.com/godothub/konado/releases)，该链接可有效改善下载速度。
 
 
 #### 每日构建版（尝鲜版）

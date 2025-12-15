@@ -22,7 +22,7 @@ The Kona character design for Konado Version 2.0 pays exceptional attention to d
 - **Accessories**: The socks are a highlight of this design—featuring rich, gradient colors with a bold "KONADO" logo on one side (simple and clean, reinforcing brand identity). They are also adorned with vibrant triangular geometric patterns that complement the overall lively style, making the leg lines appear more dynamic. The white shoes are simple and versatile, ensuring the outfit's completeness without stealing the spotlight.
 
 ### Version 1.0
-> Artist: [marukles](https://gitcode.com/marukles)  
+> Artist: [marukles](https://atomgit.com/marukles)  
 > Release Date: 2023-07-22  
 
 <p align="center">
