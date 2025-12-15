@@ -15,7 +15,6 @@ background bg2 wave
 
 background bg1 erase
 
-
 choice "Coffee" coffee_choice "Tea" tea_choice
 
 branch coffee_choice
