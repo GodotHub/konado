@@ -3,8 +3,8 @@ name: Konado Tag Release
 on:
   push:
     tags:
-      - 'v*'  # 匹配所有以v开头的Tag（符合语义化版本规范）
-  workflow_dispatch:  # 保留手动触发，方便测试/紧急发布
+      - 'v*'
+  workflow_dispatch:
 
 env:
   GODOT_VERSION: 4.5.1
@@ -20,107 +20,165 @@ jobs:
       contents: write
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-      with:
-        lfs: true
-        fetch-depth: 0
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+          fetch-depth: 1  # 只拉取最近一次commit
 
-    - name: Setup Godot Export Templates
-      run: |
-        mkdir -v -p ~/.local/share/godot/export_templates/
-        mkdir -v -p ~/.config/
-        mv /root/.config/godot ~/.config/godot
-        mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+      - name: Setup Godot Export Templates
+        run: |
+          mkdir -v -p ~/.local/share/godot/export_templates/
+          mkdir -v -p ~/.config/
+          mv /root/.config/godot ~/.config/godot
+          mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
 
-    - name: Extract project version (from Tag or project.godot)
-      id: get_version
-      run: |
-        # 优先从触发的Tag提取版本（核心修改：适配Tag触发）
-        if [[ "${{ github.event_name }}" == "push" && "${{ github.ref_type }}" == "tag" ]]; then
-          # 从 refs/tags/v1.0.0 中提取 1.0.0
-          TAG_VERSION=$(echo "${{ github.ref }}" | sed 's/refs\/tags\/v//')
-          echo "base_version=$TAG_VERSION" >> $GITHUB_OUTPUT
-          echo "Version extracted from Tag: $TAG_VERSION"
-        elif grep -q '^config/version=' ${{ env.PROJECT_PATH }}/project.godot; then
-          # 备用：从project.godot提取版本
-          BASE_VERSION=$(grep '^config/version=' ${{ env.PROJECT_PATH }}/project.godot | cut -d'=' -f2 | tr -d '" ')
-          echo "base_version=$BASE_VERSION" >> $GITHUB_OUTPUT
-          echo "Version extracted from project.godot: $BASE_VERSION"
-        else
-          exit 1
-        fi
+      - name: Extract project version (from Tag)
+        id: get_version
+        run: |
+          # Tag推送触发，提取Tag版本
+          if [[ "${{ github.event_name }}" == "push" && "${{ github.ref_type }}" == "tag" ]]; then
+              # 健壮解析Tag版本：refs/tags/v2.0.1 → 2.0.1
+              TAG_FULL_NAME=$(echo "${{ github.ref }}" | awk -F '/' '{print $3}')  # 提取 v2.0.1
+              TAG_VERSION=$(echo "$TAG_FULL_NAME" | sed 's/^v//')                # 去掉开头的v → 2.0.1
+              
+              # 严格校验Tag版本格式
+              if [[ -z "$TAG_VERSION" ]]; then
+                  echo "错误：从Tag [$TAG_FULL_NAME] 提取版本失败！"
+                  exit 1
+              fi
+              if ! echo "$TAG_VERSION" | grep -qE '^[0-9]+\.[0-9]+\.[0-9]+(-.+)?$'; then
+                  echo "错误：Tag版本 [$TAG_VERSION] 不符合语义化规范（建议格式：x.y.z 或 x.y.z-beta）"
+                  exit 1
+              fi
 
-    - name: Generate release metadata
-      id: version
-      run: |
-        git config --global --add safe.directory /__w/konado/konado
+              echo "base_version=$TAG_VERSION" >> $GITHUB_OUTPUT
+              echo "tag_full_name=$TAG_FULL_NAME" >> $GITHUB_OUTPUT  # 传递完整Tag名
+              echo "Tag触发：使用Tag版本 → $TAG_VERSION"
+          fi
 
-        # 版本号直接使用Tag中的版本
-        BUILD_VERSION="${{ steps.get_version.outputs.base_version }}"
-        echo "build_version=$BUILD_VERSION" >> $GITHUB_OUTPUT
-        echo "tag_name=v$BUILD_VERSION" >> $GITHUB_OUTPUT
-        echo "release_name=Konado Release $BUILD_VERSION" >> $GITHUB_OUTPUT
-        # 自定义Release描述
-        echo "release_desc=**Official release of Konado $BUILD_VERSION**" >> $GITHUB_OUTPUT
-        echo "plugin_zip=konado-${BUILD_VERSION}.zip" >> $GITHUB_OUTPUT
+      - name: Extract version from project.godot
+        id: get_project_godot_version
+        run: |
+          # 读取project.godot中的版本号
+          PROJECT_GODOT_FILE="${{ env.PROJECT_PATH }}/project.godot"
+          if [[ ! -f "$PROJECT_GODOT_FILE" ]]; then
+              echo "::warning::未找到project.godot文件 → $PROJECT_GODOT_FILE"
+              echo "project_version=unknown" >> $GITHUB_OUTPUT
+              exit 0
+          fi
 
-    - name: Create export presets
-      run: |
-        rm -f ${{ env.PROJECT_PATH }}/export_presets.cfg
-        cat > ${{ env.PROJECT_PATH }}/export_presets.cfg << EOF
-        [preset.0]
-        name="Linux/X11"
-        platform="Linux/X11"
-        runnable=true
-        export_path="build/linux/${{ env.EXPORT_NAME }}-linux.x86_64"
-        
-        [preset.0.options]
-        binary_format/embed_pck=true
-        
-        [preset.1]
-        name="Windows Desktop"
-        platform="Windows Desktop"
-        runnable=true
-        export_path="build/windows/${{ env.EXPORT_NAME }}-windows.exe"
-        
-        [preset.1.options]
-        binary_format/embed_pck=true
-        EOF
+          # 提取version字段值：匹配 version = "x.y.z" 或 version = 'x.y.z'
+          PROJECT_VERSION=$(grep -E '^ *version *= *["'\''][0-9]+\.[0-9]+\.[0-9]+(-.+)?["'\'']' "$PROJECT_GODOT_FILE" | \
+                            sed -E 's/^ *version *= *["'\'']([^"'\'']+)["'\'']/\1/')
 
-    - name: Build for Linux
-      run: |
-        mkdir -v -p build/linux
-        EXPORT_DIR="$(readlink -f build)"
-        cd ${{ env.PROJECT_PATH }}
-        godot --headless --verbose --export-release "Linux/X11" "$EXPORT_DIR/linux/${{ env.EXPORT_NAME }}-linux.x86_64"
+          if [[ -z "$PROJECT_VERSION" ]]; then
+              echo "::warning::未从project.godot中提取到有效版本号"
+              echo "project_version=unknown" >> $GITHUB_OUTPUT
+          else
+              echo "project.godot 版本 → $PROJECT_VERSION"
+              echo "project_version=$PROJECT_VERSION" >> $GITHUB_OUTPUT
+          fi
 
-    - name: Build for Windows
-      run: |
-        mkdir -v -p build/windows
-        EXPORT_DIR="$(readlink -f build)"
-        cd ${{ env.PROJECT_PATH }}
-        godot --headless --verbose --export-release "Windows Desktop" "$EXPORT_DIR/windows/${{ env.EXPORT_NAME }}-windows.exe"
+      - name: Compare Tag version and project.godot version
+        id: compare_versions
+        run: |
+          TAG_VERSION="${{ steps.get_version.outputs.base_version }}"
+          PROJECT_VERSION="${{ steps.get_project_godot_version.outputs.project_version }}"
 
-    - name: Create Plugin Zip
-      run: |
-        mkdir -v -p build/plugins
-        cd addons || exit 1
-        zip -r "../build/plugins/${{ steps.version.outputs.plugin_zip }}" konado
-        cd - || exit 1
-        ls -l build/plugins
+          # 仅在Tag触发时对比版本（手动触发无Tag版本，跳过对比）
+          if [[ -n "$TAG_VERSION" && "$PROJECT_VERSION" != "unknown" ]]; then
+              if [[ "$TAG_VERSION" != "$PROJECT_VERSION" ]]; then
+                  # 核心：生成GitHub Actions醒目警告（会在界面上标黄显示）
+                  echo "::warning::Tag版本 [$TAG_VERSION] 与 project.godot 版本 [$PROJECT_VERSION] 不一致！"
+                  # 补充详细日志，方便排查
+                  echo "详细信息："
+                  echo "  - Tag完整名称：${{ steps.get_version.outputs.tag_full_name }}"
+                  echo "  - 仓库地址：${{ github.repository }}"
+                  echo "  - 触发提交：${{ github.sha }}"
+                  echo "version_mismatch=true" >> $GITHUB_OUTPUT
+              else
+                  echo "Tag版本 [$TAG_VERSION] 与 project.godot 版本 [$PROJECT_VERSION] 一致"
+                  echo "version_mismatch=false" >> $GITHUB_OUTPUT
+              fi
+          else
+              echo "非Tag触发/未提取到project.godot版本，跳过版本对比"
+              echo "version_mismatch=false" >> $GITHUB_OUTPUT
+          fi
 
-    - name: Create GitHub Release
-      uses: softprops/action-gh-release@v1
-      with:
-        tag_name: ${{ steps.version.outputs.tag_name }}
-        name: ${{ steps.version.outputs.release_name }}
-        body: ${{ steps.version.outputs.release_desc }}
-        draft: false
-        prerelease: false
-        generate_release_notes: true
-        files: |
-          build/plugins/${{ steps.version.outputs.plugin_zip }}
-          build/linux/${{ env.EXPORT_NAME }}-linux.x86_64
-          build/windows/${{ env.EXPORT_NAME }}-windows.exe
+      - name: Generate release metadata
+        id: version
+        run: |
+          git config --global --add safe.directory /__w/konado/konado
 
+          # 版本号直接使用Tag中的版本
+          BUILD_VERSION="${{ steps.get_version.outputs.base_version }}"
+          if [[ -z "$BUILD_VERSION" ]]; then
+              BUILD_VERSION="0.0.0-unknown"
+              echo "警告：未从Tag提取到版本 → $BUILD_VERSION"
+          fi
+          echo "build_version=$BUILD_VERSION" >> $GITHUB_OUTPUT
+          echo "tag_name=v$BUILD_VERSION" >> $GITHUB_OUTPUT
+          echo "release_name=Konado Release $BUILD_VERSION" >> $GITHUB_OUTPUT
+          # 自定义Release描述
+          echo "release_desc=**Official release of Konado $BUILD_VERSION**" >> $GITHUB_OUTPUT
+          echo "plugin_zip=konado-${BUILD_VERSION}.zip" >> $GITHUB_OUTPUT
+
+      - name: Create export presets
+        run: |
+          rm -f ${{ env.PROJECT_PATH }}/export_presets.cfg
+          cat > ${{ env.PROJECT_PATH }}/export_presets.cfg << EOF
+          [preset.0]
+          name="Linux/X11"
+          platform="Linux/X11"
+          runnable=true
+          export_path="build/linux/${{ env.EXPORT_NAME }}-linux.x86_64"
+          
+          [preset.0.options]
+          binary_format/embed_pck=true
+          
+          [preset.1]
+          name="Windows Desktop"
+          platform="Windows Desktop"
+          runnable=true
+          export_path="build/windows/${{ env.EXPORT_NAME }}-windows.exe"
+          
+          [preset.1.options]
+          binary_format/embed_pck=true
+          EOF
+
+      - name: Build for Linux
+        run: |
+          mkdir -v -p build/linux
+          EXPORT_DIR="$(readlink -f build)"
+          cd ${{ env.PROJECT_PATH }}
+          godot --headless --verbose --export-release "Linux/X11" "$EXPORT_DIR/linux/${{ env.EXPORT_NAME }}-linux.x86_64"
+
+      - name: Build for Windows
+        run: |
+          mkdir -v -p build/windows
+          EXPORT_DIR="$(readlink -f build)"
+          cd ${{ env.PROJECT_PATH }}
+          godot --headless --verbose --export-release "Windows Desktop" "$EXPORT_DIR/windows/${{ env.EXPORT_NAME }}-windows.exe"
+
+      - name: Create Plugin Zip
+        run: |
+          mkdir -v -p build/plugins
+          cd addons || exit 1
+          zip -r "../build/plugins/${{ steps.version.outputs.plugin_zip }}" konado
+          cd - || exit 1
+          ls -l build/plugins
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ steps.version.outputs.tag_name }}
+          name: ${{ steps.version.outputs.release_name }}
+          body: ${{ steps.version.outputs.release_desc }}
+          draft: false
+          prerelease: false
+          generate_release_notes: true
+          files: |
+            build/plugins/${{ steps.version.outputs.plugin_zip }}
+            build/linux/${{ env.EXPORT_NAME }}-linux.x86_64
+            build/windows/${{ env.EXPORT_NAME }}-windows.exe
