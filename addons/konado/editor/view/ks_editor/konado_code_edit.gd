@@ -113,7 +113,14 @@ func _get_completion_candidates(line: int, line_text: String, current_word: Stri
 				pass
 			elif tokens.size() == 2:
 				# 补全效果类型
-				var effects = ["erase", "blinds", "wave", "fade", "vortex", "none"]
+				var effects = [
+					"erase", 
+					"blinds", 
+					"wave", 
+					"fade", 
+					"vortex",
+					"windmill", 
+					"none"]
 				for effect in effects:
 					candidates.append({
 						"kind": CodeCompletionKind.KIND_CONSTANT,

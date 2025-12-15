@@ -9,18 +9,22 @@ enum BackgroundTransitionEffectsType {
 	BlindsEffect, ## 百叶窗效果
 	WaveEffect, ## 波浪效果
 	ALPHA_FADE_EFFECT, ## ALPHA淡入淡出
-	VORTEX_SWAP_EFFECT ## 极坐标漩涡效果
+	VORTEX_SWAP_EFFECT, ## 极坐标漩涡效果
+	WINDMILL_EFFECT ## 风车
 	}
 	
 ## 当前背景
 var current_texture: Texture = Texture.new()
-## 特效路径
+
+## 特效Shader路径
 var none_effect_shader: Shader = preload("res://addons/konado/shader/bg_trans_effects/none_effect.gdshader")
 var erase_effect_shader: Shader = preload("res://addons/konado/shader/bg_trans_effects/erase_effect.gdshader")
 var blinds_effect_shader: Shader = preload("res://addons/konado/shader/bg_trans_effects/blinds_effect.gdshader")
 var wave_effect_shader: Shader = preload("res://addons/konado/shader/bg_trans_effects/wave_effect.gdshader")
 var alpha_fade_effect_shader: Shader = preload("res://addons/konado/shader/bg_trans_effects/alpha_fade_effect.gdshader")
 var vortex_swap_effect_shader: Shader = preload("res://addons/konado/shader/bg_trans_effects/vortex_swap_effect.gdshader")
+var windmill_effect_shader: Shader = preload("res://addons/konado/shader/bg_trans_effects/windmill_effect.gdshader")
+
 ## 演员字典
 var actor_dict = {}
 ## 角色列表
@@ -139,6 +143,12 @@ func init_transtion_config() -> void:
 		},
 		BackgroundTransitionEffectsType.VORTEX_SWAP_EFFECT: {
 			"shader": vortex_swap_effect_shader,
+			"duration": 1.0,
+			"progress_target": 1.0,
+			"tween_trans": Tween.TRANS_LINEAR
+		},
+		BackgroundTransitionEffectsType.WINDMILL_EFFECT: {
+			"shader": windmill_effect_shader,
 			"duration": 1.0,
 			"progress_target": 1.0,
 			"tween_trans": Tween.TRANS_LINEAR
