@@ -160,7 +160,7 @@ jobs:
     - name: Install GitHub CLI
       run: |
         # 确保安装GitHub CLI（用于操作Release/Tag）
-        type -p gh >/dev/null || (sudo apt update && sudo apt install -y gh)
+        type -p gh >/dev/null || (apt update && apt install -y gh)
 
     - name: Authenticate GitHub CLI
       run: |
