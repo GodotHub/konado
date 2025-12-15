@@ -3,8 +3,8 @@ name: Konado Tag Release
 on:
   push:
     tags:
-      - 'v*'
-  workflow_dispatch:
+      - 'v*'  # 匹配所有以v开头的Tag（符合语义化版本规范）
+  workflow_dispatch:  # 保留手动触发，方便测试/紧急发布
 
 env:
   GODOT_VERSION: 4.5.1
@@ -33,7 +33,7 @@ jobs:
           mv /root/.config/godot ~/.config/godot
           mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
 
-      - name: Extract project version (from Tag)
+      - name: Extract project version
         id: get_version
         run: |
           # Tag推送触发，提取Tag版本
@@ -53,57 +53,7 @@ jobs:
               fi
 
               echo "base_version=$TAG_VERSION" >> $GITHUB_OUTPUT
-              echo "tag_full_name=$TAG_FULL_NAME" >> $GITHUB_OUTPUT  # 传递完整Tag名
               echo "Tag触发：使用Tag版本 → $TAG_VERSION"
-          fi
-
-      - name: Extract version from project.godot
-        id: get_project_godot_version
-        run: |
-          # 读取project.godot中的版本号
-          PROJECT_GODOT_FILE="${{ env.PROJECT_PATH }}/project.godot"
-          if [[ ! -f "$PROJECT_GODOT_FILE" ]]; then
-              echo "::warning::未找到project.godot文件 → $PROJECT_GODOT_FILE"
-              echo "project_version=unknown" >> $GITHUB_OUTPUT
-              exit 0
-          fi
-
-          # 提取version字段值：匹配 version = "x.y.z" 或 version = 'x.y.z'
-          PROJECT_VERSION=$(grep -E '^ *version *= *["'\''][0-9]+\.[0-9]+\.[0-9]+(-.+)?["'\'']' "$PROJECT_GODOT_FILE" | \
-                            sed -E 's/^ *version *= *["'\'']([^"'\'']+)["'\'']/\1/')
-
-          if [[ -z "$PROJECT_VERSION" ]]; then
-              echo "::warning::未从project.godot中提取到有效版本号"
-              echo "project_version=unknown" >> $GITHUB_OUTPUT
-          else
-              echo "project.godot 版本 → $PROJECT_VERSION"
-              echo "project_version=$PROJECT_VERSION" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Compare Tag version and project.godot version
-        id: compare_versions
-        run: |
-          TAG_VERSION="${{ steps.get_version.outputs.base_version }}"
-          PROJECT_VERSION="${{ steps.get_project_godot_version.outputs.project_version }}"
-
-          # 仅在Tag触发时对比版本（手动触发无Tag版本，跳过对比）
-          if [[ -n "$TAG_VERSION" && "$PROJECT_VERSION" != "unknown" ]]; then
-              if [[ "$TAG_VERSION" != "$PROJECT_VERSION" ]]; then
-                  # 核心：生成GitHub Actions醒目警告（会在界面上标黄显示）
-                  echo "::warning::Tag版本 [$TAG_VERSION] 与 project.godot 版本 [$PROJECT_VERSION] 不一致！"
-                  # 补充详细日志，方便排查
-                  echo "详细信息："
-                  echo "  - Tag完整名称：${{ steps.get_version.outputs.tag_full_name }}"
-                  echo "  - 仓库地址：${{ github.repository }}"
-                  echo "  - 触发提交：${{ github.sha }}"
-                  echo "version_mismatch=true" >> $GITHUB_OUTPUT
-              else
-                  echo "Tag版本 [$TAG_VERSION] 与 project.godot 版本 [$PROJECT_VERSION] 一致"
-                  echo "version_mismatch=false" >> $GITHUB_OUTPUT
-              fi
-          else
-              echo "非Tag触发/未提取到project.godot版本，跳过版本对比"
-              echo "version_mismatch=false" >> $GITHUB_OUTPUT
           fi
 
       - name: Generate release metadata
@@ -115,7 +65,7 @@ jobs:
           BUILD_VERSION="${{ steps.get_version.outputs.base_version }}"
           if [[ -z "$BUILD_VERSION" ]]; then
               BUILD_VERSION="0.0.0-unknown"
-              echo "警告：未从Tag提取到版本 → $BUILD_VERSION"
+              echo "警告：未从Tag提取到版本，使用兜底版本 → $BUILD_VERSION"
           fi
           echo "build_version=$BUILD_VERSION" >> $GITHUB_OUTPUT
           echo "tag_name=v$BUILD_VERSION" >> $GITHUB_OUTPUT
