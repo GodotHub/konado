@@ -189,6 +189,10 @@ export default defineConfig({
           {
             text: '开发',
             items: [
+              { text: '核心功能指南', items: [
+                { text: '对话数据', link: '/develop/core/shot-and-dialogue.md'},
+                { Text: '背景切换特效' , link: '/develop/core/bg-trans-effect.md'},
+              ]},
               { text: '版本规划', link: '/develop/roadmap' },
               { text: '代码贡献', link: '/develop/code-contribute' },
               { text: '文档贡献', link: '/develop/doc-contribute' },
