@@ -723,7 +723,7 @@ func on_option_triggered(choice: DialogueChoice) -> void:
 ## TODO：应该需要性能优化
 func _jump_tag(tag: String) -> void:
 	print_rich("跳转到标签： " + str(tag))
-	var target_dialogue: Dialogue = dialog_data.branchs[tag]
+	var target_dialogue: Dialogue = dialog_data.branches[tag]
 	if target_dialogue == null:
 		print("无法完成跳转，没有这个标签")
 		return
