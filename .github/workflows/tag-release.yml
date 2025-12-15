@@ -1,0 +1,126 @@
+name: Konado Tag Release
+
+on:
+  push:
+    tags:
+      - 'v*'  # 匹配所有以v开头的Tag（符合语义化版本规范）
+  workflow_dispatch:  # 保留手动触发，方便测试/紧急发布
+
+env:
+  GODOT_VERSION: 4.5.1
+  EXPORT_NAME: "konado-demo"
+  PROJECT_PATH: "."
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    container:
+      image: barichello/godot-ci:4.5.1
+    permissions:
+      contents: write
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        lfs: true
+        fetch-depth: 0
+
+    - name: Setup Godot Export Templates
+      run: |
+        mkdir -v -p ~/.local/share/godot/export_templates/
+        mkdir -v -p ~/.config/
+        mv /root/.config/godot ~/.config/godot
+        mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+
+    - name: Extract project version (from Tag or project.godot)
+      id: get_version
+      run: |
+        # 优先从触发的Tag提取版本（核心修改：适配Tag触发）
+        if [[ "${{ github.event_name }}" == "push" && "${{ github.ref_type }}" == "tag" ]]; then
+          # 从 refs/tags/v1.0.0 中提取 1.0.0
+          TAG_VERSION=$(echo "${{ github.ref }}" | sed 's/refs\/tags\/v//')
+          echo "base_version=$TAG_VERSION" >> $GITHUB_OUTPUT
+          echo "Version extracted from Tag: $TAG_VERSION"
+        elif grep -q '^config/version=' ${{ env.PROJECT_PATH }}/project.godot; then
+          # 备用：从project.godot提取版本
+          BASE_VERSION=$(grep '^config/version=' ${{ env.PROJECT_PATH }}/project.godot | cut -d'=' -f2 | tr -d '" ')
+          echo "base_version=$BASE_VERSION" >> $GITHUB_OUTPUT
+          echo "Version extracted from project.godot: $BASE_VERSION"
+        else
+          exit 1
+        fi
+
+    - name: Generate release metadata
+      id: version
+      run: |
+        git config --global --add safe.directory /__w/konado/konado
+
+        # 版本号直接使用Tag中的版本
+        BUILD_VERSION="${{ steps.get_version.outputs.base_version }}"
+        echo "build_version=$BUILD_VERSION" >> $GITHUB_OUTPUT
+        echo "tag_name=v$BUILD_VERSION" >> $GITHUB_OUTPUT
+        echo "release_name=Konado Release $BUILD_VERSION" >> $GITHUB_OUTPUT
+        # 自定义Release描述
+        echo "release_desc=**Official release of Konado $BUILD_VERSION**" >> $GITHUB_OUTPUT
+        echo "plugin_zip=konado-${BUILD_VERSION}.zip" >> $GITHUB_OUTPUT
+
+    - name: Create export presets
+      run: |
+        rm -f ${{ env.PROJECT_PATH }}/export_presets.cfg
+        cat > ${{ env.PROJECT_PATH }}/export_presets.cfg << EOF
+        [preset.0]
+        name="Linux/X11"
+        platform="Linux/X11"
+        runnable=true
+        export_path="build/linux/${{ env.EXPORT_NAME }}-linux.x86_64"
+        
+        [preset.0.options]
+        binary_format/embed_pck=true
+        
+        [preset.1]
+        name="Windows Desktop"
+        platform="Windows Desktop"
+        runnable=true
+        export_path="build/windows/${{ env.EXPORT_NAME }}-windows.exe"
+        
+        [preset.1.options]
+        binary_format/embed_pck=true
+        EOF
+
+    - name: Build for Linux
+      run: |
+        mkdir -v -p build/linux
+        EXPORT_DIR="$(readlink -f build)"
+        cd ${{ env.PROJECT_PATH }}
+        godot --headless --verbose --export-release "Linux/X11" "$EXPORT_DIR/linux/${{ env.EXPORT_NAME }}-linux.x86_64"
+
+    - name: Build for Windows
+      run: |
+        mkdir -v -p build/windows
+        EXPORT_DIR="$(readlink -f build)"
+        cd ${{ env.PROJECT_PATH }}
+        godot --headless --verbose --export-release "Windows Desktop" "$EXPORT_DIR/windows/${{ env.EXPORT_NAME }}-windows.exe"
+
+    - name: Create Plugin Zip
+      run: |
+        mkdir -v -p build/plugins
+        cd addons || exit 1
+        zip -r "../build/plugins/${{ steps.version.outputs.plugin_zip }}" konado
+        cd - || exit 1
+        ls -l build/plugins
+
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: ${{ steps.version.outputs.tag_name }}
+        name: ${{ steps.version.outputs.release_name }}
+        body: ${{ steps.version.outputs.release_desc }}
+        draft: false
+        prerelease: false
+        generate_release_notes: true
+        files: |
+          build/plugins/${{ steps.version.outputs.plugin_zip }}
+          build/linux/${{ env.EXPORT_NAME }}-linux.x86_64
+          build/windows/${{ env.EXPORT_NAME }}-windows.exe
+
