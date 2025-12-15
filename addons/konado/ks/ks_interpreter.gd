@@ -305,7 +305,8 @@ func _parse_background(line: String, dialog: Dialogue) -> bool:
 			"wave": ActingInterface.BackgroundTransitionEffectsType.WaveEffect,
 			"fade": ActingInterface.BackgroundTransitionEffectsType.ALPHA_FADE_EFFECT,
 			"vortex": ActingInterface.BackgroundTransitionEffectsType.VORTEX_SWAP_EFFECT,
-			"windmill": ActingInterface.BackgroundTransitionEffectsType.WINDMILL_EFFECT
+			"windmill": ActingInterface.BackgroundTransitionEffectsType.WINDMILL_EFFECT,
+			"cyberglitch": ActingInterface.BackgroundTransitionEffectsType.CYBER_GLITCH_EFFECT
 		}.get(effect, ActingInterface.BackgroundTransitionEffectsType.NONE_EFFECT)
 
 	return true
