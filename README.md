@@ -9,7 +9,11 @@
   <img src="https://img.shields.io/github/forks/godothub/konado?style=flat-square&logo=github&color=blueviolet&logoSize=14" alt="Forks" height="20">
   <img src="https://img.shields.io/github/stars/godothub/konado?style=flat-square&logo=github&color=ffcb2b&logoSize=14" alt="Stars" height="20">
   <img src="https://gitcode.com/godothub/konado/star/badge.svg?style=flat-square&logoSize=14" alt="GitCode Star" height="20">
+  <img src="https://gitcode.com/godothub/konado/star/2025top.svg?style=flat-square&logoSize=14"
+  alt="GitCode Star 2025" height="20">
 </div>
+
+
 
 <br>
 
