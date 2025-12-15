@@ -155,7 +155,7 @@ func process_scripts_to_data(path: String) -> KND_Shot:
 		if dialog:
 			# 如果是标签对话，则添加到标签对话字典中
 			if dialog.dialog_type == Dialogue.Type.Branch:
-				diadata.source_branchs.set(dialog.branch_id, dialog.serialize_to_dict())
+				diadata.source_branches.set(dialog.branch_id, dialog.serialize_to_dict())
 			else:
 				var dialogue_dic: Dictionary = dialog.serialize_to_dict()
 				diadata.dialogues_source_data.append(dialogue_dic)
