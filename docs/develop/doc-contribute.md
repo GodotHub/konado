@@ -17,7 +17,7 @@ git config --global user.email 你的提交邮箱，必须和代码平台账户�
 ```
 
 1. **Fork 项目**：点击右上角 Fork 到自己的仓库  
-2. **克隆仓库**：`git clone https://gitcode.net/your_username/konado.git`  
+2. **克隆仓库**：`git clone`  
 3. **编辑文档**：在 `docs` 目录下找到需要修改的文件，使用 Markdown 语法进行编辑（参考 [Markdown 语法](https://www.markdownguide.org/basic-syntax)）
 4. **提交更改**：`git commit -m "描述你的文档更改"`  
 5. **推送分支**：`git push origin master`

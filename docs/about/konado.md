@@ -18,7 +18,7 @@ Konado Project 开发组是一个由社区驱动的开源项目团队，归属�
 
 QQ频道交流群组：https://pd.qq.com/g/GodotHub999/text/707799746
 
-如有问题反馈或功能建议，欢迎前往Konado的项目[仓库提交 Issue](https://gitcode.com/godothub/konado/issues)
+如有问题反馈或功能建议，欢迎前往Konado的项目[仓库提交 Issue](https://github.com/godothub/konado/issues)
 
 如果是其他问题，欢迎发送邮件至：konadoproject@163.com
 
@@ -49,7 +49,7 @@ QQ频道交流群组：https://pd.qq.com/g/GodotHub999/text/707799746
  </picture>
 
 
-### AtomGit Gitcode Star History
+### AtomGit Star History
 
-![AtomGit Gitcode Star History](https://gitcode.com/godothub/konado/starcharts.svg?variant=adaptive)
+![AtomGit Star History](https://atomgit.com/godothub/konado/starcharts.svg?variant=adaptive)
 

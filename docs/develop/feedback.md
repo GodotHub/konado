@@ -7,7 +7,7 @@
 
 ## 问题反馈  
 
-向官方仓库[提交issue](https://gitcode.com/godothub/konado/issues)，分为以下三种类型：
+向官方仓库[提交issue](https://github.com/godothub/konado/issues)，分为以下三种类型：
 
 - **Bug 报告**：描述问题，需包含重现步骤
 - **功能建议**：在 Issue 区描述需求背景和预期效果
@@ -16,7 +16,7 @@
 
 ## 建议渠道
 
-* [提交issue](https://gitcode.com/godothub/konado/issues) （优先考虑，这样可以方便我们追踪问题）
+* [提交issue](https://github.com/godothub/konado/issues) （优先考虑，这样可以方便我们追踪问题）
 
 * [加群反馈](https://pd.qq.com/g/GodotHub999/text/707799746)
 

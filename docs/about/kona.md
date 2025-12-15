@@ -28,7 +28,7 @@ Konado 2.0版本的Kona形象，在细节刻画上尤为用心，整体造型更
 
 
 ### 1.0 版本
-> 画师：[marukles](https://gitcode.com/marukles)  
+> 画师：[marukles](https://atomgit.com/marukles)  
 > 发布时间：2023-07-22
 
 <p align="center">

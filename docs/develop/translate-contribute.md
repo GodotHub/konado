@@ -24,7 +24,7 @@
 - 韩语（ko）
 - 德语（de）
 
-详细请编辑 [i18n.csv](https://gitcode.com/godothub/konado/blob/master/addons/konado/i18n/i18n.csv) 文件，并提交PR到项目中。
+详细请编辑 `i18n.csv` 文件，并提交PR到项目中。
 
 详细请参考[代码贡献指南](./code-contribute.md)。
 

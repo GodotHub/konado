@@ -10,12 +10,7 @@
 - [putyk](https://github.com/putyk)
 - [moluopro](https://github.com/moluopro)
 
-## 项目参与者
+## 项目贡献者
 
-- [Fang_Chu](https://github.com/fangchudark)
-- [ioniccrystal](https://github.com/ioniccrystal)
-- [marukles](https://gitcode.com/marukles)
-- [Kamiki_](https://github.com/Kamiki1974)
-- [gezigezi123](https://gitcode.com/gezigezi123)
-- [ProgrammerMao](https://github.com/ProgrammerMao)
-- [lgyxj](https://gitee.com/lgyxj)
+
+

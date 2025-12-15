@@ -8,13 +8,10 @@
   <img src="https://img.shields.io/github/last-commit/godothub/konado.svg?style=flat-square&logo=github&logoSize=14" alt="Last Commit" height="20">
   <img src="https://img.shields.io/github/forks/godothub/konado?style=flat-square&logo=github&color=blueviolet&logoSize=14" alt="Forks" height="20">
   <img src="https://img.shields.io/github/stars/godothub/konado?style=flat-square&logo=github&color=ffcb2b&logoSize=14" alt="Stars" height="20">
-  <img src="https://gitcode.com/godothub/konado/star/badge.svg?style=flat-square&logoSize=14" alt="GitCode Star" height="20">
-  <img src="https://gitcode.com/godothub/konado/star/2025top.svg?style=flat-square&logoSize=14"
-  alt="GitCode Star 2025" height="20">
+  <img src="https://atomgit.com/godothub/konado/star/badge.svg?style=flat-square&logoSize=14" alt="AtomGit GStar" height="20">
+  <img src="https://atomgit.com/godothub/konado/star/2025top.svg?style=flat-square&logoSize=14"
+  alt="AtomGit GStar 2025" height="20">
 </div>
-
-
-
 <br>
 
 <div align="center" style="border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);">
