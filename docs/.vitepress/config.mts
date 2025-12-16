@@ -205,6 +205,7 @@ export default defineConfig({
             items: [
               { text: '关于Konado', link: '/about/konado' },
               { text: '看板娘Kona', link: '/about/kona' },
+              { text: '海报', link: '/about/banner' },
               { text: '许可证', link: '/about/license' },
               { text: '鸣谢', link: '/about/thanks' }
             ]
