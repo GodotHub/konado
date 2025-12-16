@@ -6,7 +6,7 @@ Konado的.NET API，用于在Godot C#项目中使用Konado API来控制Konado对
 
 ## 依赖
 
-- Godot 4.4.1 C# 版本
+- Godot 4.5.1 C# 版本
 - .NET 8.0 SDK
 - Konado
 

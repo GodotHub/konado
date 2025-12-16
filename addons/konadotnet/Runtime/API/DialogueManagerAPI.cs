@@ -9,14 +9,73 @@ using System.Collections.Generic;
 public sealed partial class DialogueManagerAPI : Node
 {
     private Node _source;
+    
+    public bool IsReady = false;
+    
     public override void _Ready()
     {
-        _source = GetNodeOrNull("/root/KonadoSample/DialogManager");
-        if (_source == null)
-        {
-            GD.PrintErr("未找到对话管理器节点。请确保已安装 Konado 插件，并且已初始化对话管理器节点。");
-            return;
-        }
+	    _source = GetNodeOrNull("/root/KonadoSample/DialogManager");
+	    
+	    if (_source == null)
+	    {
+		    GD.Print("指定路径未找到DialogManager，尝试遍历场景树查找...");
+
+		    var konadoSampleNode = FindNodeInTree(GetTree().Root, "KonadoSample");
+		    if (konadoSampleNode != null)
+		    {
+			    _source = konadoSampleNode.GetNodeOrNull("DialogManager");
+		    }
+		    
+		    if (_source == null)
+		    {
+			    _source = FindNodeInTree(GetTree().Root, "DialogManager");
+		    }
+		    
+		    if (_source == null)
+		    {
+			    GD.PrintErr("未找到对话管理器节点。请确保已安装 Konado 插件，并且已初始化对话管理器节点。");
+			    return;
+		    }
+            
+		    GD.Print($"成功通过遍历找到DialogManager节点：{_source.GetPath()}");
+		    
+		    IsReady =  true;
+	    }
+	    else
+	    {
+		    GD.Print("成功通过指定路径找到DialogManager节点");
+
+		    IsReady = true;
+	    }
+    }
+
+    /// <summary>
+    /// 递归遍历场景树查找指定名称的节点
+    /// </summary>
+    /// <param name="currentNode">当前遍历的节点</param>
+    /// <param name="targetName">目标节点名称</param>
+    /// <returns>找到的节点（未找到返回null）</returns>
+    private Node FindNodeInTree(Node currentNode, string targetName)
+    {
+	    if (currentNode == null) return null;
+
+	    // 匹配当前节点名称
+	    if (currentNode.Name == targetName)
+	    {
+		    return currentNode;
+	    }
+
+	    // 递归遍历子节点
+	    foreach (Node child in currentNode.GetChildren())
+	    {
+		    Node foundNode = FindNodeInTree(child, targetName);
+		    if (foundNode != null)
+		    {
+			    return foundNode;
+		    }
+	    }
+
+	    return null;
     }
 
 
@@ -75,7 +134,7 @@ public sealed partial class DialogueManagerAPI : Node
         
     }
 
-    public delegate void DialogueLineStartSignalHandler(long line);
+    public delegate void DialogueLineStartSignalHandler(int line);
     private DialogueLineStartSignalHandler _dialogueLineStartSignal;
     private Callable _dialogueLineStartSignalCallable;
     public event DialogueLineStartSignalHandler DialogueLineStart
@@ -84,7 +143,7 @@ public sealed partial class DialogueManagerAPI : Node
         {
             if (_dialogueLineStartSignal is null)
             {
-                _dialogueLineStartSignalCallable = Callable.From((long line) => _dialogueLineStartSignal?.Invoke(line));
+                _dialogueLineStartSignalCallable = Callable.From((int line) => _dialogueLineStartSignal?.Invoke(line));
                 _source.Connect(GDScriptSignalName.DialogueLineStart, _dialogueLineStartSignalCallable);
             }
             _dialogueLineStartSignal += value;
@@ -98,7 +157,7 @@ public sealed partial class DialogueManagerAPI : Node
         }
     }
 
-    public delegate void DialogueLineEndSignalHandler(long line);
+    public delegate void DialogueLineEndSignalHandler(int line);
     private DialogueLineEndSignalHandler _dialogueLineEndSignal;
     private Callable _dialogueLineEndSignalCallable;
     public event DialogueLineEndSignalHandler DialogueLineEnd
@@ -107,7 +166,7 @@ public sealed partial class DialogueManagerAPI : Node
         {
             if (_dialogueLineEndSignal is null)
             {
-                _dialogueLineEndSignalCallable = Callable.From((long line) => _dialogueLineEndSignal?.Invoke(line));
+                _dialogueLineEndSignalCallable = Callable.From((int line) => _dialogueLineEndSignal?.Invoke(line));
                 _source.Connect(GDScriptSignalName.DialogueLineEnd, _dialogueLineEndSignalCallable);
             }
             _dialogueLineEndSignal += value;

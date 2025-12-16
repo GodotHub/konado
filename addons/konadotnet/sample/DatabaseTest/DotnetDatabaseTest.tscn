@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://da6v4kxgrc6o7"]
-
-[ext_resource type="Script" uid="uid://chuqjwqmx7rrg" path="res://addons/konadotnet/sample/DatabaseTest.cs" id="1_u01a1"]
-
-[node name="DotnetDatabaseTest" type="Node"]
-script = ExtResource("1_u01a1")

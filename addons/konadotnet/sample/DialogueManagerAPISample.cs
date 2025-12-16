@@ -1,41 +1,58 @@
 using Godot;
 using System;
+using Godot.Collections;
 using Konado.Runtime.API;
-
+using Konado.Wrapper;
 using static Konado.Runtime.API.KonadoAPI;
+
+/// <summary>
+/// 这个是DialogueManagerAPI的使用示例
+/// </summary>
 public partial class DialogueManagerAPISample : Node
 {
-    public override void _Ready()
-    {
-        DialogueManager.ShotStart += () =>
-        {
-            GD.Print("Shot Start");
-        };
+	public override void _Ready()
+	{
+		var interpreter = KonadoScriptsInterpreter.Instantiate(new Dictionary<string, Variant>());
+		var shot = interpreter.ProcessScriptsToData("res://sample/demo/demo.ks");
+		GD.Print(shot.DialoguesSourceData);
+		
+		if (DialogueManagerApi.IsReady)
+		{
+			GD.Print("Ready");
+			
+			_StartDialogue();
+		}
+	}
+	
+	private void _StartDialogue()
+	{
+		DialogueManagerApi.ShotStart += () =>
+		{
+			GD.Print("Shot Start");
+		};
 
-        DialogueManager.ShotEnd += () =>
-        {
-            GD.Print("Shot End");
-        };
-        DialogueManager.DialogueLineStart += (int index) =>
-        {
-            GD.Print(index);
-        };
-        DialogueManager.DialogueLineEnd += (int index) =>
-        {
-            GD.Print(index);
-        };
+		DialogueManagerApi.ShotEnd += () =>
+		{
+			GD.Print("Shot End");
+		};
+		DialogueManagerApi.DialogueLineStart += (int index) =>
+		{
+			GD.Print(index);
+		};
+		DialogueManagerApi.DialogueLineEnd += (int index) =>
+		{
+			GD.Print(index);
+		};
 
-        // 等待1秒
-        if (API.IsApiReady)
-        {
-            GD.Print("API Ready");
+		// 等待1秒
+		if (API.IsApiReady)
+		{
+			GD.Print("API Ready");
 
-            DialogueManager.InitDialogue();
-            DialogueManager.StartDialogue();
-            //DialogueManagerAPI.Instance.LoadDialogueShot("res://sample/sample_lists/storys/test.ks");
-        }
-
-
-    }
+			DialogueManagerApi.InitDialogue();
+			DialogueManagerApi.StartDialogue();
+			//DialogueManagerAPI.Instance.LoadDialogueShot("res://sample/sample_lists/storys/test.ks");
+		}
+	}
 
 }
