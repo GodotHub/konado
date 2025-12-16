@@ -8,13 +8,6 @@ on:
     paths:
       - "docs/**"
       - ".github/workflows/build-docs.yaml"
-  pull_request:
-    branches:
-      - main
-      - master
-    paths:
-      - "docs/**"
-      - ".github/workflows/build-docs.yaml"
   workflow_dispatch: {}
 
 permissions:
