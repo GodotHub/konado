@@ -59,7 +59,7 @@ Konado 是一个视觉小说引擎框架，提供多种对话模板以及对话�
 
 ## 项目贡献者
 
-贡献者名单请查看 [AUTHORS.md](./AUTHORS)。
+贡献者名单请查看 [AUTHORS.md](./AUTHORS.md)。
 
 
 ## 开源许可证
