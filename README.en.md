@@ -51,7 +51,7 @@ This project adheres to our [Code of Conduct](./CODE_OF_CONDUCT.md). By particip
 
 ## Contributors
 
-A complete list of contributors can be found in [AUTHORS.md](./AUTHORS).
+A complete list of contributors can be found in [AUTHORS.md](./AUTHORS.md).
 
 ## Open Source License
 
