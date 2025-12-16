@@ -8,27 +8,29 @@ namespace Konado.Wrapper;
 
 public partial class Dialogue : Resource
 {
-    private static CSharpScript _wrapperScriptAsset;
+    private static GDScript _sourceScript;
     private const string SourceScriptPath = "res://addons/konado/scripts/dialogue/dialogue.gd";
+    private GodotObject _source;
 
-    protected Dialogue() { }
-
-    public new static Dialogue Bind(GodotObject godotObject)
+    public Dialogue(GodotObject source)
     {
-        if (godotObject is Dialogue instance)
-            return instance;
-
-        if (_wrapperScriptAsset is null)
+        if (source is null || !IsInstanceValid(source))
         {
-            var scriptPathAttribute = typeof(Dialogue).GetCustomAttributes<ScriptPathAttribute>().FirstOrDefault()
-                ?? throw new System.InvalidOperationException();
-
-            _wrapperScriptAsset = ResourceLoader.Load<CSharpScript>(scriptPathAttribute.Path);
+            throw new System.InvalidOperationException("Source object is not valid!");
+        }
+        
+        if (!ResourceLoader.Exists(SourceScriptPath))
+        {
+            throw new System.InvalidOperationException("Source script not found!");
         }
 
-        var instanceId = godotObject.GetInstanceId();
-        godotObject.SetScript(_wrapperScriptAsset);
-        return (Dialogue)InstanceFromId(instanceId);
+        _sourceScript ??= ResourceLoader.Load<GDScript>(SourceScriptPath);
+        if (source.GetScript().As<GDScript>() != _sourceScript)
+        {
+            throw new System.InvalidOperationException("Source Object is not a valid source!");
+        }
+
+        _source = source;
     }
 
     /// <summary>
@@ -36,14 +38,15 @@ public partial class Dialogue : Resource
     /// </summary>
     /// <returns></returns>
     /// <exception cref="System.InvalidOperationException"></exception>
-    public new static Dialogue Instantiate()
+    public Dialogue()
     {
         if (!ResourceLoader.Exists(SourceScriptPath))
         {
             throw new System.InvalidOperationException("Source script not found!");
         }
 
-        return Bind(ResourceLoader.Load<GDScript>(SourceScriptPath).New().AsGodotObject());
+        _sourceScript ??= ResourceLoader.Load<GDScript>(SourceScriptPath);
+        _source = _sourceScript.New().AsGodotObject();
     }
 
     public enum Type
@@ -93,120 +96,120 @@ public partial class Dialogue : Resource
 
     public new Type DialogueType
     {
-        set => Set(GDScriptPropertyName.DialogType, (int)value);
+        set => _source.Set(GDScriptPropertyName.DialogType, (int)value);
     }
 
     public new string BranchId
     {
-        get => Get(GDScriptPropertyName.BranchId).As<string>();
-        set => Set(GDScriptPropertyName.BranchId, value);
+        get => _source.Get(GDScriptPropertyName.BranchId).As<string>();
+        set => _source.Set(GDScriptPropertyName.BranchId, value);
     }
 
     public new Godot.Collections.Array<Dialogue> BranchDialogue
     {
-        get => new(Get(GDScriptPropertyName.BranchDialogue).As<Godot.Collections.Array<Resource>>().Select(Bind));
-        set => Set(GDScriptPropertyName.BranchDialogue, value);
+        get => new(_source.Get(GDScriptPropertyName.BranchDialogue).As<Godot.Collections.Array<Resource>>().Select(r => new Dialogue(r)));
+        set => _source.Set(GDScriptPropertyName.BranchDialogue, value);
     }
 
     public new bool IsBranchLoaded
     {
-        get => Get(GDScriptPropertyName.IsBranchLoaded).As<bool>();
-        set => Set(GDScriptPropertyName.IsBranchLoaded, value);
+        get => _source.Get(GDScriptPropertyName.IsBranchLoaded).As<bool>();
+        set => _source.Set(GDScriptPropertyName.IsBranchLoaded, value);
     }
 
     public new string CharacterId
     {
-        get => Get(GDScriptPropertyName.CharacterId).As<string>();
-        set => Set(GDScriptPropertyName.CharacterId, value);
+        get => _source.Get(GDScriptPropertyName.CharacterId).As<string>();
+        set => _source.Set(GDScriptPropertyName.CharacterId, value);
     }
 
     public new string DialogueContent
     {
-        get => Get(GDScriptPropertyName.DialogueContent).As<string>();
-        set => Set(GDScriptPropertyName.DialogueContent, value);
+        get => _source.Get(GDScriptPropertyName.DialogueContent).As<string>();
+        set => _source.Set(GDScriptPropertyName.DialogueContent, value);
     }
 
     public new DialogueActor ShowActor
     {
-        get => DialogueActor.Bind(Get(GDScriptPropertyName.ShowActor).As<Resource>());
-        set => Set(GDScriptPropertyName.ShowActor, value);
+        get => new(_source.Get(GDScriptPropertyName.ShowActor).As<Resource>());
+        set => _source.Set(GDScriptPropertyName.ShowActor, value);
     }
 
     public new string ExitActor
     {
-        get => Get(GDScriptPropertyName.ExitActor).As<string>();
-        set => Set(GDScriptPropertyName.ExitActor, value);
+        get => _source.Get(GDScriptPropertyName.ExitActor).As<string>();
+        set => _source.Set(GDScriptPropertyName.ExitActor, value);
     }
 
     public string ChangeStateActor
     {
-        get => Get(GDScriptPropertyName.ChangeStateActor).As<string>();
-        set => Set(GDScriptPropertyName.ChangeStateActor, value);
+        get => _source.Get(GDScriptPropertyName.ChangeStateActor).As<string>();
+        set => _source.Set(GDScriptPropertyName.ChangeStateActor, value);
     }
 
     public string TargetMoveChara
     {
-        get => Get(GDScriptPropertyName.TargetMoveChara).As<string>();
-        set => Set(GDScriptPropertyName.TargetMoveChara, value);
+        get => _source.Get(GDScriptPropertyName.TargetMoveChara).As<string>();
+        set => _source.Set(GDScriptPropertyName.TargetMoveChara, value);
     }
 
     public Vector2 TargetMovePos
     {
-        get => Get(GDScriptPropertyName.TargetMovePos).As<Vector2>();
-        set => Set(GDScriptPropertyName.TargetMovePos, value);
+        get => _source.Get(GDScriptPropertyName.TargetMovePos).As<Vector2>();
+        set => _source.Set(GDScriptPropertyName.TargetMovePos, value);
     }
 
     public Godot.Collections.Array<DialogueChoice> Choices
     {
-        get => new(Get(GDScriptPropertyName.Choices).As<Godot.Collections.Array<Resource>>().Select(DialogueChoice.Bind));
-        set => Set(GDScriptPropertyName.Choices, value);
+        get => new(_source.Get(GDScriptPropertyName.Choices).As<Godot.Collections.Array<Resource>>().Select(r => new DialogueChoice(r)));
+        set => _source.Set(GDScriptPropertyName.Choices, value);
     }
 
     public new string BgmName
     {
-        get => Get(GDScriptPropertyName.BgmName).As<string>();
-        set => Set(GDScriptPropertyName.BgmName, value);
+        get => _source.Get(GDScriptPropertyName.BgmName).As<string>();
+        set => _source.Set(GDScriptPropertyName.BgmName, value);
     }
 
     public new string VoiceId
     {
-        get => Get(GDScriptPropertyName.VoiceId).As<string>();
-        set => Set(GDScriptPropertyName.VoiceId, value);    
+        get => _source.Get(GDScriptPropertyName.VoiceId).As<string>();
+        set => _source.Set(GDScriptPropertyName.VoiceId, value);    
     }
 
     public new string SoundeffectName
     {
-        get => Get(GDScriptPropertyName.SoundeffectName).As<string>();
-        set => Set(GDScriptPropertyName.SoundeffectName, value);
+        get => _source.Get(GDScriptPropertyName.SoundeffectName).As<string>();
+        set => _source.Set(GDScriptPropertyName.SoundeffectName, value);
     }
 
     public new string BackgroundImageName
     {
-        get => Get(GDScriptPropertyName.BackgroundImageName).As<string>();
-        set => Set(GDScriptPropertyName.BackgroundImageName, value);
+        get => _source.Get(GDScriptPropertyName.BackgroundImageName).As<string>();
+        set => _source.Set(GDScriptPropertyName.BackgroundImageName, value);
     }
 
     public new ActingInterface.BackgroundTransitionEffectsType BackgroundToggleEffects
     {
-        get => Get(GDScriptPropertyName.BackgroundToggleEffects).As<ActingInterface.BackgroundTransitionEffectsType>();
-        set => Set(GDScriptPropertyName.BackgroundToggleEffects, (int)value);
+        get => _source.Get(GDScriptPropertyName.BackgroundToggleEffects).As<ActingInterface.BackgroundTransitionEffectsType>();
+        set => _source.Set(GDScriptPropertyName.BackgroundToggleEffects, (int)value);
     }
 
     public new string JumpShotId
     {
-        get => Get(GDScriptPropertyName.JumpShotId).As<string>();
-        set => Set(GDScriptPropertyName.JumpShotId, value);
+        get => _source.Get(GDScriptPropertyName.JumpShotId).As<string>();
+        set => _source.Set(GDScriptPropertyName.JumpShotId, value);
     }
 
     public new string LabelNotes
     {
-        get => Get(GDScriptPropertyName.LabelNotes).As<string>();
-        set => Set(GDScriptPropertyName.LabelNotes, value);
+        get => _source.Get(GDScriptPropertyName.LabelNotes).As<string>();
+        set => _source.Set(GDScriptPropertyName.LabelNotes, value);
     }
 
     public new Godot.Collections.Dictionary ActorSnapshots
     {
-        get => Get(GDScriptPropertyName.ActorSnapshots).As<Godot.Collections.Dictionary>();
-        set => Set(GDScriptPropertyName.ActorSnapshots, value);
+        get => _source.Get(GDScriptPropertyName.ActorSnapshots).As<Godot.Collections.Dictionary>();
+        set => _source.Set(GDScriptPropertyName.ActorSnapshots, value);
     }
 }

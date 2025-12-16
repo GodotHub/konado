@@ -7,27 +7,30 @@ namespace Konado.Wrapper;
 
 public partial class KndShot : KndData
 {
-    private static CSharpScript _wrapperScriptAsset;
+    private static GDScript _sourceScript;
     private const string SourceScriptPath = "res://addons/konado/knd_data/shot/knd_shot.gd";
+    private GodotObject _source;
 
-    protected KndShot() { }
 
-    public new static KndShot Bind(GodotObject godotObject)
+    public KndShot(GodotObject source)
     {
-        if (godotObject is KndShot instance)
-            return instance;
-
-        if (_wrapperScriptAsset is null)
+        if (source is null || !IsInstanceValid(source))
         {
-            var scriptPathAttribute = typeof(KndShot).GetCustomAttributes<ScriptPathAttribute>().FirstOrDefault()
-                ?? throw new System.InvalidOperationException();
-
-            _wrapperScriptAsset = ResourceLoader.Load<CSharpScript>(scriptPathAttribute.Path);
+            throw new System.InvalidOperationException("Source object is not valid!");
+        }
+       
+        if (!ResourceLoader.Exists(SourceScriptPath))
+        {
+            throw new System.InvalidOperationException("Source script not found!");
         }
 
-        var instanceId = godotObject.GetInstanceId();
-        godotObject.SetScript(_wrapperScriptAsset);
-        return (KndShot)InstanceFromId(instanceId);
+        _sourceScript ??= ResourceLoader.Load<GDScript>(SourceScriptPath);
+        if (source.GetScript().As<GDScript>() != _sourceScript)
+        {
+            throw new System.InvalidOperationException("Source Object is not a valid source!");
+        }
+
+        _source = source;
     }
 
     /// <summary>
@@ -35,14 +38,15 @@ public partial class KndShot : KndData
     /// </summary>
     /// <returns></returns>
     /// <exception cref="System.InvalidOperationException"></exception>
-    public new static KndShot Instantiate()
+    public KndShot()
     {
         if (!ResourceLoader.Exists(SourceScriptPath))
         {
             throw new System.InvalidOperationException("Source script not found!");
         }
 
-        return Bind(ResourceLoader.Load<GDScript>(SourceScriptPath).New().AsGodotObject());
+        _sourceScript ??= ResourceLoader.Load<GDScript>(SourceScriptPath);
+        _source = _sourceScript.New().AsGodotObject();
     }
 
     public new static class GDScriptPropertyName
@@ -59,43 +63,43 @@ public partial class KndShot : KndData
 
     public new string Name
     {
-        get => Get(GDScriptPropertyName.Name).As<string>();
-        set => Set(GDScriptPropertyName.Name, value);
+        get => _source.Get(GDScriptPropertyName.Name).As<string>();
+        set => _source.Set(GDScriptPropertyName.Name, value);
     }
 
     public new string ShotId
     {
-        get => Get(GDScriptPropertyName.ShotId).As<string>();
-        set => Set(GDScriptPropertyName.ShotId, value);
+        get => _source.Get(GDScriptPropertyName.ShotId).As<string>();
+        set => _source.Set(GDScriptPropertyName.ShotId, value);
     }
 
     public new string SourceStory
     {
-        get => Get(GDScriptPropertyName.SourceStory).As<string>();
-        set => Set(GDScriptPropertyName.SourceStory, value);
+        get => _source.Get(GDScriptPropertyName.SourceStory).As<string>();
+        set => _source.Set(GDScriptPropertyName.SourceStory, value);
     }
 
     public new Godot.Collections.Array<Godot.Collections.Dictionary> DialoguesSourceData
     {
-        get => Get(GDScriptPropertyName.DialoguesSourceData).AsGodotArray<Godot.Collections.Dictionary>();
-        set => Set(GDScriptPropertyName.DialoguesSourceData, value);
+        get => _source.Get(GDScriptPropertyName.DialoguesSourceData).AsGodotArray<Godot.Collections.Dictionary>();
+        set => _source.Set(GDScriptPropertyName.DialoguesSourceData, value);
     }
 
     public new Godot.Collections.Dictionary Branches
     {
-        get => Get(GDScriptPropertyName.Branches).As<Godot.Collections.Dictionary>();
-        set => Set(GDScriptPropertyName.Branches, value);
+        get => _source.Get(GDScriptPropertyName.Branches).As<Godot.Collections.Dictionary>();
+        set => _source.Set(GDScriptPropertyName.Branches, value);
     }
 
     public new Godot.Collections.Dictionary<string, Godot.Collections.Dictionary> SourceBranches
     {
-        get => Get(GDScriptPropertyName.SourceBranches).As<Godot.Collections.Dictionary<string, Godot.Collections.Dictionary>>();
-        set => Set(GDScriptPropertyName.SourceBranches, value);
+        get => _source.Get(GDScriptPropertyName.SourceBranches).As<Godot.Collections.Dictionary<string, Godot.Collections.Dictionary>>();
+        set => _source.Set(GDScriptPropertyName.SourceBranches, value);
     }
 
     public new Godot.Collections.Dictionary<string, int> ActorCharacterMap
     {
-        get => Get(GDScriptPropertyName.ActorCharacterMap).As<Godot.Collections.Dictionary<string, int>>();
-        set => Set(GDScriptPropertyName.ActorCharacterMap, value);
+        get => _source.Get(GDScriptPropertyName.ActorCharacterMap).As<Godot.Collections.Dictionary<string, int>>();
+        set => _source.Set(GDScriptPropertyName.ActorCharacterMap, value);
     }    
 }

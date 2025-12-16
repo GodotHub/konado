@@ -6,29 +6,10 @@ using Godot;
 namespace Konado.Wrapper;
 
 public sealed partial class KonadoScriptsInterpreter : RefCounted
-{
-    private static CSharpScript _wrapperScriptAsset;
+{    
+    private static GDScript _sourceScript;
     private const string SourceScriptPath = "res://addons/konado/ks/ks_interpreter.gd";
-
-    private KonadoScriptsInterpreter() { }
-
-    public new static KonadoScriptsInterpreter Bind(GodotObject godotObject)
-    {
-        if (godotObject is KonadoScriptsInterpreter instance)
-            return instance;
-
-        if (_wrapperScriptAsset is null)
-        {
-            var scriptPathAttribute = typeof(KonadoScriptsInterpreter).GetCustomAttributes<ScriptPathAttribute>().FirstOrDefault()
-                ?? throw new System.InvalidOperationException();
-
-            _wrapperScriptAsset = ResourceLoader.Load<CSharpScript>(scriptPathAttribute.Path);
-        }
-
-        var instanceId = godotObject.GetInstanceId();
-        godotObject.SetScript(_wrapperScriptAsset);
-        return (KonadoScriptsInterpreter)InstanceFromId(instanceId);
-    }
+    private GodotObject _source;
 
     /// <summary>
     /// Create a new instance of the <see cref="KonadoScriptsInterpreter"/> class.
@@ -36,14 +17,36 @@ public sealed partial class KonadoScriptsInterpreter : RefCounted
     /// <param name="flags"></param>
     /// <returns></returns>
     /// <exception cref="System.InvalidOperationException"></exception>
-    public new static KonadoScriptsInterpreter Instantiate(Godot.Collections.Dictionary<string, Variant> flags)
+    public KonadoScriptsInterpreter(Godot.Collections.Dictionary<string, Variant> flags)
     {
         if (!ResourceLoader.Exists(SourceScriptPath))
         {
             throw new System.InvalidOperationException("Source script not found!");
         }
 
-        return Bind(ResourceLoader.Load<GDScript>(SourceScriptPath).New(flags).AsGodotObject());
+        _sourceScript ??= ResourceLoader.Load<GDScript>(SourceScriptPath);
+        _source = _sourceScript.New(flags).AsGodotObject();
+    }
+
+    public KonadoScriptsInterpreter(GodotObject source)
+    {
+        if (source is null || !IsInstanceValid(source))
+        {
+            throw new System.InvalidOperationException("Source object is not valid!");
+        }
+       
+        if (!ResourceLoader.Exists(SourceScriptPath))
+        {
+            throw new System.InvalidOperationException("Source script not found!");
+        }
+
+        _sourceScript ??= ResourceLoader.Load<GDScript>(SourceScriptPath);
+        if (source.GetScript().As<GDScript>() != _sourceScript)
+        {
+            throw new System.InvalidOperationException("Source Object is not a valid source!");
+        }
+
+        _source = source;
     }
 
     public new static class GDScriptMethodName
@@ -53,9 +56,9 @@ public sealed partial class KonadoScriptsInterpreter : RefCounted
     }
 
     public KndShot ProcessScriptsToData(string path)
-        => KndShot.Bind(Call(GDScriptMethodName.ProcessScriptsToData, [path]).As<Resource>());
+        => new (_source.Call(GDScriptMethodName.ProcessScriptsToData, [path]).As<Resource>());
 
     public Dialogue ParseSingleLine(string line, long lineNumber, string path)
-        => Dialogue.Bind(Call(GDScriptMethodName.ParseSingleLine, [line, lineNumber, path]).As<Resource>());
+        => new (_source.Call(GDScriptMethodName.ParseSingleLine, [line, lineNumber, path]).As<Resource>());
 
 }
