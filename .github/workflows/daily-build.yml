@@ -97,6 +97,7 @@ jobs:
         echo "release_name=Konado Daily Build $BUILD_VERSION" >> $GITHUB_OUTPUT
         echo "release_desc=**This is a daily build of Konado, built on $BUILD_DATE. Please don't use this version for production.**" >> $GITHUB_OUTPUT
         echo "plugin_zip=konado-${BUILD_VERSION}.zip" >> $GITHUB_OUTPUT
+        echo "plugin_dotnet_zip=konadotnet-${BUILD_VERSION}.zip" >> $GITHUB_OUTPUT
 
     - name: Create export presets
       run: |
@@ -140,6 +141,7 @@ jobs:
         mkdir -v -p build/plugins
         cd addons || exit 1
         zip -r "../build/plugins/${{ steps.version.outputs.plugin_zip }}" konado
+        zip -r "../build/plugins/${{ steps.version.outputs.plugin_dotnet_zip }}" konadotnet
         cd - || exit 1
         ls -l build/plugins
 
@@ -154,6 +156,7 @@ jobs:
         generate_release_notes: false
         files: |
           build/plugins/${{ steps.version.outputs.plugin_zip }}
+          build/plugins/${{ steps.version.outputs.plugin_dotnet_zip }}
           build/linux/${{ env.EXPORT_NAME }}-linux.x86_64
           build/windows/${{ env.EXPORT_NAME }}-windows.exe
 
