@@ -156,6 +156,7 @@ jobs:
         generate_release_notes: false
         files: |
           build/plugins/${{ steps.version.outputs.plugin_zip }}
+          build/plugins/${{ steps.version.outputs.plugin_dotnet_zip }}
           build/linux/${{ env.EXPORT_NAME }}-linux.x86_64
           build/windows/${{ env.EXPORT_NAME }}-windows.exe
 
