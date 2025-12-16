@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
+namespace Konado.Runtime.API;
 
 /// <summary>
 /// Konado DialogueManager C# API，用于与 Konado DialogueManager 节点进行交互
@@ -77,8 +78,8 @@ public sealed partial class DialogueManagerAPI : Node
 
 	    return null;
     }
-
-
+	
+    
     public static class GDScriptSignalName
     {
         public static readonly StringName ShotStart = "shot_start";
