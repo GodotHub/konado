@@ -1,10 +1,12 @@
-## 安装
+# 安装
 
-首次安装 Konado.NET，会遇到如下报错：
+## 基础依赖
 
-```
-无法从路径 “res://addons/konadotnet/Konadotnet.cs” 加载附加组件脚本：该脚本可能有代码错误。
-正在禁用位于 “res://addons/konadotnet/plugin.cfg” 的附加组件以阻止其进一步报错。
-```
+1. 安装 Konado 插件（必须）
+2. 支持C#的Godot版本（推荐 4.5+）   
 
-请重新编译 Konado.NET，然后重新打开项目即可
+## 安装步骤
+
+1. 将 konadotnet 插件解压缩到 Godot 项目的 `addons` 目录下
+2. 构建项目，确保没有错误
+3. 在 Godot 编辑器中，进入 `项目 -> 项目设置 -> 插件`，启用 Konado 和 Konadotnet 插件

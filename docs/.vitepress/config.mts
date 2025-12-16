@@ -170,19 +170,10 @@ export default defineConfig({
             ]
           },
           {
-            text: ' Konado .NET',
+            text: 'Konado .NET API',
             items: [
-              { text: '安装konadotnet', link: '/konadotnet/install_konadotnet' },
-              {
-                text: 'KonadoAPI',
-                collapsed: true,
-                items: [
-                  { text: 'KonadoAPI介绍', link: '/konadotnet/konadoapi' },
-                  { text: 'KonadoAPI使用', link: '/konadotnet/konadoapi_use' },
-                  { text: '对话管理', link: '/konadotnet/konadoapi_example' },
-                  { text: 'KonadoAPI示例', link: '/konadotnet/konadoapi_example' }
-                ]
-              }
+              { text: '安装', link: '/konadotnet/install_konadotnet' },
+              { text: '使用API', link: '/konadotnet/konadotnet_api' }
             ]
 
           },
