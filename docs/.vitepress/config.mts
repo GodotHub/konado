@@ -101,7 +101,7 @@ export default defineConfig({
             text: '查看文档', link: '/tutorial/install'
           },
           {
-            text: '更新日志', link: '/update'
+            text: '下载插件', link: 'https://github.com/GodotHub/konado/releases/latest'
           },
           {
             text: '加入群聊', link: 'https://pd.qq.com/g/GodotHub999/text/707799746'
@@ -191,7 +191,7 @@ export default defineConfig({
             items: [
               { text: '核心功能指南', items: [
                 { text: '对话数据', link: '/develop/core/shot-and-dialogue.md'},
-                { Text: '背景切换特效' , link: '/develop/core/bg-trans-effect.md'},
+                { text: '背景切换特效' , link: '/develop/core/bg-trans-effect.md'},
               ]},
               { text: '版本规划', link: '/develop/roadmap' },
               { text: '代码贡献', link: '/develop/code-contribute' },
