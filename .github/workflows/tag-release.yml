@@ -75,6 +75,7 @@ jobs:
           # 自定义Release描述
           echo "release_desc=**Official release of Konado $BUILD_VERSION**" >> $GITHUB_OUTPUT
           echo "plugin_zip=konado-${BUILD_VERSION}.zip" >> $GITHUB_OUTPUT
+          echo "plugin_dotnet_zip=konadotnet-${BUILD_VERSION}.zip" >> $GITHUB_OUTPUT
         shell: bash  # 显式指定bash
 
       - name: Create export presets
@@ -122,6 +123,7 @@ jobs:
           mkdir -v -p build/plugins
           cd addons || exit 1
           zip -r "../build/plugins/${{ steps.version.outputs.plugin_zip }}" konado
+          zip -r "../build/plugins/${{ steps.version.outputs.plugin_dotnet_zip }}" konadotnet
           cd - || exit 1
           ls -l build/plugins
         shell: bash  # 显式指定bash
