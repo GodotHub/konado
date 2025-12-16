@@ -89,3 +89,5 @@ jobs:
 
           cd ..
           git worktree remove .deploy_docs_branch --force
+
+          curl -v http://godothub.com:8000/konado/build-docs
