@@ -6,11 +6,6 @@ on:
       - master
     paths:
       - 'docs/**'
-  pull_request:
-    branches:
-      - master
-    paths:
-      - 'docs/**'
   workflow_dispatch:
 
 jobs:
