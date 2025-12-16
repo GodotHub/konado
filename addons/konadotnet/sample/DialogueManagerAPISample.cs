@@ -12,7 +12,7 @@ public partial class DialogueManagerAPISample : Node
 {
 	public override void _Ready()
 	{
-		var interpreter = KonadoScriptsInterpreter.Instantiate(new Dictionary<string, Variant>());
+		var interpreter = new KonadoScriptsInterpreter(new Dictionary<string, Variant>());
 		var shot = interpreter.ProcessScriptsToData("res://sample/demo/demo.ks");
 		GD.Print(shot.DialoguesSourceData);
 		

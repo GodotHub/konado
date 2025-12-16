@@ -7,42 +7,45 @@ namespace Konado.Wrapper;
 
 public partial class DialogueChoice : Resource
 {
-    private static CSharpScript _wrapperScriptAsset;
+    private static GDScript _sourceScript;
     private const string SourceScriptPath = "res://addons/konado/scripts/dialogue/dialogue_choice.gd";
+    private GodotObject _source;
 
-    protected DialogueChoice() { }
-
-    public new static DialogueChoice Bind(GodotObject godotObject)
+    public DialogueChoice(GodotObject source)
     {
-        if (godotObject is DialogueChoice instance)
-            return instance;
-
-        if (_wrapperScriptAsset is null)
+        if (source is null || !IsInstanceValid(source))
         {
-            var scriptPathAttribute = typeof(DialogueChoice).GetCustomAttributes<ScriptPathAttribute>().FirstOrDefault()
-                ?? throw new System.InvalidOperationException();
-
-            _wrapperScriptAsset = ResourceLoader.Load<CSharpScript>(scriptPathAttribute.Path);
+            throw new System.InvalidOperationException("Source object is not valid!");
+        }
+       
+        if (!ResourceLoader.Exists(SourceScriptPath))
+        {
+            throw new System.InvalidOperationException("Source script not found!");
         }
 
-        var instanceId = godotObject.GetInstanceId();
-        godotObject.SetScript(_wrapperScriptAsset);
-        return (DialogueChoice)InstanceFromId(instanceId);
+        _sourceScript ??= ResourceLoader.Load<GDScript>(SourceScriptPath);
+        if (source.GetScript().As<GDScript>() != _sourceScript)
+        {
+            throw new System.InvalidOperationException("Source Object is not a valid source!");
+        }
+
+        _source = source;
     }
 
     /// <summary>
-    /// Create a new instance of the <see cref="KonadoScriptsInterpreter"/> class.
+    /// Create a new instance of the <see cref="DialogueChoice"/> class.
     /// </summary>
     /// <returns></returns>
     /// <exception cref="System.InvalidOperationException"></exception>
-    public new static DialogueChoice Instantiate()
+    public DialogueChoice()
     {
         if (!ResourceLoader.Exists(SourceScriptPath))
         {
             throw new System.InvalidOperationException("Source script not found!");
         }
 
-        return Bind(ResourceLoader.Load<GDScript>(SourceScriptPath).New().AsGodotObject());
+        _sourceScript ??= ResourceLoader.Load<GDScript>(SourceScriptPath);
+        _source = _sourceScript.New().AsGodotObject();
     }
 
     public new static class GDScriptPropertyName
@@ -53,13 +56,13 @@ public partial class DialogueChoice : Resource
 
     public new string ChoiceText
     {
-        get => Get(GDScriptPropertyName.ChoiceText).As<string>();
-        set => Set(GDScriptPropertyName.ChoiceText, value);
+        get => _source.Get(GDScriptPropertyName.ChoiceText).As<string>();
+        set => _source.Set(GDScriptPropertyName.ChoiceText, value);
     }
 
     public new string JumpTag
     {
-        get => Get(GDScriptPropertyName.JumpTag).As<string>();
-        set => Set(GDScriptPropertyName.JumpTag, value);    
+        get => _source.Get(GDScriptPropertyName.JumpTag).As<string>();
+        set => _source.Set(GDScriptPropertyName.JumpTag, value);    
     }
 }

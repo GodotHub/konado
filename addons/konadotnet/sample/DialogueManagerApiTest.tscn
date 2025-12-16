@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://cfhlwc3f0d35e"]
+[gd_scene load_steps=3 format=3 uid="uid://hori2txfr06p"]
 
 [ext_resource type="Script" uid="uid://cn042ni2qad57" path="res://addons/konadotnet/sample/DialogueManagerAPISample.cs" id="1_lahcb"]
 [ext_resource type="PackedScene" uid="uid://bcl2e6o0kb5dm" path="res://sample/demo/demo.tscn" id="2_bcxdr"]

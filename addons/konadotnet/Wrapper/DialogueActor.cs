@@ -8,27 +8,29 @@ namespace Konado.Wrapper;
 
 public partial class DialogueActor : Resource
 {
-    private static CSharpScript _wrapperScriptAsset;
+    private static GDScript _sourceScript;
     private const string SourceScriptPath = "res://addons/konado/scripts/dialogue/dialogue_actor.gd";
+    private GodotObject _source;
 
-    protected DialogueActor() { }
-
-    public new static DialogueActor Bind(GodotObject godotObject)
+    public DialogueActor(GodotObject source)
     {
-        if (godotObject is DialogueActor instance)
-            return instance;
-
-        if (_wrapperScriptAsset is null)
+        if (source is null || !IsInstanceValid(source))
         {
-            var scriptPathAttribute = typeof(DialogueActor).GetCustomAttributes<ScriptPathAttribute>().FirstOrDefault()
-                ?? throw new System.InvalidOperationException();
-
-            _wrapperScriptAsset = ResourceLoader.Load<CSharpScript>(scriptPathAttribute.Path);
+            throw new System.InvalidOperationException("Source object is not valid!");
         }
 
-        var instanceId = godotObject.GetInstanceId();
-        godotObject.SetScript(_wrapperScriptAsset);
-        return (DialogueActor)InstanceFromId(instanceId);
+        if (!ResourceLoader.Exists(SourceScriptPath))
+        {
+            throw new System.InvalidOperationException("Source script not found!");
+        }
+
+        _sourceScript ??= ResourceLoader.Load<GDScript>(SourceScriptPath);
+        if (source.GetScript().As<GDScript>() != _sourceScript)
+        {
+            throw new System.InvalidOperationException("Source Object is not a valid source!");
+        }
+
+        _source = source;
     }
 
     /// <summary>
@@ -36,14 +38,15 @@ public partial class DialogueActor : Resource
     /// </summary>
     /// <returns></returns>
     /// <exception cref="System.InvalidOperationException"></exception>
-    public new static DialogueActor Instantiate()
+    public DialogueActor()
     {
         if (!ResourceLoader.Exists(SourceScriptPath))
         {
             throw new System.InvalidOperationException("Source script not found!");
         }
 
-        return Bind(ResourceLoader.Load<GDScript>(SourceScriptPath).New().AsGodotObject());
+        _sourceScript ??= ResourceLoader.Load<GDScript>(SourceScriptPath);
+        _source = _sourceScript.New().AsGodotObject();
     }
 
     public new static class GDScriptPropertyName
@@ -57,31 +60,31 @@ public partial class DialogueActor : Resource
 
     public new string CharacterName
     {
-        get => Get(GDScriptPropertyName.CharacterName).As<string>();
-        set => Set(GDScriptPropertyName.CharacterName, value);
+        get => _source.Get(GDScriptPropertyName.CharacterName).As<string>();
+        set => _source.Set(GDScriptPropertyName.CharacterName, value);
     }
 
     public new string CharacterState
     {
-        get => Get(GDScriptPropertyName.CharacterState).As<string>();
-        set => Set(GDScriptPropertyName.CharacterState, value);
+        get => _source.Get(GDScriptPropertyName.CharacterState).As<string>();
+        set => _source.Set(GDScriptPropertyName.CharacterState, value);
     }
 
     public new Vector2 ActorPosition
     {
-        get => Get(GDScriptPropertyName.ActorPosition).As<Vector2>();
-        set => Set(GDScriptPropertyName.ActorPosition, value);
+        get => _source.Get(GDScriptPropertyName.ActorPosition).As<Vector2>();
+        set => _source.Set(GDScriptPropertyName.ActorPosition, value);
     }
 
     public new Vector2 ActorScale
     {
-        get => Get(GDScriptPropertyName.ActorScale).As<Vector2>();
-        set => Set(GDScriptPropertyName.ActorScale, value);
+        get => _source.Get(GDScriptPropertyName.ActorScale).As<Vector2>();
+        set => _source.Set(GDScriptPropertyName.ActorScale, value);
     }
 
     public new bool ActorMirror
     {
-        get => Get(GDScriptPropertyName.ActorMirror).As<bool>();
-        set => Set(GDScriptPropertyName.ActorMirror, value);
+        get => _source.Get(GDScriptPropertyName.ActorMirror).As<bool>();
+        set => _source.Set(GDScriptPropertyName.ActorMirror, value);
     }
 }

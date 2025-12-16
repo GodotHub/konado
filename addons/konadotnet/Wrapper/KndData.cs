@@ -7,27 +7,29 @@ namespace Konado.Wrapper;
 
 public partial class KndData : Resource
 {
-    private static CSharpScript _wrapperScriptAsset;
+    private static GDScript _sourceScript;
     private const string SourceScriptPath = "res://addons/konado/knd_data/knd_data.gd";
+    private GodotObject _source;
 
-    protected KndData() { }
-
-    public new static KndData Bind(GodotObject godotObject)
+    public KndData(GodotObject source)
     {
-        if (godotObject is KndData instance)
-            return instance;
-
-        if (_wrapperScriptAsset is null)
+        if (source is null || !IsInstanceValid(source))
         {
-            var scriptPathAttribute = typeof(KndData).GetCustomAttributes<ScriptPathAttribute>().FirstOrDefault()
-                ?? throw new System.InvalidOperationException();
-
-            _wrapperScriptAsset = ResourceLoader.Load<CSharpScript>(scriptPathAttribute.Path);
+            throw new System.InvalidOperationException("Source object is not valid!");
+        }
+       
+        if (!ResourceLoader.Exists(SourceScriptPath))
+        {
+            throw new System.InvalidOperationException("Source script not found!");
         }
 
-        var instanceId = godotObject.GetInstanceId();
-        godotObject.SetScript(_wrapperScriptAsset);
-        return (KndData)InstanceFromId(instanceId);
+        _sourceScript ??= ResourceLoader.Load<GDScript>(SourceScriptPath);
+        if (source.GetScript().As<GDScript>() != _sourceScript)
+        {
+            throw new System.InvalidOperationException("Source Object is not a valid source!");
+        }
+
+        _source = source;
     }
 
     /// <summary>
@@ -35,14 +37,15 @@ public partial class KndData : Resource
     /// </summary>
     /// <returns></returns>
     /// <exception cref="System.InvalidOperationException"></exception>
-    public new static KndData Instantiate()
+    public KndData()
     {
         if (!ResourceLoader.Exists(SourceScriptPath))
         {
             throw new System.InvalidOperationException("Source script not found!");
         }
 
-        return Bind(ResourceLoader.Load<GDScript>(SourceScriptPath).New().AsGodotObject());
+        _sourceScript ??= ResourceLoader.Load<GDScript>(SourceScriptPath);
+        _source = _sourceScript.New().AsGodotObject();
     }
 
     public new static class GDScriptPropertyName
@@ -54,19 +57,19 @@ public partial class KndData : Resource
 
     public new string Type
     {
-        get => Get(GDScriptPropertyName.Type).As<string>();
-        set => Set(GDScriptPropertyName.Type, value);
+        get => _source.Get(GDScriptPropertyName.Type).As<string>();
+        set => _source.Set(GDScriptPropertyName.Type, value);
     }
 
     public new bool Love
     {
-        get => Get(GDScriptPropertyName.Love).As<bool>();
-        set => Set(GDScriptPropertyName.Love, value);
+        get => _source.Get(GDScriptPropertyName.Love).As<bool>();
+        set => _source.Set(GDScriptPropertyName.Love, value);
     }
 
     public new string Tip
     {
-        get => Get(GDScriptPropertyName.Tip).As<string>();
-        set => Set(GDScriptPropertyName.Tip, value);
+        get => _source.Get(GDScriptPropertyName.Tip).As<string>();
+        set => _source.Set(GDScriptPropertyName.Tip, value);
     }
 }
