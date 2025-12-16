@@ -6,7 +6,7 @@ public sealed partial class KonadoAPI : Node
 {
     public bool IsApiReady { get; private set; }
     public static KonadoAPI API { get; private set; }
-    public static DialogueManagerAPI DialogueManager { get; private set; }
+    public static DialogueManagerAPI DialogueManagerApi { get; private set; }
 
     public override void _Ready()
     {
@@ -14,15 +14,15 @@ public sealed partial class KonadoAPI : Node
             return;
 
         API = this;
-        DialogueManager = new DialogueManagerAPI();
+        DialogueManagerApi = new DialogueManagerAPI();
 
-        DialogueManager.Name = "DialogueManager";
+        DialogueManagerApi.Name = "DialogueManagerAPI";
 
-        AddChild(DialogueManager);
+        AddChild(DialogueManagerApi);
 
         IsApiReady = true;
     }
 
     private bool IsModuleLoaded()
-        => GetNodeOrNull("DialogueManager") != null;
+        => GetNodeOrNull("DialogueManagerAPI") != null;
 }

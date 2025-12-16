@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://cfhlwc3f0d35e"]
+
+[ext_resource type="Script" uid="uid://cn042ni2qad57" path="res://addons/konadotnet/sample/DialogueManagerAPISample.cs" id="1_lahcb"]
+[ext_resource type="PackedScene" uid="uid://bcl2e6o0kb5dm" path="res://sample/demo/demo.tscn" id="2_bcxdr"]
+
+[node name="DialogueManagerApiTest" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_lahcb")
+
+[node name="Demo" parent="." instance=ExtResource("2_bcxdr")]
+layout_mode = 1
