@@ -33,9 +33,3 @@ graph TD
 
 ```
 如果你想详细了解 Konado Script 的解析过程，可以参考 Konado Script 的相关文档以及解析器的源代码。
-
-
-### 属性
-
-
-KND_Shot 类包含以下属性：

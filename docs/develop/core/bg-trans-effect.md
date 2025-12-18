@@ -8,7 +8,7 @@
 
 为了统一管理和播放背景转场特效，我们约定了一个 Shader 规范，具体如下：
 
-shader类型必须是`canvas_item`
+shader类型必须是 `canvas_item`
 
 ```glsl
 shader_type canvas_item;
@@ -51,6 +51,26 @@ BackgroundTransitionEffectsType.YOUR_EFFECT_SHADER: {
 }
 ```
 
-接下来测试一下背景切换特效。
+接下来测试一下背景切换特效，在切换场景时，添加以下测试代码，观察背景切换效果是否符合预期。
+
+```gdscript
+bg.material.set("shader", your_effect_shader)
+
+bg.material.set_shader_parameter("progress", 0.0)
+bg.material.set_shader_parameter("current_texture", current_texture)
+bg.material.set_shader_parameter("target_texture", tex)
+
+# 创建并配置过渡动画
+effect_tween = get_tree().create_tween()
+effect_tween.tween_property(
+	bg.material, 
+	"shader_parameter/progress", 
+	1.0, 
+	1.0
+)
+
+effect_tween.play()
+```
+
 
 

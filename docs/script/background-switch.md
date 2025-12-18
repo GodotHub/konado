@@ -20,12 +20,14 @@ background [图片资源名] <效果类型>
 
 | 效果 | 描述 |
 |------|------|
+| `none` | 立即切换 |
 | `fade` | 淡入淡出 |
 | `erase` | 擦除 |
 | `blinds` | 百叶窗 | 
 | `wave` | 波浪 |
 | `vortex` | 旋涡 |
-| `none` | 立即切换 |
+| `windmill` | 风车 |
+| `cyberglitch` | 赛博故障 |
 
 如果不指定效果类型，默认使用`none`（立即切换）
 
