@@ -16,9 +16,10 @@ general/accessibility_support=2
 
 config/name="Konado Demo"
 config/description="Konado is an open-source framework for creating visual novels with the Godot Engine."
-config/version="2.0"
+config/version="2.1"
 run/main_scene="uid://bcl2e6o0kb5dm"
 config/features=PackedStringArray("4.5", "C#", "Forward Plus")
+boot_splash/image="uid://cxe2kpfeicnd"
 config/icon="uid://b5olx2vwoscbr"
 
 [autoload]
