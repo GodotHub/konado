@@ -1,0 +1,14 @@
+[remap]
+
+importer="konado.kscsv"
+type="Resource"
+uid="uid://d3up03s4ey6a4"
+path="res://.godot/imported/ks_dict_cn.kdic-238f1cf9fe886326218d293dcf299339.res"
+
+[deps]
+
+source_file="res://addons/konado/editor/view/ks_editor/ks_dict_cn.kdic"
+dest_files=["res://.godot/imported/ks_dict_cn.kdic-238f1cf9fe886326218d293dcf299339.res"]
+
+[params]
+
