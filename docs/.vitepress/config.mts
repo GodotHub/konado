@@ -279,7 +279,7 @@ export default defineConfig({
                 text: '交互',
                 collapsed: true,
                 items: [
-                  { text: '标签', link: '/script/label' },
+                  { text: '分支', link: '/script/branch' },
                   { text: '选项跳转', link: '/script/option-to-jump' },
                 ]
               },
