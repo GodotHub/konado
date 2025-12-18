@@ -13,9 +13,14 @@ var ks_statement: Dictionary = {}
 func _ready() -> void:
 	# ks_statement = load_csv()
 	var kscsv := KsCsvDict.new()
-	kscsv = ResourceLoader.load("res://addons/konado/editor/view/ks_editor/ks_dict.kdic")
+	# 多语言
+	var sys_lang: String = OS.get_locale()
+	if sys_lang.begins_with("zh_CN"):
+		kscsv = ResourceLoader.load("res://addons/konado/editor/view/ks_editor/ks_dict_cn.kdic")
+	else:
+		kscsv = ResourceLoader.load("res://addons/konado/editor/view/ks_editor/ks_dict_en.kdic")
 	## 直接从资源加载
-	ks_statement =kscsv.csv_data
+	ks_statement = kscsv.csv_data
 	create_tree_from_dict()
 
 func create_tree_from_dict():

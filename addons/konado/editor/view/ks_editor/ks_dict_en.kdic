@@ -1,0 +1,15 @@
+Tag,Button Name,Button Icon,Insert Statement,Button Remarks
+Metadata,Shot ID,,shot_id <Shot Identifier>,Must be located in the first line of the file
+Dialogue,Dialogue,,"""Character ID"" ""Dialogue Content"" [Voice ID]",Character dialogue content
+Background,Background Switch,,background <Background Image Name> [Effect Type],Switch background image, optional effects
+Character,Actor Display,,actor show <Character Name> <Character State> at <X Coordinate> <Y Coordinate> scale <Scale Ratio> [mirror],Display character on the screen
+Character,Actor Exit,,actor exit <Character Name>,Character exits the screen
+Character,State Change,,actor change <Character Name> <New State>,Change character state
+Character,Move Character,,actor move <Character Name> <Target X Coordinate> <Target Y Coordinate>,Move character position
+Audio,Play BGM,,play bgm <BGM Name>,Play background music
+Audio,Play SFX,,play sfx <Sound Effect Name>,Play sound effect
+Audio,Stop BGM,,stop bgm,Stop background music
+Branch,Option Branch,,choice "Option Text 1" <Jump Tag 1> "Option Text 2" <Jump Tag 2> ...,Create option branch
+Branch,Branch Tag,,branch <Branch Tag Name>,Define branch tag
+Process,Shot Jump,,jump <Target Shot ID>,Jump to other shots
+Special,End Marker,,end,Scene end marker
