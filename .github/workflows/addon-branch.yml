@@ -51,19 +51,30 @@ jobs:
       # 处理文件（仅保留addons/konado内容，移至根目录，删除其他文件）
       - name: Extract addons/konado content to root directory
         run: |
-          # 1. 创建临时目录，备份addons/konado下的所有内容
-          mkdir -p ./temp_konado
-          cp -r ./addons/konado/* ./temp_konado/
+          # 前置检查：确认addons/konado目录存在，不存在则直接报错退出
+          if [ ! -d "./addons/konado" ]; then
+            echo "Error: Directory ./addons/konado does not exist!"
+            exit 1
+          fi
+
+          # 1. 创建【隐藏临时目录】（避免被rm -rf ./* 删除），备份addons/konado下的所有内容
+          # 隐藏目录以.开头，./* 不会匹配隐藏目录，可安全保留
+          mkdir -p ./.temp_konado
+          # 使用 ./addons/konado/. 替代 *，可匹配所有内容（包括隐藏文件、空目录），兼容性更强
+          cp -r ./addons/konado/. ./.temp_konado/
 
           # 2. 删除当前工作区所有跟踪的文件（保留.git目录，不影响Git仓库）
           git rm -rf . --quiet
-          # 3. 删除未被Git跟踪的文件/目录（如临时文件、日志等）
+
+          # 3. 删除未被Git跟踪的文件/目录（不影响隐藏目录 .temp_konado）
           rm -rf ./*
 
-          # 4. 将临时目录中的内容移回仓库根目录
-          cp -r ./temp_konado/* ./
-          # 5. 删除临时目录
-          rm -rf ./temp_konado
+          # 4. 将隐藏临时目录中的内容移回仓库根目录
+          cp -r ./.temp_konado/. ./
+
+          # 5. 删除隐藏临时目录
+          rm -rf ./.temp_konado
+        shell: /usr/bin/bash -e {0}
 
       # 提交更改并推送到addon-{tagname}分支
       - name: Commit and push branch
