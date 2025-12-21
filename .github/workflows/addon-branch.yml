@@ -69,4 +69,4 @@ jobs:
           git commit -m "chore: sync master branch content to addon-master" --quiet || echo "No changes to commit"
 
           # 推送分支到远程仓库（使用默认GITHUB_TOKEN授权）
-          git push origin $BRANCH_NAME
+          git push origin $BRANCH_NAME --force
