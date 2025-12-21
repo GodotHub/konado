@@ -4,69 +4,78 @@ on:
   push:
     branches:
       - master
-  workflow_dispatch:
+  workflow_dispatch: # 手动触发支持
 
 jobs:
   sync-to-addon-master:
     runs-on: ubuntu-latest
     steps:
-      # 检出仓库代码（需拉取完整历史，用于分支操作）
+      # 检出仓库代码（拉取完整历史，支持分支操作）
       - name: Checkout repository code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # 拉取完整的仓库历史，避免分支操作失败
+          fetch-depth: 0 # 必须拉取完整历史，否则分支查询/切换可能失败
 
-      # 配置Git用户信息（流水线提交代码需要身份标识）
+      # 配置Git用户信息（流水线提交需要身份标识）
       - name: Configure Git user
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
 
-      # 创建并切换到固定的addon-master分支（不再依赖Tag，分支名固定）
+      # 创建并切换到addon-master分支（修复原有逻辑：存在则拉取最新，不存在则创建）
       - name: Create and checkout addon-master branch
         run: |
-          # 固定分支名：addon-master（不再动态拼接Tag名称）
           BRANCH_NAME="addon-master"
-          # 检查分支是否已存在，若存在则先切换并拉取最新代码；若不存在则创建新分支
+          # 检查远程是否存在该分支
           if git ls-remote --heads origin $BRANCH_NAME | grep -q $BRANCH_NAME; then
-            echo "Branch $BRANCH_NAME already exists"
+            echo "Branch $BRANCH_NAME already exists, checkout and pull latest code"
+            git checkout $BRANCH_NAME # 切换到已有分支
+            git pull origin $BRANCH_NAME # 拉取远程最新代码，避免冲突
           else
             echo "Create new branch $BRANCH_NAME"
-            git checkout -b $BRANCH_NAME
+            git checkout -b $BRANCH_NAME # 创建并切换到新分支
           fi
 
-      # 处理文件（保留原有文件迁移逻辑，无需修改）
+      # 处理文件（保留原有迁移逻辑，无需修改）
       - name: Extract addons/konado content to root directory
         run: |
-          # 前置检查：确认addons/konado目录存在，不存在则直接报错退出
+          # 前置检查：确认目标目录存在
           if [ ! -d "./addons/konado" ]; then
             echo "Error: Directory ./addons/konado does not exist!"
             exit 1
           fi
 
-          # 1. 创建【隐藏临时目录】（避免被rm -rf ./* 删除），备份addons/konado下的所有内容
-          # 隐藏目录以.开头，./* 不会匹配隐藏目录，可安全保留
+          # 创建隐藏临时目录（避免被rm -rf ./* 删除）
           mkdir -p ./.temp_konado
-          # 使用 ./addons/konado/. 替代 *，可匹配所有内容（包括隐藏文件、空目录），兼容性更强
+          # 复制addons/konado下所有内容（包括隐藏文件、空目录）
           cp -r ./addons/konado/. ./.temp_konado/
 
+          # 删除当前分支所有文件（--quiet静默执行）
           git rm -rf . --quiet
-
+          # 彻底删除工作区非版本控制文件
           rm -rf ./*
+          # 从临时目录恢复文件
           cp -r ./.temp_konado/. ./
+          # 删除临时目录
           rm -rf ./.temp_konado
         shell: /usr/bin/bash -e {0}
 
-      # 提交更改并推送到固定的addon-master分支
+      # 提交更改并推送（核心：先删除远程已有addon-master，再推送新分支）
       - name: Commit and push to addon-master
         run: |
-          # 固定分支名：addon-master
           BRANCH_NAME="addon-master"
-
+          
           # 暂存所有更改
           git add .
-          # 提交更改（备注信息调整为master同步相关，便于追溯）
+          
+          # 提交更改（无变更时不报错，仅提示）
           git commit -m "chore: sync master branch content to addon-master" --quiet || echo "No changes to commit"
-
-          # 推送分支到远程仓库（使用默认GITHUB_TOKEN授权）
-          git push origin $BRANCH_NAME --force
+          
+          # 关键步骤：检查远程是否存在addon-master分支，若存在则删除
+          if git ls-remote --heads origin $BRANCH_NAME | grep -q $BRANCH_NAME; then
+            echo "Remote branch $BRANCH_NAME exists, deleting it first"
+            git push origin --delete $BRANCH_NAME # 删除远程分支
+          fi
+          
+          # 推送本地addon-master分支到远程（此时远程无该分支，直接创建）
+          git push origin $BRANCH_NAME
