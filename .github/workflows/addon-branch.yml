@@ -1,15 +1,13 @@
-name: Auto Create Addon Branch
+name: Auto Sync Master to Addon-Master
 
-# 触发条件：仅当推送Tag时触发
 on:
   push:
-    tags:
-      - '*'
+    branches:
+      - master
   workflow_dispatch:
 
-# 流水线任务配置
 jobs:
-  create-addon-branch:
+  sync-to-addon-master:
     runs-on: ubuntu-latest
     steps:
       # 检出仓库代码（需拉取完整历史，用于分支操作）
@@ -24,20 +22,11 @@ jobs:
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
 
-      # 提取当前Tag名称（截取refs/tags/后的纯Tag名）
-      - name: Get current Tag name
-        id: get_tag
+      # 创建并切换到固定的addon-master分支（不再依赖Tag，分支名固定）
+      - name: Create and checkout addon-master branch
         run: |
-          # 从github.ref中提取纯Tag名称（github.ref格式为refs/tags/{tagname}）
-          TAG_NAME=$(echo "${{ github.ref }}" | sed 's/refs\/tags\///g')
-          # 输出Tag名称，供后续步骤使用
-          echo "tag_name=$TAG_NAME" >> $GITHUB_OUTPUT
-
-      # 创建并切换到addon-{tagname}分支
-      - name: Create and checkout addon branch
-        run: |
-          # 定义分支名：addon-拼接Tag名称
-          BRANCH_NAME="addon-${{ steps.get_tag.outputs.tag_name }}"
+          # 固定分支名：addon-master（不再动态拼接Tag名称）
+          BRANCH_NAME="addon-master"
           # 检查分支是否已存在，若存在则先切换并拉取最新代码；若不存在则创建新分支
           if git ls-remote --heads origin $BRANCH_NAME | grep -q $BRANCH_NAME; then
             echo "Branch $BRANCH_NAME already exists, checkout and pull latest code"
@@ -48,7 +37,7 @@ jobs:
             git checkout -b $BRANCH_NAME
           fi
 
-      # 处理文件（仅保留addons/konado内容，移至根目录，删除其他文件）
+      # 处理文件（保留原有文件迁移逻辑，无需修改）
       - name: Extract addons/konado content to root directory
         run: |
           # 前置检查：确认addons/konado目录存在，不存在则直接报错退出
@@ -63,30 +52,23 @@ jobs:
           # 使用 ./addons/konado/. 替代 *，可匹配所有内容（包括隐藏文件、空目录），兼容性更强
           cp -r ./addons/konado/. ./.temp_konado/
 
-          # 2. 删除当前工作区所有跟踪的文件（保留.git目录，不影响Git仓库）
           git rm -rf . --quiet
 
-          # 3. 删除未被Git跟踪的文件/目录（不影响隐藏目录 .temp_konado）
           rm -rf ./*
-
-          # 4. 将隐藏临时目录中的内容移回仓库根目录
           cp -r ./.temp_konado/. ./
-
-          # 5. 删除隐藏临时目录
           rm -rf ./.temp_konado
         shell: /usr/bin/bash -e {0}
 
-      # 提交更改并推送到addon-{tagname}分支
-      - name: Commit and push branch
+      # 提交更改并推送到固定的addon-master分支
+      - name: Commit and push to addon-master
         run: |
-          # 定义分支名和Tag名称
-          BRANCH_NAME="addon-${{ steps.get_tag.outputs.tag_name }}"
-          TAG_NAME="${{ steps.get_tag.outputs.tag_name }}"
+          # 固定分支名：addon-master
+          BRANCH_NAME="addon-master"
 
           # 暂存所有更改
           git add .
-          # 提交更改（备注信息包含Tag名称，便于追溯）
-          git commit -m "chore: push konado content for tag $TAG_NAME" --quiet
+          # 提交更改（备注信息调整为master同步相关，便于追溯）
+          git commit -m "chore: sync master branch content to addon-master" --quiet || echo "No changes to commit"
 
           # 推送分支到远程仓库（使用默认GITHUB_TOKEN授权）
           git push origin $BRANCH_NAME
