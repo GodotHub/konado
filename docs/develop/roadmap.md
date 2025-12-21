@@ -6,11 +6,13 @@
 以下是Konado的版本号和开发代号列表：
 
 
-| 开发代号        | 版本号 |  状态     | 发布时间          | 下载链接                                                  |
-| :------------- | :----: | :-------: | :--------------- | :------------------------------------------------------- |
-| /              | 3.0    | Planning  | /                |                                                          |
-| Lebkuchen      | 2.1    | Active    | 2025-12-24       |  https://github.com/GodotHub/konado/releases/tag/v2.1  |
-| Mooncake       | 2.0    | Release   | 2025-12-03       | https://github.com/GodotHub/konado/releases/tag/v2.0 |
+| Codename | Version |  Status   | Release Date      | Download                                         |
+| :--------------- | :-----: | :-------: | :---------------- | :-------------------------------------------------------- |
+| /                |  3.0    | Planning  | /                 |                                                           |
+| Lebkuchen        |  2.2    | Planning  | 2026-02-01        | https://github.com/GodotHub/konado/releases/tag/v2.1      |
+| Lebkuchen        |  2.1    | Active    | 2025-12-24        | https://github.com/GodotHub/konado/releases/tag/v2.1      |
+| Mooncake         |  2.0    | Release   | 2025-12-03        | https://github.com/GodotHub/konado/releases/tag/v2.0      |
+
 
 
 ## 状态说明

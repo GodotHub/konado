@@ -1,11 +1,16 @@
 @tool
 extends Button
-## 存档标签组件，
+class_name SaveComponect
+
+## 存档标签组件
 
 @onready var name_label      : Label = %name_label
 @onready var save_time_label : Label = %save_time_label
 @onready var game_time_label : Label = %game_time_label
 @onready var autosave_sign   : Label = $autosave_sign
+
+## 存档ID
+@export var save_id: int = -1;
 
 @export var save_name := "存档":  ## 存档名称
 	set(value):

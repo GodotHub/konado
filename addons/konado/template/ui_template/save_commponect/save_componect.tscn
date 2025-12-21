@@ -10,7 +10,7 @@ corner_radius_top_left = 35
 [sub_resource type="LabelSettings" id="LabelSettings_kt3kp"]
 font_size = 35
 
-[node name="save_componect" type="Button"]
+[node name="SaveComponect" type="Button"]
 clip_contents = true
 custom_minimum_size = Vector2(800, 200)
 offset_right = 901.0

@@ -19,7 +19,7 @@ font_size = 35
 offsets = PackedFloat32Array(0, 0.996764, 1)
 colors = PackedColorArray(0.527091, 0.626497, 0.835147, 0.611765, 0.0801724, 0.0952924, 0.127029, 0.0930516, 1, 1, 1, 0)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_m86f6"]
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_wkmvg"]
 gradient = SubResource("Gradient_ic4fm")
 width = 512
 height = 512
@@ -28,7 +28,7 @@ fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.7, 0.7)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ppjkd"]
-texture = SubResource("GradientTexture2D_m86f6")
+texture = SubResource("GradientTexture2D_wkmvg")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_o7frm"]
 

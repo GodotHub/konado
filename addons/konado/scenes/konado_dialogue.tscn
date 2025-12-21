@@ -1,9 +1,12 @@
-[gd_scene load_steps=22 format=3 uid="uid://bj8ynu8013j4j"]
+[gd_scene load_steps=32 format=3 uid="uid://bj8ynu8013j4j"]
 
 [ext_resource type="Script" uid="uid://dpo124xwpder5" path="res://addons/konado/scripts/dialogue/knd_dialogue_manager.gd" id="1_buo3n"]
 [ext_resource type="Script" uid="uid://cyoedi0x84dxy" path="res://addons/konado/scripts/act/acting_Interface.gd" id="2_pq6sw"]
 [ext_resource type="Script" uid="uid://b0kbsxqyedoml" path="res://addons/konado/scripts/dialogue/dialogue_Interface.gd" id="3_gl7il"]
 [ext_resource type="Script" uid="uid://cfbojxb1pdbrs" path="res://addons/konado/scripts/audio/audio_interface.gd" id="4_gd2ll"]
+[ext_resource type="Theme" uid="uid://bb865dga7c5sp" path="res://addons/konado/editor/theme/game_theme.tres" id="4_inqap"]
+[ext_resource type="Script" uid="uid://gh6w15d30qe7" path="res://addons/konado/scripts/save_system/save_load_ui.gd" id="4_m5nin"]
+[ext_resource type="Script" uid="uid://bh2origtxajo3" path="res://addons/konado/scripts/actionbar/actionbar.gd" id="6_m5nin"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_e5o0s"]
 
@@ -20,13 +23,13 @@ colors = PackedColorArray(0, 0, 0, 0.870588, 0.141176, 0.141176, 0.141176, 0.749
 gradient = SubResource("Gradient_qodmk")
 fill_to = Vector2(1, 1)
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mhqpb"]
-
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_m5nin"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_r5ho2"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_w8bt0"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ytbee"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3sqld"]
 
@@ -50,6 +53,29 @@ texture = SubResource("GradientTexture2D_sxvt2")
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_d61i7"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_f70o6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vp4la"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wk2xw"]
+
+[sub_resource type="Gradient" id="Gradient_ytbee"]
+offsets = PackedFloat32Array(0, 0.996764, 1)
+colors = PackedColorArray(0.527091, 0.626497, 0.835147, 0.611765, 0.0801724, 0.0952924, 0.127029, 0.0930516, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_m86f6"]
+gradient = SubResource("Gradient_ytbee")
+width = 512
+height = 512
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.7, 0.7)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ky1ed"]
+texture = SubResource("GradientTexture2D_m86f6")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_n5ysx"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3v8po"]
 
 [node name="KonadoDialogue" type="Control"]
 layout_mode = 3
@@ -153,8 +179,8 @@ theme_override_constants/separation = 30
 custom_minimum_size = Vector2(0, 35)
 layout_mode = 2
 theme_override_font_sizes/normal_font_size = 25
-theme_override_styles/normal = SubResource("StyleBoxEmpty_mhqpb")
-theme_override_styles/background = SubResource("StyleBoxEmpty_m5nin")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_m5nin")
+theme_override_styles/background = SubResource("StyleBoxEmpty_r5ho2")
 bbcode_enabled = true
 fit_content = true
 
@@ -166,8 +192,8 @@ theme_override_constants/margin_right = 200
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_font_sizes/normal_font_size = 22
-theme_override_styles/normal = SubResource("StyleBoxEmpty_r5ho2")
-theme_override_styles/background = SubResource("StyleBoxEmpty_w8bt0")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_w8bt0")
+theme_override_styles/background = SubResource("StyleBoxEmpty_ytbee")
 bbcode_enabled = true
 fit_content = true
 autowrap_mode = 2
@@ -238,6 +264,199 @@ theme_override_styles/disabled = SubResource("StyleBoxEmpty_d61i7")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_f70o6")
 toggle_mode = true
 text = "回顾"
+
+[node name="SaveLoad" type="Control" parent="DialogUI" node_paths=PackedStringArray("root_container")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+script = ExtResource("4_m5nin")
+root_container = NodePath("Panel/ScrollContainer/MarginContainer/RootSlotContainer")
+
+[node name="Panel" type="Panel" parent="DialogUI/SaveLoad"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"Background"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="DialogUI/SaveLoad/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="DialogUI/SaveLoad/Panel/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 150
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 100
+
+[node name="RootSlotContainer" type="BoxContainer" parent="DialogUI/SaveLoad/Panel/ScrollContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 2
+theme_override_constants/separation = 50
+vertical = true
+
+[node name="game_ui_buttons" type="Panel" parent="DialogUI"]
+custom_minimum_size = Vector2(0, 55)
+layout_mode = 2
+size_flags_vertical = 8
+theme = ExtResource("4_inqap")
+metadata/_edit_group_ = true
+
+[node name="ActionsContainer" type="HBoxContainer" parent="DialogUI/game_ui_buttons" node_paths=PackedStringArray("continue_btn", "replay_btn", "save_btn", "load_btn", "record_btn", "exit_btn", "autoplay_btn", "review_btn", "save_load_ui")]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -555.0
+offset_top = -17.5
+offset_bottom = 17.5
+grow_horizontal = 0
+grow_vertical = 2
+alignment = 1
+script = ExtResource("6_m5nin")
+continue_btn = NodePath("继续")
+replay_btn = NodePath("重新播放")
+save_btn = NodePath("存档")
+load_btn = NodePath("读档")
+record_btn = NodePath("记录")
+exit_btn = NodePath("退出")
+autoplay_btn = NodePath("自动")
+review_btn = NodePath("回顾")
+save_load_ui = NodePath("../../SaveLoad")
+
+[node name="继续" type="Button" parent="DialogUI/game_ui_buttons/ActionsContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(90, 35)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8646751, 0.86467516, 0.8646751, 1)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_vp4la")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_wk2xw")
+theme_override_styles/hover = SubResource("StyleBoxTexture_ky1ed")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_n5ysx")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_3v8po")
+text = "继续"
+
+[node name="重新播放" type="Button" parent="DialogUI/game_ui_buttons/ActionsContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(90, 35)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8646751, 0.86467516, 0.8646751, 1)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_vp4la")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_wk2xw")
+theme_override_styles/hover = SubResource("StyleBoxTexture_ky1ed")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_n5ysx")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_3v8po")
+text = "重新播放"
+
+[node name="存档" type="Button" parent="DialogUI/game_ui_buttons/ActionsContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(90, 35)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8646751, 0.86467516, 0.8646751, 1)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_vp4la")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_wk2xw")
+theme_override_styles/hover = SubResource("StyleBoxTexture_ky1ed")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_n5ysx")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_3v8po")
+toggle_mode = true
+text = "存档"
+
+[node name="读档" type="Button" parent="DialogUI/game_ui_buttons/ActionsContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(90, 35)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8646751, 0.86467516, 0.8646751, 1)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_vp4la")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_wk2xw")
+theme_override_styles/hover = SubResource("StyleBoxTexture_ky1ed")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_n5ysx")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_3v8po")
+toggle_mode = true
+text = "读档"
+
+[node name="记录" type="Button" parent="DialogUI/game_ui_buttons/ActionsContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(90, 35)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8646751, 0.86467516, 0.8646751, 1)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_vp4la")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_wk2xw")
+theme_override_styles/hover = SubResource("StyleBoxTexture_ky1ed")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_n5ysx")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_3v8po")
+text = "记录"
+
+[node name="退出" type="Button" parent="DialogUI/game_ui_buttons/ActionsContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(90, 35)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8646751, 0.86467516, 0.8646751, 1)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_vp4la")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_wk2xw")
+theme_override_styles/hover = SubResource("StyleBoxTexture_ky1ed")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_n5ysx")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_3v8po")
+text = "退出"
+
+[node name="自动" type="Button" parent="DialogUI/game_ui_buttons/ActionsContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(90, 35)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8646751, 0.86467516, 0.8646751, 1)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_vp4la")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_wk2xw")
+theme_override_styles/hover = SubResource("StyleBoxTexture_ky1ed")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_n5ysx")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_3v8po")
+toggle_mode = true
+text = "自动播放"
+
+[node name="回顾" type="Button" parent="DialogUI/game_ui_buttons/ActionsContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(90, 35)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8646751, 0.86467516, 0.8646751, 1)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_vp4la")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_wk2xw")
+theme_override_styles/hover = SubResource("StyleBoxTexture_ky1ed")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_n5ysx")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_3v8po")
+toggle_mode = true
+text = "回顾"
+
+[node name="ActionsContainer2" type="HBoxContainer" parent="DialogUI/game_ui_buttons"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -17.5
+offset_right = 560.0
+offset_bottom = 17.5
+grow_vertical = 2
+
+[node name="version" type="Button" parent="DialogUI/game_ui_buttons/ActionsContainer2"]
+custom_minimum_size = Vector2(90, 35)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8646751, 0.86467516, 0.8646751, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxEmpty_vp4la")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_wk2xw")
+theme_override_styles/hover = SubResource("StyleBoxTexture_ky1ed")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_n5ysx")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_3v8po")
+text = "version: konado2-neo-v2.0.4"
 
 [node name="AudioInterface" type="Node2D" parent="."]
 visible = false
