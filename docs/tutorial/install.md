@@ -13,6 +13,7 @@
 - 4.4
 
 ### 插件下载
+
 #### 稳定版（推荐）
 请前往 [Konado 最新版本页面](https://github.com/GodotHub/konado/releases/latest) 下载最新稳定版的插件 ZIP 压缩包。稳定版经过充分验证，稳定性和可靠性更有保障，是生产环境的首选。
 
@@ -25,6 +26,28 @@
 如果你是开发人员，并且希望体验最新的开发特性，可以下载每日构建版，并将使用过程中遇到的问题反馈到Issues中。
 
 > Caution：每日构建版仅用于体验最新开发特性，由于包含未经过完整测试的新功能，可能会存在未修复的 Bug，**请不要用于生产环境**，请根据实际需求谨慎选择。
+
+#### Git Submodule 方式
+
+如果你想随时体验最新的开发特性，你可以选择使用 Git submodule 方式，这个方式可以让你在本地仓库中直接获取最新的插件代码，并且可以随时更新到最新的代码，我们为此专门创建了一个分支，你可以通过以下步骤来安装：
+
+   添加子模块：
+   ```bash
+   git submodule add -b addon-master https://github.com/GodotHub/konado.git addons/konado
+   ```
+   更新插件：
+
+   ```bash
+   git submodule update --remote
+   git submodule update --init --recursive
+   ```
+
+   移除子模块（不会删除文件）：
+
+   ```bash
+   git submodule deinit -f -- addons/konado
+   git rm --cached addons/konado
+   ```
 
 
 
