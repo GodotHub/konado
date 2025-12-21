@@ -29,9 +29,7 @@ jobs:
           BRANCH_NAME="addon-master"
           # 检查分支是否已存在，若存在则先切换并拉取最新代码；若不存在则创建新分支
           if git ls-remote --heads origin $BRANCH_NAME | grep -q $BRANCH_NAME; then
-            echo "Branch $BRANCH_NAME already exists, checkout and pull latest code"
-            git checkout $BRANCH_NAME
-            git pull origin $BRANCH_NAME
+            echo "Branch $BRANCH_NAME already exists"
           else
             echo "Create new branch $BRANCH_NAME"
             git checkout -b $BRANCH_NAME
