@@ -62,6 +62,9 @@ jobs:
       - name: Commit and push to addon-master
         run: |
           BRANCH_NAME="addon-master"
+
+          # 切换到addon-master分支
+          git checkout $BRANCH_NAME
           
           # 暂存所有更改
           git add .
