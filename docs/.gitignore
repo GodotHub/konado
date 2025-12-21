@@ -1,7 +1,0 @@
-node_modules/
-.vitepress/*
-!.vitepress/config.mts
-!.vitepress/theme
-pnpm-lock.yaml
-package-lock.json
-yarn.lock
