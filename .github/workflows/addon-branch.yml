@@ -29,8 +29,6 @@ jobs:
           # 检查远程是否存在该分支
           if git ls-remote --heads origin $BRANCH_NAME | grep -q $BRANCH_NAME; then
             echo "Branch $BRANCH_NAME already exists, checkout and pull latest code"
-            git checkout $BRANCH_NAME # 切换到已有分支
-            git pull origin $BRANCH_NAME # 拉取远程最新代码，避免冲突
           else
             echo "Create new branch $BRANCH_NAME"
             git checkout -b $BRANCH_NAME # 创建并切换到新分支
