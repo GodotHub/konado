@@ -5,7 +5,7 @@ class_name SaveLoadUI
 
 @export var save_componect: PackedScene = preload("res://addons/konado/template/ui_template/save_commponect/save_componect.tscn")
 
-@export var root_container: Control = $Panel/ScrollContainer/MarginContainer/BoxContainer
+@onready var root_container: BoxContainer = $Panel/ScrollContainer/MarginContainer/RootSlotContainer
 
 @export var save_slot_count: int = 20
 
