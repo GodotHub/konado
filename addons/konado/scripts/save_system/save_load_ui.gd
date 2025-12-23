@@ -16,7 +16,7 @@ func _ready() -> void:
 ## 创建存档
 func _create_save_slot() -> void:
 	for i in save_slot_count:
-			var save_slot: SaveComponect = save_componect.instantiate() as SaveComponect
+			var save_slot: SaveComponent = save_componect.instantiate() as SaveComponent
 			# 确保实例化成功
 			if save_slot:
 				root_container.add_child(save_slot)
@@ -27,6 +27,8 @@ func _create_save_slot() -> void:
 				# 设置存档名称
 				save_slot.save_name = "存档" + format_save_id
 				save_slot.auto_save = false
+				
+				save_slot.init_empty_save_slot()
 				
 
 func _process(delta: float) -> void:

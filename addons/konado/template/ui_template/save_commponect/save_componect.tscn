@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://b5njwitmejk76"]
 
 [ext_resource type="Script" uid="uid://cqjotblvlkg3y" path="res://addons/konado/template/ui_template/save_commponect/save_componect.gd" id="1_4ot8c"]
-[ext_resource type="Texture2D" uid="uid://cfau2duojvd33" path="res://addons/konado/neo/runtime/assets/KonadoBanner.png" id="2_8xdhd"]
+[ext_resource type="Texture2D" uid="uid://cxe2kpfeicnd" path="res://assets/banner/2.1/konado-2.1-banner.png" id="2_ip0xe"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kt3kp"]
 bg_color = Color(0.915066, 0.431991, 0.379989, 1)
@@ -10,9 +10,9 @@ corner_radius_top_left = 35
 [sub_resource type="LabelSettings" id="LabelSettings_kt3kp"]
 font_size = 35
 
-[node name="save_componect" type="Button"]
+[node name="SaveComponent" type="Button"]
 clip_contents = true
-custom_minimum_size = Vector2(800, 200)
+custom_minimum_size = Vector2(860, 200)
 offset_right = 901.0
 offset_bottom = 200.0
 script = ExtResource("1_4ot8c")
@@ -83,38 +83,32 @@ offset_top = -66.0
 offset_right = 675.0
 offset_bottom = -25.0
 grow_vertical = 0
-text = "游戏时长 3h2min"
+text = " 3h 2min"
 vertical_alignment = 1
 
-[node name="Button" type="Button" parent="."]
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -126.0
-offset_top = -98.0
-offset_right = -36.0
-offset_bottom = -60.0
-grow_horizontal = 0
-grow_vertical = 0
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(124, 0)
+layout_mode = 0
+offset_left = 732.0
+offset_top = 24.0
+offset_right = 856.0
+offset_bottom = 174.0
+alignment = 1
+
+[node name="DeleteSaveButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
 text = "删除存档"
 
-[node name="Button2" type="Button" parent="."]
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -126.0
-offset_top = -157.0
-offset_right = -36.0
-offset_bottom = -119.0
-grow_horizontal = 0
-grow_vertical = 0
-text = "开始游戏"
+[node name="LoadSaveButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "读取存档"
+
+[node name="SaveProgress" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "保存进度"
 
 [node name="Background" type="TextureRect" parent="."]
 custom_minimum_size = Vector2(200, 200)
@@ -122,6 +116,6 @@ layout_mode = 1
 offset_right = 369.0
 offset_bottom = 200.0
 mouse_filter = 2
-texture = ExtResource("2_8xdhd")
+texture = ExtResource("2_ip0xe")
 expand_mode = 1
 stretch_mode = 6
