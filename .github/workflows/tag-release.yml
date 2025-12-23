@@ -48,10 +48,6 @@ jobs:
                   echo "错误：从Tag [$TAG_FULL_NAME] 提取版本失败！"
                   exit 1
               fi
-              if ! echo "$TAG_VERSION" | grep -qE '^[0-9]+\.[0-9]+\.[0-9]+(-.+)?$'; then
-                  echo "错误：Tag版本 [$TAG_VERSION] 不符合语义化规范（建议格式：x.y.z 或 x.y.z-beta）"
-                  exit 1
-              fi
 
               echo "base_version=$TAG_VERSION" >> $GITHUB_OUTPUT
               echo "Tag触发：使用Tag版本 → $TAG_VERSION"
