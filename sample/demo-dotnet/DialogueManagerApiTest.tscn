@@ -14,3 +14,9 @@ script = ExtResource("1_lahcb")
 
 [node name="Demo" parent="." instance=ExtResource("2_bcxdr")]
 layout_mode = 1
+
+[node name="DialogManager" parent="Demo" index="0"]
+init_onstart = false
+autostart = false
+
+[editable path="Demo"]

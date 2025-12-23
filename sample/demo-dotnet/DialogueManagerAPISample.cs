@@ -42,8 +42,7 @@ public partial class DialogueManagerAPISample : Node
 		{
 			GD.Print(index);
 		};
-
-		// 等待1秒
+		
 		if (API.IsApiReady)
 		{
 			GD.Print("API Ready");

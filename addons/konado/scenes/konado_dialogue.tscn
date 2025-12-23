@@ -265,12 +265,11 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_f70o6")
 toggle_mode = true
 text = "回顾"
 
-[node name="SaveLoad" type="Control" parent="DialogUI" node_paths=PackedStringArray("root_container")]
+[node name="SaveLoad" type="Control" parent="DialogUI"]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
 script = ExtResource("4_m5nin")
-root_container = NodePath("Panel/ScrollContainer/MarginContainer/RootSlotContainer")
 
 [node name="Panel" type="Panel" parent="DialogUI/SaveLoad"]
 layout_mode = 1
@@ -306,6 +305,7 @@ theme_override_constants/separation = 50
 vertical = true
 
 [node name="game_ui_buttons" type="Panel" parent="DialogUI"]
+visible = false
 custom_minimum_size = Vector2(0, 55)
 layout_mode = 2
 size_flags_vertical = 8
