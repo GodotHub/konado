@@ -15,7 +15,7 @@ English | [简体中文](README.ZH.md)
 <br>
 
 <div align="center" style="border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);">
-<img src="./assets/banner/2.0/konado-2.0-banner.png" alt="Konado Mascot" width="100%" max-width="800px">
+<img src="./assets/banner/2.1/konado-2.1-banner.png" alt="Konado Mascot" width="100%" max-width="800px">
 </div>
 
 ## Overview
